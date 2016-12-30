@@ -1,4 +1,4 @@
-package cn.dahe.model;
+package cn.dahe.dto;
 
 import java.util.Date;
 import java.util.List;

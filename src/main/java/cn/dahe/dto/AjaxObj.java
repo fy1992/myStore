@@ -1,4 +1,4 @@
-package cn.dahe.model;
+package cn.dahe.dto;
 /**
  * json 返回值封装
  * */

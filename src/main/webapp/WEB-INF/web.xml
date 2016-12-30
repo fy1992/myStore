@@ -30,8 +30,6 @@
     <servlet-name>default</servlet-name>
     <url-pattern>*.html</url-pattern>
   </servlet-mapping>
-
-
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
@@ -62,6 +60,7 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
+  <!--sql inject and xss filter-->
   <filter>
     <filter-name>XssSqlFilter</filter-name>
     <filter-class>cn.dahe.filter.SystemContextFilter</filter-class>
@@ -70,6 +69,19 @@
     <filter-name>XssSqlFilter</filter-name>
     <url-pattern>/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  <!-- shiro -->
+  <filter>
+    <filter-name>shiroFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <init-param>
+      <param-name>targetFilterLifecycle</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>shiroFilter</filter-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
 
   <filter>
@@ -88,6 +100,7 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
   <filter>
     <filter-name>openSessionInViewFilter</filter-name>
     <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
@@ -101,10 +114,6 @@
   <filter>
     <filter-name>SystemContextFilter</filter-name>
     <filter-class>cn.dahe.filter.SystemContextFilter</filter-class>
-    <init-param>
-      <param-name>pageSize</param-name>
-      <param-value>15</param-value>
-    </init-param>
   </filter>
   <filter-mapping>
     <filter-name>SystemContextFilter</filter-name>
@@ -137,11 +146,11 @@
     <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
     <init-param>
       <param-name>loginUsername</param-name>
-      <param-value>dahewh</param-value>
+      <param-value>admin</param-value>
     </init-param>
     <init-param>
       <param-name>loginPassword</param-name>
-      <param-value>dahe3124</param-value>
+      <param-value>admin3124</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>
@@ -151,7 +160,7 @@
 
   <!-- Session 配置 -->
   <session-config>
-    <session-timeout>100</session-timeout>
+    <session-timeout>500</session-timeout>
     <cookie-config>
       <http-only>true</http-only>
     </cookie-config>
