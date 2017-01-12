@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 
@@ -49,10 +50,10 @@ public class LoginController {
      * */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj login(String loginName, String password, Model model){
+    public AjaxObj login(String loginName, String password){
         logger.info("-- 用户登录 --");
         String msg = "";
-        UsernamePasswordToken token = new UsernamePasswordToken(loginName, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(loginName, SecurityUtil.MD5(password));
         Subject subject = SecurityUtils.getSubject();
         AjaxObj json = new AjaxObj();
         try{

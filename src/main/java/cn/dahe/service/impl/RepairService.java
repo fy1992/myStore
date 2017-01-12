@@ -10,11 +10,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
 
 @Service
 public class RepairService implements IRepairService {
-	
 	private static Log  logger = LogFactory.getLog(RepairService.class);
 	@Resource
 	private IUserDao userDao;

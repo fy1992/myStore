@@ -1,4 +1,4 @@
-﻿<%@page language="java" import="java.util.*,cn.dahe.model.*" pageEncoding="utf-8"%>
+﻿<%@page language="java"  pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/jsp/taglib.jsp"%>
 <!DOCTYPE HTML>
 <html>
@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="pd-40">
-  <p class="f-20 text-success">欢迎使用河南省人民政府网站APP内容管理系统！</p>
+  <p class="f-20 text-success">欢迎使用GoldenLeopard后台管理系统！</p>
 </div>
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>

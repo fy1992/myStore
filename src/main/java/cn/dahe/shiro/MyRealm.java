@@ -80,8 +80,8 @@ public class MyRealm extends AuthorizingRealm {
             SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getLoginName(), user.getPassword(), getName());
             Session session = SecurityUtils.getSubject().getSession();
             // 当验证都通过后，把用户信息放在session里
-            session.setAttribute("userSession", user);
-            session.setAttribute("userSessionId", user.getId());
+            session.setAttribute("loginUser", user);
+            session.setAttribute("loginUserId", user.getId());
             return info;
         }
         return null;

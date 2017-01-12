@@ -23,9 +23,9 @@
 <body>
 <header class="Hui-header cl">
 	<%--<iframe class="baniframe" sandbox="allow-scripts allow-same-origin" id="mh" src="${ctxResource}/js/cavans.html" width="100%" height="50" style="position: absolute; z-index: -1; border: 0;"></iframe>--%>
-	<a class="Hui-logo" href="<%=request.getContextPath()%>/admin/index">GoldenLeopard后台系统</a>
+	<a class="Hui-logo" href="<%=request.getContextPath()%>/index">GoldenLeopard后台系统</a>
 	<ul class="Hui-userbar">
-		<li class="dropDown dropDown_hover"><a href="#" class="dropDown_A">${user.}<i class="Hui-iconfont">&#xe6d5;</i></a>
+		<li class="dropDown dropDown_hover"><a href="#" class="dropDown_A">${user.storeName} | ${user.username}<i class="Hui-iconfont">&#xe6d5;</i></a>
 			<ul class="dropDown-menu radius box-shadow">
 				<li><a href="<%=request.getContextPath()%>/logout">安全退出</a></li>
 			</ul>
@@ -37,7 +37,7 @@
 <aside class="Hui-aside">
 	<input runat="server" id="divScrollValue" type="hidden" value="" />
 	<div class="menu_dropdown bk_2 f-16">
-		<dl id="menu-news">
+		<dl id="menu-sale">
 			<dt><i class="Hui-iconfont">&#xe616;</i> 销售<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -47,29 +47,27 @@
 				</ul>
 			</dd>
 		</dl>
-        <c:if test="${user.rank eq 0}">
-            <dl id="menu-column">
-                <dt><i class="Hui-iconfont">&#xe6c0;</i> 商品<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-                <dd>
-                    <ul>
-                        <li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">商品分类</a></li>
-                        <li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">商品资料</a></li>
-                        <li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">批量操作</a></li>
-                        <li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">排序管理</a></li>
-                        <li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">口味管理</a></li>
-                    </ul>
-                </dd>
-            </dl>
-			<dl id="menu-tongji">
-				<dt><i class="Hui-iconfont">&#xe623;</i>库存<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-				<dd>
-					<ul>
-						<li><a _href="<%=request.getContextPath()%>/admin/log/logList/view" href="javascript:void(0)">日志记录</a></li>
-					</ul>
-				</dd>
-			</dl>
-		</c:if>
-		<dl id="menu-push">
+		<dl id="menu-goods">
+			<dt><i class="Hui-iconfont">&#xe6c0;</i> 商品<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">商品分类</a></li>
+					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">商品资料</a></li>
+					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">批量操作</a></li>
+					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">排序管理</a></li>
+					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">口味管理</a></li>
+				</ul>
+			</dd>
+		</dl>
+		<dl id="menu-stock">
+			<dt><i class="Hui-iconfont">&#xe623;</i>库存<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a _href="<%=request.getContextPath()%>/admin/log/logList/view" href="javascript:void(0)">日志记录</a></li>
+				</ul>
+			</dd>
+		</dl>
+		<dl id="menu-vip">
 			<dt><i class="Hui-iconfont">&#xe623;</i>会员<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -82,7 +80,7 @@
 				</ul>
 			</dd>
 		</dl>
-		<dl id="menu-user">
+		<dl id="menu-salePro">
 			<dt><i class="Hui-iconfont">&#xe623;</i>营销<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -100,7 +98,7 @@
 				</ul>
 			</dd>
 		</dl>
-        <dl id="menu-user">
+        <dl id="menu-goodsFlow">
             <dt><i class="Hui-iconfont">&#xe623;</i>货流<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
@@ -126,7 +124,7 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display:none" class="loading"></div>
-			<iframe scrolling="yes" frameborder="0" src="<%=request.getContextPath()%>/admin/welcome" name="iframe"></iframe>
+			<iframe scrolling="yes" frameborder="0" src="<%=request.getContextPath()%>/welcome" name="iframe"></iframe>
 		</div>
 	</div>
 </section>

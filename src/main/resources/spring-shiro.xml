@@ -12,7 +12,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <!-- Shiro生命周期处理器-->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
-        <property name="proxyTargetClass" value="true"/>
+        <!-- 不强制使用cglib进行动态代理 -->
+        <property name="proxyTargetClass" value="false"/>
     </bean>
 
     <!-- 配置权限管理器 -->
