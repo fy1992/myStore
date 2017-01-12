@@ -21,7 +21,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -48,13 +47,13 @@ public class MyRealm extends AuthorizingRealm {
             //用户的角色集合
             info.setRoles(user.getRolesName());
             //用户的角色对应的所有权限，和用户的自定义权限
-            List<Role> roleList = user.getRoleList();
-            List<Permission> permissionList = user.getPermissionList();
-            for (Role role : roleList) {
+            Set<Role> roleSet= user.getRoleSet();
+            Set<Permission> permissionSet = user.getPermissionSet();
+            for (Role role : roleSet) {
                 info.addStringPermissions(role.getPermissionsName());
             }
             Set<String> permissionNameSet = new HashSet<>();
-            for(Permission permission : permissionList){
+            for(Permission permission : permissionSet){
                 permissionNameSet.add(permission.getName());
             }
             info.addStringPermissions(permissionNameSet);

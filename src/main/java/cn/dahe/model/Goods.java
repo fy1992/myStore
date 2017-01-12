@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 商品
@@ -86,13 +87,13 @@ public class Goods {
     @JoinTable(name = "t_goods_smallTicket",
             joinColumns = {@JoinColumn(name = "goods_id")},
             inverseJoinColumns = {@JoinColumn(name = "ticket_id")})
-    private List<SmallTicket> smallTicketList;
+    private Set<SmallTicket> smallTicketList;
     //商品标签
     @ManyToMany
     @JoinTable(name = "t_goods_goodsTags",
             joinColumns = {@JoinColumn(name = "goods_id")},
             inverseJoinColumns = {@JoinColumn(name = "tags_id")})
-    private List<GoodsTags> goodsTagsList;
+    private Set<GoodsTags> goodsTagsList;
 
     public int getId() {
         return id;
@@ -270,19 +271,19 @@ public class Goods {
         this.description = description;
     }
 
-    public List<SmallTicket> getSmallTicketList() {
+    public Set<SmallTicket> getSmallTicketList() {
         return smallTicketList;
     }
 
-    public void setSmallTicketList(List<SmallTicket> smallTicketList) {
+    public void setSmallTicketList(Set<SmallTicket> smallTicketList) {
         this.smallTicketList = smallTicketList;
     }
 
-    public List<GoodsTags> getGoodsTagsList() {
+    public Set<GoodsTags> getGoodsTagsList() {
         return goodsTagsList;
     }
 
-    public void setGoodsTagsList(List<GoodsTags> goodsTagsList) {
+    public void setGoodsTagsList(Set<GoodsTags> goodsTagsList) {
         this.goodsTagsList = goodsTagsList;
     }
 }

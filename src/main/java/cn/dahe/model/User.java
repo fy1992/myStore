@@ -57,17 +57,17 @@ public class User {
     @JoinTable(name = "t_user_permission",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")})
-    private List<Permission> permissionList;
+    private Set<Permission> permissionSet;
     //用户对应的角色
     @ManyToMany
     @JoinTable(name = "t_user_role",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private List<Role> roleList;
+    private Set<Role> roleSet;
 
     @Transient
     public Set<String> getRolesName(){
-        List<Role> roles = getRoleList();
+        Set<Role> roles = getRoleSet();
         Set<String> set = new HashSet<String>();
         for (Role role : roles) {
             set.add(role.getRoleName());
@@ -77,7 +77,7 @@ public class User {
 
     @Transient
     public Set<String> getPermissionName(){
-        List<Permission> permissions = getPermissionList();
+        Set<Permission> permissions = getPermissionSet();
         Set<String> set = new HashSet<String>();
         for (Permission permission : permissions) {
             set.add(permission.getName());
@@ -149,14 +149,6 @@ public class User {
         this.createDate = createDate;
     }
 
-    public List<Role> getRoleList() {
-        return roleList;
-    }
-
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
-    }
-
     public String getLoginName() {
         return loginName;
     }
@@ -173,11 +165,19 @@ public class User {
         this.lastLoginDate = lastLoginDate;
     }
 
-    public List<Permission> getPermissionList() {
-        return permissionList;
+    public Set<Permission> getPermissionSet() {
+        return permissionSet;
     }
 
-    public void setPermissionList(List<Permission> permissionList) {
-        this.permissionList = permissionList;
+    public void setPermissionSet(Set<Permission> permissionSet) {
+        this.permissionSet = permissionSet;
+    }
+
+    public Set<Role> getRoleSet() {
+        return roleSet;
+    }
+
+    public void setRoleSet(Set<Role> roleSet) {
+        this.roleSet = roleSet;
     }
 }

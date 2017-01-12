@@ -8,6 +8,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 权限
@@ -28,13 +29,13 @@ public class Permission {
     @JoinTable(name = "t_role_permission",
             joinColumns = {@JoinColumn(name = "permission_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private List<Role> role;
+    private Set<Role> roleSet;
     //权限对应的用户
     @ManyToMany
     @JoinTable(name = "t_user_permission",
             joinColumns = {@JoinColumn(name = "permission_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private List<Permission> permissionList;
+    private Set<Permission> permissionSet;
 
     public int getId() {
         return id;
@@ -60,19 +61,19 @@ public class Permission {
         this.description = description;
     }
 
-    public List<Role> getRole() {
-        return role;
+    public Set<Role> getRoleSet() {
+        return roleSet;
     }
 
-    public void setRole(List<Role> role) {
-        this.role = role;
+    public void setRoleSet(Set<Role> roleSet) {
+        this.roleSet = roleSet;
     }
 
-    public List<Permission> getPermissionList() {
-        return permissionList;
+    public Set<Permission> getPermissionSet() {
+        return permissionSet;
     }
 
-    public void setPermissionList(List<Permission> permissionList) {
-        this.permissionList = permissionList;
+    public void setPermissionSet(Set<Permission> permissionSet) {
+        this.permissionSet = permissionSet;
     }
 }

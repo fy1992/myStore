@@ -10,7 +10,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,17 +34,17 @@ public class Role {
     @JoinTable(name = "t_role_permission",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name="permission_id")})
-    private List<Permission> permissionList;
+    private Set<Permission> permissionSet;
     //角色对应的用户
     @ManyToMany
     @JoinTable(name = "t_user_role",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private List<User> userList;
+    private Set<User> userSet;
 
     @Transient
     public Set<String> getPermissionsName(){
-        List<Permission> permissions = getPermissionList();
+        Set<Permission> permissions = getPermissionSet();
         Set<String> set = new HashSet<String>();
         for (Permission permission : permissions) {
             set.add(permission.getName());
@@ -85,19 +84,19 @@ public class Role {
         this.description = description;
     }
 
-    public List<Permission> getPermissionList() {
-        return permissionList;
+    public Set<Permission> getPermissionSet() {
+        return permissionSet;
     }
 
-    public void setPermissionList(List<Permission> permissionList) {
-        this.permissionList = permissionList;
+    public void setPermissionSet(Set<Permission> permissionSet) {
+        this.permissionSet = permissionSet;
     }
 
-    public List<User> getUserList() {
-        return userList;
+    public Set<User> getUserSet() {
+        return userSet;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
     }
 }

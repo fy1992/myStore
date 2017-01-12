@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 商品标签
@@ -28,7 +28,7 @@ public class GoodsTags {
     @JoinTable(name = "t_goods_goodsTags",
             joinColumns = {@JoinColumn(name = "tags_id")},
             inverseJoinColumns = {@JoinColumn(name = "goods_id")})
-    private List<Goods> goodsList;
+    private Set<Goods> goodsSet;
 
     public int getId() {
         return id;
@@ -38,12 +38,12 @@ public class GoodsTags {
         this.id = id;
     }
 
-    public List<Goods> getGoodsList() {
-        return goodsList;
+    public Set<Goods> getGoodsSet() {
+        return goodsSet;
     }
 
-    public void setGoodsList(List<Goods> goodsList) {
-        this.goodsList = goodsList;
+    public void setGoodsSet(Set<Goods> goodsSet) {
+        this.goodsSet = goodsSet;
     }
 
     public String getTagsName() {
