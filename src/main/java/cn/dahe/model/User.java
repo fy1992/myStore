@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Date;
@@ -31,59 +32,35 @@ public class User {
     //用户名
     @NotEmpty(message = "用户名不能为空")
     private String username;
-    //登录名
+    //登录名（账号）
     @Column(name = "login_name")
     @NotEmpty(message = "登录名不能为空")
     private String loginName;
     //密码
     @NotEmpty(message = "密码不能为空")
     private String password;
-    //所属店面Id
-    @Column(name = "store_id")
-    private int storeId;
-    //所属店面名称
-    @Column(name = "store_name")
+    //邮箱
+    private String email;
+    //注册时间
+    @Column(name = "register_date")
+    private Date registerDate;
+    //店铺名称
+    @Column(name ="store_name")
     private String storeName;
-    //状态 0 停用  1 启用
+    //联系地址
+    private String addr;
+    //状态  0 停用 1 启用
     private int status;
-    //创建时间
-    @Column(name = "create_date")
-    private Date createDate;
-    //上次登录时间
-    @Column(name="last_login_date")
-    private Date lastLoginDate;
+    //用户对应的角色
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
     //用户对应的权限
     @ManyToMany
     @JoinTable(name = "t_user_permission",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")})
-    private Set<Permission> permissionSet;
-    //用户对应的角色
-    @ManyToMany
-    @JoinTable(name = "t_user_role",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<Role> roleSet;
-
-    @Transient
-    public Set<String> getRolesName(){
-        Set<Role> roles = getRoleSet();
-        Set<String> set = new HashSet<String>();
-        for (Role role : roles) {
-            set.add(role.getRoleName());
-        }
-        return set;
-    }
-
-    @Transient
-    public Set<String> getPermissionName(){
-        Set<Permission> permissions = getPermissionSet();
-        Set<String> set = new HashSet<String>();
-        for (Permission permission : permissions) {
-            set.add(permission.getName());
-        }
-        return set;
-    }
+    private Set<Permission> permissionSet = new HashSet<>();
 
     public int getId() {
         return id;
@@ -101,52 +78,12 @@ public class User {
         this.phone = phone;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public int getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
-    }
-
-    public String getStoreName() {
-        return storeName;
-    }
-
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
     }
 
     public String getLoginName() {
@@ -157,12 +94,60 @@ public class User {
         this.loginName = loginName;
     }
 
-    public Date getLastLoginDate() {
-        return lastLoginDate;
+    public String getPassword() {
+        return password;
     }
 
-    public void setLastLoginDate(Date lastLoginDate) {
-        this.lastLoginDate = lastLoginDate;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Set<Permission> getPermissionSet() {
@@ -171,13 +156,5 @@ public class User {
 
     public void setPermissionSet(Set<Permission> permissionSet) {
         this.permissionSet = permissionSet;
-    }
-
-    public Set<Role> getRoleSet() {
-        return roleSet;
-    }
-
-    public void setRoleSet(Set<Role> roleSet) {
-        this.roleSet = roleSet;
     }
 }

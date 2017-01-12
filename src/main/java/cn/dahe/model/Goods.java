@@ -1,6 +1,5 @@
 package cn.dahe.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,10 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -62,12 +62,10 @@ public class Goods {
     private int orderUnit;
     //拼音码
     private String pinyin;
-    //供货商Id
-    @Column(name = "supplier_id")
-    private int supplierId;
-    //供货商名称
-    @Column(name = "supplier_name")
-    private String supplierName;
+    //供货商
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
     //生产日期
     @Column(name = "production_date")
     private Date productionDate;
@@ -87,13 +85,13 @@ public class Goods {
     @JoinTable(name = "t_goods_smallTicket",
             joinColumns = {@JoinColumn(name = "goods_id")},
             inverseJoinColumns = {@JoinColumn(name = "ticket_id")})
-    private Set<SmallTicket> smallTicketList;
+    private Set<SmallTicket> smallTicketList = new HashSet<>();
     //商品标签
     @ManyToMany
     @JoinTable(name = "t_goods_goodsTags",
             joinColumns = {@JoinColumn(name = "goods_id")},
             inverseJoinColumns = {@JoinColumn(name = "tags_id")})
-    private Set<GoodsTags> goodsTagsList;
+    private Set<GoodsTags> goodsTagsList = new HashSet<>();
 
     public int getId() {
         return id;
@@ -215,20 +213,12 @@ public class Goods {
         this.pinyin = pinyin;
     }
 
-    public int getSupplierId() {
-        return supplierId;
+    public Supplier getSupplier() {
+        return supplier;
     }
 
-    public void setSupplierId(int supplierId) {
-        this.supplierId = supplierId;
-    }
-
-    public String getSupplierName() {
-        return supplierName;
-    }
-
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     public Date getProductionDate() {

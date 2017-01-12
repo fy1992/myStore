@@ -29,6 +29,8 @@ public class VipLevel {
     //有效期 0 永久 1  1年
     private int expiryDate;
 
+
+
     public int getId() {
         return id;
     }

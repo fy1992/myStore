@@ -98,6 +98,7 @@
 			<tx:method name="*" propagation="REQUIRED" read-only="true" />
 		</tx:attributes>
 	</tx:advice>
+
 	<aop:config proxy-target-class = "true">
 		<aop:pointcut id="transactionPointcut" expression="execution(* cn.dahe.service.*.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />

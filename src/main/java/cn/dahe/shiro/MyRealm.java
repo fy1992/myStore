@@ -44,14 +44,14 @@ public class MyRealm extends AuthorizingRealm {
             User user = userDao.findByLoginName(loginName);
             //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+            Role role = user.getRole();
+            Set<String> roleSet = new HashSet<>();
+            roleSet.add(role.getRoleName());
             //用户的角色集合
-            info.setRoles(user.getRolesName());
+            info.setRoles(roleSet);
             //用户的角色对应的所有权限，和用户的自定义权限
-            Set<Role> roleSet= user.getRoleSet();
+            info.addStringPermissions(role.getPermissionsName());
             Set<Permission> permissionSet = user.getPermissionSet();
-            for (Role role : roleSet) {
-                info.addStringPermissions(role.getPermissionsName());
-            }
             Set<String> permissionNameSet = new HashSet<>();
             for(Permission permission : permissionSet){
                 permissionNameSet.add(permission.getName());

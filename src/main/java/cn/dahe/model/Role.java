@@ -1,5 +1,6 @@
 package cn.dahe.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.HashSet;
@@ -22,25 +24,31 @@ public class Role {
     @Id
     @GeneratedValue
     private int id;
+
     //角色名称
     @Column(name = "role_name")
     private String roleName;
-    //角色类型  0 店长 1 收银员 2 导购员（服务员）
-    private int type;
+
     //角色描述
     private String description;
+
     //角色对应的权限
     @ManyToMany
     @JoinTable(name = "t_role_permission",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name="permission_id")})
-    private Set<Permission> permissionSet;
-    //角色对应的用户
+    private Set<Permission> permissionSet = new HashSet<>();
+
+    //角色对应的登录用户
     @ManyToMany
     @JoinTable(name = "t_user_role",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private Set<User> userSet;
+    private Set<User> userSet = new HashSet<>();
+
+    //角色对应的导购员
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private Set<Cashier> cashierSet = new HashSet<>();
 
     @Transient
     public Set<String> getPermissionsName(){
@@ -68,14 +76,6 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -98,5 +98,13 @@ public class Role {
 
     public void setUserSet(Set<User> userSet) {
         this.userSet = userSet;
+    }
+
+    public Set<Cashier> getCashierSet() {
+        return cashierSet;
+    }
+
+    public void setCashierSet(Set<Cashier> cashierSet) {
+        this.cashierSet = cashierSet;
     }
 }

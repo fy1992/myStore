@@ -33,5 +33,7 @@ public class VipSys {
     //赠送积分
     @Column(name = "zjs_point")
     private int zjsPpoint;
-
+    //会员等级
+    @Column(name = "vip_level_id")
+    private int vipLevelId;
 }

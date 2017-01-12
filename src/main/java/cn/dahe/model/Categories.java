@@ -21,6 +21,7 @@ public class Categories {
     //商品类别名称
     @Column(name = "categories_name")
     private String categoriesName;
+    //商品父类
     @ManyToOne
     @JoinColumn(name = "pid")
     private Categories parent;

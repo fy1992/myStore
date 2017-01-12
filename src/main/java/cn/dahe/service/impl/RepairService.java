@@ -38,7 +38,6 @@ public class RepairService implements IRepairService {
     private void initUser(String loginName){
 		User user = new User();
 		user.setLoginName(loginName);
-		user.setCreateDate(new Date());
 		user.setStatus(1);
         user.setUsername("系统管理员");
 		user.setPassword(SecurityUtil.MD5(ResourcesUtils.getAdminPassword()));

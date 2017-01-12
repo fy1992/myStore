@@ -35,7 +35,14 @@ public class Permission {
     @JoinTable(name = "t_user_permission",
             joinColumns = {@JoinColumn(name = "permission_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private Set<Permission> permissionSet;
+    private Set<User> userSet;
+    //权限对应的收银员
+    @ManyToMany
+    @JoinTable(name = "t_cashier_permission",
+            joinColumns = {@JoinColumn(name = "permission_id")},
+            inverseJoinColumns = {@JoinColumn(name = "cashier_id")})
+    private Set<Cashier> cashierSet;
+
 
     public int getId() {
         return id;
@@ -69,11 +76,19 @@ public class Permission {
         this.roleSet = roleSet;
     }
 
-    public Set<Permission> getPermissionSet() {
-        return permissionSet;
+    public Set<User> getUserSet() {
+        return userSet;
     }
 
-    public void setPermissionSet(Set<Permission> permissionSet) {
-        this.permissionSet = permissionSet;
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
+    }
+
+    public Set<Cashier> getCashierSet() {
+        return cashierSet;
+    }
+
+    public void setCashierSet(Set<Cashier> cashierSet) {
+        this.cashierSet = cashierSet;
     }
 }

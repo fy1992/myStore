@@ -24,7 +24,7 @@ public class SmallTicket {
     private String name;
     //小票类型 0 一品一切 1 一单一切
     private int type;
-    //商品
+    //小票对应的商品
     @ManyToMany
     @JoinTable(name = "t_goods_smallTicket",
             joinColumns = {@JoinColumn(name = "ticket_id")},

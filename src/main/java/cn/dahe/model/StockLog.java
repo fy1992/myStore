@@ -17,6 +17,12 @@ public class StockLog {
     @Id
     @GeneratedValue
     private int id;
+    //商品Id
+    @Column(name = "goods_id")
+    private int goodsId;
+    //商品名称
+    @Column(name = "goods_name")
+    private String goodsName;
     //交易数量
     @Column(name = "opt_num")
     private int optNum;
@@ -67,5 +73,21 @@ public class StockLog {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
 }

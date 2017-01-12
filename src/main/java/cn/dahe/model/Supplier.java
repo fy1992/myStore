@@ -1,10 +1,14 @@
 package cn.dahe.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 供货商
@@ -42,6 +46,9 @@ public class Supplier {
     private String description;
     //是否授权  0  没有授权  1  授权
     private int isAuthorize;
+    //供货商对应的商品
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
+    private Set<Goods> goods = new HashSet<>();
 
     public int getId() {
         return id;
@@ -137,5 +144,13 @@ public class Supplier {
 
     public void setIsAuthorize(int isAuthorize) {
         this.isAuthorize = isAuthorize;
+    }
+
+    public Set<Goods> getGoods() {
+        return goods;
+    }
+
+    public void setGoods(Set<Goods> goods) {
+        this.goods = goods;
     }
 }

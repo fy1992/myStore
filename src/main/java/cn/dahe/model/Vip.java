@@ -41,8 +41,7 @@ public class Vip {
     //qq
     private String qq;
     //email
-    @Column(name = "e_mail")
-    private String eMail;
+    private String email;
     //地址
     private String addr;
     //备注
@@ -142,12 +141,12 @@ public class Vip {
         this.qq = qq;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAddr() {

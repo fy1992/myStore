@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -28,7 +29,7 @@ public class GoodsTags {
     @JoinTable(name = "t_goods_goodsTags",
             joinColumns = {@JoinColumn(name = "tags_id")},
             inverseJoinColumns = {@JoinColumn(name = "goods_id")})
-    private Set<Goods> goodsSet;
+    private Set<Goods> goodsSet = new HashSet<>();
 
     public int getId() {
         return id;
