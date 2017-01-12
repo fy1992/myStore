@@ -10,8 +10,15 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd"
 	default-lazy-init="true">
 	
-	<!-- 加载配置属性文件 -->
-	<context:property-placeholder location="classpath:config.properties" />
+	<!-- 加载配置文件 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+				<value>classpath:config.properties</value>
+			</list>
+		</property>
+	</bean>
 
 	<!-- 使用Annotation自动注册Bean，解决事物失效问题：在主容器中不扫描@Controller注解，在SpringMvc中只扫描@Controller注解。 -->
 	<context:component-scan base-package="cn.dahe">
@@ -91,7 +98,7 @@
 			<tx:method name="*" propagation="REQUIRED" read-only="true" />
 		</tx:attributes>
 	</tx:advice>
-	<aop:config>
+	<aop:config proxy-target-class = "true">
 		<aop:pointcut id="transactionPointcut" expression="execution(* cn.dahe.service.*.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
 	</aop:config>

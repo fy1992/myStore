@@ -9,17 +9,28 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-    <!-- 配置权限管理器 -->
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <!-- ref对应我们写的realm  MyShiro -->
-        <property name="realm" ref="myShiro"/>
-        <!-- 使用下面配置的缓存管理器 -->
-        <property name="cacheManager" ref="cacheManager"/>
+    <!-- Shiro生命周期处理器-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true"/>
     </bean>
 
-    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
+    <!-- 配置权限管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!-- ref对应我们写的realm  myRealm -->
+        <property name="realm" ref="myRealm"/>
+        <!-- 使用下面配置的缓存管理器 -->
+        <property name="cacheManager" ref="shiroEncacheManager"/>
+    </bean>
 
-    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+    <bean id="shiroEncacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManager" ref="ehCacheManager"/>
+    </bean>
+
+    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:${ehcache.configFile}"></property>
+        <property name="shared" value="true"/>
+    </bean>
 
     <!-- 配置shiro的过滤器工厂类，id- shiroFilter要和我们在web.xml中配置的过滤器一致 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -35,15 +46,16 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         <property name="filterChainDefinitions">
             <value>
                 <!-- anon表示此地址不需要任何权限即可访问 -->
-                /static/**=anon
+                /resources/**=anon
+                /login=anon
                 <!-- perms[user:query]表示访问此连接需要权限为user:query的用户 -->
-                /user=perms[user:query]
-                <!-- roles[manager]表示访问此连接需要用户的角色为manager -->
+                <!--/user=perms[user:query]
+                &lt;!&ndash; roles[manager]表示访问此连接需要用户的角色为manager &ndash;&gt;
                 /user/add=roles[manager]
                 /user/del/**=roles[admin]
                 /user/edit/**=roles[manager]
-                <!--所有的请求(除去配置的静态资源请求或请求地址为anon的请求)都要通过登录验证,如果未登录则跳到/login-->
-                /** = authc
+                &lt;!&ndash;所有的请求(除去配置的静态资源请求或请求地址为anon的请求)都要通过登录验证,如果未登录则跳到/login&ndash;&gt;
+                /** = authc-->
             </value>
         </property>
     </bean>

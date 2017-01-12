@@ -21,10 +21,15 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		String contextPath = request.getContextPath();
 		String url = requestUri.substring(contextPath.length());
 		logger.info("url enter the sessinInterceptor : " + url);
-
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("loginUser");
-		return user != null || redictLogin(request, response);
+        if(url.contains("/login")){
+            return true;
+        }
+		if(user == null){
+			redictLogin(request, response);
+		}
+		return true;
 	}
 
 

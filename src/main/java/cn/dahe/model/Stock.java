@@ -26,4 +26,35 @@ public class Stock {
     @Column(name = "good_num")
     private long goodNum;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getGoodId() {
+        return goodId;
+    }
+
+    public void setGoodId(int goodId) {
+        this.goodId = goodId;
+    }
+
+    public String getGoodName() {
+        return goodName;
+    }
+
+    public void setGoodName(String goodName) {
+        this.goodName = goodName;
+    }
+
+    public long getGoodNum() {
+        return goodNum;
+    }
+
+    public void setGoodNum(long goodNum) {
+        this.goodNum = goodNum;
+    }
 }

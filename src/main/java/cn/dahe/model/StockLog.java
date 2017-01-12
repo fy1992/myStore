@@ -28,4 +28,44 @@ public class StockLog {
     private Date optDate;
     //备注
     private String description;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getOptNum() {
+        return optNum;
+    }
+
+    public void setOptNum(int optNum) {
+        this.optNum = optNum;
+    }
+
+    public int getOptType() {
+        return optType;
+    }
+
+    public void setOptType(int optType) {
+        this.optType = optType;
+    }
+
+    public Date getOptDate() {
+        return optDate;
+    }
+
+    public void setOptDate(Date optDate) {
+        this.optDate = optDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

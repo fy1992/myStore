@@ -1,5 +1,6 @@
 package cn.dahe.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,5 +16,126 @@ public class Supplier {
     @Id
     @GeneratedValue
     private int id;
+    //是否启用 0 禁用  1 启用
+    private int status;
+    //供货商名称
+    private String name;
+    //联系人
+    private String contacts;
+    //联系电话
+    private String phone;
+    //联系邮箱
+    @Column(name = "e_mail")
+    private String eMail;
+    //供货商编号
+    @Column(name = "supplier_no")
+    private String supplierNo;
+    //配送费
+    @Column(name = "packing_fee")
+    private String packingFee;
+    //固定返利点
+    @Column(name = "rebate_point")
+    private String rebatePoint;
+    //地址
+    private String addr;
+    //备注
+    private String description;
+    //是否授权  0  没有授权  1  授权
+    private int isAuthorize;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String geteMail() {
+        return eMail;
+    }
+
+    public void seteMail(String eMail) {
+        this.eMail = eMail;
+    }
+
+    public String getSupplierNo() {
+        return supplierNo;
+    }
+
+    public void setSupplierNo(String supplierNo) {
+        this.supplierNo = supplierNo;
+    }
+
+    public String getPackingFee() {
+        return packingFee;
+    }
+
+    public void setPackingFee(String packingFee) {
+        this.packingFee = packingFee;
+    }
+
+    public String getRebatePoint() {
+        return rebatePoint;
+    }
+
+    public void setRebatePoint(String rebatePoint) {
+        this.rebatePoint = rebatePoint;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getIsAuthorize() {
+        return isAuthorize;
+    }
+
+    public void setIsAuthorize(int isAuthorize) {
+        this.isAuthorize = isAuthorize;
+    }
 }

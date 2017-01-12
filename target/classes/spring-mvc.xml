@@ -23,37 +23,16 @@
 	    <mvc:interceptor>
 	        <mvc:mapping path="/**" />
 			<bean class="cn.dahe.interceptor.SessionInterceptor">
-			<property name="excludeUrls">
-			  <list>
-			    <value>/consult/0001/**</value>
-			    <value>/login</value>
-			    <value>/druid</value>
-			    <value>/logout</value>
-			    <value>/drawCheckCode</value>
-			    <value>/open/add</value>
-			    <value>/open/addPeopleOpen</value>
-			    <value>/open/addCompOpen</value>
-			    <value>/open/usearch</value>
-			    <value>/pub/pc</value>
-			    <value>/pub/pt</value>
-			    <value>/open/sendPhoneCode</value>
-			    <value>/open/checkPhoneCode</value>
-			  </list>
-			</property>
 			</bean>
-	    </mvc:interceptor>
-	    <mvc:interceptor>
-	       <mvc:mapping path="/zf/**"/>
-	       <bean class="cn.dahe.interceptor.AuthorInterceptor"></bean>
 	    </mvc:interceptor>
 	</mvc:interceptors>
 	
 	<bean  id="exceptionResolve" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-	<property name="exceptionMappings">
-	   <props>
-	     <prop key="DaheException">error/error</prop>
-	   </props>
-	</property>
+		<property name="exceptionMappings">
+		   <props>
+			 <prop key="cn.dahe.model.DaheException">error/error</prop>
+		   </props>
+		</property>
 	</bean>
 	
 	<bean id="multipartResolver"

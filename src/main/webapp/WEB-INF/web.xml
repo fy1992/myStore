@@ -4,7 +4,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-
   <!-- 激活Tomcat的defaultServlet来处理静态文件 -->
   <servlet-mapping>
     <servlet-name>default</servlet-name>
@@ -34,16 +33,18 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
 
-  <!-- 加载Spring配置文件 -->
+  <!-- 加载Spring和shiro的配置文件 -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath*:spring-context.xml</param-value>
+    <param-value>
+        classpath*:spring-context.xml,
+        classpath*:spring-shiro.xml
+    </param-value>
   </context-param>
 
-  <!-- <listener>
-    <listener-class>cn.dahe.common.listener.StartListener</listener-class>
-  </listener> -->
-
+   <listener>
+        <listener-class>cn.dahe.listener.InitListener</listener-class>
+   </listener>
 
   <!-- Spring MVC -->
   <servlet>
@@ -70,19 +71,6 @@
     <url-pattern>/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
-  <!-- shiro -->
-  <filter>
-    <filter-name>shiroFilter</filter-name>
-    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    <init-param>
-      <param-name>targetFilterLifecycle</param-name>
-      <param-value>true</param-value>
-    </init-param>
-  </filter>
-  <filter-mapping>
-    <filter-name>shiroFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
 
   <filter>
     <filter-name>encodingFilter</filter-name>
@@ -101,6 +89,7 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+
   <filter>
     <filter-name>openSessionInViewFilter</filter-name>
     <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
@@ -110,17 +99,21 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
-  <!-- 配置分页和threadlocal的属性 -->
-  <filter>
-    <filter-name>SystemContextFilter</filter-name>
-    <filter-class>cn.dahe.filter.SystemContextFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>SystemContextFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+    <!-- shiro -->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-  <!-- druid数据源Web监控配置 -->
+    <!-- druid数据源Web监控配置 -->
   <filter>
     <filter-name>druidWebStatFilter</filter-name>
     <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>

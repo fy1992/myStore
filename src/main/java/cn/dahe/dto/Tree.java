@@ -8,6 +8,7 @@ public class Tree {
 	private Integer id;
 	private String name;
 	private Integer pid;
+	private boolean open;
 	
 	public Integer getId() {
 		return id;
@@ -27,11 +28,21 @@ public class Tree {
 	public void setPid(Integer pid) {
 		this.pid = pid;
 	}
-	public Tree(Integer id, String name, Integer pid) {
+
+	public boolean isOpen() {
+		return open;
+	}
+
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
+
+	public Tree(Integer id, String name, Integer pid, boolean open) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.pid = pid;
+		this.open = open;
 	}
 	public Tree() {
 		super();

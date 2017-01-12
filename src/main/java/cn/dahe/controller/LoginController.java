@@ -2,23 +2,35 @@ package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.model.User;
+import cn.dahe.util.SecurityUtil;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.DisabledAccountException;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.ExpiredCredentialsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
 
 /**
+ * 登录
  * Created by fy on 2016/12/30.
  */
 @Controller
-@RequestMapping("store/login")
 public class LoginController {
     private Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -27,7 +39,8 @@ public class LoginController {
      * */
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginForm(Model model){
-        model.addAttribute("user", new User());
+        logger.info("--- 登录页跳转 ---");
+        model.addAttribute(new User());
         return "/login";
     }
 
@@ -36,9 +49,48 @@ public class LoginController {
      * */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj login(@Valid User user, Model model){
+    public AjaxObj login(String loginName, String password, Model model){
+        logger.info("-- 用户登录 --");
+        String msg = "";
+        UsernamePasswordToken token = new UsernamePasswordToken(loginName, password);
+        Subject subject = SecurityUtils.getSubject();
         AjaxObj json = new AjaxObj();
-
+        try{
+            subject.login(token);
+            //认证通过
+            if(subject.isAuthenticated()){
+                json.setResult(1);
+            }else{
+                logger.info("--- 认证失败 ---");
+                msg = "权限认证失败，请联系管理员";
+                json.setResult(0);
+            }
+            return json;
+        } catch (IncorrectCredentialsException e) {
+            msg = "登录密码错误";
+            json.setResult(0);
+        } catch (ExcessiveAttemptsException e) {
+            msg = "登录失败次数过多";
+            json.setResult(0);
+        } catch (LockedAccountException e) {
+            msg = "帐号已被锁定";
+            json.setResult(0);
+        } catch (DisabledAccountException e) {
+            msg = "帐号已被禁用";
+            json.setResult(0);
+        } catch (ExpiredCredentialsException e) {
+            msg = "帐号已过期";
+            json.setResult(0);
+        } catch (UnknownAccountException e) {
+            msg = "帐号不存在";
+            json.setResult(0);
+        } catch (UnauthorizedException e) {
+            msg = "您没有得到相应的授权";
+            json.setResult(0);
+        }finally {
+            json.setMsg(msg);
+            logger.info(msg);
+        }
         return json;
     }
 
@@ -46,10 +98,10 @@ public class LoginController {
      * 退出
      * */
     @RequestMapping(value="/logout",method=RequestMethod.GET)
-    public String logout(Model model){
+    public String logout(RedirectAttributes redirectAttributes){
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         SecurityUtils.getSubject().logout();
-        model.addAttribute("msg", "您已安全退出");
-        return "/login";
+        redirectAttributes.addFlashAttribute("msg", "您已安全退出");
+        return "redirect:/login";
     }
 }

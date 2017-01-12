@@ -15,7 +15,7 @@ import org.hibernate.transform.Transformers;
 import cn.dahe.dao.IBaseDao;
 
 @SuppressWarnings("unchecked")
-public class BaseDao<T> implements IBaseDao<T> {
+public class BaseDaoImpl<T> implements IBaseDao<T> {
 
 	private SessionFactory sessionFactory;
 
