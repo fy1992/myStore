@@ -1,6 +1,7 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.IBaseDao;
+import cn.dahe.model.User;
 import cn.dahe.service.IBaseService;
 
 import javax.annotation.Resource;
@@ -35,5 +36,10 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
     @Override
     public T load(int id) {
         return baseDao.load(id);
+    }
+
+    @Override
+    public T findByName(String name, User user) {
+        return baseDao.findByName(name, user.getStoreId());
     }
 }

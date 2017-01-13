@@ -26,6 +26,9 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
         if(url.contains("/login")){
             return true;
         }
+        if(url.contains("/resources")){
+            return true;
+        }
 		if(user == null){
 			redictLogin(request, response);
 		}

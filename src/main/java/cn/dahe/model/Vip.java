@@ -57,8 +57,10 @@ public class Vip {
     private int vipLevelID;
     //会员等级名称
     @Column(name = "vip_level_name")
-    private int vipLevelName;
-
+    private String vipLevelName;
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
 
 
     public int getId() {
@@ -187,5 +189,29 @@ public class Vip {
 
     public void setPoint(int point) {
         this.point = point;
+    }
+
+    public int getVipLevelID() {
+        return vipLevelID;
+    }
+
+    public void setVipLevelID(int vipLevelID) {
+        this.vipLevelID = vipLevelID;
+    }
+
+    public String getVipLevelName() {
+        return vipLevelName;
+    }
+
+    public void setVipLevelName(String vipLevelName) {
+        this.vipLevelName = vipLevelName;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

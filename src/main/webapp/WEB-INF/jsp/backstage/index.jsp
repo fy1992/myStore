@@ -14,7 +14,7 @@
 <![endif]-->
 <link href="${ctxResource}/css/H-ui.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
-<link href="${ctxResource}/css/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 
 <title>GoldenLeopard后台系统</title>
 <meta name="keywords" content="">
@@ -27,7 +27,7 @@
 	<ul class="Hui-userbar">
 		<li class="dropDown dropDown_hover"><a href="#" class="dropDown_A">${user.storeName} | ${user.username}<i class="Hui-iconfont">&#xe6d5;</i></a>
 			<ul class="dropDown-menu radius box-shadow">
-				<li><a href="<%=request.getContextPath()%>/logout">安全退出</a></li>
+				<li><a href="<%=request.getContextPath()%>/logout"><i class="Hui-iconfont">&#xe726;</i> 安全退出</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -41,9 +41,9 @@
 			<dt><i class="Hui-iconfont">&#xe616;</i> 销售<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="<%=request.getContextPath()%>/admin/news/newsList/view" href="javascript:void(0)">营业概况</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/news/firstPageList" href="javascript:void(0)">销售单据</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/news/firstPageEverList" href="javascript:void(0)">商品销售分析</a></li>
+					<li><a _href="#" href="javascript:void(0)">营业概况</a></li>
+					<li><a _href="#" href="javascript:void(0)">销售单据</a></li>
+					<li><a _href="#" href="javascript:void(0)">商品销售分析</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -71,12 +71,12 @@
 			<dt><i class="Hui-iconfont">&#xe623;</i>会员<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="<%=request.getContextPath()%>/admin/pushInfo/pushInfoList/view" href="javascript:void(0)">会员资料</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/pushInfo/pushInfoList/view" href="javascript:void(0)">会员等级</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/pushInfo/pushInfoList/view" href="javascript:void(0)">会员制度</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/pushInfo/pushInfoList/view" href="javascript:void(0)">精准营销</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/pushInfo/pushInfoList/view" href="javascript:void(0)">次卡管理</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/pushInfo/pushInfoList/view" href="javascript:void(0)">购物卡管理</a></li>
+					<li><a _href="#" href="javascript:void(0)">会员资料</a></li>
+					<li><a _href="#" href="javascript:void(0)">会员等级</a></li>
+					<li><a _href="#" href="javascript:void(0)">会员制度</a></li>
+					<li><a _href="#" href="javascript:void(0)">精准营销</a></li>
+					<li><a _href="#" href="javascript:void(0)">次卡管理</a></li>
+					<li><a _href="#" href="javascript:void(0)">购物卡管理</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -84,17 +84,17 @@
 			<dt><i class="Hui-iconfont">&#xe623;</i>营销<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="<%=request.getContextPath()%>/admin/user/updatePwdPage" href="javascript:void(0)">充值赠送</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/user/updatePwdPage" href="javascript:void(0)">促销活动</a></li>
+					<li><a _href="#" href="javascript:void(0)">充值赠送</a></li>
+					<li><a _href="#" href="javascript:void(0)">促销活动</a></li>
 				</ul>
 			</dd>
 		</dl>
-		<dl id="menu-user">
+		<dl id="menu-member">
 			<dt><i class="Hui-iconfont">&#xe623;</i>员工<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="<%=request.getContextPath()%>/admin/user/updatePwdPage" href="javascript:void(0)">收银员</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/user/updatePwdPage" href="javascript:void(0)">导购员</a></li>
+					<li><a _href="#" href="javascript:void(0)">收银员</a></li>
+					<li><a _href="#" href="javascript:void(0)">导购员</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -102,14 +102,31 @@
             <dt><i class="Hui-iconfont">&#xe623;</i>货流<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a _href="<%=request.getContextPath()%>/admin/user/updatePwdPage" href="javascript:void(0)">供货商</a></li>
-                    <li><a _href="<%=request.getContextPath()%>/admin/user/updatePwdPage" href="javascript:void(0)">门店订货</a></li>
-                    <li><a _href="<%=request.getContextPath()%>/admin/user/updatePwdPage" href="javascript:void(0)">货流管理</a></li>
-                    <li><a _href="<%=request.getContextPath()%>/admin/user/updatePwdPage" href="javascript:void(0)">供货商结算</a></li>
-                    <li><a _href="<%=request.getContextPath()%>/admin/user/updatePwdPage" href="javascript:void(0)">贷款汇总</a></li>
+                    <li><a _href="#" href="javascript:void(0)">供货商</a></li>
+                    <li><a _href="#" href="javascript:void(0)">门店订货</a></li>
+                    <li><a _href="#" href="javascript:void(0)">货流管理</a></li>
+                    <li><a _href="#" href="javascript:void(0)">供货商结算</a></li>
+                    <li><a _href="#" href="javascript:void(0)">贷款汇总</a></li>
                 </ul>
             </dd>
         </dl>
+		<dl id="menu-store">
+			<dt><i class="Hui-iconfont">&#xe623;</i>店面<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a _href="#" href="javascript:void(0)">建立分店</a></li>
+					<li><a _href="#" href="javascript:void(0)">分店信息</a></li>
+				</ul>
+			</dd>
+		</dl>
+		<dl id="menu-user">
+			<dt><i class="Hui-iconfont">&#xe623;</i>账户<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a _href="#" href="javascript:void(0)">账户信息</a></li>
+				</ul>
+			</dd>
+		</dl>
 	</div>
 </aside>
 <div class="dislpayArrow"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
@@ -129,7 +146,7 @@
 	</div>
 </section>
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script> 
-<script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script> 
-<script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script> 
+<script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 </body>
 </html>

@@ -50,7 +50,7 @@ public class InitListener implements ServletContextListener,
     public void contextInitialized(ServletContextEvent evt) {
         logger.info("--enter the listener--");
         ctx = WebApplicationContextUtils.getWebApplicationContext(evt.getServletContext());
-        IRepairService repairService = (IRepairService) ctx.getBean("repairService");
+        IRepairService repairService = (IRepairService) ctx.getBean("repairServiceImpl");
         repairService.repairUser();
     }
 }

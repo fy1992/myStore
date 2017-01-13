@@ -6,19 +6,44 @@ import net.sf.ehcache.Element;
 
 /**
  * 缓存工具类
- * @author Administrator
- *
+ * @author fy
  */
 public class CacheUtils {
 	
 	private static CacheManager cacheManager = SpringContextHolder.getBean("cacheManager");
 	
-	private static final String SYS_CACHE="sys_cache";
-	
 	public static CacheManager getCacheManager(){
 		return cacheManager;
 	}
-	
+	//商品缓存
+	private static final String GOODS_CACHE = "goodsCache";
+
+	/**
+	 * 加入省政府细缆页参数的缓存
+	 * 20160309
+	 * @param key
+	 * @param value
+	 * */
+	public static void putGoods(String key, Object value){
+		put(GOODS_CACHE, key, value);
+	}
+
+	/**
+	 * 得到缓存
+	 * @param key
+	 * */
+	public static Object getGoods(String key){
+		return get(GOODS_CACHE, key);
+	}
+
+	/**
+	 * 移除缓存
+	 * @param key
+	 * */
+	public static void removeGoods(String key){
+		remove(GOODS_CACHE, key);
+	}
+
 	/**
 	 * 获取一个cache，没有则创建
 	 * @param cacheName
@@ -33,42 +58,24 @@ public class CacheUtils {
 		}
 		return cache;
 	}
-	
-	public static void remove(String cacheName,String key){
-		getCache(cacheName).remove(key);
+
+	//通用
+	public static Object get(String cacheName, String key) {
+		Element element = getCache(cacheName).get(key);
+		return element == null ? null : element.getObjectValue();
 	}
-	
-	public static void put(String cacheName,String key,String value){
+
+	public static void put(String cacheName, String key, Object value) {
 		Element element = new Element(key, value);
 		getCache(cacheName).put(element);
 	}
-	
-	public static Object get(String cacheName,String key){
-		Element element = getCache(cacheName).get(key);
-		return element==null?null:element.getObjectValue();
+
+	public static void remove(String cacheName, String key) {
+		getCache(cacheName).remove(key);
 	}
-	/**
-	 * 删除缓存
-	 * @param key
-	 */
-	public static void remove(String key){
-		remove(SYS_CACHE, key);
-	}
-	/**
-	 * 向缓存写入
-	 * @param key
-	 * @param value
-	 */
-	public static void put(String key,String value){
-		put(SYS_CACHE, key, value);
-	}
-	/**
-	 * 对外的得到的key的值
-	 * @param key 缓存的key
-	 * @return
-	 */
-	public static Object get(String key){
-		return get(SYS_CACHE, key);
+
+	public static void removeAll(String cacheName){
+		getCache(cacheName).removeAll();
 	}
 
 }

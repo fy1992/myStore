@@ -7,6 +7,5 @@
 	   timeToLiveSeconds="86400"   7200
 	<cache name="frontCache" maxElementsInMemory="1000" eternal="false" timeToLiveSeconds="3600" overflowToDisk="false" />	 
 	-->		
-	<cache name="sysCache"   maxElementsInMemory="10000" eternal="false" overflowToDisk="false" timeToLiveSeconds="86400"/> 
-	<cache name="ttCache"  maxElementsInMemory="10000" eternal="false" overflowToDisk="false" timeToLiveSeconds="86400" memoryStoreEvictionPolicy="LFU"/>   		
+	<cache name="goodsCache" maxElementsInMemory="10000" eternal="false" overflowToDisk="false" timeToLiveSeconds="86400"/>
 </ehcache>

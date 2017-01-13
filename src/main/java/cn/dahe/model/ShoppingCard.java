@@ -25,6 +25,9 @@ public class ShoppingCard {
     //购买商品范围
     @Column(name = "categories_ids")
     private String categoriesIds;
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
 
     public int getId() {
         return id;
@@ -64,5 +67,13 @@ public class ShoppingCard {
 
     public void setCategoriesIds(String categoriesIds) {
         this.categoriesIds = categoriesIds;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

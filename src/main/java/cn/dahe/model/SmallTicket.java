@@ -1,5 +1,6 @@
 package cn.dahe.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -30,6 +31,9 @@ public class SmallTicket {
             joinColumns = {@JoinColumn(name = "ticket_id")},
             inverseJoinColumns = {@JoinColumn(name = "goods_id")})
     private Set<Goods> goodsSet;
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
 
     public int getId() {
         return id;
@@ -61,5 +65,13 @@ public class SmallTicket {
 
     public void setGoodsSet(Set<Goods> goodsSet) {
         this.goodsSet = goodsSet;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

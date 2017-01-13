@@ -34,7 +34,9 @@ public class StockLog {
     private Date optDate;
     //备注
     private String description;
-
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
     public int getId() {
         return id;
     }
@@ -89,5 +91,13 @@ public class StockLog {
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

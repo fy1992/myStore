@@ -1,12 +1,16 @@
 package cn.dahe.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 商品类别
@@ -19,12 +23,16 @@ public class Categories {
     @GeneratedValue
     private int id;
     //商品类别名称
-    @Column(name = "categories_name")
-    private String categoriesName;
+    private String name;
     //商品父类
     @ManyToOne
     @JoinColumn(name = "pid")
     private Categories parent;
+    //所属店面
+    @Column(name = "store_id")
+    private int storeId;
+    @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
+    private Set<Goods> goodsSet = new HashSet<>();
 
     public int getId() {
         return id;
@@ -34,12 +42,12 @@ public class Categories {
         this.id = id;
     }
 
-    public String getCategoriesName() {
-        return categoriesName;
+    public String getName() {
+        return name;
     }
 
-    public void setCategoriesName(String categoriesName) {
-        this.categoriesName = categoriesName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Categories getParent() {
@@ -48,5 +56,21 @@ public class Categories {
 
     public void setParent(Categories parent) {
         this.parent = parent;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
+
+    public Set<Goods> getGoodsSet() {
+        return goodsSet;
+    }
+
+    public void setGoodsSet(Set<Goods> goodsSet) {
+        this.goodsSet = goodsSet;
     }
 }

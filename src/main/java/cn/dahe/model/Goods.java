@@ -2,13 +2,14 @@ package cn.dahe.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.HashSet;
@@ -25,15 +26,11 @@ public class Goods {
     @GeneratedValue
     private int id;
     //商品名称
-    @Column(name = "goods_name")
-    private String goodsName;
+    private String name;
     //商品类型
-    @Column(name = "categories_id")
-    private int categoriesId;
-    //商品价格
-    private int price;
-    //商品进价
-    private int bid;
+    @ManyToOne
+    @JoinColumn(name = "categories_id")
+    private Categories categories;
     //图片访问链接
     @Column(name = "img_url")
     private String imgUrl;
@@ -51,12 +48,20 @@ public class Goods {
     //会员价
     @Column(name = "vip_price")
     private int vipPrice;
-    //折扣价
-    @Column(name = "discount_price")
-    private int discountPrice;
+    //批发价
+    @Column(name = "trade_price")
+    private int tradePrice;
+    //商品价格（销售价）
+    private int price;
+    //商品进价
+    private int bid;
     //主单位
-    @Column(name = "main_unit")
-    private int mainUnit;
+    @ManyToOne
+    @JoinColumn(name = "main_unit")
+    private GoodsUnit mainUnit;
+    //副单位
+    @Column(name = "unit_ids")
+    private String unitIds;
     //订货单位
     @Column(name = "order_unit")
     private int orderUnit;
@@ -72,6 +77,9 @@ public class Goods {
     //保质期
     @Column(name = "shelf_life")
     private Date shelfLife;
+    //库存
+    @OneToOne(mappedBy = "goods", fetch = FetchType.EAGER)
+    private Stock stock;
     //库存上限
     @Column(name = "stock_up")
     private int stockUp;
@@ -92,6 +100,10 @@ public class Goods {
             joinColumns = {@JoinColumn(name = "goods_id")},
             inverseJoinColumns = {@JoinColumn(name = "tags_id")})
     private Set<GoodsTags> goodsTagsList = new HashSet<>();
+    //所属店面
+    @Column(name = "store_id")
+    private int storeId;
+
 
     public int getId() {
         return id;
@@ -101,20 +113,28 @@ public class Goods {
         this.id = id;
     }
 
-    public String getGoodsName() {
-        return goodsName;
+    public String getName() {
+        return name;
     }
 
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getCategoriesId() {
-        return categoriesId;
+    public int getStoreId() {
+        return storeId;
     }
 
-    public void setCategoriesId(int categoriesId) {
-        this.categoriesId = categoriesId;
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
+
+    public Categories getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Categories categories) {
+        this.categories = categories;
     }
 
     public int getPrice() {
@@ -181,19 +201,19 @@ public class Goods {
         this.vipPrice = vipPrice;
     }
 
-    public int getDiscountPrice() {
-        return discountPrice;
+    public int getTradePrice() {
+        return tradePrice;
     }
 
-    public void setDiscountPrice(int discountPrice) {
-        this.discountPrice = discountPrice;
+    public void setTradePrice(int tradePrice) {
+        this.tradePrice = tradePrice;
     }
 
-    public int getMainUnit() {
+    public GoodsUnit getMainUnit() {
         return mainUnit;
     }
 
-    public void setMainUnit(int mainUnit) {
+    public void setMainUnit(GoodsUnit mainUnit) {
         this.mainUnit = mainUnit;
     }
 
@@ -275,5 +295,21 @@ public class Goods {
 
     public void setGoodsTagsList(Set<GoodsTags> goodsTagsList) {
         this.goodsTagsList = goodsTagsList;
+    }
+
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public String getUnitIds() {
+        return unitIds;
+    }
+
+    public void setUnitIds(String unitIds) {
+        this.unitIds = unitIds;
     }
 }

@@ -16,7 +16,7 @@
 <link href="${ctxResource}/css/H-ui.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
 
-<link href="${ctxResource}/css/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 
 <title>我的桌面</title>
 </head>

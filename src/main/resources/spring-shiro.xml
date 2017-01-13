@@ -50,13 +50,13 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
                 /resources/**=anon
                 /login=anon
                 <!-- perms[user:query]表示访问此连接需要权限为user:query的用户 -->
-                <!--/user=perms[user:query]
-                &lt;!&ndash; roles[manager]表示访问此连接需要用户的角色为manager &ndash;&gt;
+                /user=perms[user:query]
+                <!-- roles[manager]表示访问此连接需要用户的角色为manager -->
                 /user/add=roles[manager]
                 /user/del/**=roles[admin]
                 /user/edit/**=roles[manager]
-                &lt;!&ndash;所有的请求(除去配置的静态资源请求或请求地址为anon的请求)都要通过登录验证,如果未登录则跳到/login&ndash;&gt;
-                /** = authc-->
+                <!--所有的请求(除去配置的静态资源请求或请求地址为anon的请求)都要通过登录验证,如果未登录则跳到/login-->
+                /** = authc
             </value>
         </property>
     </bean>

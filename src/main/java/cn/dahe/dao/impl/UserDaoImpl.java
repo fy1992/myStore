@@ -9,10 +9,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao{
-
     @Override
     public User findByLoginName(String loginName) {
         String hql = "from User user where user.loginName = ?";
         return (User)this.queryByHql(hql, loginName);
     }
+
+
 }

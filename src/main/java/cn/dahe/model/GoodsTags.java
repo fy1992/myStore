@@ -22,8 +22,7 @@ public class GoodsTags {
     @GeneratedValue
     private int id;
     //标签名
-    @Column(name = "tags_name")
-    private String tagsName;
+    private String name;
     //商品
     @ManyToMany
     @JoinTable(name = "t_goods_goodsTags",
@@ -47,11 +46,11 @@ public class GoodsTags {
         this.goodsSet = goodsSet;
     }
 
-    public String getTagsName() {
-        return tagsName;
+    public String getName() {
+        return name;
     }
 
-    public void setTagsName(String tagsName) {
-        this.tagsName = tagsName;
+    public void setName(String name) {
+        this.name = name;
     }
 }

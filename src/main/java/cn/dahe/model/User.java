@@ -44,6 +44,9 @@ public class User {
     //注册时间
     @Column(name = "register_date")
     private Date registerDate;
+    //店铺Id
+    @Column(name ="store_id")
+    private int storeId;
     //店铺名称
     @Column(name ="store_name")
     private String storeName;
@@ -156,5 +159,13 @@ public class User {
 
     public void setPermissionSet(Set<Permission> permissionSet) {
         this.permissionSet = permissionSet;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

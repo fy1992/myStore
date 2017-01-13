@@ -1,5 +1,6 @@
 package cn.dahe.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,4 +16,7 @@ public class SaleInfo {
     @Id
     @GeneratedValue
     private int id;
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
 }

@@ -66,13 +66,20 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 	public T get(int id){
 		return (T) this.getSession().get(getClz(), id);
 	}
+
 	@Override
 	public void delete(int id) {
 		T t = this.load(id);
 		this.getSession().delete(t);
 	}
 
-	public int delete(String hql, List<Object> list){
+    @Override
+    public T findByName(String name, int storeId) {
+        String hql = "from "+ getClz().getName() +" where name = ? and storeId = ?";
+        return (T)queryByHql(hql, new Object[]{name, storeId});
+    }
+
+    public int delete(String hql, List<Object> list){
 		Query query = setParameterQuery(hql, list);
 		return query.executeUpdate();
 	}

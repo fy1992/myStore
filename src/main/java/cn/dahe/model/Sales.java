@@ -31,7 +31,9 @@ public class Sales {
     //是否开启精准营销  0 不开启 1  开启
     @Column(name = "is_pre_mark")
     private int isPreMark;
-
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
     public int getId() {
         return id;
     }
@@ -86,5 +88,13 @@ public class Sales {
 
     public void setIsPreMark(int isPreMark) {
         this.isPreMark = isPreMark;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

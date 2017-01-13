@@ -50,6 +50,10 @@ public class Role {
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     private Set<Cashier> cashierSet = new HashSet<>();
 
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
+
     @Transient
     public Set<String> getPermissionsName(){
         Set<Permission> permissions = getPermissionSet();
@@ -106,5 +110,13 @@ public class Role {
 
     public void setCashierSet(Set<Cashier> cashierSet) {
         this.cashierSet = cashierSet;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

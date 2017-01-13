@@ -12,16 +12,20 @@ public class Pager<T> {
 	private int rank;
 	//状态
 	private int state;
+	//状态2
+	private int status;
 	//标题等字符串参数
-	private String stringParam;
+	private String stringParam1;
 	private String stringParam2;
 	private String stringParam3;
+	private String stringParam4;
 	//父id
 	private String pid;
 	//int类型的参数
 	private Integer intParam1;
 	private Integer intParam2;
 	private Integer intParam3;
+	private Integer intParam4;
 	//开始时间
 	private Date startTime;
 	//结束时间
@@ -54,12 +58,6 @@ public class Pager<T> {
 	}
 	public void setRank(int rank) {
 		this.rank = rank;
-	}
-	public String getStringParam() {
-		return stringParam;
-	}
-	public void setStringParam(String stringParam) {
-		this.stringParam = stringParam;
 	}
 	public Date getStartTime() {
 		return startTime;
@@ -139,17 +137,36 @@ public class Pager<T> {
 	public void setIntParam3(Integer intParam3) {
 		this.intParam3 = intParam3;
 	}
-	@Override
-	public String toString() {
-		return "Pager [start=" + start + ", rank=" + rank + ", state=" + state
-				+ ", stringParam=" + stringParam + ", stringParam2="
-				+ stringParam2 + ", stringParam3=" + stringParam3 + ", pid="
-				+ pid + ", intParam1=" + intParam1 + ", intParam2=" + intParam2
-				+ ", intParam3=" + intParam3 + ", startTime=" + startTime
-				+ ", endTime=" + endTime + ", aaData=" + aaData
-				+ ", iTotalRecords=" + iTotalRecords
-				+ ", iTotalDisplayRecords=" + iTotalDisplayRecords
-				+ ", orderColumn=" + orderColumn + ", orderDir=" + orderDir
-				+ "]";
+
+	public String getStringParam1() {
+		return stringParam1;
+	}
+
+	public void setStringParam1(String stringParam1) {
+		this.stringParam1 = stringParam1;
+	}
+
+	public String getStringParam4() {
+		return stringParam4;
+	}
+
+	public void setStringParam4(String stringParam4) {
+		this.stringParam4 = stringParam4;
+	}
+
+	public Integer getIntParam4() {
+		return intParam4;
+	}
+
+	public void setIntParam4(Integer intParam4) {
+		this.intParam4 = intParam4;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 @Service
-public class RepairService implements IRepairService {
-	private static Log  logger = LogFactory.getLog(RepairService.class);
+public class RepairServiceImpl implements IRepairService {
+	private static Log  logger = LogFactory.getLog(RepairServiceImpl.class);
 	@Resource
 	private IUserDao userDao;
 	

@@ -17,7 +17,7 @@
     <link href="${ctxResource}/css/H-ui.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/login.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="${ctxResource}/css/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+    <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
     <style>
         .header{background:rgba(255,255,255,0.1) no-repeat center;}
         .loginBox{ background: rgba(255,255,255,0.3); }

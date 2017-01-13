@@ -28,7 +28,9 @@ public class VipLevel {
     private int autoLine;
     //有效期 0 永久 1  1年
     private int expiryDate;
-
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
 
 
     public int getId() {
@@ -77,5 +79,13 @@ public class VipLevel {
 
     public void setExpiryDate(int expiryDate) {
         this.expiryDate = expiryDate;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

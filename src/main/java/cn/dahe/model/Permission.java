@@ -1,5 +1,6 @@
 package cn.dahe.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -43,6 +44,9 @@ public class Permission {
             inverseJoinColumns = {@JoinColumn(name = "cashier_id")})
     private Set<Cashier> cashierSet;
 
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
 
     public int getId() {
         return id;
@@ -90,5 +94,13 @@ public class Permission {
 
     public void setCashierSet(Set<Cashier> cashierSet) {
         this.cashierSet = cashierSet;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

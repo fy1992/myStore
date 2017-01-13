@@ -36,4 +36,71 @@ public class VipSys {
     //会员等级
     @Column(name = "vip_level_id")
     private int vipLevelId;
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public int getWdoint() {
+        return wdoint;
+    }
+
+    public void setWdoint(int wdoint) {
+        this.wdoint = wdoint;
+    }
+
+    public int getDefaultVipLevelID() {
+        return defaultVipLevelID;
+    }
+
+    public void setDefaultVipLevelID(int defaultVipLevelID) {
+        this.defaultVipLevelID = defaultVipLevelID;
+    }
+
+    public int getDefaultVipLevelName() {
+        return defaultVipLevelName;
+    }
+
+    public void setDefaultVipLevelName(int defaultVipLevelName) {
+        this.defaultVipLevelName = defaultVipLevelName;
+    }
+
+    public int getZjsPpoint() {
+        return zjsPpoint;
+    }
+
+    public void setZjsPpoint(int zjsPpoint) {
+        this.zjsPpoint = zjsPpoint;
+    }
+
+    public int getVipLevelId() {
+        return vipLevelId;
+    }
+
+    public void setVipLevelId(int vipLevelId) {
+        this.vipLevelId = vipLevelId;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
 }

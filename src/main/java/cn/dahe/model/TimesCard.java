@@ -42,7 +42,9 @@ public class TimesCard {
     //使用期限（自定义天数） 到期时间
     @Column(name = "service_stop")
     private Date serviceStop;
-
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
     public int getId() {
         return id;
     }
@@ -121,5 +123,13 @@ public class TimesCard {
 
     public void setServiceStop(Date serviceStop) {
         this.serviceStop = serviceStop;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

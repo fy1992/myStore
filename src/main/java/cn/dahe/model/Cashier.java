@@ -56,6 +56,10 @@ public class Cashier {
         return set;
     }
 
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
+
     public int getId() {
         return id;
     }
@@ -118,5 +122,13 @@ public class Cashier {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

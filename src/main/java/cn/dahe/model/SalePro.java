@@ -27,7 +27,9 @@ public class SalePro {
     //结束时间
     @Column(name = "end_date")
     private Date endDate;
-
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
     public int getId() {
         return id;
     }
@@ -66,5 +68,13 @@ public class SalePro {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

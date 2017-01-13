@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -16,16 +18,16 @@ public class Stock {
     @Id
     @GeneratedValue
     private int id;
-    //商品id
-    @Column(name = "good_id")
-    private int goodId;
-    //商品名称
-    @Column(name = "good_name")
-    private String goodName;
+    //商品
+    @OneToOne
+    @JoinColumn(name = "goods_id", insertable = true, unique = true)
+    private Goods goods;
     //商品库存
     @Column(name = "good_num")
     private long goodNum;
-
+    //所属分店
+    @Column(name = "store_id")
+    private int storeId;
     public int getId() {
         return id;
     }
@@ -34,20 +36,12 @@ public class Stock {
         this.id = id;
     }
 
-    public int getGoodId() {
-        return goodId;
+    public Goods getGoods() {
+        return goods;
     }
 
-    public void setGoodId(int goodId) {
-        this.goodId = goodId;
-    }
-
-    public String getGoodName() {
-        return goodName;
-    }
-
-    public void setGoodName(String goodName) {
-        this.goodName = goodName;
+    public void setGoods(Goods goods) {
+        this.goods = goods;
     }
 
     public long getGoodNum() {
@@ -56,5 +50,13 @@ public class Stock {
 
     public void setGoodNum(long goodNum) {
         this.goodNum = goodNum;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }
