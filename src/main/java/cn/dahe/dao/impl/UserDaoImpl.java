@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by fy on 2016/12/30.
  */
-@Repository
+@Repository("userDao")
 public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao{
     @Override
     public User findByLoginName(String loginName) {

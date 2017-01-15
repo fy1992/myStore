@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 /**
  * Created by fy on 2017/1/13.
  */
-@Service
+@Service("goodsTagsService")
 public class GoodsTagsServiceImpl extends BaseServiceImpl<GoodsTags> implements IGoodsTagsService{
     private static Logger logger = LoggerFactory.getLogger(GoodsTagsServiceImpl.class);
     @Resource

@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 /**
  * Created by fy on 2017/1/13.
  */
-@Service
+@Service("goodsUnitService")
 public class GoodsUnitServiceImpl extends BaseServiceImpl<GoodsUnit> implements IGoodsUnitService{
     @Resource
     private IGoodsUnitDao goodsUnitDao;

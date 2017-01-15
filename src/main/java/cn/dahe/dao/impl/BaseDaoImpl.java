@@ -13,8 +13,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
 
 import cn.dahe.dao.IBaseDao;
+import org.springframework.stereotype.Repository;
 
 @SuppressWarnings("unchecked")
+@Repository("baseDao")
 public class BaseDaoImpl<T> implements IBaseDao<T> {
 
 	private SessionFactory sessionFactory;

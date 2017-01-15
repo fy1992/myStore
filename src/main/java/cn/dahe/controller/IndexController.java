@@ -15,8 +15,6 @@ import java.util.Date;
  * */
 @Controller
 public class IndexController {
-	//@Resource
-	//private ILogService logService;
 	/**
 	 * @param model
 	 * @param session

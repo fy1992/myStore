@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Created by fy on 2017/1/13.
  */
-@Service
+@Service("goodsService")
 public class GoodsServiceImpl extends BaseServiceImpl<Goods> implements IGoodsService{
     private static Logger logger = LoggerFactory.getLogger(GoodsServiceImpl.class);
 
