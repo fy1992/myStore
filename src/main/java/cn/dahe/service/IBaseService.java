@@ -2,6 +2,8 @@ package cn.dahe.service;
 
 import cn.dahe.model.User;
 
+import java.util.List;
+
 /**
  * Created by fy on 2016/12/29.
  */
@@ -19,4 +21,10 @@ public interface IBaseService<T> {
      * @return
      */
     T findByName(String name, User user);
+
+    /**
+     * 查询每个店铺下所有的
+     * @return
+     */
+    List<T> findAll();
 }

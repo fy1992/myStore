@@ -81,7 +81,8 @@ public class MyRealm extends AuthorizingRealm {
             Session session = SecurityUtils.getSubject().getSession();
             // 当验证都通过后，把用户信息放在session里
             session.setAttribute("loginUser", user);
-            session.setAttribute("loginUserId", user.getId());
+            session.setAttribute("sessionId", user.getId());
+            session.setAttribute("store", user.getStoreId());
             return info;
         }
         return null;

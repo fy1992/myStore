@@ -15,5 +15,11 @@ public class GoodsUnitServiceImpl extends BaseServiceImpl<GoodsUnit> implements 
     @Resource
     private IGoodsUnitDao goodsUnitDao;
 
-
+    @Override
+    public void add(String name) {
+        GoodsUnit goodsUnit = new GoodsUnit();
+        goodsUnit.setName(name);
+        //goodsUnit.setStoreId();
+        goodsUnitDao.add(goodsUnit);
+    }
 }

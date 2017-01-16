@@ -103,7 +103,8 @@ public class Goods {
     //所属店面
     @Column(name = "store_id")
     private int storeId;
-
+    //状态  0 停用 1 启用
+    private int status;
 
     public int getId() {
         return id;
@@ -311,5 +312,13 @@ public class Goods {
 
     public void setUnitIds(String unitIds) {
         this.unitIds = unitIds;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
