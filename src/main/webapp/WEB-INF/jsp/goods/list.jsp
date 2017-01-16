@@ -1,4 +1,4 @@
-﻿<%@page language="java" import="java.util.*,cn.dahe.model.*" pageEncoding="utf-8"%>
+﻿<%@page language="java" pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/jsp/taglib.jsp"%>
 <!DOCTYPE HTML>
 <html>
@@ -20,18 +20,17 @@
 <title>商品列表</title>
 </head>
 <body class="pos-r">
-<%--<div class="pos-a" style="width:210px;left:0;top:0; bottom:0;height:1000px; overflow: auto; border-right:1px solid #e5e5e5; background-color:#f5f5f5;">
-	<ul id="channelTree" class="ztree"></ul>
-	<input id="news_cid" type="hidden"/>
-	<input id="news_tableStart" type="hidden"/>
-</div>--%>
 <div>
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品资料 <span class="c-gray en">&gt;</span> 新闻列表 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品 <span class="c-gray en">&gt;</span> 商品资料 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="l">
-                <a href="javascript:;" onclick="pushAll();" class="btn btn-success radius"><i class="Hui-iconfont">&#xe603;</i> 批量推送至手机客户端</a>
-                <a href="javascript:;" onclick="removeCache();" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe609;</i> 清除所有缓存</a>
+                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增</a>
+                <a href="javascript:void(0);" onclick="importIn();" class="btn btn-primary radius">导入</a>
+                <a href="javascript:void(0);" onclick="importOut();" class="btn btn-primary radius">导出</a>
+                <a href="javascript:void(0);" onclick="unitDetail();" class="btn btn-primary radius">单位</a>
+                <a href="javascript:void(0);" onclick="smallTicketDetail();" class="btn btn-primary radius">厨打</a>
+                <a href="javascript:void(0);" onclick="tagsDetail();" class="btn btn-primary radius">标签</a>
             </span>
             <span class="select-box" style="width: 100px;">
                 <select class="select" id="goods_status">
@@ -44,7 +43,7 @@
                     <option value="-1">全部分类</option>
                 </select>
             </span>
-            <span class="select-box" style="width: 100px;">
+            <span class="select-box" style="width: 110px;">
                 <select class="select" id="goods_supplier">
                     <option value="-1">全部供应商</option>
                 </select>
@@ -61,22 +60,21 @@
             <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="goods_table">
                 <thead>
                     <tr class="text-c">
-                        <th width="25"><input type="checkbox" name="" value=""></th>
                         <th width="50">序号</th>
-                        <th>操作</th>
+                        <th width="50">操作</th>
                         <th width="100">商品名称</th>
                         <th width="50">条码</th>
                         <th width="50">拼音码</th>
                         <th width="50">分类</th>
                         <th width="50">库存</th>
                         <th width="80">主单位</th>
-                        <th width="30">进货价</th>
-                        <th width="30">销售价</th>
-                        <th width="30">批发价</th>
-                        <th width="30">会员价</th>
+                        <th width="50">进货价</th>
+                        <th width="50">销售价</th>
+                        <th width="50">批发价</th>
+                        <th width="50">会员价</th>
                         <th width="30">会员折扣</th>
                         <th width="30">供货商</th>
-                        <th width="30">生产日期</th>
+                        <th width="50">生产日期</th>
                         <th width="30">保质期</th>
                     </tr>
                 </thead>
@@ -85,7 +83,6 @@
         </div>
     </div>
 </div>
-
 
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script> 
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
@@ -98,14 +95,6 @@
 //搜索
 $(function(){
 	$("#news_search").click(function(){
-		/*var status = $("#goods_status").val();
-         var categories = $("#goods_categories").val();
-         var supplier = $("#goods_supplier").val();
-         var tags = $("#goods_tags").val();
-         var goodsInfo = $("#goods_info").val();
-         if(!goodsInfo && status == -1 && categories == -1 && supplier == -1){
-         return false;
-         }*/
 		table.fnDraw();
 	});
 });
@@ -123,39 +112,31 @@ table = $('#goods_table').dataTable({
        "aoColumns" : [
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none'>编辑</a>";
+            return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
         }},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "goodsNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "pinyin", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "pinyin", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-        	return format(data);
-        }},
-        {"mData" : "isMobile", "sDefaultContent" : "", "mRender":function(data, type, full){  
-        	return data == 1?"<div class='td-status'><span class='label label-danger radius'>未推送</span>":"<span class='label label-success radius'>已推送</span></div>";
+        {"mData" : "categoriesName", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "goodsNum", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "mainUnit", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "bid", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "price", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "tradePrice", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "vipPrice", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "isVipSet", "sDefaultContent" : "", "mRender":function(data, type, full){
+        	return data == 1?"是":"否";
         	},"bSortable":false,"sClass":"center"
         },
-        {"mData" : "isFirstPage", "sDefaultContent" : "", "mRender":function(data, type, full){  
-        	return data == 1?"<div class='td-status'><span class='label label-danger radius'>不显示</span>":"<span class='label label-success radius'>显示</span></div>";
-        	},"bSortable":false,"sClass":"center"
-        },
-        {"mData" : "isEverFirstPage", "sDefaultContent" : "", "mRender":function(data, type, full){
-               return full.isMobile == 1 || data == 0 || (data == 1 && full.isFirstPage == 0) ?"<div class='td-status'><span class='label label-danger radius'>不显示</span>":"<span class='label label-success radius'>显示</span></div>";
+        {"mData" : "supplier", "sDefaultContent" : "","bSortable":false,"sClass":"center"},
+        {"mData" : "productionDate", "sDefaultContent" : "", "mRender":function(data, type, full){
+               return format(data);
            },"bSortable":false,"sClass":"center"
         },
-	    {"mData" : "isTop", "sDefaultContent" : "", "mRender":function(data, type, full){
-			   return data == 0?"<div class='td-status'><span class='label label-danger radius'>不置顶</span>":"<span class='label label-success radius'>置顶</span></div>";
+	    {"mData" : "shelfLife", "sDefaultContent" : "", "mRender":function(data, type, full){
+            return data + " 天";
 		   },"bSortable":false,"sClass":"center"
-	    },
-        {"mData" : "isPic","sDefaultContent" : "", "mRender":function(data, type, full){
-			var classType = data == 0?"label label-danger radius":"label label-success radius";
-        	var url = "<%=request.getContextPath()%>/admin/news/uploadImg/" + full.id;
-            var btn = "<a style='text-decoration:none' class = '"+classType+"' onClick=\"pic_add('添加焦点图', '"+url+"', '10001','800','600')\" href='javascript:;' title='添加图片'>焦点图</a></div>";
-      	  	if(data == 1){
-                btn += "<a class='label label-primary' onclick='imgDetail(\""+full.id+"\")'>预览</a>";
-            }
-            return btn;
-        },"bSortable":false}
+	    }
     ],
     "language":{
        "oPaginate": {
@@ -177,7 +158,7 @@ table = $('#goods_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/goods/List",
+       "sAjaxSource" : "<%=request.getContextPath()%>/goods/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -254,17 +235,34 @@ function formatDate(val){
 	return val;
 }
 
+//新增
+function add() {
+    alert("新增");
+}
 
-/**
- * 
- 	新闻细缆页
- */
-function detail(id){
-	$.post("<%=request.getContextPath()%>/admin/news/detail", {"id":id}, function(data){
-		if(data.result == 1){
-			window.open(data.msg);
-		}
-	})
+//单位
+function unitDetail() {
+    layer_show("商品单位设置", "<%=request.getContextPath()%>/goods/goodsUnit", "480", "340");
+}
+
+//厨打
+function smallTicketDetail() {
+    layer_show("厨房小票机管理", "<%=request.getContextPath()%>/", "490", "440");
+}
+
+//标签
+function tagsDetail() {
+    layer_show("商品标签设置", "<%=request.getContextPath()%>/", "480", "340");
+}
+
+//导出
+function importOut() {
+    layer_show("批量导入", "<%=request.getContextPath()%>/", "480", "340");
+}
+
+//导入
+function importIn() {
+    layer_show("批量导出", "<%=request.getContextPath()%>/", "480", "340");
 }
 </script>
 </body>

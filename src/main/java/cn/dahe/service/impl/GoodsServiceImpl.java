@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Created by fy on 2017/1/13.
  */
-@Service
+@Service("goodsService")
 public class GoodsServiceImpl extends BaseServiceImpl<Goods> implements IGoodsService{
     private static Logger logger = LoggerFactory.getLogger(GoodsServiceImpl.class);
 
@@ -29,10 +29,10 @@ public class GoodsServiceImpl extends BaseServiceImpl<Goods> implements IGoodsSe
     private IGoodsDao goodsDao;
 
     @Override
-    public Pager<GoodsDto> goodsList(String aDataSet, User user) {
+    public Pager<GoodsDto> goodsList(String aDataSet, int storeId) {
         int start = 0;// 起始
         int pageSize = 20;// size
-        int status = -1, categories = -1, supplier = -1, tags = -1;
+        int status = 1, categories = -1, supplier = -1, tags = -1;
         String goodsInfo = "";
         try{
             JSONArray json = JSONArray.parseArray(aDataSet);
@@ -56,7 +56,6 @@ public class GoodsServiceImpl extends BaseServiceImpl<Goods> implements IGoodsSe
                 }
             }
             Pager<Object> params = new Pager<>();
-            int storeId = user.getStoreId();
             params.setStatus(status);
             params.setOrderColumn("goods.id");
             params.setOrderDir("desc");

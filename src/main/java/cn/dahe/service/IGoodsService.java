@@ -12,7 +12,8 @@ public interface IGoodsService extends IBaseService<Goods>{
     /**
      * 商品列表
      * @param aDataSet
+     * @param storeId
      * @return
      */
-    Pager<GoodsDto> goodsList(String aDataSet, User user);
+    Pager<GoodsDto> goodsList(String aDataSet, int storeId);
 }

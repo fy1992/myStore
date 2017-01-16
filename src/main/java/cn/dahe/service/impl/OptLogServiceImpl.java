@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * Created by fy on 2017/1/13.
  */
-@Service
+@Service("optLogService")
 public class OptLogServiceImpl extends BaseServiceImpl<OptLog> implements IOptLogService{
     @Resource
     private IOptLogDao optLogDao;

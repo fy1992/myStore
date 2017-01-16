@@ -35,7 +35,6 @@
 </header>
 
 <aside class="Hui-aside">
-	<input runat="server" id="divScrollValue" type="hidden" value="" />
 	<div class="menu_dropdown bk_2 f-16">
 		<dl id="menu-sale">
 			<dt><i class="Hui-iconfont">&#xe616;</i> 销售<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
@@ -52,7 +51,7 @@
 			<dd>
 				<ul>
 					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">商品分类</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">商品资料</a></li>
+					<li><a _href="<%=request.getContextPath()%>/goods/list" href="javascript:;">商品资料</a></li>
 					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">批量操作</a></li>
 					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">排序管理</a></li>
 					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">口味管理</a></li>

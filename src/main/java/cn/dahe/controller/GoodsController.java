@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 
 /**
@@ -46,16 +45,29 @@ public class GoodsController {
     }
 
     /**
+     *商品单位页数据查询
+     * @return
+     */
+    @RequestMapping(value = "goodsUnitList", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj goodsUnitList(){
+        AjaxObj json = new AjaxObj();
+        List<GoodsUnit> goodsUnitList =  goodsUnitService.findAll();
+        json.setObject(goodsUnitList);
+        return json;
+    }
+
+    /**
      * 添加商品单位
-     * @param goodsUnit
+     * @param name
      * @return
      */
     @RequestMapping(value = "goodsUnit", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addGoodsUnit(GoodsUnit goodsUnit, HttpSession session){
+    public AjaxObj addGoodsUnit(String name, HttpSession session){
         AjaxObj json = new AjaxObj();
-        if(goodsUnitService.findByName(goodsUnit.getName(), (User)session.getAttribute("loginUser")) == null) {
-            goodsUnitService.add(goodsUnit);
+        if(goodsUnitService.findByName(name, (User)session.getAttribute("loginUser")) == null) {
+            goodsUnitService.add(name);
             json.setMsg("单位添加成功");
             json.setResult(1);
         }else{
@@ -109,7 +121,6 @@ public class GoodsController {
     @ResponseBody
     public Pager<GoodsDto> getGoodsList(HttpSession session, String aDataSet){
         logger.info("--- goods list begin ---");
-        User user = (User)session.getAttribute("loginUser");
-        return goodsService.goodsList(aDataSet, user);
+        return goodsService.goodsList(aDataSet, (Integer)session.getAttribute("store"));
     }
 }

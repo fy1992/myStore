@@ -1,5 +1,7 @@
 package cn.dahe.dao;
 
+import java.util.List;
+
 public interface IBaseDao<T> {
 
 	void add(T t);
@@ -21,4 +23,10 @@ public interface IBaseDao<T> {
 	 * @return
 	 */
 	T findByName(String name, int storeId);
+
+	/**
+	 * 查询每个店铺下所有的
+	 * @return
+	 */
+	List<T> findAll();
 }

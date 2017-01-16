@@ -33,7 +33,7 @@ import javax.validation.Valid;
  */
 @Controller
 public class LoginController {
-    private Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     /**
      * 登录页跳转

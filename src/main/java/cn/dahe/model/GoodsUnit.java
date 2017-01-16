@@ -25,7 +25,7 @@ public class GoodsUnit {
     //所属店面
     @Column(name = "store_id")
     private int storeId;
-    @OneToMany(mappedBy = "main_unit", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "mainUnit", cascade = CascadeType.ALL)
     private Set<Goods> goodsSet = new HashSet<>();
 
     public int getId() {

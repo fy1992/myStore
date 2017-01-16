@@ -44,8 +44,8 @@ public class User {
     //注册时间
     @Column(name = "register_date")
     private Date registerDate;
-    //店铺Id
-    @Column(name ="store_id")
+    //店铺Id  默认值 0
+    @Column(name ="store_id", columnDefinition = "INT DEFAULT 0")
     private int storeId;
     //店铺名称
     @Column(name ="store_name")

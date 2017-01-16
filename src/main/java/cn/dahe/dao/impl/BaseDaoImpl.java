@@ -13,8 +13,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
 
 import cn.dahe.dao.IBaseDao;
+import org.springframework.stereotype.Repository;
 
 @SuppressWarnings("unchecked")
+@Repository("baseDao")
 public class BaseDaoImpl<T> implements IBaseDao<T> {
 
 	private SessionFactory sessionFactory;
@@ -79,7 +81,13 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
         return (T)queryByHql(hql, new Object[]{name, storeId});
     }
 
-    public int delete(String hql, List<Object> list){
+	@Override
+	public List<T> findAll() {
+		String hql = "from "+ getClz().getName();
+		return list(hql);
+	}
+
+	public int delete(String hql, List<Object> list){
 		Query query = setParameterQuery(hql, list);
 		return query.executeUpdate();
 	}

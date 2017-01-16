@@ -10,10 +10,16 @@ import javax.annotation.Resource;
 /**
  * Created by fy on 2017/1/13.
  */
-@Service
+@Service("goodsUnitService")
 public class GoodsUnitServiceImpl extends BaseServiceImpl<GoodsUnit> implements IGoodsUnitService{
     @Resource
     private IGoodsUnitDao goodsUnitDao;
 
-
+    @Override
+    public void add(String name) {
+        GoodsUnit goodsUnit = new GoodsUnit();
+        goodsUnit.setName(name);
+        //goodsUnit.setStoreId();
+        goodsUnitDao.add(goodsUnit);
+    }
 }
