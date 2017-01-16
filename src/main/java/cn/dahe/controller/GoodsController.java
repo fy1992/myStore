@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -46,16 +44,30 @@ public class GoodsController {
     }
 
     /**
-     * 添加商品单位
-     * @param goodsUnit
+     * 根据参数查询单位页
+     * @param aDataSet
+     * @param session
      * @return
      */
-    @RequestMapping(value = "goodsUnit", method = RequestMethod.POST)
+    @RequestMapping(value = "goodsUnitList", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addGoodsUnit(GoodsUnit goodsUnit, HttpSession session){
+    public Pager<GoodsUnit> goodsUnitList(String aDataSet, HttpSession session){
+        User user = (User)session.getAttribute("loginUser");
+        return goodsUnitService.findByParams(aDataSet, user.getStoreId());
+    }
+
+    /**
+     * 添加商品单位
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "goodsUnitAdd", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj addGoodsUnit(String name, HttpSession session){
         AjaxObj json = new AjaxObj();
-        if(goodsUnitService.findByName(goodsUnit.getName(), (User)session.getAttribute("loginUser")) == null) {
-            goodsUnitService.add(goodsUnit);
+        User user = (User)session.getAttribute("loginUser");
+        if(goodsUnitService.findByName(name, (User)session.getAttribute("loginUser")) == null) {
+            goodsUnitService.add(name, user.getStoreId());
             json.setMsg("单位添加成功");
             json.setResult(1);
         }else{
@@ -110,6 +122,6 @@ public class GoodsController {
     public Pager<GoodsDto> getGoodsList(HttpSession session, String aDataSet){
         logger.info("--- goods list begin ---");
         User user = (User)session.getAttribute("loginUser");
-        return goodsService.goodsList(aDataSet, user);
+        return goodsService.goodsList(aDataSet, user.getStoreId());
     }
 }
