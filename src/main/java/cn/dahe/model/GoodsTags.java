@@ -29,7 +29,9 @@ public class GoodsTags {
             joinColumns = {@JoinColumn(name = "tags_id")},
             inverseJoinColumns = {@JoinColumn(name = "goods_id")})
     private Set<Goods> goodsSet = new HashSet<>();
-
+    //所属店面Id
+    @Column(name = "store_id")
+    private int storeId;
     public int getId() {
         return id;
     }
@@ -52,5 +54,13 @@ public class GoodsTags {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

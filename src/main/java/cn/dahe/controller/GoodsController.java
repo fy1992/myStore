@@ -3,12 +3,15 @@ package cn.dahe.controller;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.Goods;
 import cn.dahe.model.GoodsTags;
 import cn.dahe.model.GoodsUnit;
+import cn.dahe.model.SmallTicket;
 import cn.dahe.model.User;
 import cn.dahe.service.IGoodsService;
 import cn.dahe.service.IGoodsTagsService;
 import cn.dahe.service.IGoodsUnitService;
+import cn.dahe.service.ISmallTicketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,9 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
+ * 商品相关
  * Created by fy on 2017/1/13.
  */
 @Controller
@@ -33,6 +39,8 @@ public class GoodsController {
     private IGoodsUnitService goodsUnitService;
     @Resource
     private IGoodsService goodsService;
+    @Resource
+    private ISmallTicketService smallTicketService;
 
     /***
      * 添加商品单位页
@@ -61,14 +69,52 @@ public class GoodsController {
      * @param name
      * @return
      */
-    @RequestMapping(value = "goodsUnitAdd", method = RequestMethod.POST)
+    @RequestMapping(value = "addGoodsUnit", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj addGoodsUnit(String name, HttpSession session){
+        logger.info("-- addGoodsUnit --");
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
-        if(goodsUnitService.findByName(name, (User)session.getAttribute("loginUser")) == null) {
+        if(goodsUnitService.findByName(name, user) == null) {
             goodsUnitService.add(name, user.getStoreId());
             json.setMsg("单位添加成功");
+            json.setResult(1);
+        }else{
+            json.setMsg("该单位已存在");
+            json.setResult(0);
+        }
+        return json;
+    }
+
+    /**
+     * 删除商品单位
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "delGoodsUnit", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj delGoodsUnit(int id){
+        logger.info("-- delGoodsUnit --");
+        AjaxObj json = new AjaxObj();
+        goodsUnitService.del(id);
+        json.setResult(1);
+        json.setMsg("单位删除成功");
+        return json;
+    }
+
+    /**
+     * 修改商品单位
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "editGoodsUnit", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj editGoodsUnit(int id, String name, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        User user = (User)session.getAttribute("loginUser");
+        if(goodsUnitService.findByName(name, user) == null) {
+            goodsUnitService.update(id, name);
+            json.setMsg("单位修改成功");
             json.setResult(1);
         }else{
             json.setMsg("该单位已存在");
@@ -87,22 +133,158 @@ public class GoodsController {
     }
 
     /**
-     * 添加商品标签
-     * @param goodsTags
+     * 根据参数查询标签页
+     * @param aDataSet
+     * @param session
      * @return
      */
-    @RequestMapping(value = "goodsTags", method = RequestMethod.POST)
+    @RequestMapping(value = "goodsTagsList", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addGoodsTags(GoodsTags goodsTags, HttpSession session){
+    public Pager<GoodsTags> goodsTagsList(String aDataSet, HttpSession session){
+        User user = (User)session.getAttribute("loginUser");
+        return goodsTagsService.findByParams(aDataSet, user.getStoreId());
+    }
+
+    /**
+     * 添加商品标签
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "addGoodsTags", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj addGoodsTags(String name, HttpSession session){
         AjaxObj json = new AjaxObj();
-        if(goodsTagsService.findByName(goodsTags.getName(), (User)session.getAttribute("loginUser")) == null) {
-            goodsTagsService.add(goodsTags);
+        User user = (User)session.getAttribute("loginUser");
+        if(goodsTagsService.findByName(name, user) == null) {
+            goodsTagsService.add(name, user.getStoreId());
             json.setMsg("标签添加成功");
             json.setResult(1);
         }else{
             json.setMsg("该标签已存在");
             json.setResult(0);
         }
+        return json;
+    }
+
+    /**
+     * 修改商品标签
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "editGoodsTags", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj editGoodsTags(int id, String name, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        User user = (User)session.getAttribute("loginUser");
+        if(goodsTagsService.findByName(name, user) == null) {
+            goodsTagsService.update(id, name);
+            json.setMsg("标签修改成功");
+            json.setResult(1);
+        }else{
+            json.setMsg("该标签已存在");
+            json.setResult(0);
+        }
+        return json;
+    }
+
+    /**
+     * 删除商品标签
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "delGoodsTags", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj delGoodsTags(int id){
+        logger.info("-- delGoodsTags --");
+        AjaxObj json = new AjaxObj();
+        goodsTagsService.del(id);
+        json.setResult(1);
+        json.setMsg("标签删除成功");
+        return json;
+    }
+
+    /***
+     * 添加商品小票
+     * @return
+     */
+    @RequestMapping(value = "smallTicket", method = RequestMethod.GET)
+    public String addSmallTicket(){
+        return "goods/smallTicket";
+    }
+
+    /**
+     * 小票添加
+     * @param name
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "addSmallTicket", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj addSmallTicket(String name, int type, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        User user = (User)session.getAttribute("loginUser");
+        smallTicketService.add(name, type, user.getStoreId());
+        json.setMsg("小票添加成功");
+        json.setResult(1);
+        return json;
+    }
+
+    /**
+     * 小票删除
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "delSmallTicket", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj delSmallTicket(int id){
+        AjaxObj json = new AjaxObj();
+        smallTicketService.del(id);
+        json.setMsg("小票删除成功");
+        json.setResult(1);
+        return json;
+    }
+
+    /**
+     * 根据参数查询单位页
+     * @param aDataSet
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "smallTicketList", method = RequestMethod.POST)
+    @ResponseBody
+    public Pager<SmallTicket> smallTicketList(String aDataSet, HttpSession session){
+        User user = (User)session.getAttribute("loginUser");
+        return smallTicketService.findByParams(aDataSet, user.getStoreId());
+    }
+
+    /**
+     * 商品添加
+     * @param goods
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "addGoods", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj addGoods(Goods goods, HttpSession session){
+        AjaxObj json = new AjaxObj();
+
+        json.setResult(1);
+        json.setMsg("商品添加成功");
+        return json;
+    }
+
+    /**
+     * 商品删除
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "delGoods", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj delGoods(int id){
+        AjaxObj json = new AjaxObj();
+        goodsService.del(id);
+        json.setResult(1);
+        json.setMsg("商品删除成功");
         return json;
     }
 

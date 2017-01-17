@@ -1,26 +1,52 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.IGoodsUnitDao;
-import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.Pager;
-import cn.dahe.model.Goods;
 import cn.dahe.model.GoodsUnit;
+import cn.dahe.model.User;
 import cn.dahe.service.IGoodsUnitService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by fy on 2017/1/13.
  */
 @Service("goodsUnitService")
-public class GoodsUnitServiceImpl extends BaseServiceImpl<GoodsUnit> implements IGoodsUnitService{
+public class GoodsUnitServiceImpl implements IGoodsUnitService{
+    private static Logger logger = LoggerFactory.getLogger(GoodsUnitServiceImpl.class);
     @Resource
     private IGoodsUnitDao goodsUnitDao;
+
+    @Override
+    public void add(GoodsUnit t) {
+        goodsUnitDao.add(t);
+    }
+
+    @Override
+    public void del(int id) {
+        goodsUnitDao.delete(id);
+    }
+
+    @Override
+    public void update(GoodsUnit t) {
+        goodsUnitDao.update(t);
+    }
+
+    @Override
+    public GoodsUnit get(int id) {
+        return goodsUnitDao.get(id);
+    }
+
+    @Override
+    public GoodsUnit load(int id) {
+        return goodsUnitDao.load(id);
+    }
 
     @Override
     public void add(String name, int storeid) {
@@ -48,11 +74,29 @@ public class GoodsUnitServiceImpl extends BaseServiceImpl<GoodsUnit> implements 
             Pager<Object> params = new Pager<>();
             params.setOrderColumn("goodsUnit.id");
             params.setOrderDir("desc");
-            params.setIntParam4(storeId);
+            params.setIntParam1(storeId);
             return goodsUnitDao.findByParam(start, pageSize, params);
         }catch (Exception e){
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public GoodsUnit findByName(String name, User user) {
+        logger.info("-- findByName dao --");
+        return goodsUnitDao.findByName(name, user.getStoreId());
+    }
+
+    @Override
+    public List<GoodsUnit> findAll() {
+        return goodsUnitDao.findAll();
+    }
+
+    @Override
+    public void update(int id, String name) {
+        GoodsUnit goodsUnit = get(id);
+        goodsUnit.setName(name);
+        update(goodsUnit);
     }
 }

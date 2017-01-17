@@ -25,4 +25,17 @@ public class GoodsUnitDaoImpl extends BaseDaoImpl<GoodsUnit> implements IGoodsUn
         }
         return this.find(hql, list, start, pageSize);
     }
+
+
+    @Override
+    public GoodsUnit findByName(String name, int storeId) {
+        String hql = "from GoodsUnit where name = ? and storeId = ?";
+        return (GoodsUnit)queryByHql(hql, new Object[]{name, storeId});
+    }
+
+    @Override
+    public List<GoodsUnit> findAll() {
+        String hql = "from GoodsUnit";
+        return list(hql);
+    }
 }

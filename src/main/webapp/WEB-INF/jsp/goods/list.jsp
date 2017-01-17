@@ -110,7 +110,7 @@ table = $('#goods_table').dataTable({
        "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数 
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
-	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false},
+	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
             return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
         }},
@@ -203,6 +203,12 @@ table = $('#goods_table').dataTable({
                 table.fnPageChange(redirect);
             }
         });
+        //序号
+        var api = this.api();
+        var startIndex= api.context[0]._iDisplayStart;//获取到本页开始的条数
+        api.column(0).nodes().each(function(cell, i) {
+            cell.innerHTML = startIndex + i + 1;
+        });
     }
 });
 
@@ -242,27 +248,27 @@ function add() {
 
 //单位
 function unitDetail() {
-    layer_show("商品单位设置", "<%=request.getContextPath()%>/goods/goodsUnit", "480", "340");
+    layer_show("商品单位设置", "<%=request.getContextPath()%>/goods/goodsUnit", "600", "400");
 }
 
 //厨打
 function smallTicketDetail() {
-    layer_show("厨房小票机管理", "<%=request.getContextPath()%>/", "490", "440");
+    layer_show("厨房小票机管理", "<%=request.getContextPath()%>/goods/smallTicket", "490", "440");
 }
 
 //标签
 function tagsDetail() {
-    layer_show("商品标签设置", "<%=request.getContextPath()%>/", "480", "340");
+    layer_show("商品标签设置", "<%=request.getContextPath()%>/goods/goodsTags", "600", "400");
 }
 
 //导出
 function importOut() {
-    layer_show("批量导入", "<%=request.getContextPath()%>/", "480", "340");
+    layer_show("批量导入", "<%=request.getContextPath()%>/goods/importOut", "480", "340");
 }
 
 //导入
 function importIn() {
-    layer_show("批量导出", "<%=request.getContextPath()%>/", "480", "340");
+    layer_show("批量导出", "<%=request.getContextPath()%>/goods/importIn", "480", "340");
 }
 </script>
 </body>

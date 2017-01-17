@@ -15,8 +15,8 @@
     <![endif]-->
     <link href="${ctxResource}/css/H-ui.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
-    <link href="${ctxResource}/css/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
-    <link href="${ctxResource}/css/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+    <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
     <title></title>
 </head>
 <body>
@@ -24,7 +24,7 @@
     <div class="form form-horizontal" id="form-goodsUnit-add">
         <div class="cl pl-20 pt-10 pb-10">
             <div class="text-r">
-                <input type="text" id="goods_unit_add"  style="width:200px" class="input-text"/>
+                <input type="text" id="goods_unit_add"  style="width:200px" class="input-text" placeholder="请输入商品单位名称"/>
                 <button onclick="add()" class="btn btn-primary radius">新增</button>
             </div>
         </div>
@@ -32,7 +32,6 @@
             <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="goods_unit_table">
                 <thead>
                 <tr class="text-c">
-                    <th width="50">序号</th>
                     <th width="50">单位</th>
                     <th width="50">操作</th>
                 </tr>
@@ -48,20 +47,45 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/jquery.jeditable.js"></script>
 <script>
 //添加
 function add() {
     var unitName = $.trim($("#goods_unit_add").val());
-    $.post("<%=request.getContextPath()%>/goods/goodsUnitAdd", {"name":unitName}, function (data) {
+    $.post("<%=request.getContextPath()%>/goods/addGoodsUnit", {"name":unitName}, function (data) {
         if(data.result == 1){
             layer.msg("单位添加成功");
+            $("#goods_unit_add").val("");
+            table.fnDraw();
         }else{
             layer.msg("该单位已存在")
         }
     });
 }
 
-table = $('#goods_table').dataTable({
+//删除
+function del(id){
+    layer.msg('确定要删除该单位？', {
+        time: 0 ,//不自动关闭
+        btn: ['确定', '取消'],
+        yes: function(index){
+            $.post("<%=request.getContextPath()%>/goods/delGoodsUnit", {"id" : id}, function(data){
+                layer.msg(data.msg);
+                table.fnDraw();
+            });
+        }
+    });
+}
+
+//编辑
+function edit(id) {
+    var name = $().val();
+    $.post("<%=request.getContextPath()%>/goods/editGoodsUnit", {"id" : id, "name" : name}, function(data){
+        table.fnDraw();
+    });
+}
+
+table = $('#goods_unit_table').dataTable({
     "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示
     "bPaginate": true,//是否显示（应用）分页器
     "bLengthChange": false,
@@ -71,10 +95,11 @@ table = $('#goods_table').dataTable({
     "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数
     "bFilter" : false,//是否启动过滤、搜索功能
     "aoColumns" : [
-        {"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false},
-        {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "name", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
+            return "<div class='editDiv' tagId = '"+full.id+"'>" + data + "</div>";
+        }},
         {"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
+            return "<a style='text-decoration:none' onclick='del(\""+ full.id +"\")'>删除</a>";
         }}
     ],
     "language":{
@@ -90,7 +115,6 @@ table = $('#goods_table').dataTable({
         "sProcessing": "处理中..."
     },
     //"deferRender": true, //当处理大数据时，延迟渲染数据，有效提高Datatables处理能力
-    "order" : [[1, "desc"]],
     "iDisplayLength" : 20, //每页显示条数
     //"iDisplayStart": 0,
     "bServerSide": true,
@@ -128,6 +152,28 @@ table = $('#goods_table').dataTable({
                 table.fnPageChange(redirect);
             }
         });
+
+
+        $(".editDiv").editable("<%=request.getContextPath()%>/goods/editGoodsUnit", {
+            width   : 120,
+            height  : 18,
+            cancel : "取消",
+            submit : "保存",
+            onblur: 'ignore',
+            tooltip : "双击修改",
+            "submitdata" : function (value, settings) {
+                return {
+                    "id" : this.getAttribute("tagId"),
+                    "name" : $(this).find("input").val()
+                }
+            },
+            indicator : '保存中...',
+            style    : 'display: inline',
+            callback : function (value, settings) {
+                table.fnDraw();
+                layer.msg(eval("(" + value + ")").msg);
+            }
+        })
     }
 });
 </script>

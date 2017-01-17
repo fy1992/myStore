@@ -22,11 +22,36 @@ import java.util.Map;
  * Created by fy on 2017/1/13.
  */
 @Service("goodsService")
-public class GoodsServiceImpl extends BaseServiceImpl<Goods> implements IGoodsService{
+public class GoodsServiceImpl implements IGoodsService{
     private static Logger logger = LoggerFactory.getLogger(GoodsServiceImpl.class);
 
     @Resource
     private IGoodsDao goodsDao;
+
+    @Override
+    public void add(Goods t) {
+        goodsDao.add(t);
+    }
+
+    @Override
+    public void del(int id) {
+        goodsDao.delete(id);
+    }
+
+    @Override
+    public void update(Goods t) {
+        goodsDao.update(t);
+    }
+
+    @Override
+    public Goods get(int id) {
+        return goodsDao.get(id);
+    }
+
+    @Override
+    public Goods load(int id) {
+        return goodsDao.load(id);
+    }
 
     @Override
     public Pager<GoodsDto> goodsList(String aDataSet, int storeId) {

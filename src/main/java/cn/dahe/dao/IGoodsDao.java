@@ -4,6 +4,7 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.Goods;
 
 /**
+ * 商品
  * Created by fy on 2017/1/13.
  */
 public interface IGoodsDao extends IBaseDao<Goods>{

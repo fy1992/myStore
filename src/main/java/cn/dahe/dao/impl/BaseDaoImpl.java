@@ -75,18 +75,6 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 		this.getSession().delete(t);
 	}
 
-    @Override
-    public T findByName(String name, int storeId) {
-        String hql = "from "+ getClz().getName() +" where name = ? and storeId = ?";
-        return (T)queryByHql(hql, new Object[]{name, storeId});
-    }
-
-	@Override
-	public List<T> findAll() {
-		String hql = "from "+ getClz().getName();
-		return list(hql);
-	}
-
 	public int delete(String hql, List<Object> list){
 		Query query = setParameterQuery(hql, list);
 		return query.executeUpdate();

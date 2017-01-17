@@ -3,6 +3,7 @@ package cn.dahe.dao;
 import cn.dahe.model.User;
 
 /**
+ * 后台用户
  * Created by fy on 2016/12/30.
  */
 public interface IUserDao extends IBaseDao<User>{
