@@ -39,4 +39,15 @@ public class CategoriesDaoImpl extends BaseDaoImpl<Categories> implements ICateg
         }
         return this.find(hql, list, start, pageSize);
     }
+
+    @Override
+    public Categories findByName(String name, int storeId) {
+        String hql = "from Categories categories where categories.name = ?";
+        if(storeId != 0){
+            hql += " and categories.storeId = ?";
+            return (Categories)this.queryByHql(hql, new Object[]{name, storeId});
+        }else{
+            return (Categories)this.queryByHql(hql, name);
+        }
+    }
 }

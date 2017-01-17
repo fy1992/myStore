@@ -1,4 +1,4 @@
-﻿<%@page language="java" import="java.util.*,cn.dahe.model.*" pageEncoding="utf-8"%>
+﻿<%@page language="java"  pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/jsp/taglib.jsp"%>
 <!DOCTYPE HTML>
 <html>
@@ -15,7 +15,7 @@
 <link href="${ctxResource}/css/H-ui.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
-<link href="${ctxResource}/css/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="${ctxResource}/css/zTreeStyle/zTreeStyle.css" type="text/css">
 
 <title>分类列表</title>
@@ -28,7 +28,12 @@
 </div>
 <div style="margin-left:200px;">
 	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品 <span class="c-gray en">&gt;</span> 商品分类 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-    <input id="channel_tableStart" type="hidden"/>
+    <input id="categories_tableStart" type="hidden"/>
+    <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
+        <span class="l">
+            <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增</a>
+        </span>
+    </div>
     <div class="pd-20">
 		<div>
 			<table class="table table-border table-bordered table-bg table-hover table-sort table-striped box-shadow" id="categories_table">
@@ -66,7 +71,7 @@ var setting = {
 			rootPId:0
 		},
 		key:{
-			name : "name",
+			name : "name"
 		}
 	},
 	async:{
@@ -158,7 +163,7 @@ table = $('#categories_table').dataTable({
   		  cid = -1;
   	  }
   	  aoData.push({"name":"pid","value":cid});
-        var iDisplayStart = $("#channel_tableStart").val();
+        var iDisplayStart = $("#categories_tableStart").val();
         if(!iDisplayStart){
             iDisplayStart = 0;
         }
@@ -179,9 +184,13 @@ table = $('#categories_table').dataTable({
 
 });
 
-/*编辑*/
-function column_edit(title, url, id, w, h){
-	layer_show(title, url, w, h);
+function add(){
+    var pid = $("#categories_pid").val();
+    if(!pid){
+        layer.msg("请选择具体父节点");
+        return false;
+    }
+
 }
 
 </script>

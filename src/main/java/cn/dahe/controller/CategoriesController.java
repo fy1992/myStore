@@ -1,5 +1,6 @@
 package cn.dahe.controller;
 
+import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.dto.Tree;
 import cn.dahe.model.Categories;
@@ -57,5 +58,19 @@ public class CategoriesController {
     public Pager<Categories> categoriesList(String aDataSet, HttpSession session){
         User user = (User)session.getAttribute("loginUser");
         return categoriesService.findByParams(aDataSet, user.getStoreId());
+    }
+
+    /**
+     * 添加
+     * @param name
+     * @param pid
+     * @return
+     */
+    @RequestMapping("addCategories")
+    @ResponseBody
+    public AjaxObj addCategories(String name, int pid){
+        AjaxObj json = new AjaxObj();
+
+        return json;
     }
 }

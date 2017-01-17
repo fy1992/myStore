@@ -32,4 +32,12 @@ public interface ICategoriesDao extends IBaseDao<Categories>{
      * @return
      */
     Pager<Categories> findByParam(int start, int pageSize, Pager<Object> params);
+
+    /**
+     * 根据名称查询
+     * @param name
+     * @param storeId
+     * @return
+     */
+    Categories findByName(String name, int storeId);
 }
