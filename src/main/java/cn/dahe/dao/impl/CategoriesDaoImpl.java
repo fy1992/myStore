@@ -31,8 +31,15 @@ public class CategoriesDaoImpl extends BaseDaoImpl<Categories> implements ICateg
     @Override
     public Pager<Categories> findByParam(int start, int pageSize, Pager<Object> params) {
         int storeId = params.getIntParam1();
+        int pid = params.getIntParam2();
         String hql = "from Categories categories where 1=1";
         List<Object> list = new ArrayList<>();
+        if(pid != 0){
+            hql += " and categories.parent.id = ?";
+            list.add(pid);
+        }else{
+            hql += " and categories.parent is null";
+        }
         if(storeId != 0){
             hql += " and categories.storeId = ?";
             list.add(storeId);

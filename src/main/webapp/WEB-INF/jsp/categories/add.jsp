@@ -22,23 +22,14 @@
 <div class="pd-20">
     <div class="form form-horizontal" id="form-member-add">
         <div class="row cl">
-            <label class="form-label col-5"><span class="c-red"></span>父分类：</label>
-            <div class="formControls col-5">
-				<span class="select-box">
-					<select name="" class="select" id="categoriesParent"></select>
-				</span>
-            </div>
-            <div class="col-2"> </div>
-        </div>
-        <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>名称：</label>
             <div class="formControls col-5">
-                <input type="text" class="input-text" value="" placeholder="请输入分类名称" id="name" style = "width:307px">
+                <input type="text" class="input-text" value="" placeholder="请输入分类名称" id="name" style = "width:220px">
             </div>
             <div class="col-4"> </div>
         </div>
         <div class="row cl">
-            <div class="col-9 col-offset-3 mt-20">
+            <div class="col-7 col-offset-5 mt-20">
                 <input class="btn btn-primary radius" type="button" id="recommendBtn" value="&nbsp;&nbsp;确认&nbsp;&nbsp;">
             </div>
         </div>
@@ -47,19 +38,12 @@
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
 <script type="text/javascript">
-    $(function () {
-        $.post("<%=request.getContextPath()%>/categories/tree", function(data){
-            for(var i in data){
-                $("#categoriesParent").append("<option value = " + data[i].id + ">" + data[i].name + "</option>");
-            }
-        })
-    });
     $("#recommendBtn").click(function(){
         if(check()){
             $.ajax({
-                url : "<%=request.getContextPath()%>/categories/add",
+                url : "<%=request.getContextPath()%>/categories/addCategories",
                 data : {
-                    "pid" : $("#categoriesParent").find("option:selected").val(),
+                    "pid" : ${pid},
                     "name" : $("#name").val()
                 },
                 type : "post",
@@ -67,6 +51,7 @@
                     layer.msg(data.msg, {time : 1500}, function(){
                         if(data.result == 1){
                             window.parent.table.fnDraw();
+                            window.parent.tree.reAsyncChildNodes(null, "refresh");
                             layer_close();
                         }
                     });

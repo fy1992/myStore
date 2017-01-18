@@ -35,7 +35,11 @@ public class Goods {
     @Column(name = "img_url")
     private String imgUrl;
     //商品口味
-    private String taste;
+    @ManyToMany
+    @JoinTable(name = "t_goods_tasteGroup",
+            joinColumns = {@JoinColumn(name = "goods_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tasteGroup_id")})
+    private Set<TasteGroup> tasteGroupSet = new HashSet<>();
     //条码
     @Column(name = "goods_no")
     private String goodsNo;
@@ -160,14 +164,6 @@ public class Goods {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
-    }
-
-    public String getTaste() {
-        return taste;
-    }
-
-    public void setTaste(String taste) {
-        this.taste = taste;
     }
 
     public String getGoodsNo() {
@@ -320,5 +316,13 @@ public class Goods {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Set<TasteGroup> getTasteGroupSet() {
+        return tasteGroupSet;
+    }
+
+    public void setTasteGroupSet(Set<TasteGroup> tasteGroupSet) {
+        this.tasteGroupSet = tasteGroupSet;
     }
 }

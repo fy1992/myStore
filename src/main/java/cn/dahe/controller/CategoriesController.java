@@ -9,8 +9,11 @@ import cn.dahe.service.ICategoriesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -66,11 +69,58 @@ public class CategoriesController {
      * @param pid
      * @return
      */
-    @RequestMapping("addCategories")
+    @RequestMapping(value = "addCategories", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addCategories(String name, int pid){
+    public AjaxObj addCategories(String name, int pid, HttpSession session){
         AjaxObj json = new AjaxObj();
+        User user = (User)session.getAttribute("loginUser");
+        categoriesService.add(name, pid, user.getStoreId());
+        json.setMsg("分类添加成功");
+        json.setResult(1);
+        return json;
+    }
 
+    /**
+     * 添加页面路由
+     * @return
+     */
+    @RequestMapping(value = "addCategories/{pid}", method = RequestMethod.GET)
+    public String addCategories(@PathVariable int pid, Model model){
+        model.addAttribute("pid", pid);
+        return "categories/add";
+    }
+
+    /**
+     * 编辑
+     * @param name
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "editCategories", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj editCategories(@RequestParam(defaultValue = "", required = false) String name,
+                                  int id, @RequestParam(defaultValue = "-1", required = false) int pid,
+                                  HttpSession session){
+        AjaxObj json = new AjaxObj();
+        categoriesService.update(name, id, pid);
+        json.setMsg("分类修改成功");
+        json.setResult(1);
+        return json;
+    }
+
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "delCategories", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj addCategories(int id, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        categoriesService.del(id);
+        json.setMsg("分类删除成功");
+        json.setResult(1);
         return json;
     }
 }

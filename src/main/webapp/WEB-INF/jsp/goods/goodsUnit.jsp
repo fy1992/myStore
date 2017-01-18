@@ -77,14 +77,6 @@ function del(id){
     });
 }
 
-//编辑
-function edit(id) {
-    var name = $().val();
-    $.post("<%=request.getContextPath()%>/goods/editGoodsUnit", {"id" : id, "name" : name}, function(data){
-        table.fnDraw();
-    });
-}
-
 table = $('#goods_unit_table').dataTable({
     "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示
     "bPaginate": true,//是否显示（应用）分页器
@@ -152,7 +144,6 @@ table = $('#goods_unit_table').dataTable({
                 table.fnPageChange(redirect);
             }
         });
-
 
         $(".editDiv").editable("<%=request.getContextPath()%>/goods/editGoodsUnit", {
             width   : 120,

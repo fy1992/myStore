@@ -10,6 +10,28 @@ import java.util.List;
  * Created by fy on 2017/1/17.
  */
 public interface ICategoriesService {
+    void add(Categories t);
+    void del(int id);
+    void del(int id, int storeId);
+    void update(Categories t);
+    Categories get(int id);
+    Categories load(int id);
+
+    /**
+     * 添加
+     * @param name
+     * @param pid
+     * @param storeId
+     */
+    void add(String name, int pid, int storeId);
+
+    /**
+     * 编辑
+     * @param name
+     * @param id
+     * @param pid
+     */
+    void update(String name, int id, int pid);
     /**
      * 根据父id获取子节点
      * @param pid
