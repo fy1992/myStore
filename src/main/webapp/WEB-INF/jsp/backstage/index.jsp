@@ -1,4 +1,4 @@
-﻿<%@page language="java" import="java.util.*,cn.dahe.model.*" pageEncoding="utf-8"%>
+﻿<%@page language="java" pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/jsp/taglib.jsp"%>
 <!DOCTYPE HTML>
 <html>

@@ -12,6 +12,7 @@ import cn.dahe.service.IGoodsService;
 import cn.dahe.service.IGoodsTagsService;
 import cn.dahe.service.IGoodsUnitService;
 import cn.dahe.service.ISmallTicketService;
+import jdk.nashorn.internal.ir.RuntimeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -255,6 +256,15 @@ public class GoodsController {
     public Pager<SmallTicket> smallTicketList(String aDataSet, HttpSession session){
         User user = (User)session.getAttribute("loginUser");
         return smallTicketService.findByParams(aDataSet, user.getStoreId());
+    }
+
+    /**
+     * 商品添加页面跳转
+     * @return
+     */
+    @RequestMapping(value = "addGoods", method = RequestMethod.GET)
+    public String addGoods(){
+        return "goods/add";
     }
 
     /**
