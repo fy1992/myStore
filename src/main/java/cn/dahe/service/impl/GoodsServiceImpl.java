@@ -105,4 +105,14 @@ public class GoodsServiceImpl implements IGoodsService{
         }
         return null;
     }
+
+    @Override
+    public List<GoodsDto> goodsListByCategories(int categories, int storeId) {
+        List<Goods> goodsList = goodsDao.findByCategories(categories, storeId);
+        List<GoodsDto> goodsDtoList = new ArrayList<>();
+        for(Goods goods : goodsList){
+            goodsDtoList.add(new GoodsDto(goods));
+        }
+        return goodsDtoList;
+    }
 }

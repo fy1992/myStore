@@ -316,4 +316,19 @@ public class GoodsController {
         User user = (User)session.getAttribute("loginUser");
         return goodsService.goodsList(aDataSet, user.getStoreId());
     }
+
+    /**
+     * 通过类别查询
+     * @param categoriesId
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/mobile/goodslist", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxObj getGoodsListByCategorise(int categoriesId, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        User user = (User)session.getAttribute("loginUser");
+        goodsService.goodsListByCategories(categoriesId, user.getStoreId());
+        return json;
+    }
 }

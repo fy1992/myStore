@@ -22,6 +22,8 @@ public class GoodsDto {
     private int price;
     //商品进价
     private int bid;
+    //商品图片
+    private String goodsImg;
     //主单位
     private String mainUnit;
     //拼音码
@@ -149,6 +151,14 @@ public class GoodsDto {
         this.goodsNum = goodsNum;
     }
 
+    public String getGoodsImg() {
+        return goodsImg;
+    }
+
+    public void setGoodsImg(String goodsImg) {
+        this.goodsImg = goodsImg;
+    }
+
     public GoodsDto() {
     }
 
@@ -167,5 +177,6 @@ public class GoodsDto {
         this.vipPrice = goods.getVipPrice();
         this.productionDate = goods.getProductionDate();
         this.goodsNo = goods.getGoodsNo();
+        this.goodsImg = goods.getImgUrl();
     }
 }

@@ -4,6 +4,8 @@ import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Goods;
 
+import java.util.List;
+
 /**
  * Created by fy on 2017/1/13.
  */
@@ -20,4 +22,12 @@ public interface IGoodsService{
      * @return
      */
     Pager<GoodsDto> goodsList(String aDataSet, int storeId);
+
+    /**
+     * 根据类别查询
+     * @param categories
+     * @param storeId
+     * @return
+     */
+    List<GoodsDto> goodsListByCategories(int categories, int storeId);
 }

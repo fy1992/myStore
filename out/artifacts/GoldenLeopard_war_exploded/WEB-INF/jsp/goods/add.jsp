@@ -67,15 +67,18 @@
         <div class="row cl">
             <div class="col-4">
                 <label class="form-label col-3"><span class="c-red">* </span>售价：</label>
-                <input type = "text" class="col-9 input-text radius" name = "price"/>
+                <input type = "text" class="col-5 input-text radius" name = "price"/>
+                <div class="col-4"> </div>
             </div>
             <div class="col-4">
                 <label class="form-label col-3"><span class="c-red">* </span>进价：</label>
-                <input type = "text" class="input-text radius"/>
+                <input type = "text" class="col-5 input-text radius"/>
+                <div class="col-4"> </div>
             </div>
             <div class="col-4">
                 <label class="form-label col-3"><span class="c-red">* </span>库存：</label>
-                <input type = "text" class="input-text radius"/>
+                <input type = "text" class="col-5 input-text radius"/>
+                <div class="col-4"> </div>
             </div>
         </div>
         <hr/>

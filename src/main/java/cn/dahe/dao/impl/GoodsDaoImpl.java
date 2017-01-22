@@ -55,4 +55,10 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
         hql.append(" order by "+ params.getOrderColumn() + " " +params.getOrderDir());
         return this.find(hql.toString(), objectList, start, pageSize);
     }
+
+    @Override
+    public List<Goods> findByCategories(int categories, int storeId) {
+        String hql = "from Goods goods where goods.storeId = ? and goods.categories.id = ?";
+        return this.list(hql, new Object[]{categories, storeId});
+    }
 }
