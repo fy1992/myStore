@@ -101,8 +101,8 @@
             <dt><i class="Hui-iconfont">&#xe623;</i>货流<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a _href="#" href="javascript:void(0)">供货商</a></li>
-                    <li><a _href="#" href="javascript:void(0)">门店订货</a></li>
+                    <li><a _href="<%=request.getContextPath()%>/supplier/list" href="javascript:void(0)">供货商</a></li>
+                    <li><a _href="<%=request.getContextPath()%>/goodsTraffic/list" href="javascript:void(0)">门店订货</a></li>
                     <li><a _href="#" href="javascript:void(0)">货流管理</a></li>
                     <li><a _href="#" href="javascript:void(0)">供货商结算</a></li>
                     <li><a _href="#" href="javascript:void(0)">贷款汇总</a></li>
@@ -113,8 +113,7 @@
 			<dt><i class="Hui-iconfont">&#xe623;</i>店面<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="#" href="javascript:void(0)">建立分店</a></li>
-					<li><a _href="#" href="javascript:void(0)">分店信息</a></li>
+					<li><a _href="<%=request.getContextPath()%>/store/list" href="javascript:void(0)">分店信息</a></li>
 				</ul>
 			</dd>
 		</dl>

@@ -1,9 +1,9 @@
 package cn.dahe.controller;
 
 import cn.dahe.dto.Pager;
-import cn.dahe.model.Supplier;
+import cn.dahe.model.GoodsTraffic;
 import cn.dahe.model.User;
-import cn.dahe.service.ISupplierService;
+import cn.dahe.service.IGoodsTrafficService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,22 +15,21 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 /**
- * 供货商
+ * 货流管理
  * Created by fy on 2017/1/23.
  */
 @Controller
-@RequestMapping("supplier")
-public class SupplierController {
-    private static Logger logger = LoggerFactory.getLogger(SupplierController.class);
+@RequestMapping("goodsTraffic")
+public class GoodsTrafficController {
+    private static Logger logger = LoggerFactory.getLogger(GoodsTrafficController.class);
     @Resource
-    private ISupplierService supplierService;
-
+    private IGoodsTrafficService goodsTrafficService;
     /**
      * 列表页查询
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String getSupplierList() {
-        return "supplier/list";
+    public String getGoodsTrafficList() {
+        return "goodsTraffic/list";
     }
 
     /**
@@ -38,9 +37,9 @@ public class SupplierController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public Pager<Supplier> getSupplierList(HttpSession session, String aDataSet) {
-        logger.info("--- Supplier list begin ---");
+    public Pager<GoodsTraffic> getGoodsTrafficList(HttpSession session, String aDataSet) {
+        logger.info("--- goodsTraffic list begin ---");
         User user = (User) session.getAttribute("loginUser");
-        return supplierService.findByParams(aDataSet, user.getStoreId());
+        return goodsTrafficService.findByParams(aDataSet, user.getStoreId());
     }
 }

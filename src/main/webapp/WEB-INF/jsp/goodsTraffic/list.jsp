@@ -21,61 +21,38 @@
 </head>
 <body class="pos-r">
 <div>
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品 <span class="c-gray en">&gt;</span> 商品资料 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 货流 <span class="c-gray en">&gt;</span> 门店订货 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
-            <span class="l">
-                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增</a>
-                <a href="javascript:void(0);" onclick="importIn();" class="btn btn-primary radius">导入</a>
-                <a href="javascript:void(0);" onclick="importOut();" class="btn btn-primary radius">导出</a>
-                <a href="javascript:void(0);" onclick="unitDetail();" class="btn btn-primary radius">单位</a>
-                <a href="javascript:void(0);" onclick="smallTicketDetail();" class="btn btn-primary radius">厨打</a>
-                <a href="javascript:void(0);" onclick="tagsDetail();" class="btn btn-primary radius">标签</a>
+            <span class="select-box" style="width: 100px;">
+                <select class="select" id="traffic_static">
+                    <option value="-2">所有状态</option>
+                    <option value = "0">待审核</option>
+                    <option value = "-1">已作废</option>
+                    <option value = "1">配货中</option>
+                    <option value = "2">已完成</option>
+                </select>
             </span>
             <span class="select-box" style="width: 100px;">
-                <select class="select radius" id="goods_status">
-                    <option value="0">启用</option>
-                    <option value="1">禁用</option>
+                <select class="select" id="traffic_time">
+                    <option value="0">订货时间</option>
+                    <option value="1">发货时间</option>
                 </select>
             </span>
-            <span class="select-box radius" style="width: 100px;">
-                <select class="select" id="goods_categories">
-                    <option value="-1">全部分类</option>
-                </select>
-            </span>
-            <span class="select-box radius" style="width: 110px;">
-                <select class="select" id="goods_supplier">
-                    <option value="-1">全部供应商</option>
-                </select>
-            </span>
-            <span class="select-box radius" style="width: 100px;">
-                <select class="select" id="goods_tags">
-                    <option value="-1">全部标签</option>
-                </select>
-            </span>
-            <input type="text" id="goods_info" placeholder="条码/名称/拼音码" style="width:260px" class="input-text radius">
-            <button id="news_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'tafficDate\')||\'%y-%M-%d\'}'})" id="tafficDate" class="input-text Wdate radius" style="width:120px;"/>
+            <button id="goodsTraffic_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
-            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="goods_table">
+            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="goodsTraffic_table">
                 <thead>
                     <tr class="text-c">
+                        <th></th>
                         <th width="50">序号</th>
                         <th width="50">操作</th>
-                        <th width="100">商品名称</th>
-                        <th width="50">条码</th>
-                        <th width="50">拼音码</th>
-                        <th width="50">分类</th>
-                        <th width="50">库存</th>
-                        <th width="80">主单位</th>
-                        <th width="50">进货价</th>
-                        <th width="50">销售价</th>
-                        <th width="50">批发价</th>
-                        <th width="50">会员价</th>
-                        <th width="30">会员折扣</th>
-                        <th width="30">供货商</th>
-                        <th width="50">生产日期</th>
-                        <th width="30">保质期</th>
+                        <th width="100">订货时间</th>
+                        <th width="50">期望发货时间</th>
+                        <th width="50">状态</th>
+                        <th width="50">备注</th>
                     </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -94,13 +71,13 @@
 <script type="text/javascript">
 //搜索
 $(function(){
-	$("#news_search").click(function(){
+	$("#goodsTraffic_search").click(function(){
 		table.fnDraw();
 	});
 });
 
 //table start here
-table = $('#goods_table').dataTable({
+table = $('#goodsTraffic_table').dataTable({
 	   "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示  
        "bPaginate": true,//是否显示（应用）分页器  
        "bLengthChange": false,
@@ -110,33 +87,15 @@ table = $('#goods_table').dataTable({
        "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数 
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
+        {"mData" : ""},
 	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
             return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
         }},
-        {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "goodsNo", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "pinyin", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "categoriesName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "goodsNum", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "mainUnit", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "bid", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "price", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "tradePrice", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "vipPrice", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "isVipSet", "sDefaultContent" : "", "mRender":function(data, type, full){
-        	return data == 1?"是":"否";
-        	},"bSortable":false,"sClass":"center"
-        },
-        {"mData" : "supplier", "sDefaultContent" : "","bSortable":false,"sClass":"center"},
-        {"mData" : "productionDate", "sDefaultContent" : "", "mRender":function(data, type, full){
-               return format(data);
-           },"bSortable":false,"sClass":"center"
-        },
-	    {"mData" : "shelfLife", "sDefaultContent" : "", "mRender":function(data, type, full){
-            return data + " 天";
-		   },"bSortable":false,"sClass":"center"
-	    }
+        {"mData" : "orderTime", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "wishTime", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "status", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "description", "sDefaultContent" : "", "bSortable":false}
     ],
     "language":{
        "oPaginate": {

@@ -29,8 +29,7 @@ public class Supplier {
     //联系电话
     private String phone;
     //联系邮箱
-    @Column(name = "e_mail")
-    private String eMail;
+    private String email;
     //供货商编号
     @Column(name = "supplier_no")
     private String supplierNo;
@@ -90,12 +89,12 @@ public class Supplier {
         this.phone = phone;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSupplierNo() {

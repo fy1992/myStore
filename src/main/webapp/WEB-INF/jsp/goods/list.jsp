@@ -33,27 +33,27 @@
                 <a href="javascript:void(0);" onclick="tagsDetail();" class="btn btn-primary radius">标签</a>
             </span>
             <span class="select-box" style="width: 100px;">
-                <select class="select" id="goods_status">
+                <select class="select radius" id="goods_status">
                     <option value="0">启用</option>
                     <option value="1">禁用</option>
                 </select>
             </span>
-            <span class="select-box" style="width: 100px;">
+            <span class="select-box radius" style="width: 100px;">
                 <select class="select" id="goods_categories">
                     <option value="-1">全部分类</option>
                 </select>
             </span>
-            <span class="select-box" style="width: 110px;">
+            <span class="select-box radius" style="width: 110px;">
                 <select class="select" id="goods_supplier">
                     <option value="-1">全部供应商</option>
                 </select>
             </span>
-            <span class="select-box" style="width: 100px;">
+            <span class="select-box radius" style="width: 100px;">
                 <select class="select" id="goods_tags">
                     <option value="-1">全部标签</option>
                 </select>
             </span>
-            <input type="text" id="goods_info" placeholder="条码/名称/拼音码" style="width:260px" class="input-text">
+            <input type="text" id="goods_info" placeholder="条码/名称/拼音码" style="width:260px" class="input-text radius">
             <button id="news_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">

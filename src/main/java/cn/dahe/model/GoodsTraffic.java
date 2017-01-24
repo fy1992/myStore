@@ -23,4 +23,48 @@ public class GoodsTraffic {
     //期望发货时间
     @Column(name = "wish_time'")
     private Date wishTime;
+    //订货状态 -1 已作废 0 待审核 1 配货中 2 已完成
+    private int status;
+    //备注
+    private String description;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(Date orderTime) {
+        this.orderTime = orderTime;
+    }
+
+    public Date getWishTime() {
+        return wishTime;
+    }
+
+    public void setWishTime(Date wishTime) {
+        this.wishTime = wishTime;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

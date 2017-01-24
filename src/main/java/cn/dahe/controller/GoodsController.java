@@ -331,4 +331,6 @@ public class GoodsController {
         goodsService.goodsListByCategories(categoriesId, user.getStoreId());
         return json;
     }
+
+
 }
