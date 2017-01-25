@@ -4,8 +4,10 @@ import cn.dahe.dao.IStoreDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Store;
 import cn.dahe.service.IStoreService;
+import cn.dahe.util.DateUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -49,6 +51,8 @@ public class StoreServiceImpl implements IStoreService{
     public Pager<Store> findByParams(String aDataSet, int storeId) {
         int start = 0;// 起始
         int pageSize = 20;// size
+        int status = 0;
+        String startTime = "", endTime = "";
         try{
             JSONArray json = JSONArray.parseArray(aDataSet);
             int len = json.size();
@@ -58,9 +62,22 @@ public class StoreServiceImpl implements IStoreService{
                     start = (Integer) jsonObject.get("value");
                 } else if (jsonObject.get("name").equals("iDisplayLength")) {
                     pageSize = (Integer) jsonObject.get("value");
+                }else if (jsonObject.get("name").equals("status")) {
+                    status = Integer.parseInt(jsonObject.get("value").toString());
+                }else if (jsonObject.get("name").equals("startTime")) {
+                    startTime = jsonObject.get("value").toString();
+                }else if (jsonObject.get("name").equals("endTime")) {
+                    endTime = jsonObject.get("value").toString();
                 }
             }
             Pager<Object> params = new Pager<>();
+            params.setStatus(status);
+            if(StringUtils.isNotBlank(startTime)){
+                params.setStartTime(DateUtil.format(startTime, "yyyy-MM-dd"));
+            }
+            if(StringUtils.isNotBlank(endTime)){
+                params.setEndTime(DateUtil.format(endTime, "yyyy-MM-dd"));
+            }
             params.setOrderColumn("store.id");
             params.setOrderDir("desc");
             params.setIntParam4(storeId);

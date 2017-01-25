@@ -29,12 +29,14 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
         if (StringUtils.isNotEmpty(goodsInfo) && StringUtils.isNotBlank(goodsInfo)){
             if(StringUtil.isNumber(goodsInfo)){
                 hql.append(" and goods.goodsNo = ?");
+                objectList.add(goodsInfo);
             }else if(StringUtil.isPinyin(goodsInfo)){
-                hql.append(" and goods.pinyin = ?");
+                hql.append(" and goods.pinyin like ?");
+                objectList.add("%" + goodsInfo + "%");
             }else{
-                hql.append(" and goods.name = ?");
+                hql.append(" and goods.name like ?");
+                objectList.add("%" + goodsInfo + "%");
             }
-            objectList.add(goodsInfo);
         }
         if(categoriesId != -1){
             hql.append(" and goods.categories.id = ?");

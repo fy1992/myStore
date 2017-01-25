@@ -3,6 +3,7 @@ package cn.dahe.dao.impl;
 import cn.dahe.dao.ISupplierDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Supplier;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -17,7 +18,20 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements ISupplierD
     public Pager<Supplier> findByParam(int start, int pageSize, Pager<Object> params) {
         StringBuffer hql = new StringBuffer("from Supplier supplier where 1=1");
         List<Object> list = new ArrayList<>();
-
-        return null;
+        int status = params.getStatus();
+        String keywords = params.getStringParam1();
+        int storeId = params.getIntParam1();
+        hql.append(" and supplier.status = ?");
+        list.add(status);
+        if(StringUtils.isNotBlank(keywords)){
+            hql.append(" and supplier.name like ?");
+            list.add("%" + keywords + "%");
+        }
+        if(storeId != -1){
+            hql.append(" and supplier.storeId = ? ");
+            list.add(storeId);
+        }
+        hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
+        return this.find(hql.toString(), list, start, pageSize);
     }
 }

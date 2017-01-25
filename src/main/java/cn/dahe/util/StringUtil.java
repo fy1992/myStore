@@ -33,6 +33,15 @@ public class StringUtil extends StringUtils{
 	}
 
 	/**
+	 * 是否是电话
+	 * @param str
+	 * @return
+	 */
+	public static boolean isMobile(String str){
+		return str.length() > 6 && str.length() <= 11 && str.matches("^1[34578][0-9]{9}$");
+	}
+
+	/**
 	 * 是否是纯拼音
 	 * @param str
 	 * @return

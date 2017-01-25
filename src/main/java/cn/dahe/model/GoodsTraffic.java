@@ -27,6 +27,9 @@ public class GoodsTraffic {
     private int status;
     //备注
     private String description;
+    //所属店面
+    @Column(name = "store_id")
+    private int storeId;
 
     public int getId() {
         return id;
@@ -66,5 +69,13 @@ public class GoodsTraffic {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

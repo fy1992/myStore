@@ -4,8 +4,10 @@ import cn.dahe.dao.IGoodsTrafficDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.GoodsTraffic;
 import cn.dahe.service.IGoodsTrafficService;
+import cn.dahe.util.DateUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -50,6 +52,9 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
     public Pager<GoodsTraffic> findByParams(String aDataSet, int storeId) {
         int start = 0;// 起始
         int pageSize = 20;// size
+        int status = -1;
+        String startTime = "", endTime = "";
+        int timeType = 0; // 0 订货时间  1 发货时间
         try{
             JSONArray json = JSONArray.parseArray(aDataSet);
             int len = json.size();
@@ -59,10 +64,25 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
                     start = (Integer) jsonObject.get("value");
                 } else if (jsonObject.get("name").equals("iDisplayLength")) {
                     pageSize = (Integer) jsonObject.get("value");
+                }else if (jsonObject.get("name").equals("status")) {
+                    status = Integer.parseInt(jsonObject.get("value").toString());
+                }else if(jsonObject.get("name").equals("startTime")){
+                    startTime = jsonObject.get("value").toString();
+                }else if (jsonObject.get("name").equals("endTime")) {
+                    endTime = jsonObject.get("value").toString();
+                }else if (jsonObject.get("name").equals("timeType")) {
+                    timeType = Integer.parseInt(jsonObject.get("value").toString());
                 }
             }
             Pager<Object> params = new Pager<>();
-            params.setOrderColumn("store.id");
+            if(StringUtils.isNotBlank(startTime)){
+                params.setStartTime(DateUtil.format(startTime, "yyyy-MM-dd"));
+            }
+            if(StringUtils.isNotBlank(endTime)){
+                params.setEndTime(DateUtil.format(endTime, "yyyy-MM-dd"));
+            }
+            params.setIntParam1(timeType);
+            params.setOrderColumn("goodTraffic.id");
             params.setOrderDir("desc");
             params.setIntParam4(storeId);
             return goodsTrafficDao.findByParam(start, pageSize, params);
