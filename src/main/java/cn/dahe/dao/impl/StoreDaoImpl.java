@@ -35,4 +35,14 @@ public class StoreDaoImpl extends BaseDaoImpl<Store> implements IStoreDao {
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);
     }
+
+    @Override
+    public List<Store> findAll(int storeId) {
+        String hql = "from Store store";
+        if(storeId != 0){
+            hql += " where store.parent.id = ?";
+            return this.list(hql, storeId);
+        }
+        return this.list(hql);
+    }
 }

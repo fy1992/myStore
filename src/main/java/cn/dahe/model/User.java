@@ -46,7 +46,7 @@ public class User {
     private Date registerDate;
     //店铺Id  默认值 0
     @Column(name ="store_id", columnDefinition = "INT DEFAULT 0")
-    private int storeId;
+    private int storeId = 0;
     //店铺名称
     @Column(name ="store_name")
     private String storeName;

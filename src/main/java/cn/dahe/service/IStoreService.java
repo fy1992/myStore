@@ -3,6 +3,8 @@ package cn.dahe.service;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Store;
 
+import java.util.List;
+
 /**
  * Created by fy on 2017/1/24.
  */
@@ -19,4 +21,11 @@ public interface IStoreService {
      * @return
      */
     Pager<Store> findByParams(String aDataSet, int storeId);
+
+    /**
+     * 查询全部店面
+     * @param storeId
+     * @return
+     */
+    List<Store> findAll(int storeId);
 }

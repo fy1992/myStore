@@ -3,6 +3,8 @@ package cn.dahe.dao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Store;
 
+import java.util.List;
+
 /**
  * Created by fy on 2017/1/24.
  */
@@ -15,4 +17,11 @@ public interface IStoreDao extends IBaseDao<Store>{
      * @return
      */
     Pager<Store> findByParam(int start, int pageSize, Pager<Object> params);
+
+    /**
+     * 查询全部点店面
+     * @param storeId
+     * @return
+     */
+    List<Store> findAll(int storeId);
 }

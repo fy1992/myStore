@@ -1,5 +1,6 @@
 package cn.dahe.service;
 
+import cn.dahe.dto.Pager;
 import cn.dahe.model.User;
 
 /**
@@ -18,4 +19,12 @@ public interface IUserService{
      * @return
      */
     User findByLoginName(String loginName);
+
+    /**
+     * 根据参数查询
+     * @param aDataSet
+     * @param storeId
+     * @return
+     */
+    Pager<User> findByParams(String aDataSet, int storeId);
 }

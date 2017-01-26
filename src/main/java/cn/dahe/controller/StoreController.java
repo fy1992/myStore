@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by fy on 2017/1/24.
@@ -41,4 +42,17 @@ public class StoreController {
         User user = (User) session.getAttribute("loginUser");
         return storeService.findByParams(aDataSet, user.getStoreId());
     }
+
+    /**
+     * 查询所有店面
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/allStore", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Store> getAllStore(HttpSession session){
+        User user = (User)session.getAttribute("loginUser");
+        return storeService.findAll(user.getStoreId());
+    }
+
 }

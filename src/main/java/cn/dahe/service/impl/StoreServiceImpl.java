@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by fy on 2017/1/24.
@@ -86,5 +87,10 @@ public class StoreServiceImpl implements IStoreService{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<Store> findAll(int storeId) {
+        return storeDao.findAll(storeId);
     }
 }
