@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,6 +71,19 @@ public class UserController {
         json.setMsg("用户添加成功");
         json.setResult(1);
         return json;
+    }
+
+    /**
+     * 用户修改跳转
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public String editUser(@PathVariable int id,  Model model){
+        User user = userService.get(id);
+        model.addAttribute("user", user);
+        return "user/edit";
     }
 
     /**

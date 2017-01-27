@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +26,7 @@ public class StoreServiceImpl implements IStoreService{
     private IStoreDao storeDao;
     @Override
     public void add(Store t) {
+        t.setCreateDate(new Date());
         storeDao.add(t);
     }
 
