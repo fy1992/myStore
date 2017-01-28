@@ -5,8 +5,10 @@ import cn.dahe.dao.ISalesDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Cashier;
 import cn.dahe.model.Sales;
+import cn.dahe.model.User;
 import cn.dahe.service.IEmployeeService;
-import org.apache.poi.ss.formula.functions.T;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,8 @@ public class EmployeeServiceImpl implements IEmployeeService{
     private ISalesDao salesDao;
 
     @Override
-    public void addCashier(Cashier t) {
+    public void addCashier(Cashier t, User user) {
+        t.setStoreId(user.getStoreId());
         cashierDao.add(t);
     }
 
@@ -51,7 +54,8 @@ public class EmployeeServiceImpl implements IEmployeeService{
     }
 
     @Override
-    public void addSales(Sales t) {
+    public void addSales(Sales t, User user) {
+        t.setStoreId(user.getStoreId());
         salesDao.add(t);
     }
 
@@ -76,15 +80,36 @@ public class EmployeeServiceImpl implements IEmployeeService{
     }
 
     @Override
-    public Pager<T> employeeList(String aDataSet, int storeId, int type) {
+    public Pager employeeList(String aDataSet, int storeId, int type) {
         int start = 0;// 起始
         int pageSize = 20;// size
         int status = 1;
         String employeeInfo = "";
+        JSONArray json = JSONArray.parseArray(aDataSet);
+        int len = json.size();
+        for (int i = 0; i < len; i++) {
+            JSONObject jsonObject = (JSONObject) json.get(i);
+            if (jsonObject.get("name").equals("iDisplayStart")) {
+                start = (Integer) jsonObject.get("value");
+            } else if (jsonObject.get("name").equals("iDisplayLength")) {
+                pageSize = (Integer) jsonObject.get("value");
+            } else if (jsonObject.get("name").equals("employeeInfo")) {
+                employeeInfo = jsonObject.get("value").toString();
+            } else if (jsonObject.get("name").equals("status")) {
+                status = Integer.parseInt(jsonObject.get("value").toString());
+            }
+        }
         Pager<Object> params = new Pager<>();
         params.setStatus(status);
         params.setStringParam1(employeeInfo);
-        //return cashierDao.findByParam(start, pageSize, params);
-        return null;
+        params.setOrderDir("desc");
+        params.setIntParam1(storeId);
+        if(type == 1){
+            params.setOrderColumn("sales.id");
+            return salesDao.findByParam(start, pageSize, params);
+        }else{
+            params.setOrderColumn("cashier.id");
+            return cashierDao.findByParam(start, pageSize, params);
+        }
     }
 }

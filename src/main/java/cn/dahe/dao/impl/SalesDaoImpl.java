@@ -20,11 +20,10 @@ public class SalesDaoImpl extends BaseDaoImpl<Sales> implements ISalesDao{
         StringBuffer hql = new StringBuffer("from Sales sales where 1=1");
         int status = params.getStatus();
         String sales = params.getStringParam1();
+        int storeId = params.getIntParam1();
         List<Object> list = new ArrayList<>();
-        if(status != -1){
-            hql.append(" and sales.status = ?");
-            list.add(status);
-        }
+        hql.append(" and sales.status = ?");
+        list.add(status);
         if(StringUtils.isNotBlank(sales)){
             if(StringUtil.isMobile(sales)){
                 hql.append(" and sales.phone = ?");
@@ -36,6 +35,10 @@ public class SalesDaoImpl extends BaseDaoImpl<Sales> implements ISalesDao{
                 hql.append(" and sales.name like ?");
                 list.add("%" + sales + "%");
             }
+        }
+        if(storeId != 0){
+            hql.append(" and sales.storeId = ?");
+            list.add(storeId);
         }
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);

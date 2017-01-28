@@ -20,11 +20,10 @@ public class CashierDaoImpl extends BaseDaoImpl<Cashier> implements ICashierDao{
         StringBuffer hql = new StringBuffer("from Cashier cashier where 1=1");
         int status = params.getStatus();
         String cashierInfo = params.getStringParam1();
+        int storeId = params.getIntParam1();
         List<Object> list = new ArrayList<>();
-        if(status != -1){
-            hql.append(" and cashier.status = ?");
-            list.add(status);
-        }
+        hql.append(" and cashier.status = ?");
+        list.add(status);
         if(StringUtils.isNotBlank(cashierInfo)){
             if(StringUtil.isMobile(cashierInfo)){
                 hql.append(" and cashier.phone = ?");
@@ -36,6 +35,10 @@ public class CashierDaoImpl extends BaseDaoImpl<Cashier> implements ICashierDao{
                 hql.append(" and cashier.name like ?");
                 list.add("%" + cashierInfo + "%");
             }
+        }
+        if(storeId != 0){
+            hql.append(" and cashier.storeId = ?");
+            list.add(storeId);
         }
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);
