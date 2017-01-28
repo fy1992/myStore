@@ -2,6 +2,7 @@ package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.GoodsDto;
+import cn.dahe.dto.GoodsDtoSimple;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Categories;
 import cn.dahe.model.Goods;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 /**
@@ -320,17 +322,19 @@ public class GoodsController {
     }
 
     /**
-     * 通过类别查询
+     * 通过类别查询(客户端用)
      * @param categoriesId
      * @param session
      * @return
      */
-    @RequestMapping(value = "/mobile/goodslist", method = RequestMethod.GET)
+    @RequestMapping(value = "/mobile/goodsist", method = RequestMethod.GET)
     @ResponseBody
     public AjaxObj getGoodsListByCategorise(int categoriesId, HttpSession session){
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
-        goodsService.goodsListByCategories(categoriesId, user.getStoreId());
+        List<GoodsDtoSimple> list = goodsService.goodsListByCategories(categoriesId, user.getStoreId());
+        json.setResult(1);
+        json.setObject(list);
         return json;
     }
 
@@ -371,6 +375,7 @@ public class GoodsController {
     @ResponseBody
     public AjaxObj goodsCopy(int storeId, String ids){
         AjaxObj json = new AjaxObj();
+        goodsService.goodsCopy(storeId, ids);
         json.setMsg("商品复制成功");
         json.setResult(1);
         return json;

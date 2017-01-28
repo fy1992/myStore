@@ -3,17 +3,20 @@ package cn.dahe.service.impl;
 import cn.dahe.dao.IGoodsDao;
 import cn.dahe.dao.IStoreDao;
 import cn.dahe.dto.GoodsDto;
+import cn.dahe.dto.GoodsDtoSimple;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Goods;
 import cn.dahe.model.Store;
 import cn.dahe.service.IGoodsService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,13 +111,13 @@ public class GoodsServiceImpl implements IGoodsService{
     }
 
     @Override
-    public List<GoodsDto> goodsListByCategories(int categories, int storeId) {
+    public List<GoodsDtoSimple> goodsListByCategories(int categories, int storeId) {
         List<Goods> goodsList = goodsDao.findByCategories(categories, storeId);
-        List<GoodsDto> goodsDtoList = new ArrayList<>();
+        List<GoodsDtoSimple> goodsDtoSimpleList = new ArrayList<>();
         for(Goods goods : goodsList){
-            goodsDtoList.add(new GoodsDto(goods));
+            goodsDtoSimpleList.add(new GoodsDtoSimple(goods));
         }
-        return goodsDtoList;
+        return goodsDtoSimpleList;
     }
 
     @Override
@@ -129,7 +132,19 @@ public class GoodsServiceImpl implements IGoodsService{
 
     @Override
     public void goodsCopy(int storeId, String ids) {
-        Store store = storeDao.get(storeId);
-
+        String[] idsArr = ids.split(",");
+        for(int i = 0, len = idsArr.length; i < len; i++){
+            Goods copyGoods = new Goods();
+            Goods goods = get(Integer.parseInt(idsArr[i]));
+            try {
+                BeanUtils.copyProperties(copyGoods, goods);
+                copyGoods.setStoreId(storeId);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            add(copyGoods);
+        }
     }
 }

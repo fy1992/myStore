@@ -91,4 +91,11 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
         }
         return null;
     }
+
+    @Override
+    public void auditGoodsTraffic(int id) {
+        GoodsTraffic goodsTraffic = get(id);
+        goodsTraffic.setStatus(1);
+        update(goodsTraffic);
+    }
 }

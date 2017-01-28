@@ -1,14 +1,18 @@
 package cn.dahe.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * 货流 订货信息
+ * 货流 订货信息单
  * Created by fy on 2017/1/22.
  */
 @Table(name = "t_goods_traffic")
@@ -30,6 +34,9 @@ public class GoodsTraffic {
     //所属店面
     @Column(name = "store_id")
     private int storeId;
+    //所包含的订货信息
+    @OneToMany(mappedBy = "goodsTraffic", cascade = CascadeType.ALL)
+    private Set<OrderGoodsInfo> goodsInfoSet = new HashSet<>();
 
     public int getId() {
         return id;
@@ -77,5 +84,13 @@ public class GoodsTraffic {
 
     public void setStoreId(int storeId) {
         this.storeId = storeId;
+    }
+
+    public Set<OrderGoodsInfo> getGoodsInfoSet() {
+        return goodsInfoSet;
+    }
+
+    public void setGoodsInfoSet(Set<OrderGoodsInfo> goodsInfoSet) {
+        this.goodsInfoSet = goodsInfoSet;
     }
 }

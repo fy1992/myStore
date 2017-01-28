@@ -1,5 +1,7 @@
 package cn.dahe.controller;
 
+import cn.dahe.dto.AjaxObj;
+import cn.dahe.dto.GoodsTrafficDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.GoodsTraffic;
 import cn.dahe.model.User;
@@ -41,5 +43,18 @@ public class GoodsTrafficController {
         logger.info("--- goodsTraffic list begin ---");
         User user = (User) session.getAttribute("loginUser");
         return goodsTrafficService.findByParams(aDataSet, user.getStoreId());
+    }
+
+    /**
+     * 客户端订货
+     * @param  goodsTrafficDto
+     * @return
+     */
+    @RequestMapping(value = "orderGoods", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj orderGoods(GoodsTrafficDto goodsTrafficDto){
+        AjaxObj json = new AjaxObj();
+
+        return json;
     }
 }

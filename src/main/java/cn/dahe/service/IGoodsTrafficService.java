@@ -20,4 +20,10 @@ public interface IGoodsTrafficService {
      * @return
      */
     Pager<GoodsTraffic> findByParams(String aDataSet, int storeId);
+
+    /**
+     * 审核
+     * @param id
+     */
+    void auditGoodsTraffic(int id);
 }

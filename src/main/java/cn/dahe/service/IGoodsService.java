@@ -1,6 +1,7 @@
 package cn.dahe.service;
 
 import cn.dahe.dto.GoodsDto;
+import cn.dahe.dto.GoodsDtoSimple;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Goods;
 
@@ -29,7 +30,7 @@ public interface IGoodsService{
      * @param storeId
      * @return
      */
-    List<GoodsDto> goodsListByCategories(int categories, int storeId);
+    List<GoodsDtoSimple> goodsListByCategories(int categories, int storeId);
 
     /**
      * 商品排序
