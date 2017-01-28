@@ -123,4 +123,18 @@ public class CategoriesController {
         json.setResult(1);
         return json;
     }
+
+    /**
+     * 商品类别排序
+     * @param ids
+     */
+    @RequestMapping(value = "categoriesSort", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj categoriesSort(String ids){
+        AjaxObj json = new AjaxObj();
+        categoriesService.categoriesSort(ids);
+        json.setMsg("商品类别排序已保存");
+        json.setResult(1);
+        return json;
+    }
 }

@@ -1,10 +1,11 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.IGoodsDao;
+import cn.dahe.dao.IStoreDao;
 import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Goods;
-import cn.dahe.model.User;
+import cn.dahe.model.Store;
 import cn.dahe.service.IGoodsService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -14,9 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by fy on 2017/1/13.
@@ -27,6 +26,8 @@ public class GoodsServiceImpl implements IGoodsService{
 
     @Resource
     private IGoodsDao goodsDao;
+    @Resource
+    private IStoreDao storeDao;
 
     @Override
     public void add(Goods t) {
@@ -124,5 +125,11 @@ public class GoodsServiceImpl implements IGoodsService{
             goods.setSeq(i);
             update(goods);
         }
+    }
+
+    @Override
+    public void goodsCopy(int storeId, String ids) {
+        Store store = storeDao.get(storeId);
+
     }
 }

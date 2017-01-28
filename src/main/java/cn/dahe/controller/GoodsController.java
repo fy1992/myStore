@@ -3,11 +3,13 @@ package cn.dahe.controller;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.Categories;
 import cn.dahe.model.Goods;
 import cn.dahe.model.GoodsTags;
 import cn.dahe.model.GoodsUnit;
 import cn.dahe.model.SmallTicket;
 import cn.dahe.model.User;
+import cn.dahe.service.ICategoriesService;
 import cn.dahe.service.IGoodsService;
 import cn.dahe.service.IGoodsTagsService;
 import cn.dahe.service.IGoodsUnitService;
@@ -15,6 +17,7 @@ import cn.dahe.service.ISmallTicketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,6 +42,8 @@ public class GoodsController {
     private IGoodsService goodsService;
     @Resource
     private ISmallTicketService smallTicketService;
+    @Resource
+    private ICategoriesService categoriesService;
 
     /***
      * 添加商品单位页
@@ -330,6 +335,19 @@ public class GoodsController {
     }
 
     /**
+     * 商品排序页面路由
+     * @param categoriesId
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "goodsSort", method = RequestMethod.GET)
+    public String goodsSort(int categoriesId, Model model){
+        Categories categories = categoriesService.get(categoriesId);
+        model.addAttribute("categories", categories);
+        return "goods/sortPage";
+    }
+
+    /**
      * 商品排序
      * @param ids
      */
@@ -339,6 +357,21 @@ public class GoodsController {
         AjaxObj json = new AjaxObj();
         goodsService.goodsSort(ids);
         json.setMsg("商品排序已保存");
+        json.setResult(1);
+        return json;
+    }
+
+    /**
+     * 商品复制
+     * @param storeId
+     * @param  ids
+     * @return
+     */
+    @RequestMapping(value = "goodsCopy", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj goodsCopy(int storeId, String ids){
+        AjaxObj json = new AjaxObj();
+        json.setMsg("商品复制成功");
         json.setResult(1);
         return json;
     }

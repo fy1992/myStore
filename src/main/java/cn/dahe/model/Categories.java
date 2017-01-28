@@ -33,7 +33,8 @@ public class Categories {
     private int storeId;
     @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
     private Set<Goods> goodsSet = new HashSet<>();
-
+    private int seq;
+    //排序
     public int getId() {
         return id;
     }
@@ -72,5 +73,13 @@ public class Categories {
 
     public void setGoodsSet(Set<Goods> goodsSet) {
         this.goodsSet = goodsSet;
+    }
+
+    public int getSeq() {
+        return seq;
+    }
+
+    public void setSeq(int seq) {
+        this.seq = seq;
     }
 }

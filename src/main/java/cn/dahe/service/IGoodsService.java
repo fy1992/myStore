@@ -36,4 +36,11 @@ public interface IGoodsService{
      * @param ids
      */
     void goodsSort(String ids);
+
+    /**
+     * 商品复制
+     * @param storeId
+     * @param ids
+     */
+    void goodsCopy(int storeId, String ids);
 }

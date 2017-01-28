@@ -133,4 +133,14 @@ public class CategoriesServiceImpl implements ICategoriesService{
         }
         update(categories);
     }
+
+    @Override
+    public void categoriesSort(String ids) {
+        String[] idsArr = ids.split(",");
+        for(int i = 0, len = idsArr.length; i < len; i++){
+            Categories categories = get(Integer.parseInt(idsArr[i]));
+            categories.setSeq(i);
+            update(categories);
+        }
+    }
 }

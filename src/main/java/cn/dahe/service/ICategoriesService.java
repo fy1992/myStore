@@ -55,4 +55,10 @@ public interface ICategoriesService {
      * @return
      */
     Pager<Categories> findByParams(String aDataSet, int storeId);
+
+    /**
+     * 商品类别排序
+     * @param ids
+     */
+    void categoriesSort(String ids);
 }
