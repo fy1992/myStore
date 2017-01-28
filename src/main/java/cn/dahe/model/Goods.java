@@ -109,7 +109,9 @@ public class Goods {
     private int storeId;
     //状态  0 停用 1 启用
     private int status;
-
+    //排序
+    @Column(columnDefinition = "INT DEFAULT 0")
+    private int seq;
     public int getId() {
         return id;
     }
@@ -324,5 +326,13 @@ public class Goods {
 
     public void setTasteGroupSet(Set<TasteGroup> tasteGroupSet) {
         this.tasteGroupSet = tasteGroupSet;
+    }
+
+    public int getSeq() {
+        return seq;
+    }
+
+    public void setSeq(int seq) {
+        this.seq = seq;
     }
 }

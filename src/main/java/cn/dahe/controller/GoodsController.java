@@ -12,7 +12,6 @@ import cn.dahe.service.IGoodsService;
 import cn.dahe.service.IGoodsTagsService;
 import cn.dahe.service.IGoodsUnitService;
 import cn.dahe.service.ISmallTicketService;
-import jdk.nashorn.internal.ir.RuntimeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,8 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -332,5 +329,17 @@ public class GoodsController {
         return json;
     }
 
-
+    /**
+     * 商品排序
+     * @param ids
+     */
+    @RequestMapping(value = "goodsSort", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj goodsSort(String ids){
+        AjaxObj json = new AjaxObj();
+        goodsService.goodsSort(ids);
+        json.setMsg("商品排序已保存");
+        json.setResult(1);
+        return json;
+    }
 }

@@ -115,4 +115,14 @@ public class GoodsServiceImpl implements IGoodsService{
         }
         return goodsDtoList;
     }
+
+    @Override
+    public void goodsSort(String ids) {
+        String[] idsArr = ids.split(",");
+        for(int i = 0, len = idsArr.length; i < len; i++){
+            Goods goods = get(Integer.parseInt(idsArr[i]));
+            goods.setSeq(i);
+            update(goods);
+        }
+    }
 }

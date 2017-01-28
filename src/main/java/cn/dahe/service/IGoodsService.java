@@ -30,4 +30,10 @@ public interface IGoodsService{
      * @return
      */
     List<GoodsDto> goodsListByCategories(int categories, int storeId);
+
+    /**
+     * 商品排序
+     * @param ids
+     */
+    void goodsSort(String ids);
 }
