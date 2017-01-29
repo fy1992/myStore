@@ -26,7 +26,7 @@ public class OrderGoodsInfo {
     //商品名称
     @Column(name = "goods_name")
     private String goodsName;
-    //请求量
+    //请求量（货流量）
     @Column(name = "order_num")
     private int orderNum;
     //商品条码
@@ -40,7 +40,7 @@ public class OrderGoodsInfo {
     //价格小计
     @Column(name = "price_sum")
     private int priceSum;
-    //配货量
+    //配货量（实收量）
     @Column(name = "distribute_num")
     private int distributeNum;
     //商品种类
@@ -50,6 +50,7 @@ public class OrderGoodsInfo {
     @ManyToOne
     @JoinColumn(name = "goods_traffic_id")
     private GoodsTraffic goodsTraffic;
+
     public int getId() {
         return id;
     }

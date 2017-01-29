@@ -45,6 +45,9 @@ public class Store {
     @ManyToOne
     @JoinColumn(name = "industry_id")
     private Industry industry;
+    //是否是连锁店 0 不是 1 是
+    @Column(name = "is_multiple", columnDefinition = "INT DEFAULT 0")
+    private int isMultiple;
 
     public int getId() {
         return id;
@@ -140,5 +143,13 @@ public class Store {
 
     public void setIndustry(Industry industry) {
         this.industry = industry;
+    }
+
+    public int getIsMultiple() {
+        return isMultiple;
+    }
+
+    public void setIsMultiple(int isMultiple) {
+        this.isMultiple = isMultiple;
     }
 }

@@ -31,12 +31,26 @@ public class GoodsTraffic {
     private int status;
     //备注
     private String description;
-    //所属店面
-    @Column(name = "store_id")
-    private int storeId;
+    //订货门店Id
+    @Column(name = "order_store_id")
+    private int orderStoreId;
+    //订货门店名称
+    @Column(name = "order_store_name")
+    private String orderStoreName;
     //所包含的订货信息
     @OneToMany(mappedBy = "goodsTraffic", cascade = CascadeType.ALL)
     private Set<OrderGoodsInfo> goodsInfoSet = new HashSet<>();
+
+    //如果订货的门店是连锁店则需要以下属性：
+    //配货门店Id
+    @Column(name = "prepare_store_id")
+    private int prepareStoreId;
+    //配货门店名称
+    @Column(name = "prepare_store_name")
+    private String prepareStoreName;
+    //配货方式 0 通过调货来配货（来源为指定的配货门店） 1 通过进货来配货 （来源为供货商）
+    @Column(name = "prepare_type")
+    private int prepareType;
 
     public int getId() {
         return id;
@@ -78,12 +92,36 @@ public class GoodsTraffic {
         this.description = description;
     }
 
-    public int getStoreId() {
-        return storeId;
+    public int getOrderStoreId() {
+        return orderStoreId;
     }
 
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
+    public void setOrderStoreId(int orderStoreId) {
+        this.orderStoreId = orderStoreId;
+    }
+
+    public String getOrderStoreName() {
+        return orderStoreName;
+    }
+
+    public void setOrderStoreName(String orderStoreName) {
+        this.orderStoreName = orderStoreName;
+    }
+
+    public int getPrepareStoreId() {
+        return prepareStoreId;
+    }
+
+    public void setPrepareStoreId(int prepareStoreId) {
+        this.prepareStoreId = prepareStoreId;
+    }
+
+    public String getPrepareStoreName() {
+        return prepareStoreName;
+    }
+
+    public void setPrepareStoreName(String prepareStoreName) {
+        this.prepareStoreName = prepareStoreName;
     }
 
     public Set<OrderGoodsInfo> getGoodsInfoSet() {
@@ -92,5 +130,13 @@ public class GoodsTraffic {
 
     public void setGoodsInfoSet(Set<OrderGoodsInfo> goodsInfoSet) {
         this.goodsInfoSet = goodsInfoSet;
+    }
+
+    public int getPrepareType() {
+        return prepareType;
+    }
+
+    public void setPrepareType(int prepareType) {
+        this.prepareType = prepareType;
     }
 }
