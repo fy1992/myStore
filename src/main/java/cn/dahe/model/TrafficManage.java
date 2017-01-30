@@ -1,11 +1,15 @@
 package cn.dahe.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 货流管理
@@ -23,7 +27,7 @@ public class TrafficManage {
     //货流单号
     @Column(name = "traffic_no")
     private String trafficNo;
-    //货单类型 0 退货单 1 进货单
+    //货单类型 0 退货单 1 进货单 2 调货单
     @Column(name = "traffic_type")
     private int trafficType;
     //所属店面
@@ -50,6 +54,10 @@ public class TrafficManage {
     private String description;
     //预付款
     private int imprest;
+    //所含的货流信息
+    @OneToMany(mappedBy = "trafficManager", cascade = CascadeType.ALL)
+    private Set<OrderGoodsInfo> orderGoodsInfoSet = new HashSet<>();
+
     public int getId() {
         return id;
     }
@@ -152,5 +160,13 @@ public class TrafficManage {
 
     public void setImprest(int imprest) {
         this.imprest = imprest;
+    }
+
+    public Set<OrderGoodsInfo> getOrderGoodsInfoSet() {
+        return orderGoodsInfoSet;
+    }
+
+    public void setOrderGoodsInfoSet(Set<OrderGoodsInfo> orderGoodsInfoSet) {
+        this.orderGoodsInfoSet = orderGoodsInfoSet;
     }
 }

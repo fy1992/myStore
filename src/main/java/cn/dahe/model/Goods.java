@@ -80,7 +80,7 @@ public class Goods {
     private Date productionDate;
     //保质期
     @Column(name = "shelf_life")
-    private Date shelfLife;
+    private int shelfLife;
     //库存
     @OneToOne(mappedBy = "goods", fetch = FetchType.EAGER)
     private Stock stock;
@@ -112,6 +112,12 @@ public class Goods {
     //排序
     @Column(columnDefinition = "INT DEFAULT 0")
     private int seq;
+    //是否打印 0 不打印 1 打印
+    @Column(name = "is_print")
+    private int isPrint;
+    //是否是积分商品 0 不是 1 是
+    @Column(name = "is_score'")
+    private int isScore;
     public int getId() {
         return id;
     }
@@ -248,11 +254,11 @@ public class Goods {
         this.productionDate = productionDate;
     }
 
-    public Date getShelfLife() {
+    public int getShelfLife() {
         return shelfLife;
     }
 
-    public void setShelfLife(Date shelfLife) {
+    public void setShelfLife(int shelfLife) {
         this.shelfLife = shelfLife;
     }
 
@@ -334,5 +340,21 @@ public class Goods {
 
     public void setSeq(int seq) {
         this.seq = seq;
+    }
+
+    public int getIsPrint() {
+        return isPrint;
+    }
+
+    public void setIsPrint(int isPrint) {
+        this.isPrint = isPrint;
+    }
+
+    public int getIsScore() {
+        return isScore;
+    }
+
+    public void setIsScore(int isScore) {
+        this.isScore = isScore;
     }
 }

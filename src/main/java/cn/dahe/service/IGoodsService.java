@@ -44,4 +44,10 @@ public interface IGoodsService{
      * @param ids
      */
     void goodsCopy(int storeId, String ids);
+
+    /**
+     * 通过excel导入商品
+     * @return
+     */
+    List<Goods> importGoodsExcel();
 }

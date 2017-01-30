@@ -14,13 +14,29 @@ public class ResourcesUtils {
 	private void ResourcesUtils(){
 		
 	}
-	
+
+	/**
+	 * 超级管理员登录名
+	 * @return
+	 */
 	public static String getAdminLoginName(){
 		return bundel.getString("admin_loginName");
 	}
 
+	/**
+	 * 超级管理员密码
+	 * @return
+	 */
 	public static String getAdminPassword(){
 		return bundel.getString("admin_password");
+	}
+
+	/**
+	 * 读取文件路径
+	 * @return
+	 */
+	public static String getFilePath(){
+		return bundel.getString("filePath");
 	}
 
 }

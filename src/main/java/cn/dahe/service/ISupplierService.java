@@ -20,4 +20,9 @@ public interface ISupplierService {
      * @return
      */
     Pager<Supplier> findByParams(String aDataSet, int storeId);
+
+    /**
+     * 通过excel导入供应商
+     */
+    void importSupplierExcel();
 }

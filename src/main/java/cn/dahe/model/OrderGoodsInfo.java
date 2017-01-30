@@ -50,7 +50,16 @@ public class OrderGoodsInfo {
     @ManyToOne
     @JoinColumn(name = "goods_traffic_id")
     private GoodsTraffic goodsTraffic;
-
+    //所属订单管理
+    @ManyToOne
+    @JoinColumn(name = "traffic_manager")
+    private TrafficManage trafficManage;
+    //供货商id
+    @Column(name = "supplier_id")
+    private int supplierId;
+    //供货商名称
+    @Column(name = "supplier_name")
+    private String supplierName;
     public int getId() {
         return id;
     }
@@ -145,5 +154,29 @@ public class OrderGoodsInfo {
 
     public void setCategoriesId(int categoriesId) {
         this.categoriesId = categoriesId;
+    }
+
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public TrafficManage getTrafficManage() {
+        return trafficManage;
+    }
+
+    public void setTrafficManage(TrafficManage trafficManage) {
+        this.trafficManage = trafficManage;
     }
 }

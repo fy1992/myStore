@@ -3,15 +3,18 @@ package cn.dahe.util;
 import cn.dahe.model.Goods;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Workbook;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,13 @@ import java.util.List;
  * Created by fy on 2017/1/29.
  */
 public class PoiUtils {
+     public static final String OFFICE_EXCEL_2003_POSTFIX = "xls";
+     public static final String OFFICE_EXCEL_2010_POSTFIX = "xlsx";
+
+     public static final String POINT = ".";
+     public static final String LIB_PATH = "lib";
+     public static final String STUDENT_INFO_XLS_PATH = LIB_PATH + "/student_info" + POINT + OFFICE_EXCEL_2003_POSTFIX;
+     public static final String STUDENT_INFO_XLSX_PATH = LIB_PATH + "/student_info" + POINT + OFFICE_EXCEL_2010_POSTFIX;
     /**
      * 根据实体类导出excel
      * @param tableName 表格名称
@@ -32,29 +42,45 @@ public class PoiUtils {
         HSSFWorkbook wb = new HSSFWorkbook();
         //声明一个单子并命名
         HSSFSheet sheet = wb.createSheet(tableName);
-        sheet.setDefaultColumnWidth(20*256);
+        sheet.setDefaultColumnWidth(200*256);
         //创建第一行
         HSSFRow row = sheet.createRow(0);
         //生成一个样式
         HSSFCellStyle style = wb.createCellStyle();
-
+        style.setWrapText(true);//设置自动换行
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); //水平布局：居中
+        HSSFFont font = wb.createFont();
+        font.setFontHeightInPoints((short) 10); //字体高度
+        font.setColor(HSSFFont.COLOR_NORMAL); //字体颜色
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//字体加粗
+        font.setFontName("宋体"); //字体
+        style.setFont(font);
         //样式字体居中
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        CellStyle cellStyle = wb.createCellStyle();
+        HSSFFont cellFont = wb.createFont();
+        cellFont.setFontName("宋体");
+        cellFont.setColor(HSSFFont.COLOR_NORMAL);
+        cellStyle.setFont(cellFont);
+        cellStyle.setWrapText(true);
         for(int i = 0, len = excelHeader.length; i < len; i++){
             HSSFCell cell = row.createCell(i);
+            row.setRowStyle(style);
             cell.setCellValue(excelHeader[i]);
-            cell.setCellStyle(style);
-            sheet.autoSizeColumn(i);
+            cell.setCellStyle(cellStyle);
         }
+
         try {
-            for (int i = 0, len = list.size(); i < len; i++) {
-                row = sheet.createRow(i + 1);
-                for (int j = 0, length = headerClassName.length; j < length; j++) {
-                    Object obj = ReflectUtils.getFieldValue(list.get(i), headerClassName[j]);
-                    if(obj != null){
-                        row.createCell(j).setCellValue(obj.toString());
-                    }else{
-                        row.createCell(j).setCellValue("");
+            if(list.size() > 0){
+                for (int i = 0, len = list.size(); i < len; i++) {
+                    row = sheet.createRow(i + 1);
+                    for (int j = 0, length = headerClassName.length; j < length; j++) {
+                        Object obj = ReflectUtils.getFieldValue(list.get(i), headerClassName[j]);
+                        if(obj != null){
+                            row.createCell(j).setCellValue(obj.toString());
+                        }else{
+                            row.createCell(j).setCellValue("");
+                        }
                     }
                 }
             }
@@ -70,19 +96,22 @@ public class PoiUtils {
         }
     }
 
-    //读取excel
-
+    /**
+     * 解析excel的数据
+     * @param hssfRow
+     * @return
+     */
+    public static String getValue(HSSFCell hssfRow) {
+         if (hssfRow.getCellType() == hssfRow.CELL_TYPE_BOOLEAN) {
+                 return String.valueOf(hssfRow.getBooleanCellValue());
+             } else if (hssfRow.getCellType() == hssfRow.CELL_TYPE_NUMERIC) {
+                 return String.valueOf(hssfRow.getNumericCellValue());
+             } else {
+                 return String.valueOf(hssfRow.getStringCellValue());
+         }
+    }
 
     public static void main(String[] args) {
-        Goods goods1 = new Goods();
-        goods1.setName("可乐");
-        goods1.setPinyin("kele");
-        Goods goods2 = new Goods();
-        goods2.setName("雪碧");
-        goods2.setPinyin("xuebi");
-        List<Object> list = new ArrayList<>();
-        list.add(goods1);
-        list.add(goods2);
-        exportExcel("测试", new String[]{"名称", "价格"}, new String[]{"name", "pinyin"}, list);
+        ExcelTemplateUtils.goodsExcelTemplate();
     }
 }
