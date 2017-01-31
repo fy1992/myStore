@@ -48,7 +48,8 @@ public class Supplier {
     //供货商对应的商品
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
     private Set<Goods> goods = new HashSet<>();
-
+    //拼音
+    private String pinyin;
     public int getId() {
         return id;
     }
@@ -151,5 +152,13 @@ public class Supplier {
 
     public void setGoods(Set<Goods> goods) {
         this.goods = goods;
+    }
+
+    public String getPinyin() {
+        return pinyin;
+    }
+
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
     }
 }

@@ -119,8 +119,17 @@ public class SupplierServiceImpl implements ISupplierService{
                             HSSFCell rebatePoint = hssfRow.getCell(8);
                             HSSFCell addr = hssfRow.getCell(9);
                             HSSFCell description = hssfRow.getCell(10);
-
-
+                            supplier.setAddr(PoiUtils.getValue(addr));
+                            supplier.setEmail(PoiUtils.getValue(email));
+                            supplier.setContacts(PoiUtils.getValue(contacts));
+                            supplier.setDescription(PoiUtils.getValue(description));
+                            supplier.setName(PoiUtils.getValue(name));
+                            supplier.setPhone(PoiUtils.getValue(phone));
+                            supplier.setPinyin(PoiUtils.getValue(pinyin));
+                            supplier.setPackingFeePoint(PoiUtils.getValue(packingFeePoint));
+                            supplier.setRebatePoint(PoiUtils.getValue(rebatePoint));
+                            supplier.setStatus(PoiUtils.getValue(status).equals("启用") ? 1 : 0);
+                            supplierDao.add(supplier);
                         }
                     }
                 }
