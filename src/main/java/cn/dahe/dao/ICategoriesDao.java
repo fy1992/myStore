@@ -12,10 +12,9 @@ public interface ICategoriesDao extends IBaseDao<Categories>{
     /**
      * 根据父id获取子节点
      * @param pid
-     * @param storeId
      * @return
      */
-    List<Categories> findByPid(int pid, int storeId);
+    List<Categories> findByPid(int pid);
 
     /**
      * 查询所有分类

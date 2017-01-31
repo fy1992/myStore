@@ -59,8 +59,27 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
     }
 
     @Override
-    public List<Goods> findByCategories(int categories, int storeId) {
-        String hql = "from Goods goods where goods.storeId = ? and goods.categories.id = ?";
-        return this.list(hql, new Object[]{categories, storeId});
+    public List<Goods> findByParam(Pager<Object> params) {
+        if(params == null){
+            return null;
+        }
+        int categoriesId = params.getIntParam1(); //分类id
+        int unitId = params.getIntParam2(); //单位id
+        String hql = "from Goods goods where 1=1";
+        if(categoriesId != 0){
+            hql += " and goods.categories.id = ?";
+            return this.list(hql, categoriesId);
+        }
+        if(unitId != 0){
+            hql += " and goods.mainUnit.id = ?";
+            return this.list(hql, unitId);
+        }
+        return null;
+    }
+
+    @Override
+    public Goods findByGoodsNo(String goodsNo) {
+        String hql = "from Goods goods where goods.goodsNo = ?";
+        return (Goods)this.queryByHql(hql, goodsNo);
     }
 }

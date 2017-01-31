@@ -20,10 +20,16 @@ public interface IGoodsDao extends IBaseDao<Goods>{
     Pager<Goods> findByParam(int start, int pageSize, Pager<Object> params);
 
     /**
-     * 根据类别查询
-     * @param categories
-     * @param storeId
+     * 根据指定参数查询
+     * @param params
      * @return
      */
-    List<Goods> findByCategories(int categories, int storeId);
+    List<Goods> findByParam(Pager<Object> params);
+
+    /**
+     * 通过商品条码查询
+     * @param goodsNo
+     * @return
+     */
+    Goods findByGoodsNo(String goodsNo);
 }

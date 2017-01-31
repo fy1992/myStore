@@ -33,7 +33,7 @@ public class GoodsDto {
     //生产日期
     private Date productionDate;
     //保质期
-    private Date shelfLife;
+    private int shelfLife;
     //是否开启会员折扣 0 不开启  1 开启
     private int isVipSet;
     //库存
@@ -127,11 +127,11 @@ public class GoodsDto {
         this.productionDate = productionDate;
     }
 
-    public Date getShelfLife() {
+    public int getShelfLife() {
         return shelfLife;
     }
 
-    public void setShelfLife(Date shelfLife) {
+    public void setShelfLife(int shelfLife) {
         this.shelfLife = shelfLife;
     }
 

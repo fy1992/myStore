@@ -4,8 +4,10 @@ import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.GoodsDtoSimple;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Goods;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fy on 2017/1/13.
@@ -27,10 +29,9 @@ public interface IGoodsService{
     /**
      * 根据类别查询
      * @param categories
-     * @param storeId
      * @return
      */
-    List<GoodsDtoSimple> goodsListByCategories(int categories, int storeId);
+    List<GoodsDtoSimple> goodsListByCategories(int categories);
 
     /**
      * 商品排序
@@ -47,7 +48,11 @@ public interface IGoodsService{
 
     /**
      * 通过excel导入商品
+     * @param file
+     * @param storeId  门店id
+     * @param isCreateNewCategories 是否自动创建不存在的栏目 0 不创建 1 创建
+     * @param isCreateNewUnit  是否自动创建不存在的单位 0 不创建 1 创建
      * @return
      */
-    List<Goods> importGoodsExcel();
+    Map<String, Object> importGoodsExcel(MultipartFile file, int storeId, int isCreateNewCategories, int isCreateNewUnit);
 }

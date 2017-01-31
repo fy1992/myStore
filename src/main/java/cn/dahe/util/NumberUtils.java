@@ -12,16 +12,16 @@ public class NumberUtils {
      * @param  num
      * @return
      */
-    public static int getNo(int num){
+    public static long getNo(int num){
         Random random = new Random();
         String result = "";
         for(int i = 0; i < num; i++) {
             result += random.nextInt(10);
         }
-        return Integer.parseInt(result);
+        return Long.parseLong(result);
     }
 
     public static void main(String[] args) {
-        System.out.println(getNo(6));
+        System.out.println(getNo(18));
     }
 }

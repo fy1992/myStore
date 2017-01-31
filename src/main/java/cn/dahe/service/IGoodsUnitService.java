@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface IGoodsUnitService{
     void add(GoodsUnit t);
-    void del(int id);
+    boolean del(int id);
     void update(GoodsUnit t);
     GoodsUnit get(int id);
     GoodsUnit load(int id);

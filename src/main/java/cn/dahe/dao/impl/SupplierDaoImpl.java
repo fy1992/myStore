@@ -34,4 +34,22 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements ISupplierD
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);
     }
+
+    @Override
+    public List<Supplier> findByName(int storeId, String name) {
+        String hql = "from Supplier supplier where supplier.storeId = ? and supplier.name = ? and supplier.status = 1";
+        return this.list(hql, new Object[]{storeId, name});
+    }
+
+    @Override
+    public List<Supplier> findAll(int storeId) {
+        String hql = "from Supplier supplier where supplier.storeId = ? and supplier.status = 1";
+        return this.list(hql, storeId);
+    }
+
+    @Override
+    public Supplier findByNo(String supplierNo) {
+        String hql = "from Supplier supplier where supplier.supplierNo = ?";
+        return (Supplier)this.queryByHql(hql, supplierNo);
+    }
 }

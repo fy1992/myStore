@@ -5,6 +5,7 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.Supplier;
 import cn.dahe.model.User;
 import cn.dahe.service.ISupplierService;
+import cn.dahe.util.UploadsUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * 供货商
@@ -84,6 +87,49 @@ public class SupplierController {
         supplierService.update(supplier);
         json.setMsg("供应商修改成功");
         json.setResult(1);
+        return json;
+    }
+
+    /**
+     *查询所有供应商
+     */
+    @RequestMapping(value = "allSupplier", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj allSupplier(HttpSession session){
+        AjaxObj json = new AjaxObj();
+        User user = (User) session.getAttribute("loginUser");
+        json.setObject(supplierService.findAll(user.getStoreId()));
+        json.setResult(1);
+        return json;
+    }
+
+    /**
+     * 导入excel添加
+     * @param file
+     * @return
+     */
+    @RequestMapping("importExcel")
+    @ResponseBody
+    public AjaxObj importExcel(MultipartFile file, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        if(file == null){
+            json.setMsg("请选择文件上传");
+            json.setResult(0);
+            return json;
+        }
+        if(!UploadsUtils.checkFilePostfix(file.getOriginalFilename(), "xls")){
+            json.setMsg("无效的文件类型，请上传xls类型的文件");
+            json.setResult(0);
+            return json;
+        }
+        if(file.getSize() > 3000000){
+            json.setMsg("上传失败，文件大小大于3M");
+            json.setResult(0);
+            return json;
+        }
+        User user = (User)session.getAttribute("loginUser");
+        Map<String, Object> map = supplierService.importSupplierExcel(file, user.getStoreId());
+
         return json;
     }
 }

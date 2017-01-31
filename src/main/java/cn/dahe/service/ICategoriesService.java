@@ -11,8 +11,7 @@ import java.util.List;
  */
 public interface ICategoriesService {
     void add(Categories t);
-    void del(int id);
-    void del(int id, int storeId);
+    boolean del(int id);
     void update(Categories t);
     Categories get(int id);
     Categories load(int id);
@@ -61,4 +60,12 @@ public interface ICategoriesService {
      * @param ids
      */
     void categoriesSort(String ids);
+
+    /**
+     * 根据名称查询
+     * @param name
+     * @param storeId
+     * @return
+     */
+    Categories findByName(String name, int storeId);
 }

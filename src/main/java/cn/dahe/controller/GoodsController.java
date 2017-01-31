@@ -15,6 +15,9 @@ import cn.dahe.service.IGoodsService;
 import cn.dahe.service.IGoodsTagsService;
 import cn.dahe.service.IGoodsUnitService;
 import cn.dahe.service.ISmallTicketService;
+import cn.dahe.util.ExcelTemplateUtils;
+import cn.dahe.util.UploadsUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,10 +25,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -324,15 +331,13 @@ public class GoodsController {
     /**
      * 通过类别查询(客户端用)
      * @param categoriesId
-     * @param session
      * @return
      */
     @RequestMapping(value = "/mobile/goodsist", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxObj getGoodsListByCategorise(int categoriesId, HttpSession session){
+    public AjaxObj getGoodsListByCategorise(int categoriesId){
         AjaxObj json = new AjaxObj();
-        User user = (User)session.getAttribute("loginUser");
-        List<GoodsDtoSimple> list = goodsService.goodsListByCategories(categoriesId, user.getStoreId());
+        List<GoodsDtoSimple> list = goodsService.goodsListByCategories(categoriesId);
         json.setResult(1);
         json.setObject(list);
         return json;
@@ -378,6 +383,78 @@ public class GoodsController {
         goodsService.goodsCopy(storeId, ids);
         json.setMsg("商品复制成功");
         json.setResult(1);
+        return json;
+    }
+
+    /**
+     * 导入excel添加
+     * @param file
+     * @param isCreateNewUnit
+     * @param isCreateNewCategories
+     * @return
+     */
+    @RequestMapping("importExcel")
+    @ResponseBody
+    public AjaxObj importExcel(MultipartFile file, int isCreateNewCategories, int isCreateNewUnit, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        if(file == null){
+            json.setMsg("请选择文件上传");
+            json.setResult(0);
+            return json;
+        }
+        if(!UploadsUtils.checkFilePostfix(file.getOriginalFilename(), "xls")){
+            json.setMsg("无效的文件类型，请上传xls类型的文件");
+            json.setResult(0);
+            return json;
+        }
+        if(file.getSize() > 3000000){
+            json.setMsg("上传失败，文件大小大于3M");
+            json.setResult(0);
+            return json;
+        }
+        User user = (User)session.getAttribute("loginUser");
+        Map<String, Object> map = goodsService.importGoodsExcel(file, user.getStoreId(), isCreateNewCategories, isCreateNewUnit);
+        Object obj = map.get("goods");
+        if(obj != null){
+            json.setMsg("商品导入成功");
+            json.setResult(1);
+        }else{
+            json.setMsg(map.get("error").toString());
+            json.setResult(0);
+        }
+        return json;
+    }
+
+    /**
+     * 导出excel
+     */
+    @RequestMapping("exportExcel")
+    @ResponseBody
+    public AjaxObj exportExcel(){
+        AjaxObj json = new AjaxObj();
+
+        return json;
+    }
+
+    /**
+     * 导出excel模板下载
+     */
+    @RequestMapping("exportExcelTemplate")
+    @ResponseBody
+    public AjaxObj exportExcelTemplate(HttpServletResponse response){
+        AjaxObj json = new AjaxObj();
+        try {
+            String tableName = "商品导入模板（餐饮）";
+            HSSFWorkbook wb = ExcelTemplateUtils.goodsExcelTemplate();
+            response.setHeader("Content-disposition", "attachment;filename=" + new String(tableName.getBytes("gb2312"), "iso8859-1") + ".xls");
+            response.setContentType("application/vnd.ms-excel");
+            OutputStream outputStream = response.getOutputStream();
+            wb.write(outputStream);
+            outputStream.flush();
+            outputStream.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return json;
     }
 }

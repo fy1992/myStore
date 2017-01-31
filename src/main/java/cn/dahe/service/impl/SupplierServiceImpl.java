@@ -4,13 +4,23 @@ import cn.dahe.dao.ISupplierDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Supplier;
 import cn.dahe.service.ISupplierService;
+import cn.dahe.util.PoiUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fy on 2017/1/24.
@@ -78,5 +88,57 @@ public class SupplierServiceImpl implements ISupplierService{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Map<String, Object> importSupplierExcel(MultipartFile file, int storeId) {
+        Supplier supplier = null;
+        Map<String, Object> map = new HashMap<>();
+        try{
+            InputStream inputStream = file.getInputStream();
+            HSSFWorkbook hssfWorkbook = new HSSFWorkbook(inputStream);
+            for(int numSheet = 0, len = hssfWorkbook.getNumberOfSheets(); numSheet < len; numSheet++){
+                HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(numSheet);
+                if (hssfSheet == null) {
+                    continue;
+                }
+                for (int rowNum = 1; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
+                    HSSFRow hssfRow = hssfSheet.getRow(rowNum);
+                    if (hssfRow != null) {
+                        HSSFCell supplierNo = hssfRow.getCell(0);
+                        supplier = supplierDao.findByNo(PoiUtils.getValue(supplierNo));
+                        if(supplier == null){
+                            supplier = new Supplier();
+                            HSSFCell name = hssfRow.getCell(1);
+                            HSSFCell pinyin = hssfRow.getCell(2);
+                            HSSFCell contacts = hssfRow.getCell(3);
+                            HSSFCell phone = hssfRow.getCell(4);
+                            HSSFCell email = hssfRow.getCell(5);
+                            HSSFCell status = hssfRow.getCell(6);
+                            HSSFCell packingFeePoint = hssfRow.getCell(7);
+                            HSSFCell rebatePoint = hssfRow.getCell(8);
+                            HSSFCell addr = hssfRow.getCell(9);
+                            HSSFCell description = hssfRow.getCell(10);
+
+
+                        }
+                    }
+                }
+            }
+            return map;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Supplier> findAll(int storeId) {
+        return supplierDao.findAll(storeId);
+    }
+
+    @Override
+    public List<Supplier> findByName(String name, int storeId) {
+        return supplierDao.findByName(storeId, name);
     }
 }

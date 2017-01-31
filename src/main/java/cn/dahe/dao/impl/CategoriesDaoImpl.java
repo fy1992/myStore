@@ -14,11 +14,10 @@ import java.util.List;
 @Repository("categoriesDao")
 public class CategoriesDaoImpl extends BaseDaoImpl<Categories> implements ICategoriesDao{
     @Override
-    public List<Categories> findByPid(int pid, int storeId) {
-        String hql = "from Categories categories where categories.parent.id = ? and categories.storeId = ?";
+    public List<Categories> findByPid(int pid) {
+        String hql = "from Categories categories where categories.parent.id = ?";
         List<Object> list = new ArrayList<>();
         list.add(pid);
-        list.add(storeId);
         return this.find(hql, list);
     }
 

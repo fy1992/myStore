@@ -22,10 +22,10 @@ public class Pager<T> {
 	//父id
 	private String pid;
 	//int类型的参数
-	private Integer intParam1;
-	private Integer intParam2;
-	private Integer intParam3;
-	private Integer intParam4;
+	private Integer intParam1 = 0;
+	private Integer intParam2 = 0;
+	private Integer intParam3 = 0;
+	private Integer intParam4 = 0;
 	//开始时间
 	private Date startTime;
 	//结束时间

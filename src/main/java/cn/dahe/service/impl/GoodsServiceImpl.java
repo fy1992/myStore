@@ -2,14 +2,19 @@ package cn.dahe.service.impl;
 
 import cn.dahe.dao.ICategoriesDao;
 import cn.dahe.dao.IGoodsDao;
+import cn.dahe.dao.IGoodsUnitDao;
+import cn.dahe.dao.IStockDao;
 import cn.dahe.dao.IStoreDao;
 import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.GoodsDtoSimple;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.BaseException;
 import cn.dahe.model.Categories;
 import cn.dahe.model.Goods;
-import cn.dahe.model.Store;
+import cn.dahe.model.GoodsUnit;
+import cn.dahe.model.Stock;
 import cn.dahe.service.IGoodsService;
+import cn.dahe.util.DateUtil;
 import cn.dahe.util.PoiUtils;
 import cn.dahe.util.ResourcesUtils;
 import com.alibaba.fastjson.JSONArray;
@@ -22,13 +27,16 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fy on 2017/1/13.
@@ -43,6 +51,10 @@ public class GoodsServiceImpl implements IGoodsService{
     private IStoreDao storeDao;
     @Resource
     private ICategoriesDao categoriesDao;
+    @Resource
+    private IGoodsUnitDao goodsUnitDao;
+    @Resource
+    private IStockDao stockDao;
 
     @Override
     public void add(Goods t) {
@@ -123,8 +135,10 @@ public class GoodsServiceImpl implements IGoodsService{
     }
 
     @Override
-    public List<GoodsDtoSimple> goodsListByCategories(int categories, int storeId) {
-        List<Goods> goodsList = goodsDao.findByCategories(categories, storeId);
+    public List<GoodsDtoSimple> goodsListByCategories(int categories) {
+        Pager<Object> params = new Pager<>();
+        params.setIntParam2(categories);
+        List<Goods> goodsList = goodsDao.findByParam(params);
         List<GoodsDtoSimple> goodsDtoSimpleList = new ArrayList<>();
         for(Goods goods : goodsList){
             goodsDtoSimpleList.add(new GoodsDtoSimple(goods));
@@ -161,13 +175,14 @@ public class GoodsServiceImpl implements IGoodsService{
     }
 
     @Override
-    public List<Goods> importGoodsExcel() {
+    public Map<String, Object> importGoodsExcel(MultipartFile file, int storeId, int isCreateNewCategories, int isCreateNewUnit) {
         String filePath = ResourcesUtils.getFilePath();
-        List<Goods> list = new ArrayList<>();
+        Map<String, Object> map = new HashMap<>();
         Goods goods = null;
         filePath = filePath + "/商品导入模板(餐饮).xls";
         try{
             InputStream inputStream = new FileInputStream(filePath);
+            //InputStream inputStream = file.getInputStream();
             HSSFWorkbook hssfWorkbook = new HSSFWorkbook(inputStream);
             for(int numSheet = 0, len = hssfWorkbook.getNumberOfSheets(); numSheet < len; numSheet++){
                 HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(numSheet);
@@ -178,40 +193,77 @@ public class GoodsServiceImpl implements IGoodsService{
                     HSSFRow hssfRow = hssfSheet.getRow(rowNum);
                     if (hssfRow != null) {
                         goods = new Goods();
-                        HSSFCell name = hssfRow.getCell(0);
-                        HSSFCell categoriesName = hssfRow.getCell(1);
                         HSSFCell goodsNo = hssfRow.getCell(2);
-                        HSSFCell mainUnit = hssfRow.getCell(3);
-                        HSSFCell stock = hssfRow.getCell(4);
-                        HSSFCell bid = hssfRow.getCell(5);
-                        HSSFCell price = hssfRow.getCell(6);
-                        HSSFCell tradePrice = hssfRow.getCell(7);
-                        HSSFCell vipPrice = hssfRow.getCell(8);
-                        HSSFCell isVipSet = hssfRow.getCell(9);
-                        HSSFCell isScore = hssfRow.getCell(10);
-                        HSSFCell stockUp = hssfRow.getCell(11);
-                        HSSFCell stockDown = hssfRow.getCell(12);
-                        HSSFCell isPrint = hssfRow.getCell(13);
-                        HSSFCell supplier = hssfRow.getCell(14);
-                        HSSFCell productionDate = hssfRow.getCell(15);
-                        HSSFCell shelfLife = hssfRow.getCell(16);
-                        HSSFCell pinyin = hssfRow.getCell(17);
-                        HSSFCell status = hssfRow.getCell(18);
-                        HSSFCell description = hssfRow.getCell(19);
-                        Categories c = categoriesDao.get(Integer.valueOf(PoiUtils.getValue(categoriesName)));
-                        goods.setPinyin(PoiUtils.getValue(pinyin));
-                        goods.setName(PoiUtils.getValue(name));
-                        goods.setStatus(Integer.valueOf(PoiUtils.getValue(status)));
-                        goods.setBid(Integer.valueOf(PoiUtils.getValue(bid)));
-                        goods.setDescription(PoiUtils.getValue(description));
-                        goods.setShelfLife(Integer.valueOf(PoiUtils.getValue(shelfLife)));
-                        list.add(goods);
+                        Goods g = goodsDao.findByGoodsNo(PoiUtils.getValue(goodsNo));
+                        if(g == null){
+                            HSSFCell name = hssfRow.getCell(0);
+                            HSSFCell categoriesName = hssfRow.getCell(1);
+                            HSSFCell mainUnit = hssfRow.getCell(3);
+                            HSSFCell stock = hssfRow.getCell(4);
+                            HSSFCell bid = hssfRow.getCell(5);
+                            HSSFCell price = hssfRow.getCell(6);
+                            HSSFCell tradePrice = hssfRow.getCell(7);
+                            HSSFCell vipPrice = hssfRow.getCell(8);
+                            HSSFCell isVipSet = hssfRow.getCell(9);
+                            HSSFCell isScore = hssfRow.getCell(10);
+                            HSSFCell stockUp = hssfRow.getCell(11);
+                            HSSFCell stockDown = hssfRow.getCell(12);
+                            HSSFCell isPrint = hssfRow.getCell(13);
+                            HSSFCell supplier = hssfRow.getCell(14);
+                            HSSFCell productionDate = hssfRow.getCell(15);
+                            HSSFCell shelfLife = hssfRow.getCell(16);
+                            HSSFCell pinyin = hssfRow.getCell(17);
+                            HSSFCell status = hssfRow.getCell(18);
+                            HSSFCell description = hssfRow.getCell(19);
+                            String c_name = PoiUtils.getValue(categoriesName);
+                            Categories c = categoriesDao.findByName(c_name, storeId);
+                            if(c == null && isCreateNewCategories == 1){
+                                c.setName(c_name);
+                                c.setStoreId(storeId);
+                                categoriesDao.add(c);
+                            }else{
+                                throw new BaseException("导入商品失败， 以下商品分类缺失： " + c_name);
+                            }
+                            String u_name = PoiUtils.getValue(mainUnit);
+                            GoodsUnit goodsUnit = goodsUnitDao.findByName(u_name, storeId);
+                            if(goodsUnit == null && isCreateNewUnit == 1){
+                                goodsUnit.setName(u_name);
+                                goodsUnit.setStoreId(storeId);
+                                goodsUnitDao.add(goodsUnit);
+                            }else{
+                                throw new BaseException("导入商品失败， 以下商品单位缺失： " + u_name);
+                            }
+                            goods.setPinyin(PoiUtils.getValue(pinyin));
+                            goods.setName(PoiUtils.getValue(name));
+                            goods.setStatus(Integer.valueOf(PoiUtils.getValue(status)));
+                            goods.setBid(Integer.valueOf(PoiUtils.getValue(bid)));
+                            goods.setDescription(PoiUtils.getValue(description));
+                            goods.setShelfLife(Integer.valueOf(PoiUtils.getValue(shelfLife)));
+                            goods.setPrice(Integer.parseInt(PoiUtils.getValue(price)));
+                            goods.setIsPrint(Integer.parseInt(PoiUtils.getValue(isPrint)));
+                            goods.setIsScore(Integer.parseInt(PoiUtils.getValue(isScore)));
+                            goods.setIsVipSet(Integer.parseInt(PoiUtils.getValue(isVipSet)));
+                            goods.setStockDown(Integer.parseInt(PoiUtils.getValue(stockDown)));
+                            goods.setStockUp(Integer.parseInt(PoiUtils.getValue(stockUp)));
+                            goods.setVipPrice(Integer.parseInt(PoiUtils.getValue(vipPrice)));
+                            goods.setTradePrice(Integer.parseInt(PoiUtils.getValue(tradePrice)));
+                            goods.setProductionDate(DateUtil.format(PoiUtils.getValue(productionDate), "yyyy-MM-dd HH:mm:ss"));
+                            /*Stock s  = new Stock();
+                            s.setStoreId(storeId);
+                            s.setGoodNum(Integer.parseInt(PoiUtils.getValue(stock)));
+                            goods.setStock(s);*/
+                            //goods.setSupplier(s);
+
+                            goodsDao.add(goods);
+                        }
                     }
                 }
+                map.put("success", true);
             }
         }catch (Exception e){
             e.printStackTrace();
+            map.put("error", e.getMessage());
         }
-        return list;
+        return map;
     }
 }

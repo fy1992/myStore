@@ -1,6 +1,5 @@
 package cn.dahe.util;
 
-import cn.dahe.model.Goods;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -8,14 +7,9 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Workbook;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,13 +17,6 @@ import java.util.List;
  * Created by fy on 2017/1/29.
  */
 public class PoiUtils {
-     public static final String OFFICE_EXCEL_2003_POSTFIX = "xls";
-     public static final String OFFICE_EXCEL_2010_POSTFIX = "xlsx";
-
-     public static final String POINT = ".";
-     public static final String LIB_PATH = "lib";
-     public static final String STUDENT_INFO_XLS_PATH = LIB_PATH + "/student_info" + POINT + OFFICE_EXCEL_2003_POSTFIX;
-     public static final String STUDENT_INFO_XLSX_PATH = LIB_PATH + "/student_info" + POINT + OFFICE_EXCEL_2010_POSTFIX;
     /**
      * 根据实体类导出excel
      * @param tableName 表格名称
@@ -37,7 +24,7 @@ public class PoiUtils {
      * @param headerClassName 表格头对应的实体类属性
      * @param list 表格数据
      * */
-    public static void exportExcel(String tableName, String[] excelHeader, String[] headerClassName, List<Object> list){
+    public static HSSFWorkbook exportExcel(String tableName, String[] excelHeader, String[] headerClassName, List<Object> list){
         //声明一个工作簿
         HSSFWorkbook wb = new HSSFWorkbook();
         //声明一个单子并命名
@@ -84,16 +71,11 @@ public class PoiUtils {
                     }
                 }
             }
-           /* response.setHeader("Content-disposition", "attachment;filename=" + new String(tableName.getBytes("gb2312"), "iso8859-1") + ".xls");
-            response.setContentType("application/vnd.ms-excel");
-            OutputStream outputStream = response.getOutputStream();*/
-            OutputStream outputStream = new FileOutputStream(new File("D:\\BaiduYunDownload\\text.xls"));
-            wb.write(outputStream);
-            outputStream.flush();
-            outputStream.close();
+            return wb;
         }catch (Exception e){
             e.printStackTrace();
         }
+        return null;
     }
 
     /**

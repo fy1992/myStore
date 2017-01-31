@@ -1,7 +1,9 @@
 package cn.dahe.service.impl;
 
+import cn.dahe.dao.IGoodsDao;
 import cn.dahe.dao.IGoodsUnitDao;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.Goods;
 import cn.dahe.model.GoodsUnit;
 import cn.dahe.model.User;
 import cn.dahe.service.IGoodsUnitService;
@@ -22,15 +24,23 @@ public class GoodsUnitServiceImpl implements IGoodsUnitService{
     private static Logger logger = LoggerFactory.getLogger(GoodsUnitServiceImpl.class);
     @Resource
     private IGoodsUnitDao goodsUnitDao;
-
+    @Resource
+    private IGoodsDao goodsDao;
     @Override
     public void add(GoodsUnit t) {
         goodsUnitDao.add(t);
     }
 
     @Override
-    public void del(int id) {
-        goodsUnitDao.delete(id);
+    public boolean del(int id) {
+        Pager<Object> params = new Pager<>();
+        params.setIntParam2(id);
+        List<Goods> goodsList = goodsDao.findByParam(params);
+        if(goodsList == null || goodsList.size() == 0){
+            goodsUnitDao.delete(id);
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -7,7 +7,7 @@ import cn.dahe.model.TrafficManage;
  * 货流管理
  * Created by fy on 2017/1/30.
  */
-public interface TrafficManageService {
+public interface ITrafficManageService {
     void add(TrafficManage t);
     void del(int id);
     void update(TrafficManage t);
@@ -23,7 +23,8 @@ public interface TrafficManageService {
     Pager<TrafficManage> findByParams(String aDataSet, int storeId);
 
     /**
-     * 通过excel导入供应商
+     * 通过excel导入货流信息
+     * @param storeId
      */
-    void importTrafficManageExcel();
+    void importTrafficManageExcel(int storeId);
 }

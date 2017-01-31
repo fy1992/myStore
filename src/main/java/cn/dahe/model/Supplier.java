@@ -33,9 +33,9 @@ public class Supplier {
     //供货商编号
     @Column(name = "supplier_no")
     private String supplierNo;
-    //配送费
-    @Column(name = "packing_fee")
-    private String packingFee;
+    //配送费返点
+    @Column(name = "packing_fee_point")
+    private String packingFeePoint;
     //固定返利点
     @Column(name = "rebate_point")
     private String rebatePoint;
@@ -105,12 +105,12 @@ public class Supplier {
         this.supplierNo = supplierNo;
     }
 
-    public String getPackingFee() {
-        return packingFee;
+    public String getPackingFeePoint() {
+        return packingFeePoint;
     }
 
-    public void setPackingFee(String packingFee) {
-        this.packingFee = packingFee;
+    public void setPackingFeePoint(String packingFeePoint) {
+        this.packingFeePoint = packingFeePoint;
     }
 
     public String getRebatePoint() {

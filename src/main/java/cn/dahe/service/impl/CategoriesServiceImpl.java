@@ -1,9 +1,11 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.ICategoriesDao;
+import cn.dahe.dao.IGoodsDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.dto.Tree;
 import cn.dahe.model.Categories;
+import cn.dahe.model.Goods;
 import cn.dahe.service.ICategoriesService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -24,6 +26,8 @@ public class CategoriesServiceImpl implements ICategoriesService{
     private static Logger logger = LoggerFactory.getLogger(CategoriesServiceImpl.class);
     @Resource
     private ICategoriesDao categoriesDao;
+    @Resource
+    private IGoodsDao goodsDao;
 
     @Override
     public List<Categories> findByPid(int pid, int storeId) {
@@ -83,17 +87,35 @@ public class CategoriesServiceImpl implements ICategoriesService{
     }
 
     @Override
-    public void del(int id) {
-        categoriesDao.delete(id);
-    }
-
-    @Override
-    public void del(int id, int storeId) {
-        List<Categories> categoriesList = categoriesDao.findByPid(id, storeId);
-        for(int i = 0, len = categoriesList.size(); i < len; i++){
-            categoriesDao.delete(categoriesList.get(i).getId());
+    public boolean del(int id) {
+        List<Categories> categoriesList = categoriesDao.findByPid(id);
+        int mark = 0;
+        Pager<Object> params = new Pager<>();
+        List<Goods> goodsList = null;
+        if(categoriesList != null && categoriesList.size() > 0) {
+            for (int i = 0, len = categoriesList.size(); i < len; i++) {
+                int cid = categoriesList.get(i).getId();
+                params.setIntParam1(cid);
+                goodsList = goodsDao.findByParam(params);
+                //若分类被使用则无法删除, 只删除没有被使用的分类
+                if (goodsList != null && goodsList.size() > 0) {
+                    mark ++;
+                } else {
+                    categoriesDao.delete(cid);
+                }
+            }
         }
-        categoriesDao.delete(id);
+        if(mark == 0){
+            params.setIntParam1(id);
+            goodsList = goodsDao.findByParam(params);
+            if(goodsList != null && goodsList.size() > 0){
+                return false;
+            }else{
+                categoriesDao.delete(id);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -142,5 +164,10 @@ public class CategoriesServiceImpl implements ICategoriesService{
             categories.setSeq(i);
             update(categories);
         }
+    }
+
+    @Override
+    public Categories findByName(String name, int storeId) {
+        return categoriesDao.findByName(name, storeId);
     }
 }
