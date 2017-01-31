@@ -57,8 +57,13 @@ public class GoodsServiceImpl implements IGoodsService{
     private IStockDao stockDao;
 
     @Override
-    public void add(Goods t) {
-        goodsDao.add(t);
+    public boolean add(Goods t) {
+        Goods goods = goodsDao.findByGoodsNo(t.getGoodsNo());
+        if(goods == null) {
+            goodsDao.add(t);
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by fy on 2017/1/13.
  */
 public interface IGoodsService{
-    void add(Goods t);
+    boolean add(Goods t);
     void del(int id);
     void update(Goods t);
     Goods get(int id);

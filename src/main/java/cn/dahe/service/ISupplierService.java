@@ -11,7 +11,7 @@ import java.util.Map;
  * Created by fy on 2017/1/23.
  */
 public interface ISupplierService {
-    void add(Supplier t);
+    boolean add(Supplier t);
     void del(int id);
     void update(Supplier t);
     Supplier get(int id);

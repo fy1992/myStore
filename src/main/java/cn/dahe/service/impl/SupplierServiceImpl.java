@@ -32,8 +32,13 @@ public class SupplierServiceImpl implements ISupplierService{
     private ISupplierDao supplierDao;
 
     @Override
-    public void add(Supplier t) {
-        supplierDao.add(t);
+    public boolean add(Supplier t) {
+        Supplier supplier = supplierDao.findByNo(t.getSupplierNo());
+        if(supplier == null){
+            supplierDao.add(t);
+            return true;
+        }
+        return false;
     }
 
     @Override
