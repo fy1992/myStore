@@ -2,6 +2,7 @@ package cn.dahe.service;
 
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Store;
+import cn.dahe.model.StoreGoodsTraffic;
 
 import java.util.List;
 
@@ -28,4 +29,14 @@ public interface IStoreService {
      * @return
      */
     List<Store> findAll(int storeId);
+
+    void add(StoreGoodsTraffic storeGoodsTraffic);
+    void update(StoreGoodsTraffic storeGoodsTraffic);
+
+    /**
+     * 根据门店id查询货流信息
+     * @param id
+     * @return
+     */
+    StoreGoodsTraffic findByStoreId(int id);
 }

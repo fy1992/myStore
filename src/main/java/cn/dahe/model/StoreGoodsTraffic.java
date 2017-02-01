@@ -1,0 +1,86 @@
+package cn.dahe.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * 门店货流管理
+ * Created by fy on 2017/2/2.
+ */
+@Table(name = "t_store_goods_traffic")
+@Entity
+public class StoreGoodsTraffic {
+    @Id
+    @GeneratedValue
+    private int id;
+    //门店Id
+    @Column(name = "store_id")
+    private int storeId;
+    //指定配货门店Id 可以为 0 （无 则默认直接从供货商处进货）
+    @Column(name = "prepare_store_id")
+    private int prepareStoreId;
+    //配货价格
+    //0 配货门店销售价 1 配货门店进货价 2 无
+    @Column(name = "prepare_price_type")
+    private int preparePriceType;
+    //是否开启在线支付 0 不开启 1 开启
+    @Column(name = "is_pay_online")
+    private int isPayOnline;
+    //调货差异操作
+    // 0  允许编辑数量，需出货方确认 1 允许编辑数量，直接完成进货 2  不允许编辑数量
+    @Column(name = "different_opt")
+    private int differentOpt;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
+
+    public int getPrepareStoreId() {
+        return prepareStoreId;
+    }
+
+    public void setPrepareStoreId(int prepareStoreId) {
+        this.prepareStoreId = prepareStoreId;
+    }
+
+    public int getPreparePriceType() {
+        return preparePriceType;
+    }
+
+    public void setPreparePriceType(int preparePriceType) {
+        this.preparePriceType = preparePriceType;
+    }
+
+    public int getIsPayOnline() {
+        return isPayOnline;
+    }
+
+    public void setIsPayOnline(int isPayOnline) {
+        this.isPayOnline = isPayOnline;
+    }
+
+    public int getDifferentOpt() {
+        return differentOpt;
+    }
+
+    public void setDifferentOpt(int differentOpt) {
+        this.differentOpt = differentOpt;
+    }
+}
+
+

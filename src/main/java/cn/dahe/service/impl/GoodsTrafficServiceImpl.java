@@ -1,8 +1,13 @@
 package cn.dahe.service.impl;
 
+import cn.dahe.dao.IGoodsDao;
 import cn.dahe.dao.IGoodsTrafficDao;
+import cn.dahe.dao.IStoreDao;
+import cn.dahe.dto.GoodsTrafficDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.GoodsTraffic;
+import cn.dahe.model.OrderGoodsInfo;
+import cn.dahe.model.Store;
 import cn.dahe.service.IGoodsTrafficService;
 import cn.dahe.util.DateUtil;
 import com.alibaba.fastjson.JSONArray;
@@ -13,6 +18,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by fy on 2017/1/23.
@@ -22,10 +31,30 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
     private static Logger logger = LoggerFactory.getLogger(GoodsUnitServiceImpl.class);
     @Resource
     private IGoodsTrafficDao goodsTrafficDao;
+    @Resource
+    private IGoodsDao goodsDao;
+    @Resource
+    private IStoreDao storeDao;
 
     @Override
-    public void add(GoodsTraffic t) {
-        goodsTrafficDao.add(t);
+    public void add(GoodsTrafficDto t) {
+        Map<Integer, Integer> map =  t.getGoodsMap();
+        Set<Map.Entry<Integer, Integer>> set = map.entrySet();
+        GoodsTraffic goodsTraffic = new GoodsTraffic();
+        Set<OrderGoodsInfo> orderGoodsInfoSet = new HashSet<>();
+        for(Map.Entry<Integer, Integer> e : set){
+            int id = e.getKey();
+            goodsDao.get(id);
+
+        }
+        goodsTraffic.setWishTime(DateUtil.format(t.getWishTime(), "yyyy-MM-dd HH:mm:ss"));
+        goodsTraffic.setDescription(t.getDescription());
+        goodsTraffic.setGoodsInfoSet(orderGoodsInfoSet);
+        goodsTraffic.setStatus(0);
+        goodsTraffic.setOrderTime(new Date());
+        Store store = storeDao.get(t.getStoreId());
+        goodsTraffic.setOrderStoreId(t.getStoreId());
+        goodsTraffic.setOrderStoreName(store.getName());
     }
 
     @Override

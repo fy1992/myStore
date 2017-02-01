@@ -54,6 +54,7 @@ public class GoodsTrafficController {
     @ResponseBody
     public AjaxObj orderGoods(GoodsTrafficDto goodsTrafficDto){
         AjaxObj json = new AjaxObj();
+        goodsTrafficService.add(goodsTrafficDto);
 
         return json;
     }

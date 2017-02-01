@@ -1,8 +1,10 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.IStoreDao;
+import cn.dahe.dao.IStoreGoodsTrafficDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Store;
+import cn.dahe.model.StoreGoodsTraffic;
 import cn.dahe.service.IStoreService;
 import cn.dahe.util.DateUtil;
 import com.alibaba.fastjson.JSONArray;
@@ -24,6 +26,8 @@ public class StoreServiceImpl implements IStoreService{
     private static Logger logger = LoggerFactory.getLogger(SupplierServiceImpl.class);
     @Resource
     private IStoreDao storeDao;
+    @Resource
+    private IStoreGoodsTrafficDao storeGoodsTrafficDao;
     @Override
     public void add(Store t) {
         t.setCreateDate(new Date());
@@ -94,5 +98,20 @@ public class StoreServiceImpl implements IStoreService{
     @Override
     public List<Store> findAll(int storeId) {
         return storeDao.findAll(storeId);
+    }
+
+    @Override
+    public void add(StoreGoodsTraffic storeGoodsTraffic) {
+        storeGoodsTrafficDao.add(storeGoodsTraffic);
+    }
+
+    @Override
+    public void update(StoreGoodsTraffic storeGoodsTraffic) {
+        storeGoodsTrafficDao.update(storeGoodsTraffic);
+    }
+
+    @Override
+    public StoreGoodsTraffic findByStoreId(int id) {
+        return storeGoodsTrafficDao.findByStoreId(id);
     }
 }

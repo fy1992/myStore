@@ -7,7 +7,7 @@ import cn.dahe.model.TrafficManage;
  * 货流管理
  * Created by fy on 2017/1/30.
  */
-public interface ITrafficManagerDao extends IBaseDao<TrafficManage>{
+public interface ITrafficManageDao extends IBaseDao<TrafficManage>{
     /**
      * 根据参数查询
      * @param start
