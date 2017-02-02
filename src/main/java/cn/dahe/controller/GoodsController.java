@@ -16,6 +16,7 @@ import cn.dahe.service.IGoodsTagsService;
 import cn.dahe.service.IGoodsUnitService;
 import cn.dahe.service.ISmallTicketService;
 import cn.dahe.util.ExcelTemplateUtils;
+import cn.dahe.util.NumberUtils;
 import cn.dahe.util.UploadsUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
@@ -455,6 +456,19 @@ public class GoodsController {
         }catch (Exception e){
             e.printStackTrace();
         }
+        return json;
+    }
+
+    /**
+     * 生成商品编号
+     * @return
+     */
+    @RequestMapping("newGoodsNo")
+    @ResponseBody
+    public AjaxObj newGoodsNo(){
+        AjaxObj json = new AjaxObj();
+        json.setMsg(Long.toString(NumberUtils.getNo(13)));
+        json.setResult(1);
         return json;
     }
 }

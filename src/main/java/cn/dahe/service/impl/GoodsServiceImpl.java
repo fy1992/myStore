@@ -12,7 +12,6 @@ import cn.dahe.model.BaseException;
 import cn.dahe.model.Categories;
 import cn.dahe.model.Goods;
 import cn.dahe.model.GoodsUnit;
-import cn.dahe.model.Stock;
 import cn.dahe.service.IGoodsService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.PoiUtils;

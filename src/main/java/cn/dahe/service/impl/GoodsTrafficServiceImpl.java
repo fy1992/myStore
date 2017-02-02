@@ -28,7 +28,7 @@ import java.util.Set;
  */
 @Service("goodsTrafficService")
 public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
-    private static Logger logger = LoggerFactory.getLogger(GoodsUnitServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(GoodsTrafficServiceImpl.class);
     @Resource
     private IGoodsTrafficDao goodsTrafficDao;
     @Resource

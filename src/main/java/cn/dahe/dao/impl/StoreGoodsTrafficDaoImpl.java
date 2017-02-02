@@ -14,4 +14,6 @@ public class StoreGoodsTrafficDaoImpl extends BaseDaoImpl<StoreGoodsTraffic> imp
         String hql = "from StoreGoodsTraffic where storeId = ?";
         return (StoreGoodsTraffic) this.queryByHql(hql, storeId);
     }
+
+
 }

@@ -4,6 +4,8 @@ import cn.dahe.dao.ITrafficManageDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.TrafficManage;
 import cn.dahe.service.ITrafficManageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -13,6 +15,7 @@ import javax.annotation.Resource;
  */
 @Service("trafficManageService")
 public class TrafficManageServiceImpl implements ITrafficManageService{
+    private static Logger logger = LoggerFactory.getLogger(TrafficManageServiceImpl.class);
     @Resource
     private ITrafficManageDao trafficManageDao;
 
