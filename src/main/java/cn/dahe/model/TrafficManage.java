@@ -55,7 +55,7 @@ public class TrafficManage {
     //预付款
     private int imprest;
     //所含的货流信息
-    @OneToMany(mappedBy = "trafficManager", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "trafficManage", cascade = CascadeType.ALL)
     private Set<OrderGoodsInfo> orderGoodsInfoSet = new HashSet<>();
 
     public int getId() {

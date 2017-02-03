@@ -32,4 +32,5 @@ public interface IUserDao extends IBaseDao<User>{
      * @return
      */
     List<User> findAll(int storeId);
+
 }

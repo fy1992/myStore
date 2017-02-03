@@ -5,6 +5,7 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.Supplier;
 import cn.dahe.model.User;
 import cn.dahe.service.ISupplierService;
+import cn.dahe.util.NumberUtils;
 import cn.dahe.util.UploadsUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -130,6 +131,19 @@ public class SupplierController {
         User user = (User)session.getAttribute("loginUser");
         Map<String, Object> map = supplierService.importSupplierExcel(file, user.getStoreId());
 
+        return json;
+    }
+
+    /**
+     * 生成供应商编号
+     * @return
+     */
+    @RequestMapping("newSupplierNo")
+    @ResponseBody
+    public AjaxObj newSupplierNo(){
+        AjaxObj json = new AjaxObj();
+        json.setMsg(Long.toString(NumberUtils.getNo(6)));
+        json.setResult(1);
         return json;
     }
 }

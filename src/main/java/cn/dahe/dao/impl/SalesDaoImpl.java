@@ -43,4 +43,10 @@ public class SalesDaoImpl extends BaseDaoImpl<Sales> implements ISalesDao{
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);
     }
+
+    @Override
+    public Sales findBySalesNo(String salesNo) {
+        String hql = "from Sales sales where sales.salesNo = ?";
+        return (Sales)this.queryByHql(hql, salesNo);
+    }
 }

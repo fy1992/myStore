@@ -43,4 +43,10 @@ public class CashierDaoImpl extends BaseDaoImpl<Cashier> implements ICashierDao{
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);
     }
+
+    @Override
+    public Cashier findByCashierNo(String cashierNo) {
+        String hql = "from Cashier cashier where cashier.cashierNo = ?";
+        return (Cashier)this.queryByHql(hql, cashierNo);
+    }
 }

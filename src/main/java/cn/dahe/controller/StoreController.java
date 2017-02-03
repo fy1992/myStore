@@ -5,6 +5,7 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.Store;
 import cn.dahe.model.User;
 import cn.dahe.service.IStoreService;
+import cn.dahe.util.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -93,6 +94,19 @@ public class StoreController {
         AjaxObj json = new AjaxObj();
         storeService.update(store);
         json.setMsg("门店信息修改成功");
+        json.setResult(1);
+        return json;
+    }
+
+    /**
+     * 生成门店编号
+     * @return
+     */
+    @RequestMapping("newStoreNo")
+    @ResponseBody
+    public AjaxObj newStoreNo(){
+        AjaxObj json = new AjaxObj();
+        json.setMsg(Long.toString(NumberUtils.getNo(4)));
         json.setResult(1);
         return json;
     }

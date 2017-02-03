@@ -16,4 +16,11 @@ public interface ICashierDao extends IBaseDao<Cashier>{
      * @return
      */
     Pager<Cashier> findByParam(int start, int pageSize, Pager<Object> params);
+
+    /**
+     * 根据收银员编号查询
+     * @param cashierNo
+     * @return
+     */
+    Cashier findByCashierNo(String cashierNo);
 }

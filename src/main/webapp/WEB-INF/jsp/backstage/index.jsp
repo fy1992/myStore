@@ -52,9 +52,9 @@
 				<ul>
 					<li><a _href="<%=request.getContextPath()%>/categories/treeAndList" href="javascript:;">商品分类</a></li>
 					<li><a _href="<%=request.getContextPath()%>/goods/list" href="javascript:;">商品资料</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">批量操作</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">排序管理</a></li>
-					<li><a _href="<%=request.getContextPath()%>/admin/channel/channelList/view" href="javascript:;">口味管理</a></li>
+					<li><a _href="<%=request.getContextPath()%>/channel/channelList/view" href="javascript:;">批量操作</a></li>
+					<li><a _href="<%=request.getContextPath()%>/goods/channelList/view" href="javascript:;">排序管理</a></li>
+					<li><a _href="<%=request.getContextPath()%>/taste/channelList/view" href="javascript:;">口味管理</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -62,11 +62,11 @@
 			<dt><i class="Hui-iconfont">&#xe623;</i>库存<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="<%=request.getContextPath()%>/admin/log/logList/view" href="javascript:void(0)">日志记录</a></li>
+					<li><a _href="<%=request.getContextPath()%>/optLog/list" href="javascript:void(0)">日志记录</a></li>
 				</ul>
 			</dd>
 		</dl>
-		<dl id="menu-vip">
+		<%--<dl id="menu-vip">
 			<dt><i class="Hui-iconfont">&#xe623;</i>会员<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -78,8 +78,8 @@
 					<li><a _href="#" href="javascript:void(0)">购物卡管理</a></li>
 				</ul>
 			</dd>
-		</dl>
-		<dl id="menu-salePro">
+		</dl>--%>
+		<%--<dl id="menu-salePro">
 			<dt><i class="Hui-iconfont">&#xe623;</i>营销<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -87,13 +87,13 @@
 					<li><a _href="#" href="javascript:void(0)">促销活动</a></li>
 				</ul>
 			</dd>
-		</dl>
+		</dl>--%>
 		<dl id="menu-member">
 			<dt><i class="Hui-iconfont">&#xe623;</i>员工<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="#" href="javascript:void(0)">收银员</a></li>
-					<li><a _href="#" href="javascript:void(0)">导购员</a></li>
+					<li><a _href="<%=request.getContextPath()%>/employee/cashierList" href="javascript:void(0)">收银员</a></li>
+					<li><a _href="<%=request.getContextPath()%>/employee/salesList" href="javascript:void(0)">导购员</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -103,9 +103,9 @@
                 <ul>
                     <li><a _href="<%=request.getContextPath()%>/supplier/list" href="javascript:void(0)">供货商</a></li>
                     <li><a _href="<%=request.getContextPath()%>/goodsTraffic/list" href="javascript:void(0)">门店订货</a></li>
-                    <li><a _href="#" href="javascript:void(0)">货流管理</a></li>
-                    <li><a _href="#" href="javascript:void(0)">供货商结算</a></li>
-                    <li><a _href="#" href="javascript:void(0)">贷款汇总</a></li>
+                    <li><a _href="<%=request.getContextPath()%>/goodsTrafficManage/list" href="javascript:void(0)">货流管理</a></li>
+                    <%--<li><a _href="#" href="javascript:void(0)">供货商结算</a></li>
+                    <li><a _href="#" href="javascript:void(0)">贷款汇总</a></li>--%>
                 </ul>
             </dd>
         </dl>
@@ -117,14 +117,14 @@
 				</ul>
 			</dd>
 		</dl>
-		<dl id="menu-user">
+		<%--<dl id="menu-user">
 			<dt><i class="Hui-iconfont">&#xe623;</i>账户<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
 					<li><a _href="#" href="javascript:void(0)">账户信息</a></li>
 				</ul>
 			</dd>
-		</dl>
+		</dl>--%>
 	</div>
 </aside>
 <div class="dislpayArrow"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>

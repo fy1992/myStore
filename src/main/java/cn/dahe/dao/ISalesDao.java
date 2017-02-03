@@ -16,4 +16,11 @@ public interface ISalesDao extends IBaseDao<Sales>{
      * @return
      */
     Pager<Sales> findByParam(int start, int pageSize, Pager<Object> params);
+
+    /**
+     * 根据导购员编号查询
+     * @param salesNo
+     * @return
+     */
+    Sales findBySalesNo(String salesNo);
 }
