@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 /**
  * 导购员
@@ -31,9 +32,14 @@ public class Sales {
     //是否开启精准营销  0 不开启 1  开启
     @Column(name = "is_pre_mark")
     private int isPreMark;
+    //精准营销有效期
+    @Column(name = "pre_mark_time")
+    private Date preMarkTime;
     //所属分店
     @Column(name = "store_id")
     private int storeId;
+    @Column(name = "store_name")
+    private int storeIName;
     public int getId() {
         return id;
     }
@@ -96,5 +102,21 @@ public class Sales {
 
     public void setStoreId(int storeId) {
         this.storeId = storeId;
+    }
+
+    public int getStoreIName() {
+        return storeIName;
+    }
+
+    public void setStoreIName(int storeIName) {
+        this.storeIName = storeIName;
+    }
+
+    public Date getPreMarkTime() {
+        return preMarkTime;
+    }
+
+    public void setPreMarkTime(Date preMarkTime) {
+        this.preMarkTime = preMarkTime;
     }
 }

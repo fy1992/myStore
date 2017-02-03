@@ -28,7 +28,7 @@ public class SupplierSettlement {
     @Column(name = "store_name")
     private String storeName;
     //货流单号
-    @Column(name = "traffic_no'")
+    @Column(name = "traffic_no")
     private String trafficNo;
     //下单时间
     @Column(name = "order_date")

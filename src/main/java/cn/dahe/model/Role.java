@@ -53,7 +53,13 @@ public class Role {
     //所属分店
     @Column(name = "store_id")
     private int storeId;
-
+    @Column(name = "store_name")
+    private int storeName;
+    //状态  0  停用 1 启用
+    private int status;
+    //是否同步相应收银员的权限 0 不同步 1 同步
+    @Column(name = "is_asyne")
+    private int isAsync;
     @Transient
     public Set<String> getPermissionsName(){
         Set<Permission> permissions = getPermissionSet();
@@ -118,5 +124,29 @@ public class Role {
 
     public void setStoreId(int storeId) {
         this.storeId = storeId;
+    }
+
+    public int getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(int storeName) {
+        this.storeName = storeName;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getIsAsync() {
+        return isAsync;
+    }
+
+    public void setIsAsync(int isAsync) {
+        this.isAsync = isAsync;
     }
 }

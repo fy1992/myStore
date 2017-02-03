@@ -25,7 +25,7 @@ public class GoodsTraffic {
     @Column(name = "order_time")
     private Date orderTime;
     //期望发货时间
-    @Column(name = "wish_time'")
+    @Column(name = "wish_time")
     private Date wishTime;
     //订货状态 -1 已作废 0 待审核 1 配货中 2 已完成
     private int status;
@@ -40,7 +40,6 @@ public class GoodsTraffic {
     //所包含的订货信息
     @OneToMany(mappedBy = "goodsTraffic", cascade = CascadeType.ALL)
     private Set<OrderGoodsInfo> goodsInfoSet = new HashSet<>();
-
     //如果订货的门店是连锁店则需要以下属性：
     //配货门店Id
     @Column(name = "prepare_store_id")

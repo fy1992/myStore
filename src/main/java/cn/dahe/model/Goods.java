@@ -116,7 +116,7 @@ public class Goods {
     @Column(name = "is_print")
     private int isPrint;
     //是否是积分商品 0 不是 1 是
-    @Column(name = "is_score'")
+    @Column(name = "is_score")
     private int isScore;
     public int getId() {
         return id;

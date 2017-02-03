@@ -59,6 +59,8 @@ public class Cashier {
     //所属分店
     @Column(name = "store_id")
     private int storeId;
+    @Column(name = "store_name")
+    private String storeName;
 
     public int getId() {
         return id;
@@ -130,5 +132,13 @@ public class Cashier {
 
     public void setStoreId(int storeId) {
         this.storeId = storeId;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 }

@@ -52,7 +52,7 @@ public class OrderGoodsInfo {
     private GoodsTraffic goodsTraffic;
     //所属订单管理
     @ManyToOne
-    @JoinColumn(name = "traffic_manager")
+    @JoinColumn(name = "traffic_manage")
     private TrafficManage trafficManage;
     //供货商id
     @Column(name = "supplier_id")
