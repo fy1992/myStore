@@ -205,7 +205,7 @@ function roleManager(){
     var	h = ($(window).height() - 50);
     var index = layer.open({
         type : 2,
-        title:'员工角色',
+        title:'员工 > 员工角色',
         content : "<%=request.getContextPath()%>/role/list",
         area : [ w+'px', h+'px' ],
         maxmin : true

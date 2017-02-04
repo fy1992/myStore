@@ -17,25 +17,26 @@
 <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 
-<title>角色列表</title>
+<title>店面列表</title>
 </head>
 <body class="pos-r">
 <div>
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 员工 <span class="c-gray en">&gt;</span> 员工角色 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>  <span class="c-gray en">&gt;</span> 门店 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="l">
-                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增角色</a>
+                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增门店</a>
             </span>
         </div>
         <div class="pd-20 clearfix">
-            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="role_table">
+            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="store_table">
                 <thead>
                     <tr class="text-c">
                         <th >序号</th>
                         <th >操作</th>
-                        <th >所属门店</th>
-                        <th >角色名称</th>
+                        <th >名称</th>
+                        <th >门店编号</th>
+                        <th >是否是连锁店</th>
                         <th >状态</th>
                     </tr>
                 </thead>
@@ -55,13 +56,13 @@
 <script type="text/javascript">
 //搜索
 $(function(){
-	$("#role_search").click(function(){
+	$("#store_search").click(function(){
 		table.fnDraw();
 	});
 });
 
 //table start here
-table = $('#role_table').dataTable({
+table = $('#store_table').dataTable({
 	   "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示  
        "bPaginate": true,//是否显示（应用）分页器  
        "bLengthChange": false,
@@ -74,8 +75,12 @@ table = $('#role_table').dataTable({
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
             return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
         }},
+        {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "roleName", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "storeNo", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "type", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return data == 1 ? "是" : "否" ;
+        }},
         {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
             return data == 1 ? "启用" : "停用" ;
         }}
@@ -100,7 +105,7 @@ table = $('#role_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/role/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/store/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -185,7 +190,7 @@ function formatDate(val){
 
 //新增
 function add() {
-    layer_show("新增角色", "<%=request.getContextPath()%>/role/add", "800", "600");
+    layer_show("新增角色", "<%=request.getContextPath()%>/store/add", "800", "600");
 }
 </script>
 </body>
