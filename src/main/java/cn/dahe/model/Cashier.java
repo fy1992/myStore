@@ -31,7 +31,12 @@ public class Cashier {
     @Column(name = "cashier_no")
     private String cashierNo;
     //手机号
-    private String phone;
+    private String mobile;
+    //邮箱
+    private String email;
+    //地址
+    private String addr;
+
     //收银员角色
     @ManyToOne
     @JoinColumn(name = "role_id")
@@ -94,12 +99,12 @@ public class Cashier {
         this.cashierNo = cashierNo;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public Role getRole() {

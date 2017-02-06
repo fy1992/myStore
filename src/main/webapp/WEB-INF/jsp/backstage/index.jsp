@@ -117,6 +117,14 @@
 				</ul>
 			</dd>
 		</dl>
+		<%--<dl id="menu-supplier">
+			<dt><i class="Hui-iconfont">&#xe623;</i>供货<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a _href="<%=request.getContextPath()%>/supplier/list" href="javascript:void(0)">我的供货</a></li>
+				</ul>
+			</dd>
+		</dl>--%>
 		<%--<dl id="menu-user">
 			<dt><i class="Hui-iconfont">&#xe623;</i>账户<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>

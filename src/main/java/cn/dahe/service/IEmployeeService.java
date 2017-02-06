@@ -1,9 +1,11 @@
 package cn.dahe.service;
 
+import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Cashier;
 import cn.dahe.model.Sales;
 import cn.dahe.model.User;
+
 
 /**
  * 员工 （收银员、导购员）
@@ -15,6 +17,20 @@ public interface IEmployeeService {
     void updateCashier(Cashier t);
     Cashier getCashier(int id);
     Cashier loadCashier(int id);
+    /**
+     * 根据工号查找
+     * @param cashierNo
+     * @return
+     */
+    Cashier findByCashierNo(String cashierNo);
+
+    /**
+     *
+     * @param cashierNo
+     * @param password
+     * @return
+     */
+    AjaxObj cashierLogin(String cashierNo, String password);
 
     void addSales(Sales t, User user);
     void delSales(int id);
@@ -22,6 +38,12 @@ public interface IEmployeeService {
     Sales getSales(int id);
     Sales loadSales(int id);
 
+    /**
+     * 根据工号查找
+     * @param salesNo
+     * @return
+     */
+    Sales findBySalesNo(String salesNo);
     /**
      * 收银员列表
      * @param aDataSet

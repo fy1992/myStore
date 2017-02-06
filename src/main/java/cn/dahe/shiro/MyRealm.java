@@ -31,7 +31,6 @@ import java.util.Set;
 public class MyRealm extends AuthorizingRealm {
     @Resource
     private IUserDao userDao;
-
     /**
      * 权限认证
      */

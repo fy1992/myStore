@@ -47,7 +47,6 @@
                         <th width="50">编号</th>
                         <th width="50">姓名</th>
                         <th width="50">角色</th>
-                        <th width="50">密码</th>
                         <th width="50">电话</th>
                         <th width="50">状态</th>
                     </tr>
@@ -94,7 +93,6 @@ table = $('#cashier_table').dataTable({
         {"mData" : "role", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
             return data.name ;
         }},
-        {"mData" : "password", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "phone", "sDefaultContent" : ""},
         {"mData" : "status", "sDefaultContent" : "", "mRender" : function (data, type, full) {
             return data == 0 ? "停用" : "启用" ;

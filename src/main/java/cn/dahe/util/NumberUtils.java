@@ -1,7 +1,5 @@
 package cn.dahe.util;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -22,6 +20,16 @@ public class NumberUtils {
         }
         return Long.parseLong(result);
     }
+
+    /**
+     * 判断是否是手机号
+     * @param mobile 手机号
+     * @return
+     */
+    public static boolean isMobile(String mobile){
+        return mobile.length() > 6 && mobile.length() <= 11 && mobile.matches("^1[34578][0-9]{9}$");
+    }
+
 
     public static void main(String[] args) {
         System.out.println(getNo(18));

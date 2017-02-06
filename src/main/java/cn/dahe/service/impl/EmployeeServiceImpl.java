@@ -2,18 +2,24 @@ package cn.dahe.service.impl;
 
 import cn.dahe.dao.ICashierDao;
 import cn.dahe.dao.ISalesDao;
+import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Cashier;
 import cn.dahe.model.Sales;
 import cn.dahe.model.User;
 import cn.dahe.service.IEmployeeService;
+import cn.dahe.util.SecurityUtil;
+import cn.dahe.util.StringUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by fy on 2017/1/27.
@@ -29,6 +35,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
     @Override
     public void addCashier(Cashier t, User user) {
         t.setStoreId(user.getStoreId());
+        t.setPassword(SecurityUtil.MD5(t.getPassword()));
         cashierDao.add(t);
     }
 
@@ -111,5 +118,43 @@ public class EmployeeServiceImpl implements IEmployeeService{
             params.setOrderColumn("cashier.id");
             return cashierDao.findByParam(start, pageSize, params);
         }
+    }
+
+    @Override
+    public Cashier findByCashierNo(String cashierNo) {
+        return cashierDao.findByCashierNo(cashierNo);
+    }
+
+    @Override
+    public AjaxObj cashierLogin(String cashierNo, String password) {
+        Cashier cashier = findByCashierNo(cashierNo);
+        AjaxObj json = new AjaxObj();
+        if(StringUtils.isBlank(cashierNo) || StringUtils.isBlank(password)){
+            json.setResult(0);
+            json.setMsg("用户名或密码不能为空");
+            return json;
+        }
+        if(cashier == null){
+            json.setResult(0);
+            json.setMsg("很抱歉，您输入的工号不存在");
+            return json;
+        }
+        if(!SecurityUtil.MD5(password).equals(cashier.getPassword())){
+            json.setResult(0);
+            json.setMsg("密码输入有误，请重新输入");
+            return json;
+        }
+        if(cashier.getStatus() == 0){
+            json.setResult(0);
+            json.setMsg("很抱歉，该工号已停用");
+            return json;
+        }
+        json.setResult(1);
+        return json;
+    }
+
+    @Override
+    public Sales findBySalesNo(String salesNo) {
+        return salesDao.findBySalesNo(salesNo);
     }
 }

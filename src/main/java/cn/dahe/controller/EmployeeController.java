@@ -169,5 +169,4 @@ public class EmployeeController {
         json.setResult(1);
         return json;
     }
-
 }

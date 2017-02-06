@@ -2,6 +2,7 @@ package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.model.User;
+import cn.dahe.service.IEmployeeService;
 import cn.dahe.util.SecurityUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -34,6 +36,8 @@ import javax.validation.Valid;
 @Controller
 public class LoginController {
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
+    @Resource
+    private IEmployeeService employeeService;
 
     /**
      * 登录页跳转
@@ -98,11 +102,23 @@ public class LoginController {
     /**
      * 退出
      * */
-    @RequestMapping(value="/logout",method=RequestMethod.GET)
+    @RequestMapping(value="/logout", method=RequestMethod.GET)
     public String logout(RedirectAttributes redirectAttributes){
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         SecurityUtils.getSubject().logout();
         redirectAttributes.addFlashAttribute("msg", "您已安全退出");
         return "redirect:/login";
+    }
+
+    /**
+     * 收银员登录
+     * @param cashierNo
+     * @param password
+     * @return
+     */
+    @RequestMapping(value = "cashierLogin", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj cashierLogin(String cashierNo, String password, HttpSession session){
+        return employeeService.cashierLogin(cashierNo, password);
     }
 }
