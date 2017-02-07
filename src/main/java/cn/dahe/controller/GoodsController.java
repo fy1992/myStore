@@ -158,7 +158,7 @@ public class GoodsController {
      */
     @RequestMapping(value = "goodsTags", method = RequestMethod.GET)
     public String addGoodsTags(){
-        return "goods/spbqgl";
+        return "goods/goodsTags";
     }
 
     /**
@@ -172,6 +172,18 @@ public class GoodsController {
     public Pager<GoodsTags> goodsTagsList(String aDataSet, HttpSession session){
         User user = (User)session.getAttribute("loginUser");
         return goodsTagsService.findByParams(aDataSet, user.getStoreId());
+    }
+
+    /**
+     * 得到所有的标签
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "findAllGoodsTags", method = RequestMethod.POST)
+    @ResponseBody
+    public List<GoodsTags> findAllGoodsTags(HttpSession session){
+        User user = (User)session.getAttribute("loginUser");
+        return goodsTagsService.findAll(user.getStoreId());
     }
 
     /**
@@ -309,6 +321,11 @@ public class GoodsController {
         return smallTicketService.findByParams(aDataSet, user.getStoreId());
     }
 
+    /**
+     * 得到所有的小票
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "findAllSmallTicket", method = RequestMethod.POST)
     @ResponseBody
     public List<SmallTicket> findAllSmallTicket(HttpSession session){

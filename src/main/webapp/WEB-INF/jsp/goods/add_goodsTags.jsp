@@ -1,3 +1,5 @@
+<%@page language="java" pageEncoding="utf-8"%>
+<%@include file="/WEB-INF/jsp/taglib.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,16 +11,10 @@
 </head>
 <body>
 <div class="box-shadow mb-40 pd-20 clearfixs" id="ckBox">
-	<!--<label><input type="checkbox" name="ck1" />aaa</label>
-	<label><input type="checkbox" name="ck1" />aaa</label>
-	<label><input type="checkbox" name="ck1" />aaa</label>
-	<label><input type="checkbox" name="ck1" />aaa</label>
-	<label><input type="checkbox" name="ck1" />aaa</label>
-	<label><input type="checkbox" name="ck1" />aaa</label>-->
 	<br clear="all" />
 </div>
 <div class="cfpdBtnbox">
-	<a class="btn btn-success size-M layui-layer-close layui-layer-close1" id="xpj">管理标签</a>
+	<a class="btn btn-success size-M layui-layer-close layui-layer-close1" id="tags">管理标签</a>
 	<a class="btn btn-primary size-M f-r pl-20 pr-20" id="ensure">确认</a>
 </div>
 
@@ -26,9 +22,17 @@
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
 <script>
 $(function(){
-	//管理小票机
-	$("#xpj").click(function(){
-		$.get("spbqgl",function(html){
+    $.post("<%=request.getContextPath()%>/goods/findAllGoodsTags", function(data){
+        for(var n in data){
+            $("#ckBox").append(
+                "<label><input type=\"checkbox\" name=\"ck1\" value = '"+data[n].id+"'/>"+data[n].name+"</label>"
+            );
+        }
+    });
+
+	//管理标签
+	$("#tags").click(function(){
+		$.get("<%=request.getContextPath()%>/goods/goodsTags",function(html){
 			$("body").html(html);
 		},"html");
 	});
@@ -42,6 +46,5 @@ function layer_close(){
 	parent.layer.close(index);
 }
 </script>
-
 </body>
 </html>

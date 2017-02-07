@@ -21,9 +21,9 @@ public class GoodsTagsDaoImpl extends BaseDaoImpl<GoodsTags> implements IGoodsTa
     }
 
     @Override
-    public List<GoodsTags> findAll() {
-        String hql = "from GoodsTags";
-        return list(hql);
+    public List<GoodsTags> findAll(int storeId) {
+        String hql = "from GoodsTags where storeId = ?";
+        return list(hql, storeId);
     }
 
     @Override

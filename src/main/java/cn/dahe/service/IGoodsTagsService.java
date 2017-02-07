@@ -25,9 +25,10 @@ public interface IGoodsTagsService{
 
     /**
      * 查询每个店铺下所有的
+     * @param storeId
      * @return
      */
-    List<GoodsTags> findAll();
+    List<GoodsTags> findAll(int storeId);
 
     /**
      * 根据参数查询

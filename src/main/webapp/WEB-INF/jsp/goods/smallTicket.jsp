@@ -19,30 +19,6 @@
 		</tr>
 	</thead>
 	<tbody id = "smallTicketList">
-		<%--<tr class="text-c">
-			<td><input type="text" class="input-text" value="后厨"></td>
-			<td>
-				<span class="select-box">
-					<select class="select">
-						<option value="0">一品一切</option>
-						<option value="1">一单一切</option>
-					</select>
-				</span>
-			</td>
-			<td><a class="btn btn-danger size-MINI radius" onclick="xpj_del(this,'10001')">删除</a></td>
-		</tr>--%>
-		<%--<tr class="text-c">
-			<td><input type="text" class="input-text" value="后厨"></td>
-			<td>
-				<span class="select-box">
-					<select class="select">
-						<option value="0">一品一切</option>
-						<option value="1">一单一切</option>
-					</select>
-				</span>
-			</td>
-			<td><a class="btn btn-danger size-MINI radius" onclick="del(this)">删除</a></td>
-		</tr>--%>
 	</tbody>
 </table>
 <p><a class="btn border-grey block mt-20 mb-40" id="addxpj">+ 添加小票机</a></p>
@@ -161,7 +137,6 @@ function del(id){
         yes: function(index){
             $.post("<%=request.getContextPath()%>/goods/delSmallTicket", {"id" : id}, function(data){
                 layer.msg(data.msg);
-                table.fnDraw();
             });
         }
     });

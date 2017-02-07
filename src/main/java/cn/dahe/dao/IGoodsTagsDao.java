@@ -28,7 +28,8 @@ public interface IGoodsTagsDao extends IBaseDao<GoodsTags>{
 
     /**
      *查询全部
+     * @param storeId
      * @return
      */
-     List<GoodsTags> findAll();
+     List<GoodsTags> findAll(int storeId);
 }

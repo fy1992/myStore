@@ -54,8 +54,8 @@ public class GoodsTagsServiceImpl implements IGoodsTagsService{
     }
 
     @Override
-    public List<GoodsTags> findAll() {
-        return goodsTagsDao.findAll();
+    public List<GoodsTags> findAll(int storeId) {
+        return goodsTagsDao.findAll(storeId);
     }
 
     @Override
