@@ -243,7 +243,16 @@ function formatDate(val){
 
 //新增
 function add() {
-    layer_show("新增商品", "<%=request.getContextPath()%>/goods/addGoods", "800", "600");
+    var w = 800;
+    var	h = ($(window).height() - 50);
+    var index = layer.open({
+        type : 2,
+        title:'新增商品',
+        content : "<%=request.getContextPath()%>/goods/addGoods",
+        area : [ w+'px', h+'px' ],
+        maxmin : true
+    });
+    layer.full(index);
 }
 
 //单位

@@ -226,8 +226,7 @@ $(document).ready(function(){
 function add(){
     var pid = $("#categories_pid").val();
     if(!pid){
-        layer.msg("请选择具体父节点");
-        return false;
+        pid = 0;
     }
     layer_show("分类添加", "<%=request.getContextPath()%>/categories/addCategories/"+pid, "400", "220");
 }

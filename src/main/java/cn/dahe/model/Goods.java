@@ -97,13 +97,13 @@ public class Goods {
     @JoinTable(name = "t_goods_smallTicket",
             joinColumns = {@JoinColumn(name = "goods_id")},
             inverseJoinColumns = {@JoinColumn(name = "ticket_id")})
-    private Set<SmallTicket> smallTicketList = new HashSet<>();
+    private Set<SmallTicket> smallTicketSet = new HashSet<>();
     //商品标签
     @ManyToMany
     @JoinTable(name = "t_goods_goodsTags",
             joinColumns = {@JoinColumn(name = "goods_id")},
             inverseJoinColumns = {@JoinColumn(name = "tags_id")})
-    private Set<GoodsTags> goodsTagsList = new HashSet<>();
+    private Set<GoodsTags> goodsTagsSet = new HashSet<>();
     //所属店面
     @Column(name = "store_id")
     private int storeId;
@@ -286,20 +286,20 @@ public class Goods {
         this.description = description;
     }
 
-    public Set<SmallTicket> getSmallTicketList() {
-        return smallTicketList;
+    public Set<SmallTicket> getSmallTicketSet() {
+        return smallTicketSet;
     }
 
-    public void setSmallTicketList(Set<SmallTicket> smallTicketList) {
-        this.smallTicketList = smallTicketList;
+    public void setSmallTicketSet(Set<SmallTicket> smallTicketSet) {
+        this.smallTicketSet = smallTicketSet;
     }
 
-    public Set<GoodsTags> getGoodsTagsList() {
-        return goodsTagsList;
+    public Set<GoodsTags> getGoodsTagsSet() {
+        return goodsTagsSet;
     }
 
-    public void setGoodsTagsList(Set<GoodsTags> goodsTagsList) {
-        this.goodsTagsList = goodsTagsList;
+    public void setGoodsTagsSet(Set<GoodsTags> goodsTagsSet) {
+        this.goodsTagsSet = goodsTagsSet;
     }
 
     public Stock getStock() {

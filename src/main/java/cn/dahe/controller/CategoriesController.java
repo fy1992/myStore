@@ -137,4 +137,15 @@ public class CategoriesController {
         json.setResult(1);
         return json;
     }
+
+    /**
+     * 查询全部分类
+     * @return
+     */
+    @RequestMapping(value = "categoriesList", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Categories> categoriesList(HttpSession session){
+        User user = (User) session.getAttribute("loginUser");
+        return categoriesService.findAll(user.getStoreId());
+    }
 }

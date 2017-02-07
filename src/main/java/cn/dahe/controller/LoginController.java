@@ -121,4 +121,5 @@ public class LoginController {
     public AjaxObj cashierLogin(String cashierNo, String password, HttpSession session){
         return employeeService.cashierLogin(cashierNo, password);
     }
+
 }

@@ -25,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,8 +33,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -54,7 +57,8 @@ public class GoodsController {
     private ISmallTicketService smallTicketService;
     @Resource
     private ICategoriesService categoriesService;
-
+    // 商品单位
+    //=====================================goodsUnit begin=====================================================
     /***
      * 添加商品单位页
      * @return
@@ -136,13 +140,25 @@ public class GoodsController {
         return json;
     }
 
+    /**
+     * 查询所有商品单位
+     * @return
+     */
+    @RequestMapping(value = "getAllGoodsUnit", method = RequestMethod.POST)
+    @ResponseBody
+    public List<GoodsUnit> goodsUnitList(){
+        return goodsUnitService.findAll();
+    }
+    //=====================================goodsUnit end=====================================================
+    //商品标签
+    //=====================================goodsTags begin=====================================================
     /***
      * 添加商品标签页
      * @return
      */
     @RequestMapping(value = "goodsTags", method = RequestMethod.GET)
     public String addGoodsTags(){
-        return "goods/goodsTags";
+        return "goods/spbqgl";
     }
 
     /**
@@ -216,6 +232,29 @@ public class GoodsController {
         return json;
     }
 
+    /**
+     * 商品标签选择
+     *@param  id
+     * @return
+     */
+    @RequestMapping("goodsTagsSelect")
+    public String goodsTagsSelect(@RequestParam(required = false, defaultValue = "0") String id, Model model){
+        if(!id.equals("0")){
+            Goods goods = goodsService.get(Integer.parseInt(id));
+            if(goods != null){
+                Set<GoodsTags> goodsTagsSet = goods.getGoodsTagsSet();
+                model.addAttribute("goodsTags", goodsTagsSet);
+            }else{
+                model.addAttribute("goodsTags", new HashSet<>());
+            }
+        }else{
+            model.addAttribute("goodsTags", new HashSet<>());
+        }
+        return "goods/add_goodsTags";
+    }
+    //=====================================goodsTags end=====================================================
+    //厨打小票
+    //=====================================smallTicket begin=====================================================
     /***
      * 添加商品小票
      * @return
@@ -227,16 +266,16 @@ public class GoodsController {
 
     /**
      * 小票添加
-     * @param name
+     * @param smallTicketList
      * @param session
      * @return
      */
     @RequestMapping(value = "addSmallTicket", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addSmallTicket(String name, int type, HttpSession session){
+    public AjaxObj addSmallTicket(String smallTicketList, HttpSession session){
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
-        smallTicketService.add(name, type, user.getStoreId());
+        smallTicketService.add(smallTicketList, user.getStoreId());
         json.setMsg("小票添加成功");
         json.setResult(1);
         return json;
@@ -270,6 +309,37 @@ public class GoodsController {
         return smallTicketService.findByParams(aDataSet, user.getStoreId());
     }
 
+    @RequestMapping(value = "findAllSmallTicket", method = RequestMethod.POST)
+    @ResponseBody
+    public List<SmallTicket> findAllSmallTicket(HttpSession session){
+        User user = (User)session.getAttribute("loginUser");
+        return smallTicketService.findAll(user.getStoreId());
+    }
+
+    /**
+     * 厨房小票选择
+     *@param  id
+     * @return
+     */
+    @RequestMapping("smallTicketSelect")
+    public String smallTicketSelect(@RequestParam(required = false, defaultValue = "0") String id, Model model){
+        if(!id.equals("0")){
+            Goods goods = goodsService.get(Integer.parseInt(id));
+            if(goods != null){
+                Set<SmallTicket> smallTicketSet = goods.getSmallTicketSet();
+                model.addAttribute("smallTicket", smallTicketSet);
+            }else{
+                model.addAttribute("smallTicket", new HashSet<>());
+            }
+        }else{
+            model.addAttribute("smallTicket", new HashSet<>());
+        }
+        return "goods/add_smallTicket";
+    }
+
+    //=======================================smallTicket end=======================================================
+    //商品
+    //=======================================goods begin=========================================================
     /**
      * 商品添加页面跳转
      * @return
@@ -471,4 +541,26 @@ public class GoodsController {
         json.setResult(1);
         return json;
     }
+
+    /**
+     * 商品图片上传
+     * @return
+     */
+    @RequestMapping(value = "uploadImg", method = RequestMethod.GET)
+    public String uploadImgView(){
+        return "goods/imgUpload";
+    }
+
+    /**
+     * 商品图片上传
+     * @return
+     */
+    @RequestMapping(value = "uploadImg", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj uploadImg(){
+        AjaxObj json = new AjaxObj();
+
+        return json;
+    }
+    //=======================================goods end=========================================================
 }

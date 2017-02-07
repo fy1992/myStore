@@ -170,4 +170,9 @@ public class CategoriesServiceImpl implements ICategoriesService{
     public Categories findByName(String name, int storeId) {
         return categoriesDao.findByName(name, storeId);
     }
+
+    @Override
+    public List<Categories> findAll(int storeId) {
+        return categoriesDao.findAll(storeId);
+    }
 }

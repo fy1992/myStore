@@ -5,6 +5,7 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.SmallTicket;
 import cn.dahe.model.User;
 import cn.dahe.service.ISmallTicketService;
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -61,12 +62,32 @@ public class SmallTicketServiceImpl implements ISmallTicketService{
     }
 
     @Override
-    public SmallTicket findByName(String name, User user) {
-        return smallTicketDao.findByName(name, user.getStoreId());
+    public SmallTicket findByName(String name, int storeId) {
+        return smallTicketDao.findByName(name, storeId);
     }
 
     @Override
-    public List<SmallTicket> findAll() {
-        return smallTicketDao.findAll();
+    public List<SmallTicket> findAll(int storeId) {
+        return smallTicketDao.findAll(storeId);
+    }
+
+    @Override
+    public void add(String smallTicketList, int storeId) {
+        List<SmallTicket> smallTickets = JSON.parseArray(smallTicketList, SmallTicket.class);
+        for(SmallTicket smallTicket : smallTickets){
+            SmallTicket smallTicket1;
+            int id = smallTicket.getId();
+            if(id == 0){
+                smallTicket1 = findByName(smallTicket.getName(), storeId);
+                if(smallTicket1 == null) {
+                    add(smallTicket);
+                }
+            }else{
+                smallTicket1 = get(id);
+                smallTicket1.setName(smallTicket.getName());
+                smallTicket1.setType(smallTicket.getType());
+                update(smallTicket1);
+            }
+        }
     }
 }

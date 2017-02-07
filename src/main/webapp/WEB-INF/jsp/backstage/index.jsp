@@ -50,8 +50,8 @@
 			<dt><i class="Hui-iconfont">&#xe6c0;</i> 商品<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="<%=request.getContextPath()%>/categories/treeAndList" href="javascript:;">商品分类</a></li>
-					<li><a _href="<%=request.getContextPath()%>/goods/list" href="javascript:;">商品资料</a></li>
+                    <li><a _href="<%=request.getContextPath()%>/goods/list" href="javascript:;">商品资料</a></li>
+                    <li><a _href="<%=request.getContextPath()%>/categories/treeAndList" href="javascript:;">商品分类</a></li>
 					<li><a _href="<%=request.getContextPath()%>/channel/channelList/view" href="javascript:;">批量操作</a></li>
 					<li><a _href="<%=request.getContextPath()%>/goods/channelList/view" href="javascript:;">排序管理</a></li>
 					<li><a _href="<%=request.getContextPath()%>/taste/channelList/view" href="javascript:;">口味管理</a></li>

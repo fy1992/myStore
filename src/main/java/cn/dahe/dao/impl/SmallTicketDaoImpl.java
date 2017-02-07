@@ -18,8 +18,8 @@ public class SmallTicketDaoImpl extends BaseDaoImpl<SmallTicket> implements ISma
     }
 
     @Override
-    public List<SmallTicket> findAll() {
-        String hql = "from SmallTicket";
-        return list(hql);
+    public List<SmallTicket> findAll(int storeId) {
+        String hql = "from SmallTicket where storeId = ?";
+        return list(hql, storeId);
     }
 }

@@ -19,7 +19,8 @@ public interface ISmallTicketDao extends IBaseDao<SmallTicket>{
 
     /**
      *查询全部
+     * @param storeId
      * @return
      */
-    List<SmallTicket> findAll();
+    List<SmallTicket> findAll(int storeId);
 }

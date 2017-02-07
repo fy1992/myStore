@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -96,12 +98,13 @@ public class SupplierController {
      */
     @RequestMapping(value = "allSupplier", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj allSupplier(HttpSession session){
-        AjaxObj json = new AjaxObj();
+    public List<Supplier> allSupplier(HttpSession session){
         User user = (User) session.getAttribute("loginUser");
-        json.setObject(supplierService.findAll(user.getStoreId()));
-        json.setResult(1);
-        return json;
+        List<Supplier> suppliers =  supplierService.findAll(user.getStoreId());
+        if(suppliers == null){
+            suppliers = new ArrayList<>();
+        }
+        return  suppliers;
     }
 
     /**

@@ -68,4 +68,11 @@ public interface ICategoriesService {
      * @return
      */
     Categories findByName(String name, int storeId);
+
+    /**
+     * 查询全部
+     * @param storeId
+     * @return
+     */
+    List<Categories> findAll(int storeId);
 }
