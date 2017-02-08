@@ -8,6 +8,7 @@ import cn.dahe.model.StoreGoodsTraffic;
 import cn.dahe.service.IStoreService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.NumberUtils;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -33,11 +34,12 @@ public class StoreServiceImpl implements IStoreService{
     @Override
     public void add(Store t) {
         t.setCreateDate(new Date());
-        storeDao.add(t);
         t.setStoreNo(Long.toString(NumberUtils.getNo(5)));
-        Store store = storeDao.findByStoreNo(t.getStoreNo());
+        int storeId = storeDao.addAndGetId4Integer(t);
+        Store store = get(storeId);
         StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();
-        storeGoodsTraffic.setStoreId(store.getId());
+        storeGoodsTraffic.setStoreId(storeId);
+        storeGoodsTraffic.setStoreName(store.getName());
         storeGoodsTrafficDao.add(storeGoodsTraffic);
     }
 
@@ -120,5 +122,24 @@ public class StoreServiceImpl implements IStoreService{
     @Override
     public StoreGoodsTraffic findByStoreId(int id) {
         return storeGoodsTrafficDao.findByStoreId(id);
+    }
+
+    @Override
+    public List<StoreGoodsTraffic> findAllStoreGoodsTraffic() {
+        return storeGoodsTrafficDao.findAll();
+    }
+
+    @Override
+    public void updateStoreGoodsTraffics(String storeGoodsTraffics) {
+        List<StoreGoodsTraffic> storeGoodsTrafficList = JSON.parseArray(storeGoodsTraffics, StoreGoodsTraffic.class);
+        for(StoreGoodsTraffic storeGoodsTraffic : storeGoodsTrafficList){
+            StoreGoodsTraffic sgt = storeGoodsTrafficDao.get(storeGoodsTraffic.getId());
+            sgt.setDifferentOpt(storeGoodsTraffic.getDifferentOpt());
+            sgt.setIsPayOnline(storeGoodsTraffic.getIsPayOnline());
+            sgt.setPreparePriceType(storeGoodsTraffic.getPreparePriceType());
+            sgt.setPrepareStoreId(storeGoodsTraffic.getPrepareStoreId());
+            sgt.setPrepareStoreName(storeGoodsTraffic.getPrepareStoreName());
+            storeGoodsTrafficDao.update(sgt);
+        }
     }
 }

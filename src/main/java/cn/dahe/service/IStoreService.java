@@ -39,4 +39,12 @@ public interface IStoreService {
      * @return
      */
     StoreGoodsTraffic findByStoreId(int id);
+
+    List<StoreGoodsTraffic> findAllStoreGoodsTraffic();
+
+    /**
+     * 门店货流设置
+     * @param storeGoodsTraffics
+     */
+    void updateStoreGoodsTraffics(String storeGoodsTraffics);
 }

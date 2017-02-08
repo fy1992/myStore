@@ -1,5 +1,6 @@
 package cn.dahe.util;
 
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -21,6 +22,12 @@ public class NumberUtils {
         return Long.parseLong(result);
     }
 
+    public static String getNoByTime(){
+        String time = DateUtil.format(new Date(), "yyyyMMddHHmmss");
+        long num = getNo(2);
+        return time + num;
+    }
+
     /**
      * 判断是否是手机号
      * @param mobile 手机号
@@ -32,6 +39,7 @@ public class NumberUtils {
 
 
     public static void main(String[] args) {
-        System.out.println(getNo(18));
+        //System.out.println(getNo(18));
+        System.out.println(getNoByTime());
     }
 }

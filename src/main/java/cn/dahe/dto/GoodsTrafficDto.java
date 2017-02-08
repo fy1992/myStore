@@ -14,8 +14,6 @@ public class GoodsTrafficDto {
     private String description;
     //订的商品信息 商品id , 订的数量
     private Map<Integer, Integer> goodsMap = new HashMap<>();
-    //店面id
-    private int storeId;
     public String getWishTime() {
         return wishTime;
     }
@@ -38,13 +36,5 @@ public class GoodsTrafficDto {
 
     public void setGoodsMap(Map<Integer, Integer> goodsMap) {
         this.goodsMap = goodsMap;
-    }
-
-    public int getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
     }
 }

@@ -30,10 +30,12 @@ public class TrafficManage {
     //货单类型 0 退货单 1 进货单 2 调货单
     @Column(name = "traffic_type")
     private int trafficType;
-    //所属店面
+    //所属店面 (进货门店)
     @Column(name = "store_id")
     private int storeId;
-    //状态
+    @Column(name = "store_name")
+    private String storeName;
+    //状态 0 待确认进货 1 已完成进货
     private int status;
     //总价
     @Column(name = "total_price")
@@ -43,21 +45,14 @@ public class TrafficManage {
     private int outStoreId;
     //出货门店名称
     @Column(name = "out_store_name")
-    private int outStoreName;
-    //进货门店id
-    @Column(name = "in_store_id")
-    private int inStoreId;
-    //出货门店名称
-    @Column(name = "in_store_name")
-    private int inStoreName;
+    private String outStoreName;
     //备注
     private String description;
     //预付款
     private int imprest;
-    //所含的货流信息
-    @OneToMany(mappedBy = "trafficManage", cascade = CascadeType.ALL)
-    private Set<OrderGoodsInfo> orderGoodsInfoSet = new HashSet<>();
-
+    //货流量
+    @Column(name = "goods_num'")
+    private int goodsNum;
     public int getId() {
         return id;
     }
@@ -122,28 +117,20 @@ public class TrafficManage {
         this.outStoreId = outStoreId;
     }
 
-    public int getOutStoreName() {
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getOutStoreName() {
         return outStoreName;
     }
 
-    public void setOutStoreName(int outStoreName) {
+    public void setOutStoreName(String outStoreName) {
         this.outStoreName = outStoreName;
-    }
-
-    public int getInStoreId() {
-        return inStoreId;
-    }
-
-    public void setInStoreId(int inStoreId) {
-        this.inStoreId = inStoreId;
-    }
-
-    public int getInStoreName() {
-        return inStoreName;
-    }
-
-    public void setInStoreName(int inStoreName) {
-        this.inStoreName = inStoreName;
     }
 
     public String getDescription() {
@@ -162,11 +149,11 @@ public class TrafficManage {
         this.imprest = imprest;
     }
 
-    public Set<OrderGoodsInfo> getOrderGoodsInfoSet() {
-        return orderGoodsInfoSet;
+    public int getGoodsNum() {
+        return goodsNum;
     }
 
-    public void setOrderGoodsInfoSet(Set<OrderGoodsInfo> orderGoodsInfoSet) {
-        this.orderGoodsInfoSet = orderGoodsInfoSet;
+    public void setGoodsNum(int goodsNum) {
+        this.goodsNum = goodsNum;
     }
 }

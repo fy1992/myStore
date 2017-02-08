@@ -4,6 +4,8 @@ import cn.dahe.dao.IStoreGoodsTrafficDao;
 import cn.dahe.model.StoreGoodsTraffic;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by fy on 2017/2/2.
  */
@@ -15,5 +17,9 @@ public class StoreGoodsTrafficDaoImpl extends BaseDaoImpl<StoreGoodsTraffic> imp
         return (StoreGoodsTraffic) this.queryByHql(hql, storeId);
     }
 
-
+    @Override
+    public List<StoreGoodsTraffic> findAll() {
+        String hql = "from StoreGoodsTraffic";
+        return this.list(hql);
+    }
 }

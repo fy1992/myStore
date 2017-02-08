@@ -2,6 +2,7 @@ package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.GoodsTrafficDto;
+import cn.dahe.model.Cashier;
 import cn.dahe.service.IEmployeeService;
 import cn.dahe.service.IGoodsTrafficService;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 /**
  * 客户端请求
@@ -25,7 +27,6 @@ public class ClientController {
     private IEmployeeService employeeService;
     @Resource
     private IGoodsTrafficService goodsTrafficService;
-
     /**
      * 客户端订货
      * @param  goodsTrafficDto
@@ -33,10 +34,10 @@ public class ClientController {
      */
     @RequestMapping(value = "orderGoods", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj orderGoods(GoodsTrafficDto goodsTrafficDto){
+    public AjaxObj orderGoods(GoodsTrafficDto goodsTrafficDto, HttpSession session){
         AjaxObj json = new AjaxObj();
-        goodsTrafficService.add(goodsTrafficDto);
-
+        Cashier cashier = (Cashier) session.getAttribute("cashier");
+        goodsTrafficService.add(goodsTrafficDto,  cashier.getStoreId());
         return json;
     }
 }

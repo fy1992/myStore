@@ -19,19 +19,23 @@ public class StoreGoodsTraffic {
     //门店Id
     @Column(name = "store_id")
     private int storeId;
+    @Column(name = "store_name")
+    private String storeName;
     //指定配货门店Id 可以为 0 （无 则默认直接从供货商处进货）
     @Column(name = "prepare_store_id")
     private int prepareStoreId;
+    @Column(name = "prepare_store_name")
+    private String prepareStoreName;
     //配货价格
     //0 配货门店销售价 1 配货门店进货价 2 无
-    @Column(name = "prepare_price_type")
+    @Column(name = "prepare_price_type", columnDefinition = "INT DEFAULT 0")
     private int preparePriceType;
     //是否开启在线支付 0 不开启 1 开启
-    @Column(name = "is_pay_online")
+    @Column(name = "is_pay_online", columnDefinition = "INT DEFAULT 0")
     private int isPayOnline;
     //调货差异操作
     // 0  允许编辑数量，需出货方确认 1 允许编辑数量，直接完成进货 2  不允许编辑数量
-    @Column(name = "different_opt")
+    @Column(name = "different_opt", columnDefinition = "INT DEFAULT 0")
     private int differentOpt;
 
     public int getId() {
@@ -80,6 +84,22 @@ public class StoreGoodsTraffic {
 
     public void setDifferentOpt(int differentOpt) {
         this.differentOpt = differentOpt;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getPrepareStoreName() {
+        return prepareStoreName;
+    }
+
+    public void setPrepareStoreName(String prepareStoreName) {
+        this.prepareStoreName = prepareStoreName;
     }
 }
 

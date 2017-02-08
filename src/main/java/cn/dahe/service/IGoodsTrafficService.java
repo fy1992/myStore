@@ -8,7 +8,7 @@ import cn.dahe.model.GoodsTraffic;
  * Created by fy on 2017/1/23.
  */
 public interface IGoodsTrafficService {
-    void add(GoodsTrafficDto t);
+    void add(GoodsTrafficDto t, int storeId);
     void del(int id);
     void update(GoodsTraffic t);
     GoodsTraffic get(int id);

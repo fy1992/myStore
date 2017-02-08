@@ -2,14 +2,21 @@ package cn.dahe.service.impl;
 
 import cn.dahe.dao.IGoodsDao;
 import cn.dahe.dao.IGoodsTrafficDao;
+import cn.dahe.dao.IOrderGoodsInfoDao;
 import cn.dahe.dao.IStoreDao;
+import cn.dahe.dao.IStoreGoodsTrafficDao;
+import cn.dahe.dao.ITrafficManageDao;
 import cn.dahe.dto.GoodsTrafficDto;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.Goods;
 import cn.dahe.model.GoodsTraffic;
 import cn.dahe.model.OrderGoodsInfo;
 import cn.dahe.model.Store;
+import cn.dahe.model.StoreGoodsTraffic;
+import cn.dahe.model.TrafficManage;
 import cn.dahe.service.IGoodsTrafficService;
 import cn.dahe.util.DateUtil;
+import cn.dahe.util.NumberUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -19,6 +26,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.Order;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -37,27 +47,41 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
     private IGoodsDao goodsDao;
     @Resource
     private IStoreDao storeDao;
-
+    @Resource
+    private IOrderGoodsInfoDao orderGoodsInfoDao;
+    @Resource
+    private ITrafficManageDao trafficManageDao;
+    @Resource
+    private IStoreGoodsTrafficDao storeGoodsTrafficDao;
 
     @Override
-    public void add(GoodsTrafficDto t) {
+    public void add(GoodsTrafficDto t, int storeId) {
         Map<Integer, Integer> map =  t.getGoodsMap();
         Set<Map.Entry<Integer, Integer>> set = map.entrySet();
         GoodsTraffic goodsTraffic = new GoodsTraffic();
+        goodsTraffic.setWishTime(DateUtil.format(t.getWishTime(), "yyyy-MM-dd HH:mm:ss"));
+        goodsTraffic.setDescription(t.getDescription());
+        goodsTraffic.setStatus(0);
+        goodsTraffic.setOrderTime(new Date());
+        Store store = storeDao.get(storeId);
+        goodsTraffic.setOrderStoreId(storeId);
+        goodsTraffic.setOrderStoreName(store.getName());
+        int goodsTrafficId = goodsTrafficDao.addAndGetId4Integer(goodsTraffic);
+
         Set<OrderGoodsInfo> orderGoodsInfoSet = new HashSet<>();
         for(Map.Entry<Integer, Integer> e : set){
             int id = e.getKey();
-            goodsDao.get(id);
-
+            Goods goods = goodsDao.get(id);
+            OrderGoodsInfo goodsInfo = new OrderGoodsInfo(goods);
+            //请求量
+            goodsInfo.setOrderNum(e.getValue());
+            //小计
+            goodsInfo.setPriceSum(goodsInfo.getOrderNum()*goodsInfo.getPrice());
+            goodsInfo.setGoodsTrafficId(goodsTrafficId);
+            orderGoodsInfoDao.add(goodsInfo);
         }
-        goodsTraffic.setWishTime(DateUtil.format(t.getWishTime(), "yyyy-MM-dd HH:mm:ss"));
-        goodsTraffic.setDescription(t.getDescription());
         goodsTraffic.setGoodsInfoSet(orderGoodsInfoSet);
-        goodsTraffic.setStatus(0);
-        goodsTraffic.setOrderTime(new Date());
-        Store store = storeDao.get(t.getStoreId());
-        goodsTraffic.setOrderStoreId(t.getStoreId());
-        goodsTraffic.setOrderStoreName(store.getName());
+        update(goodsTraffic);
     }
 
     @Override
@@ -135,10 +159,38 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
     @Override
     public void prepareGoods(int id, String orderGoodsInfos) {
         GoodsTraffic goodsTraffic = get(id);
-        Set<OrderGoodsInfo> orderGoodsInfoSet = goodsTraffic.getGoodsInfoSet();
-        List<OrderGoodsInfo> orderGoodsInfoList = JSON.parseArray(orderGoodsInfos, OrderGoodsInfo.class);
-        for(int i = 0, len = orderGoodsInfoSet.size(); i < len; i++){
+        //新建货流管理实例
+        TrafficManage trafficManage = new TrafficManage();
+        trafficManage.setStoreId(goodsTraffic.getOrderStoreId());//进货门店
+        trafficManage.setDescription(goodsTraffic.getDescription());
+        trafficManage.setOrderDate(new Date());
+        trafficManage.setStatus(0); //待确认进货
+        trafficManage.setTrafficType(1); // 进货单
+        List<OrderGoodsInfo> ogis =  orderGoodsInfoDao.findByGoodsTrafficId(id);
+        int priceSum = 0, goodsNum = 0;
+        for(OrderGoodsInfo orderGoodsInfo : ogis){
+            priceSum += orderGoodsInfo.getPriceSum();
+            goodsNum += orderGoodsInfo.getDistributeNum();
+        }
+        trafficManage.setTotalPrice(priceSum); //总价
+        trafficManage.setGoodsNum(goodsNum); //货流量
+        trafficManage.setTrafficNo(NumberUtils.getNoByTime());
+        StoreGoodsTraffic storeGoodsTraffic = storeGoodsTrafficDao.findByStoreId(trafficManage.getStoreId());
+        trafficManage.setOutStoreId(storeGoodsTraffic.getPrepareStoreId());//出货门店
+        trafficManage.setOutStoreName(storeGoodsTraffic.getPrepareStoreName());
 
+        int trafficManageId = trafficManageDao.addAndGetId4Integer(trafficManage);
+
+        Set<OrderGoodsInfo> orderGoodsInfoSet = goodsTraffic.getGoodsInfoSet();
+        List<OrderGoodsInfo> orderGoodsInfoList = new ArrayList<>(orderGoodsInfoSet);
+        List<OrderGoodsInfo> orderGoodsInfoList1 = JSON.parseArray(orderGoodsInfos, OrderGoodsInfo.class);
+        for(int i = 0, len = orderGoodsInfoList.size(); i < len; i++){
+            OrderGoodsInfo orderGoodsInfo = orderGoodsInfoList.get(i);
+            orderGoodsInfo.setDistributeNum(orderGoodsInfoList1.get(i).getDistributeNum());
+            orderGoodsInfo.setPrice(orderGoodsInfoList1.get(i).getPrice());
+            orderGoodsInfo.setPriceSum(orderGoodsInfoList1.get(i).getPriceSum());
+            orderGoodsInfo.setTrafficManageId(trafficManageId);
+            orderGoodsInfoDao.update(orderGoodsInfo);
         }
     }
 }

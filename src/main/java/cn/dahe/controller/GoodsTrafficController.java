@@ -64,7 +64,7 @@ public class GoodsTrafficController {
         }else if(step == 2){
             return "goodsTraffic/goodsPrepare";
         }else if(step == 3){
-            return "goodsTraffic/goodsPrepare";
+            return "goodsTraffic/auditFinished";
         }
         return null;
     }
@@ -93,6 +93,9 @@ public class GoodsTrafficController {
     @ResponseBody
     public AjaxObj goodsPrepare(int id, String orderGoodsInfos){
         AjaxObj json = new AjaxObj();
+        goodsTrafficService.prepareGoods(id, orderGoodsInfos);
+        json.setMsg("<%=request.getContextPath()%>/goodsTraffic/audit/3");
+        json.setResult(1);
         return json;
     }
 }

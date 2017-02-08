@@ -13,26 +13,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
 
 import cn.dahe.dao.IBaseDao;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 @SuppressWarnings("unchecked")
 @Repository("baseDao")
-public class BaseDaoImpl<T> implements IBaseDao<T> {
-
+public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T> {
+	@Resource(name = "sessionFactory")
 	private SessionFactory sessionFactory;
-
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-	@Resource
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-
-
-	protected Session getSession(){
-		return sessionFactory.getCurrentSession();
-	}
 
 	private Class<?> clz;
 
@@ -48,6 +36,17 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 	@Override
 	public void add(T t) {
 		this.getSession().save(t);
+	}
+
+	@Override
+	public int addAndGetId4Integer(T t) {
+		int id = 0;
+		try{
+			id = (int) this.getHibernateTemplate().save(t);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return id;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package cn.dahe.controller;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Store;
+import cn.dahe.model.StoreGoodsTraffic;
 import cn.dahe.model.User;
 import cn.dahe.service.IStoreService;
 import cn.dahe.util.NumberUtils;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -108,6 +110,39 @@ public class StoreController {
         AjaxObj json = new AjaxObj();
         json.setMsg(Long.toString(NumberUtils.getNo(4)));
         json.setResult(1);
+        return json;
+    }
+
+    /**
+     * 子门店货流设置列表
+     * @return
+     */
+    @RequestMapping(value = "storeGoodsTrafficList", method = RequestMethod.GET)
+    public String storeGoodsTraffic(){
+        return "store/storeGoodsTrafficList";
+    }
+
+    /**
+     * 子门店货流设置列表
+     * @return
+     */
+    @RequestMapping(value = "storeGoodsTrafficList", method = RequestMethod.POST)
+    @ResponseBody
+    public List<StoreGoodsTraffic> storeGoodsTrafficData(){
+        return  storeService.findAllStoreGoodsTraffic();
+    }
+
+    /**
+     * 子门店货流设置
+     * @return
+     */
+    @RequestMapping(value = "storeGoodsTraffic", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj storeGoodsTraffic(String storeGoodsTraffics){
+        AjaxObj json = new AjaxObj();
+        storeService.updateStoreGoodsTraffics(storeGoodsTraffics);
+        json.setResult(1);
+        json.setMsg("自门店货流设置完成");
         return json;
     }
 }

@@ -47,13 +47,11 @@ public class OrderGoodsInfo {
     @Column(name = "categories_id")
     private int categoriesId;
     //所属的订货单
-    @ManyToOne
     @JoinColumn(name = "goods_traffic_id")
-    private GoodsTraffic goodsTraffic;
+    private int goodsTrafficId;
     //所属订单管理
-    @ManyToOne
-    @JoinColumn(name = "traffic_manage")
-    private TrafficManage trafficManage;
+    @JoinColumn(name = "traffic_manage_id")
+    private int trafficManageId;
     //供货商id
     @Column(name = "supplier_id")
     private int supplierId;
@@ -140,14 +138,6 @@ public class OrderGoodsInfo {
         this.distributeNum = distributeNum;
     }
 
-    public GoodsTraffic getGoodsTraffic() {
-        return goodsTraffic;
-    }
-
-    public void setGoodsTraffic(GoodsTraffic goodsTraffic) {
-        this.goodsTraffic = goodsTraffic;
-    }
-
     public int getCategoriesId() {
         return categoriesId;
     }
@@ -172,11 +162,33 @@ public class OrderGoodsInfo {
         this.supplierName = supplierName;
     }
 
-    public TrafficManage getTrafficManage() {
-        return trafficManage;
+    public int getGoodsTrafficId() {
+        return goodsTrafficId;
     }
 
-    public void setTrafficManage(TrafficManage trafficManage) {
-        this.trafficManage = trafficManage;
+    public void setGoodsTrafficId(int goodsTrafficId) {
+        this.goodsTrafficId = goodsTrafficId;
+    }
+
+    public int getTrafficManageId() {
+        return trafficManageId;
+    }
+
+    public void setTrafficManageId(int trafficManageId) {
+        this.trafficManageId = trafficManageId;
+    }
+
+    public OrderGoodsInfo() {
+    }
+
+    public OrderGoodsInfo(Goods goods) {
+        this.goodsId = goods.getId();
+        this.price = goods.getPrice();
+        this.goodsNo = goods.getGoodsNo();
+        this.mainUnit = goods.getMainUnit().getName();
+        this.description = goods.getDescription();
+        this.categoriesId = goods.getCategories().getId();
+        this.supplierId = goods.getSupplier().getId();
+        this.supplierName = goods.getSupplier().getName();
     }
 }

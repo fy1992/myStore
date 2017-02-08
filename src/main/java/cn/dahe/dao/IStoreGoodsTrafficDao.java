@@ -2,6 +2,8 @@ package cn.dahe.dao;
 
 import cn.dahe.model.StoreGoodsTraffic;
 
+import java.util.List;
+
 /**
  * Created by fy on 2017/2/2.
  */
@@ -12,4 +14,6 @@ public interface IStoreGoodsTrafficDao extends IBaseDao<StoreGoodsTraffic>{
      * @return
      */
     StoreGoodsTraffic findByStoreId(int storeId);
+
+    List<StoreGoodsTraffic> findAll();
 }
