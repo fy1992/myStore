@@ -25,6 +25,14 @@ public interface IGoodsTrafficService {
     /**
      * 审核
      * @param id
+     * @param type 0 作废 1 审核通过
      */
-    void auditGoodsTraffic(int id);
+    void auditGoodsTraffic(int id, int type);
+
+    /**
+     * 门店配货
+     * @param id
+     * @param orderGoodsInfos
+     */
+    void prepareGoods(int id, String orderGoodsInfos);
 }

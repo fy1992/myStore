@@ -36,7 +36,9 @@ public class Cashier {
     private String email;
     //地址
     private String addr;
-
+    //微信 openId
+    @Column(name = "open_id")
+    private String openId;
     //收银员角色
     @ManyToOne
     @JoinColumn(name = "role_id")

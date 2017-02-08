@@ -186,7 +186,7 @@
         	<div class="col-6">
 	            <label class="form-label col-3">厨房票打：</label>
 	            <div class="formControls col-5">
-	            	已选中 <label class="c-red">0</label>个<a id="cardType" class="btn btn-default radius size-S ml-15">去选择</a>
+	            	已选中 <label class="c-red" id = "smallTicketNum">0</label>个<a id="cardType" class="btn btn-default radius size-S ml-15">去选择</a>
 	            </div>
 	            <div class="col-3"> </div>
 	        </div>
@@ -194,10 +194,7 @@
 	            <label class="form-label col-3">商品标签：</label>
 	            <div class="formControls col-5">
 	            	<a class="btn btn-default radius size-S" id="labelChange">+ 选择标签</a>
-	            	<div class="labelBox mt-10">
-	            		<%--<a class="btn btn-primary size-MINI mr-5">aa</a>
-	            		<a class="btn btn-primary size-MINI mr-5">bbb</a>
-	            		<a class="btn btn-primary size-MINI mr-5">sssss</a>--%>
+	            	<div class="labelBox mt-10" id="showGoodsTags">
 	            	</div>
 	            </div>
 	            <div class="col-3"> </div>
@@ -228,11 +225,26 @@
 <script>
 $(function(){
 	$("#cardType").click(function(){
-        layer_show("厨房票打设置", "<%=request.getContextPath()%>/goods/smallTicketSelect", "550", "400");
+	    var stsIds = $("#stsIds").val();
+	    var url = "<%=request.getContextPath()%>/goods/smallTicketSelect";
+	    if(stsIds){
+            url += "?stsIds="+ stsIds;
+        }
+        layer_show("厨房票打设置", url, "550", "400");
 	});
 	
 	$("#labelChange").click(function(){
-        layer_show("选择标签", "<%=request.getContextPath()%>/goods/goodsTagsSelect", "550", "400");
+	    var url = "<%=request.getContextPath()%>/goods/goodsTagsSelect";
+        var tagsIds = [];
+        $(".tagsIds").each(function(){
+            if($(this).val()){
+                tagsIds.push($(this).val());
+            }
+        });
+        if(tagsIds.length > 0){
+            url += "?tagsIds=" + tagsIds.toString();
+        }
+        layer_show("选择标签", url, "550", "400");
 	});
 
 	//编辑图片

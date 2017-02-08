@@ -55,10 +55,10 @@ $(function(){
                     layer.msg("标签添加成功");
                     //添加成功之后执行以下代码
                     var tr = "<tr class=\"text-c\">"+
-                        "<td><input type=\"text\" class=\"input-text\" value=\""+ labelName +"\"></td>"+
+                        "<td><input type=\"text\" class=\"input-text\" id = \"goodsTags_" + data.object + "\" value=\""+ labelName +"\"></td>"+
                         "<td>"+
-                        "<a class=\"btn btn-success size-MINI radius mr-15\" onclick=\"add(this)\">保存</a>"+
-                        "<a class=\"btn btn-danger size-MINI radius\" onclick=\"add(this)\">删除</a>"+
+                        "<a class=\"btn btn-success size-MINI radius mr-15\" onclick=\"update(" + data.object + ")\">保存</a>"+
+                        "<a class=\"btn btn-danger size-MINI radius\" onclick=\"del(" + data.object + ")\">删除</a>"+
                         "</td></tr>";
                     $("table tbody").append(tr);
                     $("#labelName").val("");

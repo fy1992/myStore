@@ -19,19 +19,7 @@
 			<th>类型</th>
 		</tr>
 	</thead>
-	<tbody>
-		<tr class="text-c">
-			<td><input type="checkbox" value="" name=""></td>
-			<td>1</td>
-			<td>厨房</td>
-			<td>一品一切</td>
-		</tr>
-		<tr class="text-c">
-			<td><input type="checkbox" value="" name=""></td>
-			<td>2</td>
-			<td>厨房</td>
-			<td>一单一切</td>
-		</tr>
+	<tbody id = "smallTicketBox">
 	</tbody>
 </table>
 <div class="cfpdBtnbox">
@@ -43,6 +31,29 @@
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
 <script>
 $(function(){
+    $.post("<%=request.getContextPath()%>/goods/findAllSmallTicket", function(data){
+        for(var n in data){
+            $("#smallTicketBox").append(
+                "<tr class=\"text-c\">" +
+                "<td><input type=\"checkbox\" value=\""+data[n].id+"\" name = \"smallTicketCb\" class=\"smallTicketCb\">" +
+                "</td>" +
+                "<td>"+data[n].id+"</td>" +
+                "<td>"+data[n].name+"</td>" +
+                "<td>"+ (data[n].type == 1  ? "一单一切" : "一品一切") +"</td>" +
+                "</tr>"
+            );
+        }
+        var result = "${stsIds}";
+        if(result && result != 0){
+            var resultList = result.split(",");
+            $(".smallTicketCb").each(function () {
+                if($.inArray($(this).val(), resultList) != -1){
+                    $(this).attr("checked", true);
+                }
+            })
+        }
+    });
+
 	//管理小票机
 	$("#xpj").click(function(){
 		$.get("<%=request.getContextPath()%>/goods/smallTicket",function(html){
@@ -51,6 +62,13 @@ $(function(){
 	});
 	//确认
 	$("#ensure").click(function(){
+        var n = $("input[type = 'checkbox']:checked").length;
+        var stsids = [];
+        for(var i = 0; i < n; i++){
+            stsids.push($("input[type = 'checkbox']:checked").eq(i).val());
+        }
+        parent.$("#smallTicketNum").text(n);
+        parent.$("#smallTicketNum").append("<input type = 'hidden' value = '"+stsids.toString()+"' id = 'stsIds'>");
 		layer_close();
 	});
 });

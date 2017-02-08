@@ -1,6 +1,7 @@
 package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
+import cn.dahe.model.Cashier;
 import cn.dahe.model.User;
 import cn.dahe.service.IEmployeeService;
 import cn.dahe.util.SecurityUtil;
@@ -119,7 +120,24 @@ public class LoginController {
     @RequestMapping(value = "cashierLogin", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj cashierLogin(String cashierNo, String password, HttpSession session){
-        return employeeService.cashierLogin(cashierNo, password);
+        AjaxObj json = employeeService.cashierLogin(cashierNo, password);
+        if(json.getResult() == 1){
+            session.setAttribute("cashier", (Cashier)json.getObject());
+        }
+        return json;
+    }
+
+    /**
+     * 收银员退出
+     * */
+    @RequestMapping(value="/cashierLogout", method=RequestMethod.GET)
+    @ResponseBody
+    public AjaxObj cashierLogout(HttpSession session){
+        AjaxObj json = new AjaxObj();
+        session.removeAttribute("cashier");
+        json.setResult(1);
+        json.setMsg("成功退出");
+        return json;
     }
 
 }

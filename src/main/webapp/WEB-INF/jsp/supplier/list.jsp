@@ -24,6 +24,11 @@
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 货流 <span class="c-gray en">&gt;</span> 供应商 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
+            <span class="l">
+                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增</a>
+                <%--<a href="javascript:void(0);" onclick="importIn();" class="btn btn-primary radius">导入</a>
+                <a href="javascript:void(0);" onclick="importOut();" class="btn btn-primary radius">导出</a>--%>
+            </span>
             <span class="select-box" style="width: 100px;">
                 <select class="select radius" id="supplier_static">
                     <option value = "1">启用</option>
@@ -201,22 +206,7 @@ function formatDate(val){
 
 //新增
 function add() {
-    layer_show("新增商品", "<%=request.getContextPath()%>/goods/addGoods", "800", "600");
-}
-
-//单位
-function unitDetail() {
-    layer_show("商品单位设置", "<%=request.getContextPath()%>/goods/goodsUnit", "600", "400");
-}
-
-//厨打
-function smallTicketDetail() {
-    layer_show("厨房小票机管理", "<%=request.getContextPath()%>/goods/smallTicket", "490", "440");
-}
-
-//标签
-function tagsDetail() {
-    layer_show("商品标签设置", "<%=request.getContextPath()%>/goods/goodsTags", "600", "400");
+    layer_show("新增供货商", "<%=request.getContextPath()%>/supplier/add", "800", "600");
 }
 
 //导出

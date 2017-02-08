@@ -10,6 +10,7 @@ import cn.dahe.model.OrderGoodsInfo;
 import cn.dahe.model.Store;
 import cn.dahe.service.IGoodsTrafficService;
 import cn.dahe.util.DateUtil;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,6 +37,7 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
     private IGoodsDao goodsDao;
     @Resource
     private IStoreDao storeDao;
+
 
     @Override
     public void add(GoodsTrafficDto t) {
@@ -110,6 +113,7 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
             if(StringUtils.isNotBlank(endTime)){
                 params.setEndTime(DateUtil.format(endTime, "yyyy-MM-dd"));
             }
+            params.setStatus(status);
             params.setIntParam1(timeType);
             params.setOrderColumn("goodTraffic.id");
             params.setOrderDir("desc");
@@ -122,9 +126,19 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
     }
 
     @Override
-    public void auditGoodsTraffic(int id) {
+    public void auditGoodsTraffic(int id, int type) {
         GoodsTraffic goodsTraffic = get(id);
-        goodsTraffic.setStatus(1);
+        goodsTraffic.setStatus(type);
         update(goodsTraffic);
+    }
+
+    @Override
+    public void prepareGoods(int id, String orderGoodsInfos) {
+        GoodsTraffic goodsTraffic = get(id);
+        Set<OrderGoodsInfo> orderGoodsInfoSet = goodsTraffic.getGoodsInfoSet();
+        List<OrderGoodsInfo> orderGoodsInfoList = JSON.parseArray(orderGoodsInfos, OrderGoodsInfo.class);
+        for(int i = 0, len = orderGoodsInfoSet.size(); i < len; i++){
+
+        }
     }
 }

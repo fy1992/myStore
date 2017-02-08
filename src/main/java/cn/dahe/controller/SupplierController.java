@@ -55,6 +55,14 @@ public class SupplierController {
 
     /**
      *供应商添加
+     */
+    @RequestMapping(value = "add", method = RequestMethod.GET)
+    public String addUser(){
+        return "supplier/add";
+    }
+
+    /**
+     *供应商添加
      * @param supplier
      */
     @RequestMapping(value = "add", method = RequestMethod.POST)

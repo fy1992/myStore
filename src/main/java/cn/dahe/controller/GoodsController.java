@@ -33,6 +33,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -198,8 +199,10 @@ public class GoodsController {
         User user = (User)session.getAttribute("loginUser");
         if(goodsTagsService.findByName(name, user) == null) {
             goodsTagsService.add(name, user.getStoreId());
+            GoodsTags goodsTags = goodsTagsService.findByName(name, user);
             json.setMsg("标签添加成功");
             json.setResult(1);
+            json.setObject(goodsTags.getId());
         }else{
             json.setMsg("该标签已存在");
             json.setResult(0);
@@ -249,19 +252,31 @@ public class GoodsController {
      *@param  id
      * @return
      */
-    @RequestMapping("goodsTagsSelect")
-    public String goodsTagsSelect(@RequestParam(required = false, defaultValue = "0") String id, Model model){
+    @RequestMapping(value = "goodsTagsSelect", method = RequestMethod.GET)
+    public String goodsTagsSelect(@RequestParam(required = false, defaultValue = "0") String id,
+                                  @RequestParam(required = false, defaultValue = "0") String tagsIds,
+                                  Model model){
+        logger.info("--- tagsIds " + tagsIds + " ---");
         if(!id.equals("0")){
             Goods goods = goodsService.get(Integer.parseInt(id));
             if(goods != null){
                 Set<GoodsTags> goodsTagsSet = goods.getGoodsTagsSet();
-                model.addAttribute("goodsTags", goodsTagsSet);
+                List<String> list = new ArrayList<>();
+                if(goodsTagsSet != null && goodsTagsSet.size() > 0){
+                    for(GoodsTags goodsTags : goodsTagsSet){
+                        list.add(Integer.toString(goodsTags.getId()));
+                    }
+                    tagsIds = tagsIds.join(",", list);
+                }
+                model.addAttribute("type", "edit");
             }else{
-                model.addAttribute("goodsTags", new HashSet<>());
+                model.addAttribute("type", "add");
             }
         }else{
-            model.addAttribute("goodsTags", new HashSet<>());
+            model.addAttribute("type", "add");
         }
+        logger.info("--- tagsIds " + tagsIds + " ---");
+        model.addAttribute("tagsIds", tagsIds);
         return "goods/add_goodsTags";
     }
     //=====================================goodsTags end=====================================================
@@ -339,18 +354,30 @@ public class GoodsController {
      * @return
      */
     @RequestMapping("smallTicketSelect")
-    public String smallTicketSelect(@RequestParam(required = false, defaultValue = "0") String id, Model model){
+    public String smallTicketSelect(@RequestParam(required = false, defaultValue = "0") String id,
+                                    @RequestParam(required = false, defaultValue = "0") String stsIds,
+                                    Model model){
+        logger.info("--- stsIds : "+stsIds+" ---");
         if(!id.equals("0")){
             Goods goods = goodsService.get(Integer.parseInt(id));
             if(goods != null){
                 Set<SmallTicket> smallTicketSet = goods.getSmallTicketSet();
-                model.addAttribute("smallTicket", smallTicketSet);
+                List<String> list = new ArrayList<>();
+                if(smallTicketSet != null && smallTicketSet.size() > 0){
+                    for(SmallTicket smallTicket : smallTicketSet){
+                        list.add(Integer.toString(smallTicket.getId()));
+                    }
+                    stsIds = stsIds.join(",", list);
+                }
+                model.addAttribute("type", "edit");
             }else{
-                model.addAttribute("smallTicket", new HashSet<>());
+                model.addAttribute("type", "add");
             }
         }else{
-            model.addAttribute("smallTicket", new HashSet<>());
+            model.addAttribute("type", "add");
         }
+        model.addAttribute("stsIds", stsIds);
+        logger.info("--- stsIds : "+stsIds+" ---");
         return "goods/add_smallTicket";
     }
 

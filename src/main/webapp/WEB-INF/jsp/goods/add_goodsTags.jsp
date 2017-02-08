@@ -28,6 +28,16 @@ $(function(){
                 "<label><input type=\"checkbox\" name=\"ck1\" value = '"+data[n].id+"'/>"+data[n].name+"</label>"
             );
         }
+        $("#ckBox").append("<br clear=\"all\"/>");
+        var result = "${tagsIds}";
+        if(result && result != 0){
+            var tagslist = result.split(",");
+            $("input[type='checkbox']").each(function() {
+                if($.inArray($(this).val(), tagslist) != -1){
+                    $(this).attr("checked", true);
+                }
+            });
+        }
     });
 
 	//管理标签
@@ -38,6 +48,21 @@ $(function(){
 	});
 	//确认
 	$("#ensure").click(function(){
+        var tagsIdList = [];
+        var tagsNameList = [];
+	    for(var i = 0, len = $("input[type='checkbox']:checked").length; i < len; i++){
+            tagsIdList.push($("input[type='checkbox']:checked").eq(i).val());
+            tagsNameList.push($("input[type='checkbox']:checked").parent().eq(i).text());
+        }
+        if(tagsIdList.length > 0 && tagsNameList.length > 0){
+            parent.$("#showGoodsTags").empty();
+            for(var n in tagsIdList){
+                parent.$("#showGoodsTags").append(
+                    "<a class=\"btn btn-primary size-MINI mr-5\">"+tagsNameList[n]+"</a>" +
+                    "<input type = 'hidden' value = '"+tagsIdList[n]+"' class='tagsIds'/>"
+                );
+            }
+        }
 		layer_close();
 	});
 });
