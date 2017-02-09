@@ -3,6 +3,8 @@ package cn.dahe.dao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Role;
 
+import java.util.List;
+
 /**
  * Created by fy on 2017/2/3.
  */
@@ -15,4 +17,11 @@ public interface IRoleDao extends IBaseDao<Role>{
      * @return
      */
     Pager<Role> findByParam(int start, int pageSize, Pager<Object> params);
+
+    /**
+     * 查询全部
+     * @param storeId
+     * @return
+     */
+    List<Role> findAll(int storeId);
 }

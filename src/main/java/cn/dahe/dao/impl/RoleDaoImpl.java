@@ -25,4 +25,10 @@ public class RoleDaoImpl extends BaseDaoImpl<Role> implements IRoleDao{
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);
     }
+
+    @Override
+    public List<Role> findAll(int storeId) {
+        String hql = "from Role where storeId = ?";
+        return this.list(hql, storeId);
+    }
 }

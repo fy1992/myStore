@@ -3,6 +3,8 @@ package cn.dahe.service;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Role;
 
+import java.util.List;
+
 /**
  * Created by fy on 2017/2/3.
  */
@@ -19,4 +21,11 @@ public interface IRoleService {
      * @return
      */
     Pager<Role> findByParams(String aDataSet, int storeId);
+
+    /**
+     * 查询全部
+     * @param storeId
+     * @return
+     */
+    List<Role> findAll(int storeId);
 }

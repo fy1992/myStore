@@ -17,26 +17,32 @@
 <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 
-<title>角色列表</title>
+<title>权限列表</title>
 </head>
 <body class="pos-r">
 <div>
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 员工 <span class="c-gray en">&gt;</span> 员工角色 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 权限 <span class="c-gray en">&gt;</span> 权限信息 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="l">
-                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增角色</a>
+                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增权限</a>
+            </span>
+            <span class="select-box" style="width: 100px;">
+                <select class="select radius" id="permission_status">
+                    <option value="0">启用</option>
+                    <option value="1">禁用</option>
+                </select>
             </span>
         </div>
         <div class="pd-20 clearfix">
-            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="role_table">
+            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="permission_table">
                 <thead>
                     <tr class="text-c">
                         <th >序号</th>
                         <th >操作</th>
-                        <th >所属门店</th>
-                        <th >角色名称</th>
-                        <th >状态</th>
+                        <th >权限名称</th>
+                        <th >权限类型</th>
+                        <th >权限url</th>
                     </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -55,13 +61,13 @@
 <script type="text/javascript">
 //搜索
 $(function(){
-	$("#role_search").click(function(){
+	$("#permission_search").click(function(){
 		table.fnDraw();
 	});
 });
 
 //table start here
-table = $('#role_table').dataTable({
+table = $('#permission_table').dataTable({
 	   "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示  
        "bPaginate": true,//是否显示（应用）分页器  
        "bLengthChange": false,
@@ -75,7 +81,7 @@ table = $('#role_table').dataTable({
             return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
         }},
         {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "roleName", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "permissionName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
             return data == 1 ? "启用" : "停用" ;
         }}
@@ -100,7 +106,7 @@ table = $('#role_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/role/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/permission/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -114,6 +120,8 @@ table = $('#role_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
+      	aoData.push({"name":"bNeedPaging", "value":true});
+      	var type = $("#news_isFirstPage").val();
         var iDisplayStart = $("#news_tableStart").val();
         if(!iDisplayStart){
             iDisplayStart = 0;
@@ -145,38 +153,9 @@ table = $('#role_table').dataTable({
     }
 });
 
-/* 时间格式转换*/
-function format(time){
-	if(time == null || time == "null" || time == undefined){
-		return "";
-	}
-	var date = new Date(time);
-	var seperator1 = '-';
-    var seperator2 = ':';
-	var month = formatDate(date.getMonth() + 1);
-	var day = formatDate(date.getDate());
-	var hours = formatDate(date.getHours());
-	var minutes = formatDate(date.getMinutes()); 
-    var seconds = formatDate(date.getSeconds());
-    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + day
-        + ' ' +hours + seperator2 + minutes
-        + seperator2 + seconds;
-	return currentdate;
-}
-
-function formatDate(val){
-	if(val >=1 && val <= 9){
-		val = '0' + val;
-	}
-	if(val == 0){
-		val = '00';
-	}
-	return val;
-}
-
 //新增
 function add() {
-    layer_show("新增角色", "<%=request.getContextPath()%>/role/add", "800", "600");
+    layer_show("新增权限", "<%=request.getContextPath()%>/permission/add", "800", "600");
 }
 </script>
 </body>

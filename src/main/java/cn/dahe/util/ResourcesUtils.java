@@ -39,4 +39,11 @@ public class ResourcesUtils {
 		return bundel.getString("filePath");
 	}
 
+	/**
+	 * 收银员用户密码
+	 * @return
+	 */
+	public static String getCashierPassword(){
+		return bundel.getString("cashier_password");
+	}
 }

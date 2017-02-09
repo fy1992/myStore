@@ -28,51 +28,52 @@
 		            <label class="form-label col-3">是否启用：</label>
 		            <div class="formControls col-6">
 		            	<div class="radio-box">
-				          	<input type="radio" id="supplier_using-1" name="supplier_using" value = "1" checked>
-				          	<label for="supplier_using-1">是</label>
+				          	<input type="radio" id="cashier_using-1" name="cashier_using" value = "1" checked>
+				          	<label for="cashier_using-1">是</label>
 				        </div>
 				        <div class="radio-box">
-				          	<input type="radio" id="supplier_using-2" name="supplier_using" value = "2">
-				          	<label for="supplier_using-2">否</label>
+				          	<input type="radio" id="cashier_using-2" name="cashier_using" value = "2">
+				          	<label for="cashier_using-2">否</label>
 				        </div>
 		            </div>
 		            <div class="col-3"></div>
 		        </div>
                 <div class="row cl">
-                    <label class="form-label col-3"><span class="c-red">* </span>供货商编号：</label>
+                    <label class="form-label col-3"><span class="c-red">* </span>编号：</label>
                     <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value="" id="supplier_No" placeholder="请输入供货商编号" >
+                        <input type="text" class="input-text radius" value="" id="cashier_No"/>
                     </div>
                     <div class="col-3"> </div>
                 </div>
                 <div class="row cl">
-                    <label class="form-label col-3"><span class="c-red">* </span>供货商名称：</label>
+                    <label class="form-label col-3"><span class="c-red">* </span>姓名：</label>
                     <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value=""  id="supplier_name" placeholder="请输入供货商名称" >
+                        <input type="text" class="input-text radius" value=""  id="cashier_name"/>
                     </div>
                     <div class="col-3"> </div>
                 </div>
                 <div class="row cl">
-                    <label class="form-label col-3">搜索拼音码：</label>
+                    <label class="form-label col-3"><span class="c-red">* </span>密码：</label>
                     <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value=""  id="supplier_pinyin" placeholder="请输入搜索拼音码" >
+                        <input type="text" class="input-text radius" value=""  id="cashier_pinyin"/>
                     </div>
                     <div class="col-3"> </div>
                 </div>
                 <div class="row cl">
-                	<label class="form-label col-3">联系人：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="supplier_contacts" placeholder="请输入联系人"/></div>
+                	<label class="form-label col-3">电话：</label>
+                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="cashier_contacts"/></div>
                 	<div class="col-3"> </div>
                 </div>
                 <div class="row cl">
-                	<label class="form-label col-3">联系电话：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="supplier_phone" placeholder="请输入联系电话"/></div>
-                	<div class="col-3"> </div>
-                </div>
-                <div class="row cl">
-                	<label class="form-label col-3">联系邮箱：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="supplier_email" placeholder="请输入联系邮箱"/></div>
-                	<div class="col-3"> </div>
+                    <label class="form-label col-3">角色：</label>
+                    <div class="formControls col-6">
+	            	<span class="select-box radius">
+		                <select class="select" id = "cashier_role">
+		                    <option value = "0">- 无 -</option>
+		                </select>
+	                </span>
+                    </div>
+                    <div class="col-3"> </div>
                 </div>
             </div>
         </div>
@@ -80,13 +81,13 @@
             <div class="col-6 cl">
                 <label class="form-label col-3">配送费返点：</label>
                 <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5" id="supplier_packingFeePoint"  style="width: 90%;"/><label>&nbsp;%</label>
+                    <input type = "text"  class="input-text radius mr-5" id="cashier_packingFeePoint"  style="width: 90%;"/><label>&nbsp;%</label>
                 </div>
             </div>
             <div class="col-6 cl">
                 <label class="form-label col-3">固定返利点：</label>
                 <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5"  id="supplier_rebatePoint"  style="width: 90%;"/><label>&nbsp;%</label>
+                    <input type = "text"  class="input-text radius mr-5"  id="cashier_rebatePoint"  style="width: 90%;"/><label>&nbsp;%</label>
                 </div>
             </div>
         </div>
@@ -94,7 +95,7 @@
         	<div class="col-8">
 	            <label class="form-label col-3">地址：</label>
 	            <div class="formControls col-9">
-	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_addr"></textarea>
+	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="cashier_addr"></textarea>
 	            </div>
 	        </div>
         </div>
@@ -102,24 +103,8 @@
             <div class="col-8">
                 <label class="form-label col-3">备注：</label>
                 <div class="formControls col-9">
-                    <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_desc"></textarea>
+                    <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="cashier_desc"></textarea>
                 </div>
-            </div>
-        </div>
-        <div class="row cl" style="display: none;">
-            <div class="row cl">
-                <label class="form-label col-3">是否授权供货商：</label>
-                <div class="formControls col-6">
-                    <div class="radio-box">
-                        <input type="radio" id="supplier_isAuthorize-1" name="supplier_isAuthorize" value = "1" checked>
-                        <label for="supplier_isAuthorize-1">是</label>
-                    </div>
-                    <div class="radio-box">
-                        <input type="radio" id="supplier_isAuthorize-2" name="supplier_isAuthorize" value = "2">
-                        <label for="supplier_isAuthorize-2">否</label>
-                    </div>
-                </div>
-                <div class="col-3"></div>
             </div>
         </div>
         <div class="row cl">
@@ -136,6 +121,13 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script>
+    $(function () {
+        $.post("<%=request.getContextPath()%>/role/findAll", function(data){
+            for(var n in data){
+                $("#cashier_role").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");
+            }
+        })
+    })
 </script>
 </body>
 </html>

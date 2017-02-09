@@ -2,12 +2,17 @@ package cn.dahe.service.impl;
 
 import cn.dahe.dao.ICashierDao;
 import cn.dahe.dao.ISalesDao;
+import cn.dahe.dao.IStoreDao;
+import cn.dahe.dao.IUserDao;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Cashier;
 import cn.dahe.model.Sales;
+import cn.dahe.model.Store;
 import cn.dahe.model.User;
 import cn.dahe.service.IEmployeeService;
+import cn.dahe.service.IStoreService;
+import cn.dahe.util.ResourcesUtils;
 import cn.dahe.util.SecurityUtil;
 import cn.dahe.util.StringUtil;
 import com.alibaba.fastjson.JSONArray;
@@ -18,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,12 +37,27 @@ public class EmployeeServiceImpl implements IEmployeeService{
     private ICashierDao cashierDao;
     @Resource
     private ISalesDao salesDao;
-
+    @Resource
+    private IUserDao userDao;
+    @Resource
+    private IStoreDao storeDao;
     @Override
     public void addCashier(Cashier t, User user) {
-        t.setStoreId(user.getStoreId());
+        Store store = storeDao.get(user.getStoreId());
+        t.setStoreId(store.getId());
         t.setPassword(SecurityUtil.MD5(t.getPassword()));
         cashierDao.add(t);
+        User cashierUser = new User();
+        cashierUser.setPassword(SecurityUtil.MD5(ResourcesUtils.getCashierPassword()));
+        cashierUser.setRegisterDate(new Date());
+        cashierUser.setStoreId(store.getId());
+        cashierUser.setStatus(1);
+        cashierUser.setLoginName(user.getLoginName() + ":" + t.getCashierNo());
+        cashierUser.setUsername(user.getUsername());
+        cashierUser.setStoreName(store.getName());
+        cashierUser.setPermissionSet(t.getPermissionSet());
+        cashierUser.setRole(t.getRole());
+        userDao.add(cashierUser);
     }
 
     @Override

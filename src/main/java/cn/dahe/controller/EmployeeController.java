@@ -28,26 +28,7 @@ public class EmployeeController {
     private static Logger logger = LoggerFactory.getLogger(EmployeeController.class);
     @Resource
     private IEmployeeService employeeService;
-
-    /**
-     * 导购员列表页查询
-     * */
-    @RequestMapping(value = "/salesList", method = RequestMethod.GET)
-    public String salesList(){
-        return "employee/salesList";
-    }
-
-    /**
-     * 导购员列表页查询
-     * */
-    @RequestMapping(value = "/salesList", method = RequestMethod.POST)
-    @ResponseBody
-    public Pager<Sales> salesList(HttpSession session, String aDataSet){
-        logger.info("--- sales list begin ---");
-        User user = (User)session.getAttribute("loginUser");
-        return employeeService.employeeList(aDataSet, user.getStoreId(), 1);
-    }
-
+    //========================================cashier begin========================================================
     /**
      * 收银员列表页查询
      * */
@@ -65,57 +46,6 @@ public class EmployeeController {
         logger.info("--- cashier list begin ---");
         User user = (User)session.getAttribute("loginUser");
         return employeeService.employeeList(aDataSet, user.getStoreId(), 0);
-    }
-
-    /**
-     * 导购员添加页面路由
-     * @return
-     */
-    @RequestMapping(value = "salesAdd", method = RequestMethod.GET)
-    public String salesAdd(){
-        return "employee/salesAdd";
-    }
-
-    /**
-     * 导购员添加
-     * @param sales
-     * @param session
-     * @return
-     */
-    @RequestMapping(value = "salesAdd", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxObj salesAdd(Sales sales, HttpSession session){
-        AjaxObj json = new AjaxObj();
-        User user = (User)session.getAttribute("loginUser");
-        employeeService.addSales(sales, user);
-        json.setResult(1);
-        json.setMsg("导购员添加成功");
-        return json;
-    }
-
-    /**
-     * 导购员编辑页面路由
-     * @return
-     */
-    @RequestMapping(value = "salesEdit/{id}", method = RequestMethod.GET)
-    public String salesEdit(@PathVariable int id, Model model){
-        Sales sales = employeeService.getSales(id);
-        model.addAttribute("sales", sales);
-        return "employee/salesEdit";
-    }
-    /**
-     * 导购员编辑
-     * @param sales
-     * @return
-     */
-    @RequestMapping(value = "salesEdit", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxObj salesEdit(Sales sales){
-        AjaxObj json = new AjaxObj();
-        employeeService.updateSales(sales);
-        json.setMsg("导购员编辑成功");
-        json.setResult(1);
-        return json;
     }
 
     /**
@@ -169,4 +99,78 @@ public class EmployeeController {
         json.setResult(1);
         return json;
     }
+
+    //========================================cashier end========================================================
+
+    //========================================sales begin========================================================
+    /**
+     * 导购员列表页查询
+     * */
+    @RequestMapping(value = "/salesList", method = RequestMethod.GET)
+    public String salesList(){
+        return "employee/salesList";
+    }
+
+    /**
+     * 导购员列表页查询
+     * */
+    @RequestMapping(value = "/salesList", method = RequestMethod.POST)
+    @ResponseBody
+    public Pager<Sales> salesList(HttpSession session, String aDataSet){
+        logger.info("--- sales list begin ---");
+        User user = (User)session.getAttribute("loginUser");
+        return employeeService.employeeList(aDataSet, user.getStoreId(), 1);
+    }
+
+    /**
+     * 导购员添加页面路由
+     * @return
+     */
+    @RequestMapping(value = "salesAdd", method = RequestMethod.GET)
+    public String salesAdd(){
+        return "employee/salesAdd";
+    }
+
+    /**
+     * 导购员添加
+     * @param sales
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "salesAdd", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj salesAdd(Sales sales, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        User user = (User)session.getAttribute("loginUser");
+        employeeService.addSales(sales, user);
+        json.setResult(1);
+        json.setMsg("导购员添加成功");
+        return json;
+    }
+
+    /**
+     * 导购员编辑页面路由
+     * @return
+     */
+    @RequestMapping(value = "salesEdit/{id}", method = RequestMethod.GET)
+    public String salesEdit(@PathVariable int id, Model model){
+        Sales sales = employeeService.getSales(id);
+        model.addAttribute("sales", sales);
+        return "employee/salesEdit";
+    }
+    /**
+     * 导购员编辑
+     * @param sales
+     * @return
+     */
+    @RequestMapping(value = "salesEdit", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj salesEdit(Sales sales){
+        AjaxObj json = new AjaxObj();
+        employeeService.updateSales(sales);
+        json.setMsg("导购员编辑成功");
+        json.setResult(1);
+        return json;
+    }
+    //========================================sales end========================================================
 }

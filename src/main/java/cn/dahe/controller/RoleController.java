@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by fy on 2017/2/3.
@@ -27,7 +28,7 @@ public class RoleController {
      * 列表页查询
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String getSupplierList() {
+    public String getRoleList() {
         return "role/list";
     }
 
@@ -36,9 +37,20 @@ public class RoleController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public Pager<Role> getSupplierList(HttpSession session, String aDataSet) {
-        logger.info("--- Supplier list begin ---");
+    public Pager<Role> getRoleList(HttpSession session, String aDataSet) {
+        logger.info("--- role list begin ---");
         User user = (User) session.getAttribute("loginUser");
         return roleService.findByParams(aDataSet, user.getStoreId());
+    }
+
+    /**
+     * 查询全部角色
+     * @return
+     */
+    @RequestMapping(value = "findAll", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Role> findAll(HttpSession session){
+        User user = (User)session.getAttribute("loginUser");
+        return roleService.findAll(user.getStoreId());
     }
 }

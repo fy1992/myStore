@@ -4,6 +4,7 @@ import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.User;
 import cn.dahe.service.IUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -103,5 +104,34 @@ public class UserController {
         return json;
     }
 
+    /**
+     * 密码修改
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "updatePassword", method = RequestMethod.GET)
+    public String updatePassword(Model model){
+        return "user/updatePassword";
+    }
 
+    /**
+     * 密码修改
+     * @return
+     */
+    @RequestMapping(value = "upatePassword", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj updatePassword(int id, String newPassword, String checkPassword){
+        AjaxObj json = new AjaxObj();
+        if(StringUtils.isBlank(checkPassword) || StringUtils.isBlank(newPassword)){
+            json.setMsg("参数不能为空");
+            json.setResult(0);
+            return json;
+        }
+        if(!checkPassword.equals(newPassword)){
+            json.setMsg("密码确认与新密码不一致");
+            json.setResult(0);
+            return json;
+        }
+        return json;
+    }
 }

@@ -20,13 +20,14 @@ public class SaleCount {
     //统计时间
     @Column(name = "count_date")
     private Date countDate;
-    //单数
-    @Column(name = "sale_sum")
-    private int saleSum;
+    //概况
+    private String info;
     //所属分店Id
     @Column(name = "store_id")
     private int storeId;
-
+    //现金支付
+    @Column(name = "paid_by_money")
+    private int paidByMoney;
 
 
 }

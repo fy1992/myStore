@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.List;
 import java.util.Set;
@@ -23,8 +24,18 @@ public class Permission {
     private int id;
     //权限名称
     private String name;
+    @ManyToOne
+    @JoinColumn(name = "pid")
+    private Permission parent;
+    //权限key
+    @Column(name = "per_key")
+    private String perKey;
+    //权限等级
+    private int level;
     //权限描述
     private String description;
+    //权限url
+    private String url;
     //权限对应的角色
     @ManyToMany
     @JoinTable(name = "t_role_permission",
@@ -47,7 +58,8 @@ public class Permission {
     //所属分店
     @Column(name = "store_id")
     private int storeId;
-
+    //权限类型  0 web 端权限 1 client 端权限
+    private int type;
     public int getId() {
         return id;
     }
@@ -102,5 +114,45 @@ public class Permission {
 
     public void setStoreId(int storeId) {
         this.storeId = storeId;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Permission getParent() {
+        return parent;
+    }
+
+    public void setParent(Permission parent) {
+        this.parent = parent;
+    }
+
+    public String getPerKey() {
+        return perKey;
+    }
+
+    public void setPerKey(String perKey) {
+        this.perKey = perKey;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

@@ -117,6 +117,14 @@
 				</ul>
 			</dd>
 		</dl>
+        <dl id="menu-permission">
+            <dt><i class="Hui-iconfont">&#xe623;</i>权限<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="<%=request.getContextPath()%>/permission/list" href="javascript:void(0)">权限信息</a></li>
+                </ul>
+            </dd>
+        </dl>
 		<%--<dl id="menu-supplier">
 			<dt><i class="Hui-iconfont">&#xe623;</i>供货<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>

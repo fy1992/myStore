@@ -28,7 +28,9 @@ public class Role {
     //角色名称
     @Column(name = "role_name")
     private String roleName;
-
+    //角色key
+    @Column(name = "role_key")
+    private String roleKey;
     //角色描述
     private String description;
 
@@ -148,5 +150,13 @@ public class Role {
 
     public void setIsAsync(int isAsync) {
         this.isAsync = isAsync;
+    }
+
+    public String getRoleKey() {
+        return roleKey;
+    }
+
+    public void setRoleKey(String roleKey) {
+        this.roleKey = roleKey;
     }
 }

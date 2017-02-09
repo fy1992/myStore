@@ -1,9 +1,9 @@
 package cn.dahe.service.impl;
 
-import cn.dahe.dao.IRoleDao;
+import cn.dahe.dao.IPermissionDao;
 import cn.dahe.dto.Pager;
-import cn.dahe.model.Role;
-import cn.dahe.service.IRoleService;
+import cn.dahe.model.Permission;
+import cn.dahe.service.IPermissionService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
@@ -12,39 +12,40 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * Created by fy on 2017/2/3.
+ * Created by fy on 2017/2/9.
  */
-@Service("roleService")
-public class RoleServiceImpl implements IRoleService{
+@Service("permissionService")
+public class PermissionServiceImpl implements IPermissionService{
     @Resource
-    private IRoleDao roleDao;
+    private IPermissionDao permissionDao;
+
     @Override
-    public void add(Role t) {
-        roleDao.add(t);
+    public void add(Permission t) {
+        permissionDao.add(t);
     }
 
     @Override
     public void del(int id) {
-        roleDao.delete(id);
+        permissionDao.delete(id);
     }
 
     @Override
-    public void update(Role t) {
-        roleDao.update(t);
+    public void update(Permission t) {
+        permissionDao.update(t);
     }
 
     @Override
-    public Role get(int id) {
-        return roleDao.get(id);
+    public Permission get(int id) {
+        return permissionDao.get(id);
     }
 
     @Override
-    public Role load(int id) {
-        return roleDao.load(id);
+    public Permission load(int id) {
+        return permissionDao.load(id);
     }
 
     @Override
-    public Pager<Role> findByParams(String aDataSet, int storeId) {
+    public Pager<Permission> findByParams(String aDataSet, int storeId, int type) {
         int start = 0;// 起始
         int pageSize = 20;// size
         try{
@@ -59,10 +60,11 @@ public class RoleServiceImpl implements IRoleService{
                 }
             }
             Pager<Object> params = new Pager<>();
-            params.setOrderColumn("role.id");
+            params.setOrderColumn("permission.id");
             params.setOrderDir("desc");
-            params.setIntParam4(storeId);
-            return roleDao.findByParam(start, pageSize, params);
+            params.setIntParam1(storeId);
+            params.setIntParam2(type);
+            return permissionDao.findByParam(start, pageSize, params);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -70,7 +72,7 @@ public class RoleServiceImpl implements IRoleService{
     }
 
     @Override
-    public List<Role> findAll(int storeId) {
-        return roleDao.findAll(storeId);
+    public List<Permission> findAll(int storeId, int type) {
+        return permissionDao.findAll(storeId, type);
     }
 }
