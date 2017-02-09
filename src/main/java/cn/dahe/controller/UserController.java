@@ -109,8 +109,10 @@ public class UserController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "updatePassword", method = RequestMethod.GET)
-    public String updatePassword(Model model){
+    @RequestMapping(value = "updatePassword/{id}", method = RequestMethod.GET)
+    public String updatePassword(@PathVariable int id, Model model){
+        User user = userService.get(id);
+        model.addAttribute("user", user);
         return "user/updatePassword";
     }
 
@@ -132,6 +134,7 @@ public class UserController {
             json.setResult(0);
             return json;
         }
+        userService.updatePassword(id, newPassword);
         return json;
     }
 }

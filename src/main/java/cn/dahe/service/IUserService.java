@@ -27,4 +27,6 @@ public interface IUserService{
      * @return
      */
     Pager<User> findByParams(String aDataSet, int storeId);
+
+    void updatePassword(int id, String newPassword);
 }
