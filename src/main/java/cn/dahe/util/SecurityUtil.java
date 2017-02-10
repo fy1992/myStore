@@ -10,7 +10,6 @@ import java.security.NoSuchAlgorithmException;
 public class SecurityUtil {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
-	
 	public static String MD5(String password){
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");

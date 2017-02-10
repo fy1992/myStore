@@ -5,15 +5,15 @@ import cn.dahe.model.User;
 import cn.dahe.service.IRepairService;
 import cn.dahe.util.ResourcesUtils;
 import cn.dahe.util.SecurityUtil;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 @Service
 public class RepairServiceImpl implements IRepairService {
-	private static Log  logger = LogFactory.getLog(RepairServiceImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(RepairServiceImpl.class);
 	@Resource
 	private IUserDao userDao;
 	

@@ -169,4 +169,31 @@ public class Pager<T> {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Pager{" +
+				"start=" + start +
+				", rank=" + rank +
+				", state=" + state +
+				", status=" + status +
+				", stringParam1='" + stringParam1 + '\'' +
+				", stringParam2='" + stringParam2 + '\'' +
+				", stringParam3='" + stringParam3 + '\'' +
+				", stringParam4='" + stringParam4 + '\'' +
+				", pid='" + pid + '\'' +
+				", intParam1=" + intParam1 +
+				", intParam2=" + intParam2 +
+				", intParam3=" + intParam3 +
+				", intParam4=" + intParam4 +
+				", startTime=" + startTime +
+				", endTime=" + endTime +
+				", aaData=" + aaData +
+				", iTotalRecords=" + iTotalRecords +
+				", iTotalDisplayRecords=" + iTotalDisplayRecords +
+				", orderColumn='" + orderColumn + '\'' +
+				", orderDir='" + orderDir + '\'' +
+				'}';
+	}
 }

@@ -1,5 +1,6 @@
 package cn.dahe.util;
 
+
 import java.util.Date;
 import java.util.Random;
 

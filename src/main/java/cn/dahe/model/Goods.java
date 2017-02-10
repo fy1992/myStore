@@ -357,4 +357,40 @@ public class Goods {
     public void setIsScore(int isScore) {
         this.isScore = isScore;
     }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", categories=" + categories +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", tasteGroupSet=" + tasteGroupSet +
+                ", goodsNo='" + goodsNo + '\'' +
+                ", isEx=" + isEx +
+                ", isVipSet=" + isVipSet +
+                ", vipPrice=" + vipPrice +
+                ", tradePrice=" + tradePrice +
+                ", price=" + price +
+                ", bid=" + bid +
+                ", mainUnit=" + mainUnit +
+                ", unitIds='" + unitIds + '\'' +
+                ", orderUnit=" + orderUnit +
+                ", pinyin='" + pinyin + '\'' +
+                ", supplier=" + supplier +
+                ", productionDate=" + productionDate +
+                ", shelfLife=" + shelfLife +
+                ", stock=" + stock +
+                ", stockUp=" + stockUp +
+                ", stockDown=" + stockDown +
+                ", description='" + description + '\'' +
+                ", smallTicketSet=" + smallTicketSet +
+                ", goodsTagsSet=" + goodsTagsSet +
+                ", storeId=" + storeId +
+                ", status=" + status +
+                ", seq=" + seq +
+                ", isPrint=" + isPrint +
+                ", isScore=" + isScore +
+                '}';
+    }
 }

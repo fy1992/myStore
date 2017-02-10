@@ -1,6 +1,5 @@
 package cn.dahe.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,10 +10,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,14 +27,11 @@ public class User {
     //手机号
     private String phone;
     //用户名
-    @NotEmpty(message = "用户名不能为空")
     private String username;
     //登录名（账号）
     @Column(name = "login_name")
-    @NotEmpty(message = "登录名不能为空")
     private String loginName;
     //密码
-    @NotEmpty(message = "密码不能为空")
     private String password;
     //邮箱
     private String email;

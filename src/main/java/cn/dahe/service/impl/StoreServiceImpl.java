@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fy on 2017/1/24.
@@ -141,5 +143,6 @@ public class StoreServiceImpl implements IStoreService{
             sgt.setPrepareStoreName(storeGoodsTraffic.getPrepareStoreName());
             storeGoodsTrafficDao.update(sgt);
         }
+        Map<String, String> map = new HashMap<>();
     }
 }

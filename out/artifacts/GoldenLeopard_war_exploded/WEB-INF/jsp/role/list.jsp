@@ -114,15 +114,6 @@ table = $('#role_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	aoData.push({"name":"bNeedPaging", "value":true});
-      	var newsId = $("#news_id").val();
-      	var isTop = $("#news_isTop").val();
-      	var isMobile = $("#news_isMobile").val();
-      	var isFirstPage = $("#news_isFirstPage").val();
-      	var cid = $("#news_cid").val();
-      	if(cid == ""){
-      		cid = -1;
-      	}
         var iDisplayStart = $("#news_tableStart").val();
         if(!iDisplayStart){
             iDisplayStart = 0;

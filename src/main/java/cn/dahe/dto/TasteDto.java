@@ -59,14 +59,12 @@ public class TasteDto {
         this.description = description;
     }
 
-    public TasteDto() {
-    }
-
-    public TasteDto(TasteGroup tasteGroup) {
-        this.id = tasteGroup.getId();
-        this.name = tasteGroup.getName();
-        this.isRequired = tasteGroup.getIsRequired();
-        this.type = tasteGroup.getType();
+    public TasteDto init(TasteGroup tasteGroup){
+        TasteDto tasteDto = new TasteDto();
+        tasteDto.setId(tasteGroup.getId());
+        tasteDto.setName(tasteGroup.getName());
+        tasteDto.setIsRequired(tasteGroup.getIsRequired());
+        tasteDto.setType(tasteGroup.getType());
         Set<Taste> tasteSet = tasteGroup.getTasteSet();
         StringBuffer descriptionSb = new StringBuffer();
         for(Taste taste : tasteSet){
@@ -74,6 +72,18 @@ public class TasteDto {
         }
         String description = descriptionSb.toString();
         description = description.substring(0, description.lastIndexOf(","));
-        this.description = description;
+        tasteDto.setDescription(description);
+        return tasteDto;
+    }
+
+    @Override
+    public String toString() {
+        return "TasteDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", isRequired=" + isRequired +
+                ", type=" + type +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

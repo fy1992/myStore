@@ -179,4 +179,25 @@ public class GoodsDto {
         this.goodsNo = goods.getGoodsNo();
         this.goodsImg = goods.getImgUrl();
     }
+
+    @Override
+    public String toString() {
+        return "GoodsDto{" +
+                "name='" + name + '\'' +
+                ", categoriesName='" + categoriesName + '\'' +
+                ", goodsNo='" + goodsNo + '\'' +
+                ", vipPrice=" + vipPrice +
+                ", tradePrice=" + tradePrice +
+                ", price=" + price +
+                ", bid=" + bid +
+                ", goodsImg='" + goodsImg + '\'' +
+                ", mainUnit='" + mainUnit + '\'' +
+                ", pinyin='" + pinyin + '\'' +
+                ", supplier='" + supplier + '\'' +
+                ", productionDate=" + productionDate +
+                ", shelfLife=" + shelfLife +
+                ", isVipSet=" + isVipSet +
+                ", goodsNum='" + goodsNum + '\'' +
+                '}';
+    }
 }

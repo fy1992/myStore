@@ -74,7 +74,7 @@ public class TasteGroupServiceImpl implements ITasteGroupService{
             List<TasteGroup> tasteGroupList = tasteGroup_pager.getAaData();
             List<TasteDto> tasteDtoList = new ArrayList<>(tasteGroupList.size());
             for(TasteGroup tasteGroup : tasteGroupList){
-                tasteDtoList.add(new TasteDto(tasteGroup));
+                tasteDtoList.add(new TasteDto().init(tasteGroup));
             }
             tasteGroup_dto_pager.setAaData(tasteDtoList);
             return tasteGroup_dto_pager;

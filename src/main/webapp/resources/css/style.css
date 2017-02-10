@@ -70,3 +70,5 @@ input#ExpirationDate[type='text']{width: 90%;}
     left: 0;
     bottom: 0;
 }
+
+.navbar{ background: #F8F8F8;padding: 10px 20px; }

@@ -74,4 +74,9 @@ public class OrderGoodsInfoService implements IOrderGoodsInfoService{
         goodsTraffic.setStatus(2);
         goodsTrafficDao.update(goodsTraffic);
     }
+
+    @Override
+    public List<OrderGoodsInfo> findOrderGoodsInfosByGoodsTrafficId(int goodsTrafficId) {
+        return orderGoodsInfoDao.findByGoodsTrafficId(goodsTrafficId);
+    }
 }

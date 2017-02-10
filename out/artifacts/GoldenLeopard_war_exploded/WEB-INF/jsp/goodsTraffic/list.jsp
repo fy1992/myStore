@@ -90,7 +90,7 @@ table = $('#goodsTraffic_table').dataTable({
         {"mData" : ""},
 	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
+            return "<a style='text-decoration:none' onclick='detail(" + full.id + ")'>详情</a>";
         }},
         {"mData" : "orderTime", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "wishTime", "sDefaultContent" : "", "bSortable":false},
@@ -201,33 +201,16 @@ function formatDate(val){
 }
 
 //新增
-function add() {
-    layer_show("新增商品", "<%=request.getContextPath()%>/goods/addGoods", "800", "600");
-}
-
-//单位
-function unitDetail() {
-    layer_show("商品单位设置", "<%=request.getContextPath()%>/goods/goodsUnit", "600", "400");
-}
-
-//厨打
-function smallTicketDetail() {
-    layer_show("厨房小票机管理", "<%=request.getContextPath()%>/goods/smallTicket", "490", "440");
-}
-
-//标签
-function tagsDetail() {
-    layer_show("商品标签设置", "<%=request.getContextPath()%>/goods/goodsTags", "600", "400");
-}
-
-//导出
-function importOut() {
-    layer_show("批量导入", "<%=request.getContextPath()%>/goods/importOut", "480", "340");
-}
-
-//导入
-function importIn() {
-    layer_show("批量导出", "<%=request.getContextPath()%>/goods/importIn", "480", "340");
+function detail() {
+    layer.open({
+        type: 2,
+        title: '<i class="Hui-iconfont c-primary mr-5">&#xe619;</i>一号掌柜 2017-02-04 16:15:49',
+        shadeClose: true,
+        shade: false,
+        maxmin: true, //开启最大化最小化按钮
+        area: ['950px', '350px'],
+        content: '<%=request.getContextPath()%>/goodsTraffic/audit/1'
+    });
 }
 </script>
 </body>

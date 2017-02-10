@@ -38,7 +38,7 @@ public class GoodsTraffic {
     @Column(name = "order_store_name")
     private String orderStoreName;
     //所包含的订货信息
-    @OneToMany(mappedBy = "goodsTraffic", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "goodsTrafficId", cascade = CascadeType.ALL)
     private Set<OrderGoodsInfo> goodsInfoSet = new HashSet<>();
     //如果订货的门店是连锁店则需要以下属性：
     //配货门店Id

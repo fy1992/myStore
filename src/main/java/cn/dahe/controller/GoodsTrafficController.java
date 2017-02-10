@@ -7,6 +7,7 @@ import cn.dahe.model.GoodsTraffic;
 import cn.dahe.model.OrderGoodsInfo;
 import cn.dahe.model.User;
 import cn.dahe.service.IGoodsTrafficService;
+import cn.dahe.service.IOrderGoodsInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,6 +32,8 @@ public class GoodsTrafficController {
     private static Logger logger = LoggerFactory.getLogger(GoodsTrafficController.class);
     @Resource
     private IGoodsTrafficService goodsTrafficService;
+    @Resource
+    private IOrderGoodsInfoService orderGoodsInfoService;
     /**
      * 列表页查询
      */
@@ -59,6 +63,7 @@ public class GoodsTrafficController {
         GoodsTraffic goodsTraffic = goodsTrafficService.get(id);
         Set<OrderGoodsInfo> orderGoodsInfoSet = goodsTraffic.getGoodsInfoSet();
         model.addAttribute("orderSet", orderGoodsInfoSet);
+        model.addAttribute("goodsTrafficId", id);
         if(step == 1){
             return "goodsTraffic/audit";
         }else if(step == 2){
@@ -97,5 +102,16 @@ public class GoodsTrafficController {
         json.setMsg("<%=request.getContextPath()%>/goodsTraffic/audit/3");
         json.setResult(1);
         return json;
+    }
+
+    /**
+     * 通过订单id 查询订单商品
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "findOrderGoodsInfosByGoodsTrafficId", method = RequestMethod.POST)
+    @ResponseBody
+    public List<OrderGoodsInfo> findOrderGoodsInfosByGoodsTrafficId(int id){
+        return  orderGoodsInfoService.findOrderGoodsInfosByGoodsTrafficId(id);
     }
 }

@@ -35,4 +35,14 @@ public class AjaxObj{
 	public void setObject(Object object) {
 		Object = object;
 	}
+
+	@Override
+	public String toString() {
+		return "AjaxObj{" +
+				"result=" + result +
+				", msg='" + msg + '\'' +
+				", Object=" + Object +
+				", totalPage=" + totalPage +
+				'}';
+	}
 }

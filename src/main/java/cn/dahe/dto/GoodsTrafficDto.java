@@ -37,4 +37,13 @@ public class GoodsTrafficDto {
     public void setGoodsMap(Map<Integer, Integer> goodsMap) {
         this.goodsMap = goodsMap;
     }
+
+    @Override
+    public String toString() {
+        return "GoodsTrafficDto{" +
+                "wishTime='" + wishTime + '\'' +
+                ", description='" + description + '\'' +
+                ", goodsMap=" + goodsMap +
+                '}';
+    }
 }

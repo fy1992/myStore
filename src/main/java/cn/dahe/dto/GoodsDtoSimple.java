@@ -77,4 +77,16 @@ public class GoodsDtoSimple {
         this.price = goods.getPrice();
         this.mainUnit = goods.getMainUnit().getName();
     }
+
+    @Override
+    public String toString() {
+        return "GoodsDtoSimple{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", goodsNum=" + goodsNum +
+                ", goodsImg='" + goodsImg + '\'' +
+                ", price=" + price +
+                ", mainUnit='" + mainUnit + '\'' +
+                '}';
+    }
 }

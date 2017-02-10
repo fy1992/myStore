@@ -4,8 +4,6 @@ import cn.dahe.dao.IGoodsUnitDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.GoodsUnit;
 import org.springframework.stereotype.Repository;
-import sun.swing.BakedArrayList;
-
 import java.util.ArrayList;
 import java.util.List;
 

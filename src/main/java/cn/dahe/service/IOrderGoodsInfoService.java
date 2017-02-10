@@ -25,7 +25,14 @@ public interface IOrderGoodsInfoService {
     /**
      * 配货
      * @param orderGoodsInfoList
-     * @param GoodsTrafficId
+     * @param goodsTrafficId
      */
-    void editOrderGoodsInfo(List<OrderGoodsInfo> orderGoodsInfoList, int GoodsTrafficId);
+    void editOrderGoodsInfo(List<OrderGoodsInfo> orderGoodsInfoList, int goodsTrafficId);
+
+    /**
+     * 通过订单id 查询订单商品
+     * @param goodsTrafficId
+     * @return
+     */
+    List<OrderGoodsInfo> findOrderGoodsInfosByGoodsTrafficId(int goodsTrafficId);
 }
