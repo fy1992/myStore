@@ -16,7 +16,9 @@ public class XSS implements Istrip {
 
 	@Override
 	public String strip(String value) {
-		logger.info("XSS value:"+value);
+		if(!value.startsWith("http:") && !value.startsWith("https:")){
+			logger.info("XSS value:"+value);
+		}
 		String rlt = null;
 
 		if ( value != null ) {
@@ -67,8 +69,9 @@ public class XSS implements Istrip {
 					| Pattern.MULTILINE | Pattern.DOTALL);
 			rlt = scriptPattern.matcher(rlt).replaceAll("");
 		}
-        logger.info("XSS after value:"+rlt);
+		if(!value.startsWith("http:") && !value.startsWith("https:")) {
+			logger.info("XSS after value:" + rlt);
+		}
 		return rlt;
 	}
-
 }

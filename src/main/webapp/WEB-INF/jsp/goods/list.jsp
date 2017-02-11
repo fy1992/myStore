@@ -112,7 +112,7 @@ table = $('#goods_table').dataTable({
        "aoColumns" : [
 	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
+            return "<a style='text-decoration:none' onclick='edit("+full.id+")'>编辑</a>";
         }},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "goodsNo", "sDefaultContent" : "", "bSortable":false},

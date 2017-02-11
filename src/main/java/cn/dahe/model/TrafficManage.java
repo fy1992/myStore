@@ -51,7 +51,7 @@ public class TrafficManage {
     //预付款
     private int imprest;
     //货流量
-    @Column(name = "goods_num'")
+    @Column(name = "goods_num")
     private int goodsNum;
     public int getId() {
         return id;

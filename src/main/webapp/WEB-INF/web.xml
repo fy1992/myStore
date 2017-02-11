@@ -69,7 +69,18 @@
   </filter>
   <filter-mapping>
     <filter-name>XssSqlFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/categories/*</url-pattern>
+    <url-pattern>/client/*</url-pattern>
+    <url-pattern>/employee/*</url-pattern>
+    <url-pattern>/goods/*</url-pattern>
+    <url-pattern>/goodsTraffic/*</url-pattern>
+    <url-pattern>/goodsTrafficManage/*</url-pattern>
+    <url-pattern>/permission/*</url-pattern>
+    <url-pattern>/role/*</url-pattern>
+    <url-pattern>/store/*</url-pattern>
+    <url-pattern>/supplier/*</url-pattern>
+    <url-pattern>/tasteGroup/*</url-pattern>
+    <url-pattern>/user/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
 
@@ -106,7 +117,7 @@
 
   <filter>
     <filter-name>openSessionInViewFilter</filter-name>
-    <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+    <filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>openSessionInViewFilter</filter-name>

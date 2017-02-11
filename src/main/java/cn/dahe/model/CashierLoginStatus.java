@@ -11,7 +11,7 @@ import java.util.Date;
  * 用户登录状态
  * Created by fy on 2017/2/8.
  */
-@Table(name = "")
+@Table(name = "t_cashier_login_status")
 @Entity
 public class CashierLoginStatus {
     @Id

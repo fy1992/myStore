@@ -14,7 +14,9 @@ public class SqlInject implements Istrip {
 
 	@Override
 	public String strip(String value) {
-		logger.info("sql注入虑前的值:"+value);
+		if(!value.startsWith("http:") && !value.startsWith("https:")) {
+			logger.info("sql注入虑前的值:" + value);
+		}
 		value = value.toLowerCase();// 统一转为小写
 		String badStr = "'|and|exec|execute|count|drop|*|chr|mid|master|truncate|"
 				+ "char|declare|sitename|net user|xp_cmdshell|or|like'insert|create|"
@@ -28,7 +30,9 @@ public class SqlInject implements Istrip {
             }
         }
         value = value.replaceAll("('.+--)|(--)|(\\|)|(%7C)", "");
-		logger.info("sql 注入滤后的值:" + value);
+		if(!value.startsWith("http:") && !value.startsWith("https:")) {
+			logger.info("sql 注入滤后的值:" + value);
+		}
 		return value;
 	}
 
