@@ -3,6 +3,7 @@ package cn.dahe.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
@@ -15,7 +16,7 @@ import java.util.Date;
 @Entity
 public class TimesCard {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     //名称
     private String name;

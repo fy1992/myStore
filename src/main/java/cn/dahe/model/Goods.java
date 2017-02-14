@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -23,7 +24,7 @@ import java.util.Set;
 @Entity
 public class Goods {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     //商品名称
     private String name;
@@ -44,7 +45,7 @@ public class Goods {
     @Column(name = "goods_no")
     private String goodsNo;
     //是否启用商品扩展信息  0 不启用 1 启用
-    @Column(name = "is_ex")
+    @Column(name = "is_ex", columnDefinition = "INT DEFAULT 1")
     private int isEx;
     //是否开启会员折扣 0 不开启  1 开启
     @Column(name = "is_vip_set")

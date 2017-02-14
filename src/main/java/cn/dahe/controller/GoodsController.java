@@ -403,7 +403,7 @@ public class GoodsController {
     @ResponseBody
     public AjaxObj addGoods(Goods goods, HttpSession session){
         AjaxObj json = new AjaxObj();
-
+        goodsService.add(goods);
         json.setResult(1);
         json.setMsg("商品添加成功");
         return json;

@@ -48,7 +48,7 @@
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>品名：</label>
                     <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value=""  id="truename" placeholder="请输入品名" >
+                        <input type="text" class="input-text radius" value=""  id="goodsName" placeholder="请输入品名" >
                     </div>
                     <div class="col-3"> </div>
                 </div>
@@ -65,17 +65,17 @@
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3"><span class="c-red">* </span>售价：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" name = "price" placeholder="请输入售价" style="width: 90%;"/>&nbsp;<label>元</label></div>
+                	<div class="formControls col-6"><input type = "text" class="input-text radius" name = "price" id="price" style="width: 90%;"/>&nbsp;<label>元</label></div>
                 	<div class="col-3"> </div>
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3"><span class="c-red">* </span>进价：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" placeholder="请输入进价" style="width: 90%;"/>&nbsp;<label>元</label></div>
+                	<div class="formControls col-6"><input type = "text" class="input-text radius" id = "bid" style="width: 90%;"/>&nbsp;<label>元</label></div>
                 	<div class="col-3"> </div>
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3"><span class="c-red">* </span>库存：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius text-r" value="0" placeholder="请输入库存量（单位：个）"/></div>
+                	<div class="formControls col-6"><input type = "text" class="input-text radius text-r" value="0" id = "stock" placeholder="请输入库存量（单位：个）"/></div>
                 	<div class="col-3"> </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                 <div class="clearfix">
                 	<div id="btnShowEditImages" class="defaultImage">
                     	<h1>编辑图片</h1>
-	                	<img>
+	                	<img src="" id="imgPath"/>
                 	</div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
             <div class="col-6 cl">
                 <label class="form-label col-3">会员价：</label>
                 <div class="formControls col-6">
-                    <input type = "text" class="input-text radius mr-5" placeholder="请输入会员价" id = "vipPrice" style="width: 90%;" disabled/><label>元</label>
+                    <input type = "text" class="input-text radius mr-5"  id = "vipPrice" style="width: 90%;" disabled/><label>元</label>
                 </div>
             </div>
         </div>
@@ -116,7 +116,7 @@
             <div class="col-6 cl">
                 <label class="form-label col-3">批发价：</label>
                 <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5" placeholder="请输入批发价" style="width: 90%;"/><label>&nbsp;元</label>
+                    <input type = "text"  class="input-text radius mr-5" id="tradePrice" style="width: 90%;"/><label>&nbsp;元</label>
                 </div>
             </div>
             <div class="col-6 cl">
@@ -170,14 +170,14 @@
             <div class="col-6">
                 <label class="form-label col-3">库存上限：</label>
                 <div class="formControls col-6">
-                    <input type="text"  class="input-text radius" placeholder="请输入库存上限"/>
+                    <input type="text"  class="input-text radius" id="stockUp" placeholder="请输入库存上限"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
             <div class="col-6">
                 <label class="form-label col-3">库存下限：</label>
                 <div class="formControls col-6">
-                    <input type="text"  class="input-text radius" placeholder="请输入库存下限"/>
+                    <input type="text"  class="input-text radius" id="stockDown" placeholder="请输入库存下限"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -204,7 +204,7 @@
         	<div class="col-8">
 	            <label class="form-label col-3">备注：</label>
 	            <div class="formControls col-9">
-	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="edit_remarks" placeholder="在这里写上您的备注"></textarea>
+	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="goodsDescription" placeholder="在这里写上您的备注"></textarea>
 	            </div>
 	        </div>
         </div>
@@ -278,6 +278,35 @@ $(function(){
 
         $("input[name='vip']").on("click", function(){
             $("#vipPrice").attr("disabled", $(this).val() == 1 ? false : true);
+        })
+    });
+
+	$("#userAddBtn").on("click", function () {
+        var goods = new Object();
+        goods.name = $("#goodsName").val();
+        goods.goodsNo = $("#goodsNo").val();
+        goods.imgUrl = $("#imgUrl").val();
+        goods.isVipSet = $("input[name = 'vip']:checked").val();
+        goods.status = $("input[name = 'using']:checked").val();
+        goods.stockDown = $("#stockDown").val();
+        goods.stockUp = $("#stockUp").val();
+        goods.description = $("#goodsDescription").val();
+        goods.goodsTags = $("#tagsIds").val();
+        goods.smallTicket = $("#stsIds").val();
+        goods.expirationDate = $("#ExpirationDate").val();
+        goods.productionDate = $("#productionDate").val();
+        goods.supplier = $("#supplier").val();
+        goods.pinyin = $("#pinyin").val();
+        goods.mainUnit = $("#mainUnit").val();
+        goods.tradePrice = $("#tradePrice").val();
+        goods.vipPrice = $("#vipPrice").val();
+        goods.imgUrl = $("#imgPath").val();
+        goods.stock = $("#stock").val();
+        goods.price = $("#price").val();
+        goods.bid = $("#bid").val();
+        goods.categories = $("#categories").val();
+        $.post("<%=request.getContextPath()%>/goods/addGoods",{goods : JSON.stringify(goods)}, function (data) {
+            layer.msg(data.msg);
         })
     });
 })
