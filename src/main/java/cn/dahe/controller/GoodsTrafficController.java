@@ -58,8 +58,8 @@ public class GoodsTrafficController {
      * @param step  1 审核 2 配货 3 完成
      * @return
      */
-    @RequestMapping(value = "audit/{step}", method = RequestMethod.GET)
-    public String audit(@PathVariable int step, int id, Model model){
+    @RequestMapping(value = "audit/{step}/{id}", method = RequestMethod.GET)
+    public String audit(@PathVariable int step, @PathVariable int id, Model model){
         GoodsTraffic goodsTraffic = goodsTrafficService.get(id);
         Set<OrderGoodsInfo> orderGoodsInfoSet = goodsTraffic.getGoodsInfoSet();
         model.addAttribute("orderSet", orderGoodsInfoSet);

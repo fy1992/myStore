@@ -56,12 +56,16 @@ $(function(){
         }
         if(tagsIdList.length > 0 && tagsNameList.length > 0){
             parent.$("#showGoodsTags").empty();
+            var tagsIds = [];
             for(var n in tagsIdList){
                 parent.$("#showGoodsTags").append(
-                    "<a class=\"btn btn-primary size-MINI mr-5\">"+tagsNameList[n]+"</a>" +
-                    "<input type = 'hidden' value = '"+tagsIdList[n]+"' class='tagsIds'/>"
+                    "<a class=\"btn btn-primary size-MINI mr-5\">"+tagsNameList[n]+"</a>"
                 );
+				tagsIds.push(tagsIdList[n]);
             }
+            parent.$("#showGoodsTags").append(
+                "<input type = 'hidden' value = '"+tagsIds+"' id = 'tagsIds'/>"
+            );
         }
 		layer_close();
 	});

@@ -43,7 +43,12 @@
                     <div class="formControls col-6">
                         <input type="text" class="input-text radius" value="" id="supplier_No" placeholder="请输入供货商编号" >
                     </div>
-                    <div class="col-3"> </div>
+                    <div class="col-3">
+                        <input type="button" class="btn btn-primary size-S radius" value="随机生成" id="randomNo"/>
+                        <span style="display: none;" id="help_tooltip" data-toggle="tooltip" data-placement="bottom">
+                            <i class="Hui-iconfont" style="cursor: pointer">&#xe633;</i>
+                        </span>
+                    </div>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>供货商名称：</label>
@@ -136,6 +141,22 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script>
+    $(function () {
+        $("#help_tooltip").on("show.bs.tooltip", function(){
+
+        });
+        //随机生成编号
+        $("#randomNo").on("click", function () {
+            $.post("<%=request.getContextPath()%>/supplier/newSupplierNo", function(data){
+                if(data.result == 1){
+                    $("#supplier_No").val(data.msg);
+                    $("#randomNo").css("display", "none");
+                    $("#help_tooltip").show();
+                }
+            });
+        })
+    });
+
 </script>
 </body>
 </html>

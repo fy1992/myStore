@@ -74,7 +74,7 @@
                 	<div class="col-3"> </div>
                 </div>
                 <div class="row cl">
-                	<label class="form-label col-3"><span class="c-red">* </span>库存：</label>
+                	<label class="form-label col-3">库存：</label>
                 	<div class="formControls col-6"><input type = "text" class="input-text radius text-r" value="0" id = "stock" placeholder="请输入库存量（单位：个）"/></div>
                 	<div class="col-3"> </div>
                 </div>
