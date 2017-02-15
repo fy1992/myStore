@@ -47,10 +47,9 @@ public class SupplierController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public Pager<Supplier> getSupplierList(HttpSession session, String aDataSet) {
+    public Pager<Supplier> getSupplierList(String aDataSet) {
         logger.info("--- Supplier list begin ---");
-        User user = (User) session.getAttribute("loginUser");
-        return supplierService.findByParams(aDataSet, user.getStoreId());
+        return supplierService.findByParams(aDataSet);
     }
 
     /**
@@ -68,10 +67,16 @@ public class SupplierController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj addUser(Supplier supplier){
+        logger.info(supplier.toString());
         AjaxObj json = new AjaxObj();
-        supplierService.add(supplier);
-        json.setMsg("供应商添加成功");
-        json.setResult(1);
+        boolean b = supplierService.add(supplier);
+        if(b){
+            json.setMsg("供应商添加成功");
+            json.setResult(1);
+        }else{
+            json.setMsg("该供应商编码已存在");
+            json.setResult(0);
+        }
         return json;
     }
 
@@ -106,9 +111,8 @@ public class SupplierController {
      */
     @RequestMapping(value = "allSupplier", method = RequestMethod.POST)
     @ResponseBody
-    public List<Supplier> allSupplier(HttpSession session){
-        User user = (User) session.getAttribute("loginUser");
-        List<Supplier> suppliers =  supplierService.findAll(user.getStoreId());
+    public List<Supplier> allSupplier(){
+        List<Supplier> suppliers =  supplierService.findAll();
         if(suppliers == null){
             suppliers = new ArrayList<>();
         }
@@ -122,7 +126,7 @@ public class SupplierController {
      */
     @RequestMapping("importExcel")
     @ResponseBody
-    public AjaxObj importExcel(MultipartFile file, HttpSession session){
+    public AjaxObj importExcel(MultipartFile file){
         AjaxObj json = new AjaxObj();
         if(file == null){
             json.setMsg("请选择文件上传");
@@ -139,8 +143,7 @@ public class SupplierController {
             json.setResult(0);
             return json;
         }
-        User user = (User)session.getAttribute("loginUser");
-        Map<String, Object> map = supplierService.importSupplierExcel(file, user.getStoreId());
+        Map<String, Object> map = supplierService.importSupplierExcel(file);
 
         return json;
     }

@@ -20,25 +20,22 @@ public interface ISupplierService {
     /**
      * 根据参数查询
      * @param aDataSet
-     * @param storeId
      * @return
      */
-    Pager<Supplier> findByParams(String aDataSet, int storeId);
+    Pager<Supplier> findByParams(String aDataSet);
 
     /**
      * 通过excel导入供应商
      * @param file
-     * @param storeId 门店id
      */
-    Map<String, Object> importSupplierExcel(MultipartFile file, int storeId);
+    Map<String, Object> importSupplierExcel(MultipartFile file);
 
-    List<Supplier> findAll(int storeId);
+    List<Supplier> findAll();
 
     /**
      * 根据名称查询
      * @param name
-     * @param storeId
      * @return
      */
-    List<Supplier> findByName(String name, int storeId);
+    List<Supplier> findByName(String name);
 }

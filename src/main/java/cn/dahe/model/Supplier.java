@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.HashSet;
@@ -51,6 +54,13 @@ public class Supplier {
     private Set<Goods> goods = new HashSet<>();
     //拼音
     private String pinyin;
+    //供货商对应的店铺
+    @ManyToMany
+    @JoinTable(name = "t_supplier_store",
+            joinColumns = {@JoinColumn(name = "supplier_id")},
+            inverseJoinColumns = {@JoinColumn(name = "store_id")})
+    private Set<Store> storeSet = new HashSet<>();
+
     public int getId() {
         return id;
     }
@@ -161,5 +171,25 @@ public class Supplier {
 
     public void setPinyin(String pinyin) {
         this.pinyin = pinyin;
+    }
+
+    @Override
+    public String toString() {
+        return "Supplier{" +
+                "id=" + id +
+                ", status=" + status +
+                ", name='" + name + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", supplierNo='" + supplierNo + '\'' +
+                ", packingFeePoint='" + packingFeePoint + '\'' +
+                ", rebatePoint='" + rebatePoint + '\'' +
+                ", addr='" + addr + '\'' +
+                ", description='" + description + '\'' +
+                ", isAuthorize=" + isAuthorize +
+                ", goods=" + goods +
+                ", pinyin='" + pinyin + '\'' +
+                '}';
     }
 }

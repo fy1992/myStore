@@ -20,31 +20,31 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements ISupplierD
         List<Object> list = new ArrayList<>();
         int status = params.getStatus();
         String keywords = params.getStringParam1();
-        int storeId = params.getIntParam1();
+        //int storeId = params.getIntParam1();
         hql.append(" and supplier.status = ?");
         list.add(status);
         if(StringUtils.isNotBlank(keywords)){
             hql.append(" and supplier.name like ?");
             list.add("%" + keywords + "%");
         }
-        if(storeId != -1){
+        /*if(storeId != -1){
             hql.append(" and supplier.storeId = ? ");
             list.add(storeId);
-        }
+        }*/
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);
     }
 
     @Override
-    public List<Supplier> findByName(int storeId, String name) {
-        String hql = "from Supplier supplier where supplier.storeId = ? and supplier.name = ? and supplier.status = 1";
-        return this.list(hql, new Object[]{storeId, name});
+    public List<Supplier> findByName(String name) {
+        String hql = "from Supplier supplier where supplier.name = ? and supplier.status = 1";
+        return this.list(hql,  name);
     }
 
     @Override
-    public List<Supplier> findAll(int storeId) {
-        String hql = "from Supplier supplier where supplier.storeId = ? and supplier.status = 1";
-        return this.list(hql, storeId);
+    public List<Supplier> findAll() {
+        String hql = "from  Supplier supplier where supplier.status = 1";
+        return this.list(hql);
     }
 
     @Override

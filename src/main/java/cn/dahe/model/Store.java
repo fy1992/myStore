@@ -6,9 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 店面
@@ -49,7 +53,11 @@ public class Store {
     //是否是连锁店 0 不是 1 是
     @Column(name = "is_multiple", columnDefinition = "INT DEFAULT 0")
     private int isMultiple;
-
+    @ManyToMany
+    @JoinTable(name = "t_supplier_store",
+            joinColumns = {@JoinColumn(name = "store_id")},
+            inverseJoinColumns = {@JoinColumn(name = "supplier_id")})
+    private Set<Supplier> supplierSet = new HashSet<>();
     public int getId() {
         return id;
     }

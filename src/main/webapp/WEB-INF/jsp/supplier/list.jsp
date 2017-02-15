@@ -35,7 +35,7 @@
                     <option value = "0">禁用</option>
                 </select>
             </span>
-            <input type="text" id="goods_info" placeholder="条码/名称/拼音码" style="width:260px" class="input-text radius">
+            <input type="text" id="supplier_info" placeholder="条码/名称/拼音码" style="width:260px" class="input-text radius">
             <button id="news_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
@@ -121,7 +121,7 @@ table = $('#supplier_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/goods/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/supplier/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -206,17 +206,17 @@ function formatDate(val){
 
 //新增
 function add() {
-    layer_show("新增供货商", "<%=request.getContextPath()%>/supplier/add", "800", "600");
+    layer_show("新增供货商", "<%=request.getContextPath()%>/supplier/add", "700", "600");
 }
 
 //导出
 function importOut() {
-    layer_show("批量导入", "<%=request.getContextPath()%>/goods/importOut", "480", "340");
+    layer_show("批量导入", "<%=request.getContextPath()%>/supplier/importOut", "480", "340");
 }
 
 //导入
 function importIn() {
-    layer_show("批量导出", "<%=request.getContextPath()%>/goods/importIn", "480", "340");
+    layer_show("批量导出", "<%=request.getContextPath()%>/supplier/importIn", "480", "340");
 }
 </script>
 </body>

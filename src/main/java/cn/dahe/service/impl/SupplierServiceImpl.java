@@ -35,6 +35,7 @@ public class SupplierServiceImpl implements ISupplierService{
     public boolean add(Supplier t) {
         Supplier supplier = supplierDao.findByNo(t.getSupplierNo());
         if(supplier == null){
+            logger.info("供应商编码还没有被使用");
             supplierDao.add(t);
             return true;
         }
@@ -62,7 +63,7 @@ public class SupplierServiceImpl implements ISupplierService{
     }
 
     @Override
-    public Pager<Supplier> findByParams(String aDataSet, int storeId) {
+    public Pager<Supplier> findByParams(String aDataSet) {
         int start = 0;// 起始
         int pageSize = 20;// size
         int status = 1;
@@ -86,7 +87,7 @@ public class SupplierServiceImpl implements ISupplierService{
             params.setStatus(status);
             params.setOrderColumn("supplier.id");
             params.setOrderDir("desc");
-            params.setIntParam4(storeId);
+            params.setIntParam4(-1);
             params.setStringParam1(keywords);
             return supplierDao.findByParam(start, pageSize, params);
         }catch (Exception e){
@@ -96,8 +97,8 @@ public class SupplierServiceImpl implements ISupplierService{
     }
 
     @Override
-    public Map<String, Object> importSupplierExcel(MultipartFile file, int storeId) {
-        Supplier supplier = null;
+    public Map<String, Object> importSupplierExcel(MultipartFile file) {
+        Supplier supplier;
         Map<String, Object> map = new HashMap<>();
         try{
             InputStream inputStream = file.getInputStream();
@@ -147,12 +148,12 @@ public class SupplierServiceImpl implements ISupplierService{
     }
 
     @Override
-    public List<Supplier> findAll(int storeId) {
-        return supplierDao.findAll(storeId);
+    public List<Supplier> findAll() {
+        return supplierDao.findAll();
     }
 
     @Override
-    public List<Supplier> findByName(String name, int storeId) {
-        return supplierDao.findByName(storeId, name);
+    public List<Supplier> findByName(String name) {
+        return supplierDao.findByName(name);
     }
 }

@@ -20,18 +20,16 @@ public interface ISupplierDao extends IBaseDao<Supplier>{
 
     /**
      * 根据名称和店面id查询
-     * @param storeId
      * @param name
      * @return
      */
-    List<Supplier> findByName(int storeId, String name);
+    List<Supplier> findByName(String name);
 
     /**
      * 查询全部
-     * @param storeId
      * @return
      */
-    List<Supplier> findAll(int storeId);
+    List<Supplier> findAll();
 
     /**
      * 根据编号查询
