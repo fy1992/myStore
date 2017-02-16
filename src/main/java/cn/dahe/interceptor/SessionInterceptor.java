@@ -20,7 +20,9 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		String requestUri = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String url = requestUri.substring(contextPath.length());
-		logger.info("url enter the sessinInterceptor : " + url);
+		if(!url.endsWith(".woff")) {
+			logger.info("url enter the sessinInterceptor : " + url);
+		}
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("loginUser");
         if(url.contains("/login")){

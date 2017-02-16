@@ -48,7 +48,8 @@ public class Supplier {
     //备注
     private String description;
     //是否授权  0  没有授权  1  授权
-    private int isAuthorize;
+    @Column(name = "is_authorize")
+    private int authorize;
     //供货商对应的商品
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
     private Set<Goods> goods = new HashSet<>();
@@ -149,12 +150,20 @@ public class Supplier {
         this.description = description;
     }
 
-    public int getIsAuthorize() {
-        return isAuthorize;
+    public int getAuthorize() {
+        return authorize;
     }
 
-    public void setIsAuthorize(int isAuthorize) {
-        this.isAuthorize = isAuthorize;
+    public void setAuthorize(int authorize) {
+        this.authorize = authorize;
+    }
+
+    public Set<Store> getStoreSet() {
+        return storeSet;
+    }
+
+    public void setStoreSet(Set<Store> storeSet) {
+        this.storeSet = storeSet;
     }
 
     public Set<Goods> getGoods() {
@@ -171,25 +180,5 @@ public class Supplier {
 
     public void setPinyin(String pinyin) {
         this.pinyin = pinyin;
-    }
-
-    @Override
-    public String toString() {
-        return "Supplier{" +
-                "id=" + id +
-                ", status=" + status +
-                ", name='" + name + '\'' +
-                ", contacts='" + contacts + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", supplierNo='" + supplierNo + '\'' +
-                ", packingFeePoint='" + packingFeePoint + '\'' +
-                ", rebatePoint='" + rebatePoint + '\'' +
-                ", addr='" + addr + '\'' +
-                ", description='" + description + '\'' +
-                ", isAuthorize=" + isAuthorize +
-                ", goods=" + goods +
-                ", pinyin='" + pinyin + '\'' +
-                '}';
     }
 }

@@ -55,26 +55,23 @@
         <!-- 关闭abanded连接时输出错误日志 -->
         <property name="logAbandoned" value="true" />
         <!-- 监控数据库 -->
-        <!-- <property name="filters" value="stat" />  -->
-        <property name="filters" value="mergeStat" />
+         <property name="filters" value="stat" />
 	</bean>
 
 	<!-- 定义Hibernate Session工厂 -->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan">
-		    <value>cn.dahe.model</value>
-		</property>
+		<property name="packagesToScan" value = "cn.dahe.model"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
                 <prop key="hibernate.format_sql">false</prop>
             </props>
         </property>
 	</bean>
-
+    <!-- hibernate 模板 -->
     <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
@@ -84,12 +81,11 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-
-    <!-- 配置哪些方法要加入事务控制 -->
+    <!-- 配置事务管理器 -->
     <tx:advice id="txAdvice" transaction-manager="txManager">
         <tx:attributes>
             <!-- 对其它方法进行只读事务 -->
-            <tx:method name="*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="*" propagation="REQUIRED" read-only="true"/>
             <tx:method name="add*" propagation="REQUIRED"/>
             <tx:method name="save*" propagation="REQUIRED" />
             <tx:method name="delete*" propagation="REQUIRED"/>

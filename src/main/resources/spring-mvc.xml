@@ -9,16 +9,19 @@
 						http://www.springframework.org/schema/context/spring-context-3.1.xsd
 						http://www.springframework.org/schema/mvc 
 						http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
-	
+	<!-- 开启注解 -->
 	<mvc:annotation-driven/>
+    <!-- 只扫描controller -->
 	<context:component-scan base-package="cn.dahe.controller"/>
+    <!-- 静态资源过滤 -->
 	<mvc:resources location="/resources/" mapping="/resources/**"/>
-	
+	<!-- 视图解析器 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	  <property name="prefix" value="/WEB-INF/jsp/"/>
 	  <property name="suffix" value=".jsp"/>
 	</bean>
-	
+
+	<!-- 拦截器 -->
 	<mvc:interceptors>
 	    <mvc:interceptor>
 	        <mvc:mapping path="/**" />
@@ -26,7 +29,8 @@
 			</bean>
 	    </mvc:interceptor>
 	</mvc:interceptors>
-	
+
+	<!-- spring异常处理 -->
 	<bean  id="exceptionResolve" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 		   <props>
@@ -34,13 +38,16 @@
 		   </props>
 		</property>
 	</bean>
-	
+
+	<!--文件上传-->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="500000000"/>
 		<property name="defaultEncoding" value="UTF-8"/>
 		<property name="maxInMemorySize" value="4096"/>
 	</bean>
+
+    <!-- json转码 -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
 			<list>
