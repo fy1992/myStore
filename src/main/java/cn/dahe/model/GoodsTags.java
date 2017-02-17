@@ -64,4 +64,14 @@ public class GoodsTags {
     public void setStoreId(int storeId) {
         this.storeId = storeId;
     }
+
+    @Override
+    public String toString() {
+        return "GoodsTags{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", goodsSet=" + goodsSet +
+                ", storeId=" + storeId +
+                '}';
+    }
 }

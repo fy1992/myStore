@@ -63,7 +63,7 @@ public class TasteDto {
         TasteDto tasteDto = new TasteDto();
         tasteDto.setId(tasteGroup.getId());
         tasteDto.setName(tasteGroup.getName());
-        tasteDto.setIsRequired(tasteGroup.getIsRequired());
+        tasteDto.setIsRequired(tasteGroup.getRequired());
         tasteDto.setType(tasteGroup.getType());
         Set<Taste> tasteSet = tasteGroup.getTasteSet();
         StringBuffer descriptionSb = new StringBuffer();

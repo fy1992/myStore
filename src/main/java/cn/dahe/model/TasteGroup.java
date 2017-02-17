@@ -29,7 +29,7 @@ public class TasteGroup {
     private String name;
     //是否是必选的
     @Column(name = "is_required")
-    private int isRequired;
+    private int required;
     //口味选择方式
     private int type;
     //口味对应的商品
@@ -58,12 +58,12 @@ public class TasteGroup {
         this.name = name;
     }
 
-    public int getIsRequired() {
-        return isRequired;
+    public int getRequired() {
+        return required;
     }
 
-    public void setIsRequired(int isRequired) {
-        this.isRequired = isRequired;
+    public void setRequired(int required) {
+        this.required = required;
     }
 
     public int getType() {

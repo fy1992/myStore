@@ -42,6 +42,8 @@ public class OptLog {
     //被操作对象Id
     @Column(name = "object_id")
     private int objectId;
+    //操作类型  0  删除操作  1  修改操作  2  添加操作  3 审核操作
+    private int type;
 
     public int getId() {
         return id;

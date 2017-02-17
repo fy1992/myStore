@@ -83,4 +83,18 @@ public class Categories {
     public void setSeq(int seq) {
         this.seq = seq;
     }
+
+
+
+    @Override
+    public String toString() {
+        return "Categories{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parent=" + parent +
+                ", storeId=" + storeId +
+                ", goodsSet=" + goodsSet +
+                ", seq=" + seq +
+                '}';
+    }
 }

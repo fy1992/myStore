@@ -25,7 +25,7 @@ public class CashierLoginStatus {
     @Column(name = "last_active_time")
     private Date lastActiveTime;
     //是否在线 0 不在线 1 在线
-    private int isOnline;
+    private int online;
     //session id
     @Column(name = "session_id")
     private String sessionId;
@@ -54,12 +54,12 @@ public class CashierLoginStatus {
         this.lastActiveTime = lastActiveTime;
     }
 
-    public int getIsOnline() {
-        return isOnline;
+    public int getOnline() {
+        return online;
     }
 
-    public void setIsOnline(int isOnline) {
-        this.isOnline = isOnline;
+    public void setOnline(int online) {
+        this.online = online;
     }
 
     public String getSessionId() {
@@ -69,4 +69,6 @@ public class CashierLoginStatus {
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
+
+
 }

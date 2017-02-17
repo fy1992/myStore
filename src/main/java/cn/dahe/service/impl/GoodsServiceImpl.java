@@ -244,9 +244,9 @@ public class GoodsServiceImpl implements IGoodsService{
                             goods.setDescription(PoiUtils.getValue(description));
                             goods.setShelfLife(Integer.valueOf(PoiUtils.getValue(shelfLife)));
                             goods.setPrice(Integer.parseInt(PoiUtils.getValue(price)));
-                            goods.setIsPrint(Integer.parseInt(PoiUtils.getValue(isPrint)));
-                            goods.setIsScore(Integer.parseInt(PoiUtils.getValue(isScore)));
-                            goods.setIsVipSet(Integer.parseInt(PoiUtils.getValue(isVipSet)));
+                            goods.setPrint(Integer.parseInt(PoiUtils.getValue(isPrint)));
+                            goods.setScore(Integer.parseInt(PoiUtils.getValue(isScore)));
+                            goods.setVipSet(Integer.parseInt(PoiUtils.getValue(isVipSet)));
                             goods.setStockDown(Integer.parseInt(PoiUtils.getValue(stockDown)));
                             goods.setStockUp(Integer.parseInt(PoiUtils.getValue(stockUp)));
                             goods.setVipPrice(Integer.parseInt(PoiUtils.getValue(vipPrice)));

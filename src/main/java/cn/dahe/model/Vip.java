@@ -38,7 +38,7 @@ public class Vip {
     private Date dueDate;
     //是否允许赊账 0 不允许 1 允许
     @Column(name = "is_credit")
-    private int isCredit;
+    private int credit;
     //qq
     private String qq;
     //email
@@ -128,12 +128,12 @@ public class Vip {
         this.dueDate = dueDate;
     }
 
-    public int getIsCredit() {
-        return isCredit;
+    public int getCredit() {
+        return credit;
     }
 
-    public void setIsCredit(int isCredit) {
-        this.isCredit = isCredit;
+    public void setCredit(int credit) {
+        this.credit = credit;
     }
 
     public String getQq() {

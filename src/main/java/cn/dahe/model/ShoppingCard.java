@@ -20,7 +20,7 @@ public class ShoppingCard {
     //购物卡名称
     private String name;
     //是否有使用期限 0 没有 1 有
-    private int isDue;
+    private int due;
     //有效天数
     private int dueDays;
     //购买商品范围
@@ -46,12 +46,12 @@ public class ShoppingCard {
         this.name = name;
     }
 
-    public int getIsDue() {
-        return isDue;
+    public int getDue() {
+        return due;
     }
 
-    public void setIsDue(int isDue) {
-        this.isDue = isDue;
+    public void setDue(int due) {
+        this.due = due;
     }
 
     public int getDueDays() {

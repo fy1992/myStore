@@ -139,4 +139,21 @@ public class GoodsTraffic {
     public void setPrepareType(int prepareType) {
         this.prepareType = prepareType;
     }
+
+    @Override
+    public String toString() {
+        return "GoodsTraffic{" +
+                "id=" + id +
+                ", orderTime=" + orderTime +
+                ", wishTime=" + wishTime +
+                ", status=" + status +
+                ", description='" + description + '\'' +
+                ", orderStoreId=" + orderStoreId +
+                ", orderStoreName='" + orderStoreName + '\'' +
+                ", goodsInfoSet=" + goodsInfoSet +
+                ", prepareStoreId=" + prepareStoreId +
+                ", prepareStoreName='" + prepareStoreName + '\'' +
+                ", prepareType=" + prepareType +
+                '}';
+    }
 }

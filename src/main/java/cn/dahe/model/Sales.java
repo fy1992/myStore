@@ -32,7 +32,7 @@ public class Sales {
     private int percentage;
     //是否开启精准营销  0 不开启 1  开启
     @Column(name = "is_pre_mark")
-    private int isPreMark;
+    private int preMark;
     //精准营销有效期
     @Column(name = "pre_mark_time")
     private Date preMarkTime;
@@ -89,12 +89,12 @@ public class Sales {
         this.percentage = percentage;
     }
 
-    public int getIsPreMark() {
-        return isPreMark;
+    public int getPreMark() {
+        return preMark;
     }
 
-    public void setIsPreMark(int isPreMark) {
-        this.isPreMark = isPreMark;
+    public void setPreMark(int preMark) {
+        this.preMark = preMark;
     }
 
     public int getStoreId() {

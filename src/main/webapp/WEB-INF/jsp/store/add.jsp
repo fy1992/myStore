@@ -39,9 +39,9 @@
                 <div class="col-3"></div>
             </div>
             <div class="row cl">
-                <label class="form-label col-3"><span class="c-red">* </span>供货商编号：</label>
+                <label class="form-label col-3"><span class="c-red">* </span>门店编号：</label>
                 <div class="formControls col-6">
-                    <input type="text" class="input-text radius" id="supplier_No" name = "supplierNo" value="">
+                    <input type="text" class="input-text radius" id="supplier_no" name = "supplierNo" value="">
                 </div>
                 <div class="col-3">
                     <input type="button" class="btn btn-primary size-S radius" value="随机生成" id="randomNo"/>
@@ -143,63 +143,59 @@
 <script type="text/javascript" src="${ctxResource}/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
+    var validtor;
     $(function () {
-       var  validtor = $("#form-supplier-add").Validform({
-            tiptype:3,
-            showAllError:true,
-            ajaxPost:true,
-            ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
-            //tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
-            btnSubmit:"#supplierAddBtn"
-        });
-        validtor.addRule([
-            {
-                ele:"#supplier_name",
-                datatype:"s",
-                nullmsg :"该项为必填项"
-            },
-            {
-                ele:"#supplier_No",
-                datatype:"n",
-                errormsg:"只能填写数字",
-                nullmsg:"该项为必填项"
-            },
-            {
-                ele:"#supplier_phone",
-                datatype:"n",
-                errormsg:"请填写正确的手机号码",
-                ignore : "ignore"
-            },
-            {
-                ele:"#supplier_email",
-                datatype:"n",
-                errormsg:"请填写正确的邮箱",
-                ignore : "ignore"
-            },
-            {
-                ele:"#supplier_rebatePoint",
-                datatype:"n",
-                errormsg:"请填写正确的数值",
-                ignore : "ignore"
-            },
-            {
-                ele:"#supplier_packingFeePoint",
-                datatype:"n",
-                errormsg:"请填写正确的数值",
-                ignore : "ignore"
-            }
-        ]);
+        validtor = $("#form-supplier-add").Validform({
+            btnSumbit : "#supplierAddBtn",
+            tiptype:2,
+            tipSweep:true,
 
+        });
         $("[data-toggle='tooltip']").tooltip();
     });
-
+    validtor.addRule([
+        {
+            ele : "#pinyin",
+            datatype : "s"
+        },
+        {
+            ele : "#supplier_no",
+            datatype : "n",
+            nullmsg : "供货商编号必填"
+        },
+        {
+            ele : "#supplier_name",
+            datatype : "s",
+            nullmsg : "供货商姓名必填"
+        },
+        {
+            ele : "#supplier_email",
+            datatype : "e",
+            errormsg : "请填写正确的邮箱"
+        },
+        {
+            ele : "#supplier_phone",
+            datatype : "m",
+            errormsg : "请填写正确的手机号"
+        },
+        {
+            ele : "#supplier_rebatePoint",
+            datatype : "n",
+            errormsg : "请填写正确的数值"
+        },
+        {
+            ele : "#supplier_packingFeePoint",
+            datatype : "n",
+            errormsg : "请填写正确的数值"
+        }
+    ]);
 
     //随机生成编号
     $("#randomNo").on("click", function () {
         $.post("<%=request.getContextPath()%>/supplier/newSupplierNo", function(data){
             if(data.result == 1){
-                $("#supplier_No").val(data.msg);
-                $("#supplier_No").remove(data.msg);
+                $("#supplier_no").removeClass("Validform_error");
+                $("#supplier_no").val(data.msg);
                 $("#randomNo").css("display", "none");
                 $("#help_tooltip").show();
             }

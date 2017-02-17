@@ -23,7 +23,7 @@ public class VipLevel {
     private int rebate;
     //是否自动升级 0 不自动 1 自动
     @Column(name = "is_auto")
-    private int isAuto;
+    private int auto;
     //自动升级积分界限
     @Column(name = "auto_line")
     private int autoLine;
@@ -58,12 +58,12 @@ public class VipLevel {
         this.rebate = rebate;
     }
 
-    public int getIsAuto() {
-        return isAuto;
+    public int getAuto() {
+        return auto;
     }
 
-    public void setIsAuto(int isAuto) {
-        this.isAuto = isAuto;
+    public void setAuto(int auto) {
+        this.auto = auto;
     }
 
     public int getAutoLine() {

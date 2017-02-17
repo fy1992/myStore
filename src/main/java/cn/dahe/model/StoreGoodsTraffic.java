@@ -33,7 +33,7 @@ public class StoreGoodsTraffic {
     private int preparePriceType;
     //是否开启在线支付 0 不开启 1 开启
     @Column(name = "is_pay_online", columnDefinition = "INT DEFAULT 0")
-    private int isPayOnline;
+    private int payOnline;
     //调货差异操作
     // 0  允许编辑数量，需出货方确认 1 允许编辑数量，直接完成进货 2  不允许编辑数量
     @Column(name = "different_opt", columnDefinition = "INT DEFAULT 0")
@@ -71,12 +71,12 @@ public class StoreGoodsTraffic {
         this.preparePriceType = preparePriceType;
     }
 
-    public int getIsPayOnline() {
-        return isPayOnline;
+    public int getPayOnline() {
+        return payOnline;
     }
 
-    public void setIsPayOnline(int isPayOnline) {
-        this.isPayOnline = isPayOnline;
+    public void setPayOnline(int payOnline) {
+        this.payOnline = payOnline;
     }
 
     public int getDifferentOpt() {

@@ -52,7 +52,7 @@ public class Store {
     private Industry industry;
     //是否是连锁店 0 不是 1 是
     @Column(name = "is_multiple", columnDefinition = "INT DEFAULT 0")
-    private int isMultiple;
+    private int multiple;
     @ManyToMany
     @JoinTable(name = "t_supplier_store",
             joinColumns = {@JoinColumn(name = "store_id")},
@@ -154,11 +154,19 @@ public class Store {
         this.industry = industry;
     }
 
-    public int getIsMultiple() {
-        return isMultiple;
+    public int getMultiple() {
+        return multiple;
     }
 
-    public void setIsMultiple(int isMultiple) {
-        this.isMultiple = isMultiple;
+    public void setMultiple(int multiple) {
+        this.multiple = multiple;
+    }
+
+    public Set<Supplier> getSupplierSet() {
+        return supplierSet;
+    }
+
+    public void setSupplierSet(Set<Supplier> supplierSet) {
+        this.supplierSet = supplierSet;
     }
 }

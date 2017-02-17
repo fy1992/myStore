@@ -46,10 +46,10 @@ public class Goods {
     private String goodsNo;
     //是否启用商品扩展信息  0 不启用 1 启用
     @Column(name = "is_ex", columnDefinition = "INT DEFAULT 1")
-    private int isEx;
+    private int ex;
     //是否开启会员折扣 0 不开启  1 开启
     @Column(name = "is_vip_set")
-    private int isVipSet;
+    private int vipSet;
     //会员价
     @Column(name = "vip_price")
     private int vipPrice;
@@ -115,10 +115,10 @@ public class Goods {
     private int seq;
     //是否打印 0 不打印 1 打印
     @Column(name = "is_print")
-    private int isPrint;
+    private int print;
     //是否是积分商品 0 不是 1 是
     @Column(name = "is_score")
-    private int isScore;
+    private int score;
     public int getId() {
         return id;
     }
@@ -183,20 +183,36 @@ public class Goods {
         this.goodsNo = goodsNo;
     }
 
-    public int getIsEx() {
-        return isEx;
+    public int getEx() {
+        return ex;
     }
 
-    public void setIsEx(int isEx) {
-        this.isEx = isEx;
+    public void setEx(int ex) {
+        this.ex = ex;
     }
 
-    public int getIsVipSet() {
-        return isVipSet;
+    public int getVipSet() {
+        return vipSet;
     }
 
-    public void setIsVipSet(int isVipSet) {
-        this.isVipSet = isVipSet;
+    public void setVipSet(int vipSet) {
+        this.vipSet = vipSet;
+    }
+
+    public int getPrint() {
+        return print;
+    }
+
+    public void setPrint(int print) {
+        this.print = print;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public int getVipPrice() {
@@ -343,22 +359,6 @@ public class Goods {
         this.seq = seq;
     }
 
-    public int getIsPrint() {
-        return isPrint;
-    }
-
-    public void setIsPrint(int isPrint) {
-        this.isPrint = isPrint;
-    }
-
-    public int getIsScore() {
-        return isScore;
-    }
-
-    public void setIsScore(int isScore) {
-        this.isScore = isScore;
-    }
-
     @Override
     public String toString() {
         return "Goods{" +
@@ -368,8 +368,8 @@ public class Goods {
                 ", imgUrl='" + imgUrl + '\'' +
                 ", tasteGroupSet=" + tasteGroupSet +
                 ", goodsNo='" + goodsNo + '\'' +
-                ", isEx=" + isEx +
-                ", isVipSet=" + isVipSet +
+                ", ex=" + ex +
+                ", vipSet=" + vipSet +
                 ", vipPrice=" + vipPrice +
                 ", tradePrice=" + tradePrice +
                 ", price=" + price +
@@ -390,8 +390,8 @@ public class Goods {
                 ", storeId=" + storeId +
                 ", status=" + status +
                 ", seq=" + seq +
-                ", isPrint=" + isPrint +
-                ", isScore=" + isScore +
+                ", print=" + print +
+                ", score=" + score +
                 '}';
     }
 }

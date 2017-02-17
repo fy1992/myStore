@@ -60,4 +60,14 @@ public class GoodsUnit {
     public void setGoodsSet(Set<Goods> goodsSet) {
         this.goodsSet = goodsSet;
     }
+
+    @Override
+    public String toString() {
+        return "GoodsUnit{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", storeId=" + storeId +
+                ", goodsSet=" + goodsSet +
+                '}';
+    }
 }

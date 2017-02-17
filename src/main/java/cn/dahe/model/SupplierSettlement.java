@@ -153,4 +153,23 @@ public class SupplierSettlement {
     public void setImprest(int imprest) {
         this.imprest = imprest;
     }
+
+    @Override
+    public String toString() {
+        return "SupplierSettlement{" +
+                "id=" + id +
+                ", supplierId=" + supplierId +
+                ", supplierName='" + supplierName + '\'' +
+                ", storeId=" + storeId +
+                ", storeName='" + storeName + '\'' +
+                ", trafficNo='" + trafficNo + '\'' +
+                ", orderDate=" + orderDate +
+                ", trafficType=" + trafficType +
+                ", trafficNum=" + trafficNum +
+                ", status=" + status +
+                ", totalPrice=" + totalPrice +
+                ", description='" + description + '\'' +
+                ", imprest=" + imprest +
+                '}';
+    }
 }

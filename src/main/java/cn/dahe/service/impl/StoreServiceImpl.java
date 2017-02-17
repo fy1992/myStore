@@ -137,7 +137,7 @@ public class StoreServiceImpl implements IStoreService{
         for(StoreGoodsTraffic storeGoodsTraffic : storeGoodsTrafficList){
             StoreGoodsTraffic sgt = storeGoodsTrafficDao.get(storeGoodsTraffic.getId());
             sgt.setDifferentOpt(storeGoodsTraffic.getDifferentOpt());
-            sgt.setIsPayOnline(storeGoodsTraffic.getIsPayOnline());
+            sgt.setPayOnline(storeGoodsTraffic.getPayOnline());
             sgt.setPreparePriceType(storeGoodsTraffic.getPreparePriceType());
             sgt.setPrepareStoreId(storeGoodsTraffic.getPrepareStoreId());
             sgt.setPrepareStoreName(storeGoodsTraffic.getPrepareStoreName());

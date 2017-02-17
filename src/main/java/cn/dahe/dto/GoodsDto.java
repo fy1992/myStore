@@ -166,7 +166,7 @@ public class GoodsDto {
         this.name = goods.getName();
         this.bid = goods.getBid();
         this.pinyin = goods.getPinyin();
-        this.isVipSet = goods.getIsVipSet();
+        this.isVipSet = goods.getVipSet();
         this.goodsNum = Long.toString(goods.getStock().getGoodNum());
         this.shelfLife = goods.getShelfLife();
         this.tradePrice = goods.getTradePrice();
