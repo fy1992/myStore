@@ -84,7 +84,7 @@ table = $('#supplier_table').dataTable({
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
+            return "<a style='text-decoration:none' onclick='edit(\""+full.id + "\")'>编辑</a>";
         }},
         {"mData" : "supplierNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
@@ -97,7 +97,7 @@ table = $('#supplier_table').dataTable({
         {"mData" : "email", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
             return !data ? "-" : data ;
         }},
-        {"mData" : "isAuthorize", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+        {"mData" : "authorize", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
             return data == 1 ? "已授权" : "未授权" ;
         }}
     ],
@@ -166,12 +166,6 @@ table = $('#supplier_table').dataTable({
                 table.fnPageChange(redirect);
             }
         });
-        //序号
-        var api = this.api();
-        var startIndex= api.context[0]._iDisplayStart;//获取到本页开始的条数
-        api.column(0).nodes().each(function(cell, i) {
-            cell.innerHTML = startIndex + i + 1;
-        });
     }
 });
 
@@ -207,6 +201,10 @@ function formatDate(val){
 //新增
 function add() {
     layer_show("新增供货商", "<%=request.getContextPath()%>/supplier/add", "700", "600");
+}
+
+function edit(id){
+    layer_show("编辑供货商", "<%=request.getContextPath()%>/supplier/edit/"+id, "700", "600");
 }
 
 //导出

@@ -395,15 +395,15 @@ public class GoodsController {
 
     /**
      * 商品添加
-     * @param goods
+     * @param goodsDto
      * @param session
      * @return
      */
     @RequestMapping(value = "addGoods", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addGoods(Goods goods, HttpSession session){
+    public AjaxObj addGoods(GoodsDto goodsDto, HttpSession session){
         AjaxObj json = new AjaxObj();
-        goodsService.add(goods);
+        goodsService.add(goodsDto);
         json.setResult(1);
         json.setMsg("商品添加成功");
         return json;

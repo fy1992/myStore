@@ -17,11 +17,12 @@
     <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
+
     <title></title>
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <div class="form form-horizontal" id="form-goods-add">
+    <form class="form form-horizontal" id="form-goods-add" action = "<%=request.getContextPath()%>/goods/addGoods" type = "post">
         <div class="row cl mb-30">
             <div class="col-8">
             	<div class="row cl">
@@ -210,10 +211,10 @@
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="button" id="userAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="button" id="goodsAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
@@ -222,8 +223,18 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
 $(function(){
+    var  validtor = $("#form-goods-edit").Validform({
+        tiptype:3,
+        showAllError:true,
+        ajaxPost: true,
+        ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
+        tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
+        btnSubmit:"#goodsAddBtn"
+    });
+
 	$("#cardType").click(function(){
 	    var stsIds = $("#stsIds").val();
 	    var url = "<%=request.getContextPath()%>/goods/smallTicketSelect";
@@ -252,63 +263,32 @@ $(function(){
         layer_show("商品图片", "<%=request.getContextPath()%>/goods/uploadImg", "1000", "500");
 	});
 
-	$(function(){
-	    //分类
-	    $.post("<%=request.getContextPath()%>/categories/categoriesList", function(data){
-            for(var n in data){
-                $("#categories").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
-            }
-        });
-        //供应商
-        $.post("<%=request.getContextPath()%>/supplier/allSupplier", function(data){
-            for(var n in data){
-                $("#supplier").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
-            }
-        });
-        //单位
-        $.post("<%=request.getContextPath()%>/goods/getAllGoodsUnit", function(data){
-            for(var n in data){
-                $("#mainUnit").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
-            }
-        });
-
-        if($("input[name='vip']:checked").val() == 1){
-            $("#vipPrice").attr("disabled", false);
+    //分类
+    $.post("<%=request.getContextPath()%>/categories/categoriesList", function(data){
+        for(var n in data){
+            $("#categories").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
-
-        $("input[name='vip']").on("click", function(){
-            $("#vipPrice").attr("disabled", $(this).val() == 1 ? false : true);
-        })
+    });
+    //供应商
+    $.post("<%=request.getContextPath()%>/supplier/allSupplier", function(data){
+        for(var n in data){
+            $("#supplier").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
+        }
+    });
+    //单位
+    $.post("<%=request.getContextPath()%>/goods/getAllGoodsUnit", function(data){
+        for(var n in data){
+            $("#mainUnit").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
+        }
     });
 
-	$("#userAddBtn").on("click", function () {
-        var goods = new Object();
-        goods.name = $("#goodsName").val();
-        goods.goodsNo = $("#goodsNo").val();
-        goods.imgUrl = $("#imgUrl").val();
-        goods.isVipSet = $("input[name = 'vip']:checked").val();
-        goods.status = $("input[name = 'using']:checked").val();
-        goods.stockDown = $("#stockDown").val();
-        goods.stockUp = $("#stockUp").val();
-        goods.description = $("#goodsDescription").val();
-        goods.goodsTags = $("#tagsIds").val();
-        goods.smallTicket = $("#stsIds").val();
-        goods.expirationDate = $("#ExpirationDate").val();
-        goods.productionDate = $("#productionDate").val();
-        goods.supplier = $("#supplier").val();
-        goods.pinyin = $("#pinyin").val();
-        goods.mainUnit = $("#mainUnit").val();
-        goods.tradePrice = $("#tradePrice").val();
-        goods.vipPrice = $("#vipPrice").val();
-        goods.imgUrl = $("#imgPath").val();
-        goods.stock = $("#stock").val();
-        goods.price = $("#price").val();
-        goods.bid = $("#bid").val();
-        goods.categories = $("#categories").val();
-        $.post("<%=request.getContextPath()%>/goods/addGoods",{goods : JSON.stringify(goods)}, function (data) {
-            layer.msg(data.msg);
-        })
-    });
+    if($("input[name='vip']:checked").val() == 1){
+        $("#vipPrice").attr("disabled", false);
+    }
+
+    $("input[name='vip']").on("click", function(){
+        $("#vipPrice").attr("disabled", $(this).val() == 1 ? false : true);
+    })
 })
 </script>
 </body>

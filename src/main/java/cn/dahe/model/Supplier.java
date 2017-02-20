@@ -181,4 +181,25 @@ public class Supplier {
     public void setPinyin(String pinyin) {
         this.pinyin = pinyin;
     }
+
+    @Override
+    public String toString() {
+        return "Supplier{" +
+                "id=" + id +
+                ", status=" + status +
+                ", name='" + name + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", supplierNo='" + supplierNo + '\'' +
+                ", packingFeePoint='" + packingFeePoint + '\'' +
+                ", rebatePoint='" + rebatePoint + '\'' +
+                ", addr='" + addr + '\'' +
+                ", description='" + description + '\'' +
+                ", authorize=" + authorize +
+                ", goods=" + goods +
+                ", pinyin='" + pinyin + '\'' +
+                ", storeSet=" + storeSet +
+                '}';
+    }
 }

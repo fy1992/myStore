@@ -8,12 +8,17 @@ import java.util.Date;
  * Created by fy on 2017/1/13.
  */
 public class GoodsDto {
+    //是否启用
+    private int status;
     //商品名称
     private String name;
     //商品类型
+    private int categoriesId;
     private String categoriesName;
     //条码
     private String goodsNo;
+    //是否开启会员折扣
+    private int vipSet;
     //会员价
     private int vipPrice;
     //批发价
@@ -25,11 +30,13 @@ public class GoodsDto {
     //商品图片
     private String goodsImg;
     //主单位
-    private String mainUnit;
+    private int mainUnit;
+    private String mainUnitName;
     //拼音码
     private String pinyin;
     //供货商
-    private String supplier;
+    private int supplierId;
+    private String supplierName;
     //生产日期
     private Date productionDate;
     //保质期
@@ -37,7 +44,17 @@ public class GoodsDto {
     //是否开启会员折扣 0 不开启  1 开启
     private int isVipSet;
     //库存
-    private String goodsNum;
+    private int stock;
+    //库存上限
+    private int stockUp;
+    //库存下限
+    private int stockDown;
+    //厨房票打ids
+    private String smallTickets;
+    //商品标签ids
+    private String goodsTagss;
+    //备注
+    private String description;
 
     public String getName() {
         return name;
@@ -95,12 +112,20 @@ public class GoodsDto {
         this.bid = bid;
     }
 
-    public String getMainUnit() {
+    public int getMainUnit() {
         return mainUnit;
     }
 
-    public void setMainUnit(String mainUnit) {
+    public void setMainUnit(int mainUnit) {
         this.mainUnit = mainUnit;
+    }
+
+    public String getMainUnitName() {
+        return mainUnitName;
+    }
+
+    public void setMainUnitName(String mainUnitName) {
+        this.mainUnitName = mainUnitName;
     }
 
     public String getPinyin() {
@@ -111,12 +136,84 @@ public class GoodsDto {
         this.pinyin = pinyin;
     }
 
-    public String getSupplier() {
-        return supplier;
+    public int getStatus() {
+        return status;
     }
 
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getCategoriesId() {
+        return categoriesId;
+    }
+
+    public void setCategoriesId(int categoriesId) {
+        this.categoriesId = categoriesId;
+    }
+
+    public int getVipSet() {
+        return vipSet;
+    }
+
+    public void setVipSet(int vipSet) {
+        this.vipSet = vipSet;
+    }
+
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public int getStockUp() {
+        return stockUp;
+    }
+
+    public void setStockUp(int stockUp) {
+        this.stockUp = stockUp;
+    }
+
+    public int getStockDown() {
+        return stockDown;
+    }
+
+    public void setStockDown(int stockDown) {
+        this.stockDown = stockDown;
+    }
+
+    public String getSmallTickets() {
+        return smallTickets;
+    }
+
+    public void setSmallTickets(String smallTickets) {
+        this.smallTickets = smallTickets;
+    }
+
+    public String getGoodsTagss() {
+        return goodsTagss;
+    }
+
+    public void setGoodsTagss(String goodsTagss) {
+        this.goodsTagss = goodsTagss;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getProductionDate() {
@@ -143,12 +240,12 @@ public class GoodsDto {
         this.isVipSet = isVipSet;
     }
 
-    public String getGoodsNum() {
-        return goodsNum;
+    public int getStock() {
+        return stock;
     }
 
-    public void setGoodsNum(String goodsNum) {
-        this.goodsNum = goodsNum;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public String getGoodsImg() {
@@ -157,27 +254,6 @@ public class GoodsDto {
 
     public void setGoodsImg(String goodsImg) {
         this.goodsImg = goodsImg;
-    }
-
-    public GoodsDto() {
-    }
-
-    public GoodsDto(Goods goods) {
-        this.name = goods.getName();
-        this.bid = goods.getBid();
-        this.pinyin = goods.getPinyin();
-        this.isVipSet = goods.getVipSet();
-        this.goodsNum = Long.toString(goods.getStock().getGoodNum());
-        this.shelfLife = goods.getShelfLife();
-        this.tradePrice = goods.getTradePrice();
-        this.price = goods.getPrice();
-        this.categoriesName = goods.getCategories().getName();
-        this.mainUnit = goods.getMainUnit().getName();
-        this.supplier = goods.getSupplier().getName();
-        this.vipPrice = goods.getVipPrice();
-        this.productionDate = goods.getProductionDate();
-        this.goodsNo = goods.getGoodsNo();
-        this.goodsImg = goods.getImgUrl();
     }
 
     @Override
@@ -193,11 +269,11 @@ public class GoodsDto {
                 ", goodsImg='" + goodsImg + '\'' +
                 ", mainUnit='" + mainUnit + '\'' +
                 ", pinyin='" + pinyin + '\'' +
-                ", supplier='" + supplier + '\'' +
+                ", supplier='" + supplierName + '\'' +
                 ", productionDate=" + productionDate +
                 ", shelfLife=" + shelfLife +
                 ", isVipSet=" + isVipSet +
-                ", goodsNum='" + goodsNum + '\'' +
+                ", stock='" + stock + '\'' +
                 '}';
     }
 }

@@ -18,6 +18,8 @@ public interface IGoodsService{
     void update(Goods t);
     Goods get(int id);
     Goods load(int id);
+
+    boolean add(GoodsDto goodsDto);
     /**
      * 商品列表
      * @param aDataSet

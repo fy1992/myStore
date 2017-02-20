@@ -22,17 +22,17 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-supplier-add" action = "<%=request.getContextPath()%>/supplier/add" type = "post">
+    <form class="form form-horizontal" id="form-supplier-edit" action = "<%=request.getContextPath()%>/supplier/edit" type = "post">
         <div class="row cl mb-30">
             <div class="row cl">
                 <label class="form-label col-3">是否启用：</label>
                 <div class="formControls col-6">
                     <div class="radio-box">
-                        <input type="radio" id="supplier_using-1" name="status" value = "1" checked>
+                        <input type="radio" id="supplier_using-1" name="status" value = "1" <c:if test="${supplier.status eq 1}">checked</c:if>>
                         <label for="supplier_using-1">是</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" id="supplier_using-2" name="status" value = "0">
+                        <input type="radio" id="supplier_using-2" name="status" value = "0" <c:if test="${supplier.status eq 1}">checked</c:if>>
                         <label for="supplier_using-2">否</label>
                     </div>
                 </div>
@@ -41,56 +41,49 @@
             <div class="row cl">
                 <label class="form-label col-3"><span class="c-red">* </span>供货商编号：</label>
                 <div class="formControls col-6">
-                    <input type="text" class="input-text radius" id="supplier_No" name = "supplierNo" value="">
-                </div>
-                <div class="col-3">
-                    <input type="button" class="btn btn-primary size-S radius" value="随机生成" id="randomNo"/>
-                    <span style="display: none;" id="help_tooltip" data-toggle="tooltip" data-placement="bottom" title="编号是供货商信息的唯一标识，由不超过6位的数字、字母、下划线组成。
-                        连锁店之间相同的编号，系统识别为同一个供货商。">
-                        <i class="Hui-iconfont" style="cursor: pointer">&#xe633;</i>
-                    </span>
+                    <span>${supplier.supplierNo}</span>
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-3"><span class="c-red">* </span>供货商名称：</label>
                 <div class="formControls col-6">
-                    <input type="text" class="input-text radius" value=""  id="supplier_name" name = "name">
+                    <input type="text" class="input-text radius" value="${supplier.name}"  id="supplier_name" name = "name">
                 </div>
                 <div class="col-3"> </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-3">搜索拼音码：</label>
                 <div class="formControls col-6">
-                    <input type="text" class="input-text radius" value=""  id="supplier_pinyin" name = "pinyin">
+                    <input type="text" class="input-text radius" value="${supplier.pinyin}"  id="supplier_pinyin" name = "pinyin">
                 </div>
                 <div class="col-3"> </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-3">联系人：</label>
-                <div class="formControls col-6"><input type = "text" class="input-text radius" name = "contacts" id = "supplier_contacts"/></div>
+                <div class="formControls col-6"><input type = "text" class="input-text radius" name = "contacts" id = "supplier_contacts" value = "${supplier.contacts}"/></div>
                 <div class="col-3"> </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-3">联系电话：</label>
-                <div class="formControls col-6"><input type = "text" class="input-text radius" id="supplier_phone" name = "phone"/></div>
+                <div class="formControls col-6"><input type = "text" class="input-text radius" id="supplier_phone" name = "phone" value = "${supplier.phone}"/></div>
                 <div class="col-3"> </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-3">联系邮箱：</label>
-                <div class="formControls col-6"><input type = "text" class="input-text radius" id="supplier_email" name = "email"/></div>
+                <div class="formControls col-6"><input type = "text" class="input-text radius" id="supplier_email" name = "email" value = "${supplier.email}"/></div>
                 <div class="col-3"> </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-3">配送费返点：</label>
                 <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5" id="supplier_packingFeePoint" name="packingFeePoint" style="width: 90%;"/><label>&nbsp;%</label>
+                    <input type = "text"  class="input-text radius mr-5" id="supplier_packingFeePoint" name="packingFeePoint" style="width: 90%;" value = "${supplier.packingFeePoint}"/><label>&nbsp;%</label>
                 </div>
                 <div class="col-3"> </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-3">固定返利点：</label>
                 <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5"  id="supplier_rebatePoint" name="rebatePoint" style="width: 90%;"/><label>&nbsp;%</label>
+                    <input type = "text"  class="input-text radius mr-5"  id="supplier_rebatePoint" name="rebatePoint" style="width: 90%;" value = "${supplier.rebatePoint}"/><label>&nbsp;%</label>
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -99,7 +92,7 @@
         	<div class="col-8">
 	            <label class="form-label col-3">地址：</label>
 	            <div class="formControls col-9">
-	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_addr" name = "addr"></textarea>
+	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_addr" name = "addr" value = "${supplier.addr}"></textarea>
 	            </div>
 	        </div>
         </div>
@@ -107,7 +100,7 @@
             <div class="col-8">
                 <label class="form-label col-3">备注：</label>
                 <div class="formControls col-9">
-                    <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_description" name = "description"></textarea>
+                    <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_description" name = "description" value = "${supplier.description}"></textarea>
                 </div>
             </div>
         </div>
@@ -116,11 +109,11 @@
                 <label class="form-label col-3">是否授权供货商：</label>
                 <div class="formControls col-6">
                     <div class="radio-box">
-                        <input type="radio" id="supplier_isAuthorize-1" name="authorize" value = "1" checked>
+                        <input type="radio" id="supplier_isAuthorize-1" name="authorize" value = "1" <c:if test="${supplier.authorize eq 1}">checked</c:if>/>
                         <label for="supplier_isAuthorize-1">是</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" id="supplier_isAuthorize-2" name="authorize" value = "0">
+                        <input type="radio" id="supplier_isAuthorize-2" name="authorize" value = "0" <c:if test="${supplier.authorize eq 0}">checked</c:if>>
                         <label for="supplier_isAuthorize-2">否</label>
                     </div>
                 </div>
@@ -129,7 +122,7 @@
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="button" id="supplierAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="button" id="supplierEditBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
     </form>
@@ -144,18 +137,13 @@
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
     $(function () {
-       var  validtor = $("#form-supplier-add").Validform({
+       var  validtor = $("#form-supplier-edit").Validform({
             tiptype:3,
             showAllError:true,
-            ajaxPost:{
-                url : "<%=request.getContextPath()%>/supplier/add",
-                success : function (data, obj) {
-                    layer.msg(data);
-                }
-            },
+            ajaxPost: true,
             ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
             tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
-            btnSubmit:"#supplierAddBtn"
+            btnSubmit:"#supplierEditBtn"
         });
         validtor.addRule([
             {

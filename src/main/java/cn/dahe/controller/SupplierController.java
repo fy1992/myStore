@@ -86,7 +86,6 @@ public class SupplierController {
      * @return
      */
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    @ResponseBody
     public String editSupplier(@PathVariable int id, Model model){
         Supplier supplier = supplierService.get(id);
         model.addAttribute("supplier", supplier);
