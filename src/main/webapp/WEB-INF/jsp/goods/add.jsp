@@ -29,11 +29,11 @@
 		            <label class="form-label col-3">是否启用：</label>
 		            <div class="formControls col-6">
 		            	<div class="radio-box">
-				          	<input type="radio" id="using-1" name="using" value = "1" checked>
+				          	<input type="radio" id="using-1" name="status" value = "1" checked>
 				          	<label for="using-1">是</label>
 				        </div>
 				        <div class="radio-box">
-				          	<input type="radio" id="using-2" name="using" value = "2">
+				          	<input type="radio" id="using-2" name="status" value = "2">
 				          	<label for="using-2">否</label>
 				        </div>
 		            </div>
