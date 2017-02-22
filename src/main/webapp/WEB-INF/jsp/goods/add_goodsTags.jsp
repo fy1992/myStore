@@ -64,7 +64,7 @@ $(function(){
 				tagsIds.push(tagsIdList[n]);
             }
             parent.$("#showGoodsTags").append(
-                "<input type = 'hidden' value = '"+tagsIds+"' id = 'tagsIds'/>"
+                "<input type = 'hidden' value = '"+tagsIds+"' id = 'tagsIds' name ='goodsTagss'/>"
             );
         }
 		layer_close();

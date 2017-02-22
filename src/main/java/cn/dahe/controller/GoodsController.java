@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -396,16 +397,42 @@ public class GoodsController {
     /**
      * 商品添加
      * @param goodsDto
-     * @param session
      * @return
      */
     @RequestMapping(value = "addGoods", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addGoods(GoodsDto goodsDto, HttpSession session){
+    public AjaxObj addGoods(GoodsDto goodsDto){
         AjaxObj json = new AjaxObj();
         goodsService.add(goodsDto);
-        json.setResult(1);
-        json.setMsg("商品添加成功");
+        json.setInfo("商品添加成功");
+        json.setStatus("y");
+        return json;
+    }
+
+    /**
+     * 商品编辑页面跳转
+     * @return
+     */
+    @RequestMapping(value = "editGoods/{id}", method = RequestMethod.GET)
+    public String editGoods(@PathVariable int id, Model model){
+        Goods goods = goodsService.get(id);
+        GoodsDto goodsDto = null;
+        model.addAttribute("goodsDto", goodsDto);
+        return "goods/edit";
+    }
+
+    /**
+     * 商品编辑
+     * @param goodsDto
+     * @return
+     */
+    @RequestMapping(value = "editGoods", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj editGoods(GoodsDto goodsDto){
+        AjaxObj json = new AjaxObj();
+        goodsService.add(goodsDto);
+        json.setInfo("商品编辑成功");
+        json.setStatus("y");
         return json;
     }
 

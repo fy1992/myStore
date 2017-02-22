@@ -52,9 +52,9 @@
 				<ul>
                     <li><a _href="<%=request.getContextPath()%>/goods/list" href="javascript:;">商品资料</a></li>
                     <li><a _href="<%=request.getContextPath()%>/categories/treeAndList" href="javascript:;">商品分类</a></li>
-					<li><a _href="<%=request.getContextPath()%>/channel/channelList/view" href="javascript:;">批量操作</a></li>
+					<%--<li><a _href="<%=request.getContextPath()%>/channel/channelList/view" href="javascript:;">批量操作</a></li>
 					<li><a _href="<%=request.getContextPath()%>/goods/channelList/view" href="javascript:;">排序管理</a></li>
-					<li><a _href="<%=request.getContextPath()%>/taste/channelList/view" href="javascript:;">口味管理</a></li>
+					<li><a _href="<%=request.getContextPath()%>/taste/channelList/view" href="javascript:;">口味管理</a></li>--%>
 				</ul>
 			</dd>
 		</dl>

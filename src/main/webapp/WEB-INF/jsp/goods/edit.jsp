@@ -22,18 +22,18 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-goods-add" action = "<%=request.getContextPath()%>/goods/addGoods" type = "post">
+    <form class="form form-horizontal" id="form-goods-edit" action = "<%=request.getContextPath()%>/goods/editGoods" type = "post">
         <div class="row cl mb-30">
             <div class="col-8">
             	<div class="row cl">
 		            <label class="form-label col-3">是否启用：</label>
 		            <div class="formControls col-6">
 		            	<div class="radio-box">
-				          	<input type="radio" id="using-1" name="status" value = "1" checked>
+                            <input type="radio" id="using-1" name="status" value = "1" <c:if test="${goodsDto.status} eq 1">checked</c:if>>
 				          	<label for="using-1">是</label>
 				        </div>
 				        <div class="radio-box">
-				          	<input type="radio" id="using-2" name="status" value = "0">
+				          	<input type="radio" id="using-2" name="status" value = "0" <c:if test="${goodsDto.status} eq 0">checked</c:if>>
 				          	<label for="using-2">否</label>
 				        </div>
 		            </div>
@@ -42,16 +42,14 @@
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>条码：</label>
                     <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value="" id="goodsNo" name = "goodsNo">
+                        <span>${goodsDto.goodsNo}</span>
                     </div>
-                    <div class="col-3">
-                        <input type="button" class="btn btn-primary size-S radius" value="随机生成" id="randomNo"/>
-                    </div>
+                    <div class="col-3"></div>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>品名：</label>
                     <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value=""  id="goodsName" name = "name">
+                        <input type="text" class="input-text radius" value="${goodsDto.name}"  id="goodsName" name = "name">
                     </div>
                     <div class="col-3"> </div>
                 </div>
@@ -68,17 +66,17 @@
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3"><span class="c-red">* </span>售价：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" name = "price" id="price" style="width: 90%;"/>&nbsp;<label>元</label></div>
+                	<div class="formControls col-6"><input type = "text" class="input-text radius" name = "price" value = "${goodsDto.price}" id="price" style="width: 90%;"/>&nbsp;<label>元</label></div>
                 	<div class="col-3"> </div>
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3"><span class="c-red">* </span>进价：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id = "bid" name = "bid" style="width: 90%;"/>&nbsp;<label>元</label></div>
+                	<div class="formControls col-6"><input type = "text" class="input-text radius" id = "bid" name = "bid" value = "${goodsDto.bid}" style="width: 90%;"/>&nbsp;<label>元</label></div>
                 	<div class="col-3"> </div>
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3">库存：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius text-r" value="0" id = "stock" name = "stock" placeholder="请输入库存量（单位：个）"/></div>
+                	<div class="formControls col-6"><input type = "text" class="input-text radius text-r" id = "stock" name = "stock" value = "${goodsDto.stock}" placeholder="请输入库存量（单位：个）"/></div>
                 	<div class="col-3"> </div>
                 </div>
             </div>
@@ -88,7 +86,7 @@
                 <div class="clearfix">
                 	<div id="btnShowEditImages" class="defaultImage">
                     	<h1>编辑图片</h1>
-	                	<img src="" id="imgPath"/>
+	                	<img src="${goodsDto.goodsImg}" id="imgPath"/>
                         <input type = "hidden" value="" name = "goodsImg">
                 	</div>
                 </div>
@@ -100,11 +98,11 @@
                 <label class="form-label f-l col-3">会员折扣：</label>
                 <div class="formControls f-l col-6">
                     <div class="radio-box">
-                        <input type="radio" id="vip-1" name="vipSet" value = "1" checked>
+                        <input type="radio" id="vip-1" name="vipSet" value = "1" <c:if test="${goodsDto.vipSet} eq 1">checked</c:if>>
                         <label for="vip-1">是</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" id="vip-2" name="vipSet" value = "0">
+                        <input type="radio" id="vip-2" name="vipSet" value = "0" <c:if test="${goodsDto.vipSet} eq 0">checked</c:if>>
                         <label for="vip-2">否</label>
                     </div>
                 </div>
@@ -112,7 +110,7 @@
             <div class="col-6 cl">
                 <label class="form-label col-3">会员价：</label>
                 <div class="formControls col-6">
-                    <input type = "text" class="input-text radius mr-5"  id = "vipPrice" name = "vipPrice" style="width: 90%;" disabled/><label>元</label>
+                    <input type = "text" class="input-text radius mr-5"  id = "vipPrice" name = "vipPrice" value = "${goodsDto.vipPrice}" style="width: 90%;" disabled/><label>元</label>
                 </div>
             </div>
         </div>
@@ -120,7 +118,7 @@
             <div class="col-6 cl">
                 <label class="form-label col-3">批发价：</label>
                 <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5" id="tradePrice" name = "tradePrice" style="width: 90%;"/><label>&nbsp;元</label>
+                    <input type = "text"  class="input-text radius mr-5" id="tradePrice" name = "tradePrice" value = "${goodsDto.tradePrice}" style="width: 90%;"/><label>&nbsp;元</label>
                 </div>
             </div>
             <div class="col-6 cl">
@@ -138,7 +136,7 @@
         	<div class="col-6 cl">
         		<label class="form-label col-3">拼音码：</label>
 	            <div class="formControls col-6">
-	                <input type="text" name="pinyin" class="input-text radius" placeholder="请输入拼音码"/>
+	                <input type="text" name="pinyin" class="input-text radius" placeholder="请输入拼音码" value = "${goodsDto.pinyin}"/>
 	            </div>
 	            <div class="col-3"></div>
         	</div>
@@ -158,14 +156,14 @@
             <div class="col-6">
                 <label class="form-label col-3">生产日期：</label>
                 <div class="formControls col-6">
-                    <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'productionDate\')||\'%y-%M-%d\'}'})" id="productionDate" name="productionDate" class="input-text Wdate radius" placeholder="请选择生产日期"/>
+                    <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'productionDate\')||\'%y-%M-%d\'}'})" id="productionDate" name="productionDate" value = "${goodsDto.productionDate}" class="input-text Wdate radius" placeholder="请选择生产日期"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
             <div class="col-6">
                 <label class="form-label col-3">保质期：</label>
                 <div class="formControls col-6">
-                    <input type="text" class="input-text radius mr-6" id="ExpirationDate" name = "shelfLife"/><label>&nbsp;天</label>
+                    <input type="text" class="input-text radius mr-6" id="ExpirationDate" name = "shelfLife" value = "${goodsDto.shelfLife}" /><label>&nbsp;天</label>
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -174,14 +172,14 @@
             <div class="col-6">
                 <label class="form-label col-3">库存上限：</label>
                 <div class="formControls col-6">
-                    <input type="text"  class="input-text radius" id="stockUp" name = "stockUp"/>
+                    <input type="text"  class="input-text radius" id="stockUp" name = "stockUp" value = "${goodsDto.stockUp}"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
             <div class="col-6">
                 <label class="form-label col-3">库存下限：</label>
                 <div class="formControls col-6">
-                    <input type="text"  class="input-text radius" id="stockDown" name = "stockDown"/>
+                    <input type="text"  class="input-text radius" id="stockDown" name = "stockDown"  value = "${goodsDto.stockDown}"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -208,7 +206,7 @@
         	<div class="col-8">
 	            <label class="form-label col-3">备注：</label>
 	            <div class="formControls col-9">
-	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="goodsDescription" name = "description"></textarea>
+	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="goodsDescription" name = "description"  value = "${goodsDto.description}"></textarea>
 	            </div>
 	        </div>
         </div>

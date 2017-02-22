@@ -18,6 +18,7 @@ import cn.dahe.model.GoodsTags;
 import cn.dahe.model.GoodsUnit;
 import cn.dahe.model.SmallTicket;
 import cn.dahe.model.Stock;
+import cn.dahe.model.Supplier;
 import cn.dahe.service.IGoodsService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.PoiUtils;
@@ -296,18 +297,37 @@ public class GoodsServiceImpl implements IGoodsService{
         goodsDto.setBid(goods.getBid());
         goodsDto.setPinyin(goods.getPinyin());
         goodsDto.setVipSet(goods.getVipSet());
-        goodsDto.setStock((int)goods.getStock().getGoodNum());
-        goodsDto.setShelfLife (goods.getShelfLife());
-        goodsDto.setTradePrice(goods.getTradePrice());
+        Stock stock = goods.getStock();
+        String goodsNum = "";
+        if(stock != null){
+            goodsNum = Long.toString(stock.getGoodNum());
+        }
+        goodsDto.setStock(goodsNum);
+        goodsDto.setShelfLife (Integer.toString(goods.getShelfLife()));
+        goodsDto.setTradePrice(Integer.toString(goods.getTradePrice()));
         goodsDto.setPrice(goods.getPrice());
         goodsDto.setCategoriesName(goods.getCategories().getName());
         goodsDto.setCategoriesId(goods.getCategories().getId());
-        goodsDto.setMainUnit(goods.getMainUnit().getId());
-        goodsDto.setMainUnitName(goods.getMainUnit().getName());
-        goodsDto.setSupplierName(goods.getSupplier().getName());
-        goodsDto.setSupplierId(goods.getSupplier().getId());
+        GoodsUnit goodsUnit = goods.getMainUnit();
+        int mainUnit = 0;
+        String mainUnitName = "";
+        if(stock != null){
+            mainUnit = goodsUnit.getId();
+            mainUnitName = goodsUnit.getName();
+        }
+        goodsDto.setMainUnit(mainUnit);
+        goodsDto.setMainUnitName(mainUnitName);
+        Supplier supplier = goods.getSupplier();
+        String supplierId = "";
+        String supplierName = "";
+        if(supplier != null){
+            supplierId = Integer.toString(supplier.getId());
+            supplierName = supplier.getName();
+        }
+        goodsDto.setSupplierName(supplierName);
+        goodsDto.setSupplierId(supplierId);
         goodsDto.setVipPrice(goods.getVipPrice());
-        goodsDto.setProductionDate(goods.getProductionDate());
+        goodsDto.setProductionDate(DateUtil.format(goods.getProductionDate(), "yyyy-MM-dd"));
         goodsDto.setGoodsNo(goods.getGoodsNo());
         goodsDto.setGoodsImg(goods.getImgUrl());
         return goodsDto;
@@ -317,7 +337,7 @@ public class GoodsServiceImpl implements IGoodsService{
         Goods goods = new Goods();
         goods.setPrice(goodsDto.getPrice());
         Stock stock = new Stock();
-        stock.setGoodNum(goodsDto.getStock());
+        stock.setGoodNum(Long.parseLong(goodsDto.getStock()));
 
         Categories categories = categoriesDao.get(goodsDto.getCategoriesId());
         goods.setCategories(categories);
@@ -328,10 +348,10 @@ public class GoodsServiceImpl implements IGoodsService{
         goods.setVipSet(goodsDto.getVipSet());
         goods.setVipPrice(goodsDto.getVipPrice());
         goods.setName(goodsDto.getName());
-        goods.setStockDown(goodsDto.getStockDown());
-        goods.setStockUp(goodsDto.getStockUp());
+        goods.setStockDown(StringUtils.isNotBlank(goodsDto.getStockDown())?Integer.parseInt(goodsDto.getStockDown()):0);
+        goods.setStockUp(StringUtils.isNotBlank(goodsDto.getStockUp())?Integer.parseInt(goodsDto.getStockUp()):0);
         goods.setPinyin(goodsDto.getPinyin());
-        goods.setShelfLife(goodsDto.getShelfLife());
+        goods.setShelfLife(StringUtils.isNotBlank(goodsDto.getShelfLife())?Integer.parseInt(goodsDto.getShelfLife()):0);
         goods.setStatus(goodsDto.getStatus());
         //单位
         GoodsUnit goodsUnit = goodsUnitDao.get(goodsDto.getMainUnit());
@@ -343,7 +363,7 @@ public class GoodsServiceImpl implements IGoodsService{
             String[] smallticketIds = smallTicketsStr.split(",");
             Set<SmallTicket> smallTicketSet = new HashSet<>();
             for(int i = 0, len = smallticketIds.length; i < len; i++){
-                SmallTicket smallTicket = smallTicketDao.get(smallticketIds[i]);
+                SmallTicket smallTicket = smallTicketDao.get(Integer.parseInt(smallticketIds[i]));
                 smallTicketSet.add(smallTicket);
             }
             goods.setSmallTicketSet(smallTicketSet);
@@ -352,7 +372,7 @@ public class GoodsServiceImpl implements IGoodsService{
             String[] goodsTagsIds = goodsTagsStr.split(",");
             Set<GoodsTags> goodsTagsSet = new HashSet<>();
             for(int i = 0, len = goodsTagsIds.length; i < len; i++){
-                GoodsTags goodsTags = goodsTagsDao.get(goodsTagsIds[i]);
+                GoodsTags goodsTags = goodsTagsDao.get(Integer.parseInt(goodsTagsIds[i]));
                 goodsTagsSet.add(goodsTags);
             }
             goods.setGoodsTagsSet(goodsTagsSet);

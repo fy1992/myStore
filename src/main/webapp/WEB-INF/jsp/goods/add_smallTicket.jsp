@@ -68,7 +68,7 @@ $(function(){
             stsids.push($("input[type = 'checkbox']:checked").eq(i).val());
         }
         parent.$("#smallTicketNum").text(n);
-        parent.$("#smallTicketNum").append("<input type = 'hidden' value = '"+stsids.toString()+"' id = 'stsIds'>");
+        parent.$("#smallTicketNum").append("<input type = 'hidden' value = '"+stsids.toString()+"' id = 'stsIds' name = 'smallTickets'>");
 		layer_close();
 	});
 });

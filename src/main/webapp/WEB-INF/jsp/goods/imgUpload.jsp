@@ -15,7 +15,7 @@
 <div id="uploader">
     <div class="queueList">
         <div id="dndArea" class="placeholder">
-            <div id="filePicker"></div>
+            <div id="filePicker1"></div>
         </div>
     </div>
     <div class="statusBar" style="display:none;">

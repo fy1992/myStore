@@ -140,7 +140,7 @@
         // 实例化
         uploader = WebUploader.create({
             pick: {
-                id: '#filePicker',
+                id: '#filePicker1',
                 label: '点击选择图片'
             },
             formData: {
@@ -201,10 +201,10 @@
         // });
 
         // 添加“添加文件”的按钮，
-        uploader.addButton({
+        /*uploader.addButton({
             id: '#filePicker2',
             label: '继续添加'
-        });
+        });*/
 
         uploader.on('ready', function() {
             window.uploader = uploader;

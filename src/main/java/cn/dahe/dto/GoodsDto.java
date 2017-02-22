@@ -20,9 +20,9 @@ public class GoodsDto {
     //是否开启会员折扣
     private int vipSet;
     //会员价
-    private int vipPrice;
+    private int vipPrice = 0;
     //批发价
-    private int tradePrice;
+    private String tradePrice;
     //商品价格（销售价）
     private int price;
     //商品进价
@@ -35,20 +35,18 @@ public class GoodsDto {
     //拼音码
     private String pinyin;
     //供货商
-    private int supplierId;
+    private String supplierId;
     private String supplierName;
     //生产日期
-    private Date productionDate;
+    private String productionDate;
     //保质期
-    private int shelfLife;
-    //是否开启会员折扣 0 不开启  1 开启
-    private int isVipSet;
+    private String shelfLife;
     //库存
-    private int stock;
+    private String stock;
     //库存上限
-    private int stockUp;
+    private String stockUp;
     //库存下限
-    private int stockDown;
+    private String stockDown;
     //厨房票打ids
     private String smallTickets;
     //商品标签ids
@@ -86,14 +84,6 @@ public class GoodsDto {
 
     public void setVipPrice(int vipPrice) {
         this.vipPrice = vipPrice;
-    }
-
-    public int getTradePrice() {
-        return tradePrice;
-    }
-
-    public void setTradePrice(int tradePrice) {
-        this.tradePrice = tradePrice;
     }
 
     public int getPrice() {
@@ -160,36 +150,12 @@ public class GoodsDto {
         this.vipSet = vipSet;
     }
 
-    public int getSupplierId() {
-        return supplierId;
-    }
-
-    public void setSupplierId(int supplierId) {
-        this.supplierId = supplierId;
-    }
-
     public String getSupplierName() {
         return supplierName;
     }
 
     public void setSupplierName(String supplierName) {
         this.supplierName = supplierName;
-    }
-
-    public int getStockUp() {
-        return stockUp;
-    }
-
-    public void setStockUp(int stockUp) {
-        this.stockUp = stockUp;
-    }
-
-    public int getStockDown() {
-        return stockDown;
-    }
-
-    public void setStockDown(int stockDown) {
-        this.stockDown = stockDown;
     }
 
     public String getSmallTickets() {
@@ -216,36 +182,12 @@ public class GoodsDto {
         this.description = description;
     }
 
-    public Date getProductionDate() {
+    public String getProductionDate() {
         return productionDate;
     }
 
-    public void setProductionDate(Date productionDate) {
+    public void setProductionDate(String productionDate) {
         this.productionDate = productionDate;
-    }
-
-    public int getShelfLife() {
-        return shelfLife;
-    }
-
-    public void setShelfLife(int shelfLife) {
-        this.shelfLife = shelfLife;
-    }
-
-    public int getIsVipSet() {
-        return isVipSet;
-    }
-
-    public void setIsVipSet(int isVipSet) {
-        this.isVipSet = isVipSet;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
     }
 
     public String getGoodsImg() {
@@ -256,24 +198,77 @@ public class GoodsDto {
         this.goodsImg = goodsImg;
     }
 
+    public String getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(String supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getShelfLife() {
+        return shelfLife;
+    }
+
+    public void setTradePrice(String tradePrice) {
+        this.tradePrice = tradePrice;
+    }
+
+    public void setShelfLife(String shelfLife) {
+        this.shelfLife = shelfLife;
+    }
+
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
+    public String getStockUp() {
+        return stockUp;
+    }
+
+    public void setStockUp(String stockUp) {
+        this.stockUp = stockUp;
+    }
+
+    public String getStockDown() {
+        return stockDown;
+    }
+
+    public void setStockDown(String stockDown) {
+        this.stockDown = stockDown;
+    }
+
     @Override
     public String toString() {
         return "GoodsDto{" +
-                "name='" + name + '\'' +
+                "status=" + status +
+                ", name='" + name + '\'' +
+                ", categoriesId=" + categoriesId +
                 ", categoriesName='" + categoriesName + '\'' +
                 ", goodsNo='" + goodsNo + '\'' +
+                ", vipSet=" + vipSet +
                 ", vipPrice=" + vipPrice +
                 ", tradePrice=" + tradePrice +
                 ", price=" + price +
                 ", bid=" + bid +
                 ", goodsImg='" + goodsImg + '\'' +
-                ", mainUnit='" + mainUnit + '\'' +
+                ", mainUnit=" + mainUnit +
+                ", mainUnitName='" + mainUnitName + '\'' +
                 ", pinyin='" + pinyin + '\'' +
-                ", supplier='" + supplierName + '\'' +
+                ", supplierId=" + supplierId +
+                ", supplierName='" + supplierName + '\'' +
                 ", productionDate=" + productionDate +
                 ", shelfLife=" + shelfLife +
-                ", isVipSet=" + isVipSet +
-                ", stock='" + stock + '\'' +
+                ", stock=" + stock +
+                ", stockUp=" + stockUp +
+                ", stockDown=" + stockDown +
+                ", smallTickets='" + smallTickets + '\'' +
+                ", goodsTagss='" + goodsTagss + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

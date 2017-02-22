@@ -279,6 +279,20 @@ function importOut() {
 function importIn() {
     layer_show("批量导出", "<%=request.getContextPath()%>/goods/importIn", "480", "340");
 }
+
+//商品编辑
+function edit(){
+    var w = 800;
+    var	h = ($(window).height() - 50);
+    var index = layer.open({
+        type : 2,
+        title:'编辑商品',
+        content : "<%=request.getContextPath()%>/goods/editGoods",
+        area : [ w+'px', h+'px' ],
+        maxmin : true
+    });
+    layer.full(index);
+}
 </script>
 </body>
 </html>
