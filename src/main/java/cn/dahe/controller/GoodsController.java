@@ -416,7 +416,7 @@ public class GoodsController {
     @RequestMapping(value = "editGoods/{id}", method = RequestMethod.GET)
     public String editGoods(@PathVariable int id, Model model){
         Goods goods = goodsService.get(id);
-        GoodsDto goodsDto = null;
+        GoodsDto goodsDto = goodsService.formatGoodsToGoodsDto(goods);
         model.addAttribute("goodsDto", goodsDto);
         return "goods/edit";
     }

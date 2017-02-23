@@ -3,7 +3,6 @@ package cn.dahe.controller;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Supplier;
-import cn.dahe.model.User;
 import cn.dahe.service.ISupplierService;
 import cn.dahe.util.NumberUtils;
 import cn.dahe.util.UploadsUtils;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -101,6 +99,21 @@ public class SupplierController {
         AjaxObj json = new AjaxObj();
         supplierService.update(supplier);
         json.setMsg("供应商修改成功");
+        json.setResult(1);
+        return json;
+    }
+
+    /**
+     * 供货商删除
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "delSupplier", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj delSupplier(int id){
+        AjaxObj json = new AjaxObj();
+        supplierService.del(id);
+        json.setMsg("删除成功");
         json.setResult(1);
         return json;
     }

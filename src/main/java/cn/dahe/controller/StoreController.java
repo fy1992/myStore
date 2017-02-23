@@ -34,8 +34,8 @@ public class StoreController {
      * 列表页查询
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String getGoodsTrafficList() {
-        return "goodsTraffic/list";
+    public String getStoreList() {
+        return "store/list";
     }
 
     /**
@@ -43,8 +43,8 @@ public class StoreController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public Pager<Store> getGoodsTrafficList(HttpSession session, String aDataSet) {
-        logger.info("--- goodsTraffic list begin ---");
+    public Pager<Store> getStoreList(HttpSession session, String aDataSet) {
+        logger.info("--- store list begin ---");
         User user = (User) session.getAttribute("loginUser");
         return storeService.findByParams(aDataSet, user.getStoreId());
     }
@@ -96,6 +96,19 @@ public class StoreController {
         AjaxObj json = new AjaxObj();
         storeService.update(store);
         json.setMsg("门店信息修改成功");
+        json.setResult(1);
+        return json;
+    }
+
+    /**
+     *店铺删除
+     */
+    @RequestMapping(value = "delStore", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj delStore(int id){
+        AjaxObj json = new AjaxObj();
+        storeService.del(id);
+        json.setMsg("门店删除成功");
         json.setResult(1);
         return json;
     }

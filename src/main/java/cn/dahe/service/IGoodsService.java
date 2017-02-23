@@ -57,4 +57,11 @@ public interface IGoodsService{
      * @return
      */
     Map<String, Object> importGoodsExcel(MultipartFile file, int storeId, int isCreateNewCategories, int isCreateNewUnit);
+
+    /**
+     * 转换
+     * @param goods
+     * @return
+     */
+    GoodsDto formatGoodsToGoodsDto(Goods goods);
 }

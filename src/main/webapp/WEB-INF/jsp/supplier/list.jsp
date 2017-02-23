@@ -84,7 +84,9 @@ table = $('#supplier_table').dataTable({
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='edit(\""+full.id + "\")'>编辑</a>";
+            var btn ="<a style='text-decoration:none' onclick='edit("+full.id+")'>编辑</a>";
+            btn += "<a style='text-decoration:none' onclick='del("+full.id+")'>删除</a>";
+            return btn;
         }},
         {"mData" : "supplierNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
@@ -203,8 +205,23 @@ function add() {
     layer_show("新增供货商", "<%=request.getContextPath()%>/supplier/add", "700", "600");
 }
 
+//编辑
 function edit(id){
     layer_show("编辑供货商", "<%=request.getContextPath()%>/supplier/edit/"+id, "700", "600");
+}
+
+//删除
+function del(id){
+    layer.confirm(
+        "确定删除该供货商？",
+        ["确定","取消"],
+        function(){
+            $.post("<%=request.getContextPath()%>/supplier/delSupplier", {id : id}, function (data) {
+                layer.msg(data.msg);
+                table.fnDraw();
+            })
+        }
+    )
 }
 
 //导出

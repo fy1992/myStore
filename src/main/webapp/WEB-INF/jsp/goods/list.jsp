@@ -112,7 +112,9 @@ table = $('#goods_table').dataTable({
        "aoColumns" : [
 	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='edit("+full.id+")'>编辑</a>";
+	       var btn ="<a style='text-decoration:none' onclick='edit("+full.id+")'>编辑</a>";
+	       btn += "<a style='text-decoration:none' onclick='del("+full.id+")'>删除</a>";
+	       return btn;
         }},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "goodsNo", "sDefaultContent" : "", "bSortable":false},
@@ -292,6 +294,20 @@ function edit(){
         maxmin : true
     });
     layer.full(index);
+}
+
+//删除
+function del(id){
+    layer.confirm(
+        "确定删除该商品？",
+        ["确定","取消"],
+        function(){
+            $.post("<%=request.getContextPath()%>/goods/delGoods", {id : id}, function (data) {
+                layer.msg(data.msg);
+                table.fnDraw();
+            })
+        }
+    )
 }
 </script>
 </body>

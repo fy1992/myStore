@@ -291,7 +291,8 @@ public class GoodsServiceImpl implements IGoodsService{
         return map;
     }
 
-    private GoodsDto formatGoodsToGoodsDto(Goods goods){
+    @Override
+    public GoodsDto formatGoodsToGoodsDto(Goods goods){
         GoodsDto goodsDto = new GoodsDto();
         goodsDto.setName(goods.getName());
         goodsDto.setBid(goods.getBid());
