@@ -30,7 +30,16 @@ public class PermissionServiceImpl implements IPermissionService{
     }
 
     @Override
-    public void update(Permission t) {
+    public void update(Permission t, int parentId) {
+        Permission p = permissionDao.get(t.getId());
+        p.setName(t.getName());
+        p.setDescription(t.getDescription());
+        p.setType(t.getType());
+        p.setUrl(t.getUrl());
+        Permission parent = permissionDao.get(parentId);
+        if(parent != null){
+            p.setParent(parent);
+        }
         permissionDao.update(t);
     }
 
@@ -45,9 +54,10 @@ public class PermissionServiceImpl implements IPermissionService{
     }
 
     @Override
-    public Pager<Permission> findByParams(String aDataSet, int storeId, int type) {
+    public Pager<Permission> findByParams(String aDataSet, int storeId) {
         int start = 0;// 起始
         int pageSize = 20;// size
+        int type = -1;
         try{
             JSONArray json = JSONArray.parseArray(aDataSet);
             int len = json.size();
@@ -57,6 +67,8 @@ public class PermissionServiceImpl implements IPermissionService{
                     start = (Integer) jsonObject.get("value");
                 } else if (jsonObject.get("name").equals("iDisplayLength")) {
                     pageSize = (Integer) jsonObject.get("value");
+                } else if (jsonObject.get("name").equals("type")) {
+                    type = Integer.parseInt(jsonObject.get("value").toString());
                 }
             }
             Pager<Object> params = new Pager<>();

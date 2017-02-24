@@ -51,4 +51,18 @@ public class StringUtil extends StringUtils{
         Matcher m = p.matcher(str);
         return m.find();
 	}
+
+	public static int formatStr2Int(String str){
+		if(StringUtils.isBlank(str)){
+			return 0;
+		}
+		return Integer.parseInt(str);
+	}
+
+	public static String formatStr(String str){
+	    if(StringUtils.isBlank(str)){
+	        str = "";
+        }
+	    return str;
+    }
 }

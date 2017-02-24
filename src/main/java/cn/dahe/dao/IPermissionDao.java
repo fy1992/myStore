@@ -25,4 +25,11 @@ public interface IPermissionDao extends IBaseDao<Permission>{
      * @return
      */
     List<Permission> findAll(int storeId, int type);
+
+    /**
+     * 根据父id查询
+     * @param parentId
+     * @return
+     */
+    List<Permission> findByPid(int parentId);
 }

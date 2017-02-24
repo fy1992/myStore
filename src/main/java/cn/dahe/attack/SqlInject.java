@@ -24,7 +24,8 @@ public class SqlInject implements Istrip {
 				+ "information_schema.columns|union|where|select|delete|update"
 				+ ";|-|--|+|like|//|/|%|#";// 过滤掉的sql关键字，可以手动添加
 		String[] badStrs = badStr.split("\\|");
-        if(!value.matches("\\d{4}(\\-|\\/|\\.)\\d{1,2}\\1\\d{1,2}") && !value.matches("(-)?[1-9][0-9]*")) {
+        if(!value.matches("\\d{4}(\\-|\\/|\\.)\\d{1,2}\\1\\d{1,2}")
+				&& !value.matches("(-)?[1-9][0-9]*")) {
             for (int i = 0; i < badStrs.length; i++) {
                 value = value.replace(badStrs[i], "");
             }

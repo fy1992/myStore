@@ -27,12 +27,14 @@
             <span class="l">
                 <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增权限</a>
             </span>
-            <span class="select-box" style="width: 100px;">
-                <select class="select radius" id="permission_status">
-                    <option value="0">启用</option>
-                    <option value="1">禁用</option>
+            <span class="select-box radius" style="width: 100px;">
+                <select class="select" id="permission_type">
+                    <option value="2">全部分类</option>
+                    <option value="0">服务端</option>
+                    <option value="1">客户端</option>
                 </select>
             </span>
+            <button id="permission_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
             <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="permission_table">
@@ -41,8 +43,8 @@
                         <th >序号</th>
                         <th >操作</th>
                         <th >权限名称</th>
-                        <th >权限类型</th>
                         <th >权限url</th>
+                        <th >权限类型</th>
                     </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -53,7 +55,6 @@
 
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script> 
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
-<script type="text/javascript" src="${ctxResource}/js/jquery.dragsort-0.5.2.min.js"></script> 
 <script type="text/javascript" src="${ctxResource}/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
@@ -80,10 +81,10 @@ table = $('#permission_table').dataTable({
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
             return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
         }},
-        {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "permissionName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return data == 1 ? "启用" : "停用" ;
+        {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "url", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "type", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return data == 1 ? "客户端" : "服务端" ;
         }}
     ],
     "language":{
@@ -120,19 +121,8 @@ table = $('#permission_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	aoData.push({"name":"bNeedPaging", "value":true});
-      	var type = $("#news_isFirstPage").val();
-        var iDisplayStart = $("#news_tableStart").val();
-        if(!iDisplayStart){
-            iDisplayStart = 0;
-        }
-        iDisplayStart = Number(iDisplayStart);
-        aoData[3].value = iDisplayStart == 0 ? this.fnSettings()._iDisplayStart : iDisplayStart;
-        aoData.push({"name":"cid","value":cid});
-        aoData.push({"name":"nid","value":newsId});
-        aoData.push({"name":"isTop","value":isTop});
-        aoData.push({"name":"isMobile","value":isMobile});
-        aoData.push({"name":"isFirstPage","value":isFirstPage});
+      	var type = $("#permission_type").val();
+        aoData.push({"name":"type","value":type});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){

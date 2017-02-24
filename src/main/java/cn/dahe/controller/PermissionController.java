@@ -6,6 +6,7 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
 import cn.dahe.model.User;
 import cn.dahe.service.IPermissionService;
+import cn.dahe.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -27,68 +29,36 @@ public class PermissionController {
     private static Logger logger = LoggerFactory.getLogger(PermissionController.class);
     @Resource
     private IPermissionService permissionService;
-    //===================================client permission begin================================================
-    /**
-     * 列表页查询
-     */
-    @RequestMapping(value = "/clientList", method = RequestMethod.GET)
-    public String getClientPermissionList() {
-        return "permission/clientList";
-    }
-
-    /**
-     * 列表页查询
-     */
-    @RequestMapping(value = "/clientList", method = RequestMethod.POST)
-    @ResponseBody
-    public Pager<Permission> getClientPermissionList(HttpSession session, String aDataSet) {
-        logger.info("--- permission list begin ---");
-        User user = (User) session.getAttribute("loginUser");
-        return permissionService.findByParams(aDataSet, user.getStoreId(), 1);
-    }
 
     /**
      * 查询全部权限
      * @return
      */
-    @RequestMapping(value = "findAllClientPermission", method = RequestMethod.POST)
+    @RequestMapping(value = "findAllPermission", method = RequestMethod.POST)
     @ResponseBody
-    public List<Permission> findAllClientPermission(HttpSession session){
+    public List<Permission> findAllPermission(int type, HttpSession session){
         User user = (User)session.getAttribute("loginUser");
-        return permissionService.findAll(user.getStoreId(), 1);
+        return permissionService.findAll(user.getStoreId(), type);
     }
-    //===================================client permission end================================================
-    //===================================web permission begin================================================
     /**
      * 列表页查询
      */
-    @RequestMapping(value = "/webList", method = RequestMethod.GET)
-    public String getwebPermissionList() {
-        return "permission/webList";
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String getPermissionList() {
+        return "permission/list";
     }
 
     /**
      * 列表页查询
      */
-    @RequestMapping(value = "/webList", method = RequestMethod.POST)
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public Pager<Permission> getwebPermissionList(HttpSession session, String aDataSet) {
+    public Pager<Permission> getPermissionList(HttpSession session, String aDataSet) {
         logger.info("--- permission list begin ---");
         User user = (User) session.getAttribute("loginUser");
-        return permissionService.findByParams(aDataSet, user.getStoreId(), 0);
+        return permissionService.findByParams(aDataSet, user.getStoreId());
     }
 
-    /**
-     * 查询全部权限
-     * @return
-     */
-    @RequestMapping(value = "findAllWebPermission", method = RequestMethod.POST)
-    @ResponseBody
-    public List<Permission> findAllWebPermission(HttpSession session){
-        User user = (User)session.getAttribute("loginUser");
-        return permissionService.findAll(user.getStoreId(), 0);
-    }
-    //===================================web permission end================================================
     /**
      *权限添加
      * @param session
@@ -96,7 +66,7 @@ public class PermissionController {
      */
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String addPermission(HttpSession session){
-        return "permission/addPermission";
+        return "permission/add";
     }
 
     /**
@@ -111,8 +81,36 @@ public class PermissionController {
         User user = (User) session.getAttribute("loginUser");
         permission.setStoreId(user.getStoreId());
         permissionService.add(permission);
-        json.setMsg("权限添加成功");
-        json.setResult(1);
+        json.setInfo("权限添加成功");
+        json.setStatus("y");
+        return json;
+    }
+
+    /**
+     *权限修改
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "edit", method = RequestMethod.GET)
+    public String editPermission(HttpSession session){
+        return "permission/edit";
+    }
+
+    /**
+     * 权限修改
+     * @param permission
+     * @return
+     */
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj editPermission(Permission permission, HttpSession session, HttpServletRequest request){
+        AjaxObj json = new AjaxObj();
+        User user = (User) session.getAttribute("loginUser");
+        permission.setStoreId(user.getStoreId());
+        int parentId = StringUtil.formatStr2Int(request.getParameter("parentId"));
+        permissionService.update(permission, parentId);
+        json.setInfo("权限添加成功");
+        json.setStatus("y");
         return json;
     }
 }

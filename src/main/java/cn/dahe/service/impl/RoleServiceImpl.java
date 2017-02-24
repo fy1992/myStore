@@ -19,7 +19,7 @@ public class RoleServiceImpl implements IRoleService{
     @Resource
     private IRoleDao roleDao;
     @Override
-    public void add(Role t) {
+    public void add(Role t, String permissions) {
         roleDao.add(t);
     }
 

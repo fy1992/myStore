@@ -21,103 +21,102 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <div class="form form-horizontal" id="form-goods-add">
+    <form class="form form-horizontal" id="form-permission-add" action="<%=request.getContextPath()%>/permission/add" method="post">
+        <div class="row cl">
+            <label class="form-label col-3">权限类型：</label>
+            <div class="formControls col-6">
+                <input type="radio" value="0" name="type" id="type-1" checked/> <label for="type-1">服务端</label>&nbsp;
+                <input type="radio" value="1" name="type" id="type-2"/> <label for="type-2">客户端</label>
+            </div>
+            <div class="col-3"> </div>
+        </div>
         <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>权限名称：</label>
             <div class="formControls col-6">
-                <input type="text" class="input-text radius" value="" id="permission_name">
+                <input type="text" class="input-text radius" value="" id="permission_name" name="name">
             </div>
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>权限url：</label>
             <div class="formControls col-6">
-                <input type="text" class="input-text radius" value=""  id="permission_url">
+                <input type="text" class="input-text radius" value="" name="url" id="permission_url">
             </div>
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-3">搜索拼音码：</label>
+            <label class="form-label col-3">所属权限：</label>
             <div class="formControls col-6">
-                <input type="text" class="input-text radius" value=""  id="permission_pinyin" placeholder="请输入搜索拼音码" >
+                <span class="select-box radius">
+                    <select id="parent" name = "pid" class="select">
+                        <option value = "0">- 请选择所属权限 -</option>
+                    </select>
+                </span>
             </div>
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-3">联系人：</label>
-            <div class="formControls col-6"><input type = "text" class="input-text radius" id="permission_contacts" placeholder="请输入联系人"/></div>
+            <label class="form-label col-3">备注：</label>
+            <div class="formControls col-6">
+                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="description" name = "description"></textarea>
+            </div>
             <div class="col-3"> </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-3">联系电话：</label>
-            <div class="formControls col-6"><input type = "text" class="input-text radius" id="permission_phone" placeholder="请输入联系电话"/></div>
-            <div class="col-3"> </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-3">联系邮箱：</label>
-            <div class="formControls col-6"><input type = "text" class="input-text radius" id="permission_email" placeholder="请输入联系邮箱"/></div>
-            <div class="col-3"> </div>
-        </div>
-        <div class="row cl">
-            <div class="col-6 cl">
-                <label class="form-label col-3">配送费返点：</label>
-                <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5" id="permission_packingFeePoint"  style="width: 90%;"/><label>&nbsp;%</label>
-                </div>
-            </div>
-            <div class="col-6 cl">
-                <label class="form-label col-3">固定返利点：</label>
-                <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5"  id="permission_rebatePoint"  style="width: 90%;"/><label>&nbsp;%</label>
-                </div>
-            </div>
-        </div>
-        <div class="row cl">
-        	<div class="col-8">
-	            <label class="form-label col-3">地址：</label>
-	            <div class="formControls col-9">
-	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="permission_addr"></textarea>
-	            </div>
-	        </div>
-        </div>
-        <div class="row cl">
-            <div class="col-8">
-                <label class="form-label col-3">备注：</label>
-                <div class="formControls col-9">
-                    <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="permission_desc"></textarea>
-                </div>
-            </div>
-        </div>
-        <div class="row cl" style="display: none;">
-            <div class="row cl">
-                <label class="form-label col-3">是否授权供货商：</label>
-                <div class="formControls col-6">
-                    <div class="radio-box">
-                        <input type="radio" id="permission_isAuthorize-1" name="permission_isAuthorize" value = "1" checked>
-                        <label for="permission_isAuthorize-1">是</label>
-                    </div>
-                    <div class="radio-box">
-                        <input type="radio" id="permission_isAuthorize-2" name="permission_isAuthorize" value = "2">
-                        <label for="permission_isAuthorize-2">否</label>
-                    </div>
-                </div>
-                <div class="col-3"></div>
-            </div>
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="button" id="userAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="submit" id="permissionAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
-<script type="text/javascript" src="${ctxResource}/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
+    $(function () {
+        initParent(0);
+        $("input[name='type']").on("click", function () {
+            initParent($(this).val());
+        })
+
+        var  validtor = $("#form-permission-add").Validform({
+            tiptype:3,
+            showAllError:true,
+            ajaxPost: true,
+            ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
+            tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
+            btnSubmit:"#permissionAddBtn",
+            callback:function (data) {
+                window.parent.table.fnDraw();
+            }
+        });
+
+        validtor.addRule([
+            {
+                ele:"#permission_name",
+                datatype:"*",
+                nullmsg:"权限名称必填"
+            },
+            {
+                ele:"#permission_url",
+                datatype:"*",
+                nullmsg:"权限url必填"
+            }
+        ]);
+    })
+
+
+    function initParent(type){
+        $.post("<%=request.getContextPath()%>/server/permission/findAllPermission", {type : type}, function (data) {
+            $("#parent").empty();
+            for(var n in data){
+                $("#parent").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");
+            }
+        })
+    }
 </script>
 </body>
 </html>

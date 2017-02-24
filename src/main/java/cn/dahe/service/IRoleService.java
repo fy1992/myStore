@@ -9,7 +9,7 @@ import java.util.List;
  * Created by fy on 2017/2/3.
  */
 public interface IRoleService {
-    void add(Role t);
+    void add(Role t, String permissions);
     void del(int id);
     void update(Role t);
     Role get(int id);

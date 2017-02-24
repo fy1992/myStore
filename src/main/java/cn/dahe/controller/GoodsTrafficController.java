@@ -1,7 +1,6 @@
 package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
-import cn.dahe.dto.GoodsTrafficDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.GoodsTraffic;
 import cn.dahe.model.OrderGoodsInfo;
@@ -34,6 +33,7 @@ public class GoodsTrafficController {
     private IGoodsTrafficService goodsTrafficService;
     @Resource
     private IOrderGoodsInfoService orderGoodsInfoService;
+
     /**
      * 列表页查询
      */
@@ -114,4 +114,6 @@ public class GoodsTrafficController {
     public List<OrderGoodsInfo> findOrderGoodsInfosByGoodsTrafficId(int id){
         return  orderGoodsInfoService.findOrderGoodsInfosByGoodsTrafficId(id);
     }
+
+
 }

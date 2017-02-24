@@ -19,8 +19,10 @@ public class PermissionDaoImpl extends BaseDaoImpl<Permission> implements IPermi
         List<Object> list = new ArrayList<>();
         int storeId = params.getIntParam1();
         int type = params.getIntParam2();
-        hql.append(" and permission.type = ?");
-        list.add(type);
+        if(type != -1 && type != 2){
+            hql.append(" and permission.type = ?");
+            list.add(type);
+        }
         if(storeId != -1){
             hql.append(" and permission.storeId = ? ");
             list.add(storeId);
@@ -33,5 +35,11 @@ public class PermissionDaoImpl extends BaseDaoImpl<Permission> implements IPermi
     public List<Permission> findAll(int storeId, int type) {
         String hql = "from Permission where storeId = ? and type = ?";
         return this.list(hql, new Object[]{storeId, type});
+    }
+
+    @Override
+    public List<Permission> findByPid(int parentId) {
+        String hql = "from Permission where parent.id = ?";
+        return list(hql, parentId);
     }
 }

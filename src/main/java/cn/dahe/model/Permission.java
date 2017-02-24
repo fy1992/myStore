@@ -156,4 +156,22 @@ public class Permission {
     public void setLevel(int level) {
         this.level = level;
     }
+
+    @Override
+    public String toString() {
+        return "Permission{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parent=" + parent +
+                ", perKey='" + perKey + '\'' +
+                ", level=" + level +
+                ", description='" + description + '\'' +
+                ", url='" + url + '\'' +
+                ", roleSet=" + roleSet +
+                ", userSet=" + userSet +
+                ", cashierSet=" + cashierSet +
+                ", storeId=" + storeId +
+                ", type=" + type +
+                '}';
+    }
 }

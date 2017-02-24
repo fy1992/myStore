@@ -114,17 +114,6 @@ table = $('#role_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-        var iDisplayStart = $("#news_tableStart").val();
-        if(!iDisplayStart){
-            iDisplayStart = 0;
-        }
-        iDisplayStart = Number(iDisplayStart);
-        aoData[3].value = iDisplayStart == 0 ? this.fnSettings()._iDisplayStart : iDisplayStart;
-        aoData.push({"name":"cid","value":cid});
-        aoData.push({"name":"nid","value":newsId});
-        aoData.push({"name":"isTop","value":isTop});
-        aoData.push({"name":"isMobile","value":isMobile});
-        aoData.push({"name":"isFirstPage","value":isFirstPage});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){
@@ -176,7 +165,7 @@ function formatDate(val){
 
 //新增
 function add() {
-    layer_show("新增角色", "<%=request.getContextPath()%>/role/add", "800", "600");
+    layer_show("新增角色", "<%=request.getContextPath()%>/role/addRole", "800", "600");
 }
 </script>
 </body>

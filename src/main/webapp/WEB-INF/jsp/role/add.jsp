@@ -22,101 +22,52 @@
 <body>
 <div class="pd-20 minwidth">
     <div class="form form-horizontal" id="form-goods-add">
-        <div class="row cl mb-30">
-            <div class="col-8">
-            	<div class="row cl">
-		            <label class="form-label col-3">是否启用：</label>
-		            <div class="formControls col-6">
-		            	<div class="radio-box">
-				          	<input type="radio" id="supplier_using-1" name="supplier_using" value = "1" checked>
-				          	<label for="supplier_using-1">是</label>
-				        </div>
-				        <div class="radio-box">
-				          	<input type="radio" id="supplier_using-2" name="supplier_using" value = "2">
-				          	<label for="supplier_using-2">否</label>
-				        </div>
-		            </div>
-		            <div class="col-3"></div>
-		        </div>
-                <div class="row cl">
-                    <label class="form-label col-3"><span class="c-red">* </span>供货商编号：</label>
-                    <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value="" id="supplier_No" placeholder="请输入供货商编号" >
-                    </div>
-                    <div class="col-3"> </div>
+        <div class="row cl">
+            <label class="form-label col-3">是否启用：</label>
+            <div class="formControls col-6">
+                <div class="radio-box">
+                    <input type="radio" id="role_using-1" name="status" value = "1" checked>
+                    <label for="role_using-1">是</label>
                 </div>
-                <div class="row cl">
-                    <label class="form-label col-3"><span class="c-red">* </span>供货商名称：</label>
-                    <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value=""  id="supplier_name" placeholder="请输入供货商名称" >
-                    </div>
-                    <div class="col-3"> </div>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-3">搜索拼音码：</label>
-                    <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value=""  id="supplier_pinyin" placeholder="请输入搜索拼音码" >
-                    </div>
-                    <div class="col-3"> </div>
-                </div>
-                <div class="row cl">
-                	<label class="form-label col-3">联系人：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="supplier_contacts" placeholder="请输入联系人"/></div>
-                	<div class="col-3"> </div>
-                </div>
-                <div class="row cl">
-                	<label class="form-label col-3">联系电话：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="supplier_phone" placeholder="请输入联系电话"/></div>
-                	<div class="col-3"> </div>
-                </div>
-                <div class="row cl">
-                	<label class="form-label col-3">联系邮箱：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="supplier_email" placeholder="请输入联系邮箱"/></div>
-                	<div class="col-3"> </div>
+                <div class="radio-box">
+                    <input type="radio" id="role_using-2" name="status" value = "0">
+                    <label for="role_using-2">否</label>
                 </div>
             </div>
+            <div class="col-3"></div>
         </div>
         <div class="row cl">
-            <div class="col-6 cl">
-                <label class="form-label col-3">配送费返点：</label>
-                <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5" id="supplier_packingFeePoint"  style="width: 90%;"/><label>&nbsp;%</label>
-                </div>
+            <label class="form-label col-3"><span class="c-red">* </span>角色名称：</label>
+            <div class="formControls col-6">
+                <input type="text" class="input-text radius" value="" id="roleName" name="roleName">
             </div>
-            <div class="col-6 cl">
-                <label class="form-label col-3">固定返利点：</label>
-                <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5"  id="supplier_rebatePoint"  style="width: 90%;"/><label>&nbsp;%</label>
-                </div>
-            </div>
+            <div class="col-3"> </div>
         </div>
         <div class="row cl">
-        	<div class="col-8">
-	            <label class="form-label col-3">地址：</label>
-	            <div class="formControls col-9">
-	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_addr"></textarea>
-	            </div>
-	        </div>
+            <label class="form-label col-3">角色权限：</label>
+            <div class="formControls col-6">
+                <input type = "text" class="input-text radius" id="role_email"/>
+            </div>
+            <div class="col-3"> </div>
         </div>
         <div class="row cl">
-            <div class="col-8">
-                <label class="form-label col-3">备注：</label>
-                <div class="formControls col-9">
-                    <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_desc"></textarea>
-                </div>
+            <label class="form-label col-3">备注：</label>
+            <div class="formControls col-6">
+                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="role_desc" name="description"></textarea>
             </div>
+            <div class="col-3"> </div>
         </div>
         <div class="row cl" style="display: none;">
             <div class="row cl">
-                <label class="form-label col-3">是否授权供货商：</label>
+                <label class="form-label col-3">是否同步相应收银员的权限：</label>
                 <div class="formControls col-6">
                     <div class="radio-box">
-                        <input type="radio" id="supplier_isAuthorize-1" name="supplier_isAuthorize" value = "1" checked>
-                        <label for="supplier_isAuthorize-1">是</label>
+                        <input type="radio" id="isAsync-1" name="isAsync" value = "1" checked>
+                        <label for="isAsync-1">是</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" id="supplier_isAuthorize-2" name="supplier_isAuthorize" value = "2">
-                        <label for="supplier_isAuthorize-2">否</label>
+                        <input type="radio" id="isAsync-2" name="isAsync" value = "2">
+                        <label for="isAsync-2">否</label>
                     </div>
                 </div>
                 <div class="col-3"></div>

@@ -11,17 +11,16 @@ import java.util.List;
 public interface IPermissionService {
     void add(Permission t);
     void del(int id);
-    void update(Permission t);
+    void update(Permission t, int parentId);
     Permission get(int id);
     Permission load(int id);
     /**
      * 根据参数查询
      * @param aDataSet
      * @param storeId
-     * @param type
      * @return
      */
-    Pager<Permission> findByParams(String aDataSet, int storeId, int type);
+    Pager<Permission> findByParams(String aDataSet, int storeId);
 
     /**
      * 查询全部
