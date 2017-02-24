@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <div class="form form-horizontal" id="form-goods-add">
+    <form class="form form-horizontal" id="form-role-add" action="<%=request.getContextPath()%>/server/role/add">
         <div class="row cl mb-30">
             <div class="col-8">
             	<div class="row cl">
@@ -124,10 +124,10 @@
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="button" id="userAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="button" id="roleAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>

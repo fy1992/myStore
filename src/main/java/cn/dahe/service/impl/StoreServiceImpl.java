@@ -1,8 +1,10 @@
 package cn.dahe.service.impl;
 
+import cn.dahe.dao.IIndustryDao;
 import cn.dahe.dao.IStoreDao;
 import cn.dahe.dao.IStoreGoodsTrafficDao;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.Industry;
 import cn.dahe.model.Store;
 import cn.dahe.model.StoreGoodsTraffic;
 import cn.dahe.model.User;
@@ -18,8 +20,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +37,6 @@ public class StoreServiceImpl implements IStoreService{
     private IStoreDao storeDao;
     @Resource
     private IStoreGoodsTrafficDao storeGoodsTrafficDao;
-
     @Override
     public void add(Store t) {
         t.setCreateDate(new Date());
@@ -52,8 +55,18 @@ public class StoreServiceImpl implements IStoreService{
     }
 
     @Override
-    public void add(Store t, User user) {
-
+    public boolean add(Store t, User user) {
+        if(user.getRank() > 0){
+            Store store = storeDao.get(user.getStoreId());
+            t.setParent(store);
+        }
+        Store store = storeDao.findByStoreNo(t.getStoreNo());
+        if(store == null){
+            add(t);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
@@ -119,7 +132,6 @@ public class StoreServiceImpl implements IStoreService{
 
     @Override
     public List<Store> findAll(int storeId) {
-
         return storeDao.findAll(storeId);
     }
 

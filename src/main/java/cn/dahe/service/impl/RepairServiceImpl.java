@@ -39,6 +39,7 @@ public class RepairServiceImpl implements IRepairService {
 		user.setStatus(1);
         user.setUsername("系统管理员");
         user.setStoreId(0);
+        user.setRank(0);
 		user.setPassword(SecurityUtil.MD5(ResourcesUtils.getAdminPassword()));
 		userDao.add(user);
 	}

@@ -106,7 +106,7 @@ table = $('#permission_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/permission/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/permission/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -155,7 +155,7 @@ table = $('#permission_table').dataTable({
 
 //新增
 function add() {
-    layer_show("新增权限", "<%=request.getContextPath()%>/permission/add", "800", "600");
+    layer_show("新增权限", "<%=request.getContextPath()%>/server/permission/add", "800", "600");
 }
 </script>
 </body>

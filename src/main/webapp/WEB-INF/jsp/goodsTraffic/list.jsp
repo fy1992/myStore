@@ -117,7 +117,7 @@ table = $('#goodsTraffic_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/goods/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/goods/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -209,7 +209,7 @@ function detail() {
         shade: false,
         maxmin: true, //开启最大化最小化按钮
         area: ['950px', '350px'],
-        content: '<%=request.getContextPath()%>/goodsTraffic/audit/1'
+        content: '<%=request.getContextPath()%>/server/goodsTraffic/audit/1'
     });
 }
 </script>

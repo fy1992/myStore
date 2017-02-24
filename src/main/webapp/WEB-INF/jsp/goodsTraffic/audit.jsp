@@ -58,26 +58,10 @@
 $(function(){
 	//作废
 	$("#nopass").click(function(){
-        $.post("<%=request.getContextPath()%>/goodsTraffic/audit", {"id": ${goodsTrafficId}, "type" : 0}, function (data) {
-
+        $.post("<%=request.getContextPath()%>/server/goodsTraffic/audit", {"id": ${goodsTrafficId}, "type" : 0}, function (data) {
+			window.parent.table.fnDraw();
+            layer_close();
         });
-/*
-		layer.msg('确定要作废吗？', {
-			time: 0 ,//不自动关闭
-			btn: ['确定', '取消'],
-			yes: function(index){
-	//				$.post(
-	//					"url",
-	//					{"id" : id},
-	//					function(data){
-	//						
-	//					}
-	//				);
-				$("#pass,#nopass").css("display","none");
-				$("#recover,#obsolete").css("display","block");
-				layer.msg('已作废!',{time:1000});
-			}
-		});*/
 	});
 	$("#recover").click(function(){
 		layer.msg('确定要恢复吗？', {
@@ -92,7 +76,7 @@ $(function(){
 	});
 	//通过
 	$("#pass").click(function(){
-	    $.post("<%=request.getContextPath()%>/goodsTraffic/audit", {"id": ${goodsTrafficId}, "type" : 1}, function (data) {
+	    $.post("<%=request.getContextPath()%>/server/goodsTraffic/audit", {"id": ${goodsTrafficId}, "type" : 1}, function (data) {
             $("body").html(data.msg);
         });
 		/*layer.msg('审核通过!',{time:1000});
@@ -103,7 +87,6 @@ $(function(){
 		},500);*/
 	});
 });
-
 </script>
 </body>
 </html>

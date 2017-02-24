@@ -19,7 +19,7 @@ import java.util.List;
  * Created by fy on 2017/2/3.
  */
 @Controller
-@RequestMapping("role")
+@RequestMapping("server/role")
 public class RoleController {
     private static Logger logger = LoggerFactory.getLogger(RoleController.class);
     @Resource

@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  * Created by fy on 2017/1/18.
  */
 @Controller
-@RequestMapping("tasteGroup")
+@RequestMapping("server/tasteGroup")
 public class TasteGroupController {
     private static Logger logger = LoggerFactory.getLogger(TasteGroupController.class);
     @Resource

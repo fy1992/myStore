@@ -34,8 +34,8 @@
             </span>
             <span class="select-box" style="width: 100px;">
                 <select class="select radius" id="goods_status">
-                    <option value="0">启用</option>
-                    <option value="1">禁用</option>
+                    <option value="1">启用</option>
+                    <option value="0">禁用</option>
                 </select>
             </span>
             <span class="select-box radius" style="width: 100px;">
@@ -160,7 +160,7 @@ table = $('#goods_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/goods/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/goods/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -250,7 +250,7 @@ function add() {
     var index = layer.open({
         type : 2,
         title:'新增商品',
-        content : "<%=request.getContextPath()%>/goods/addGoods",
+        content : "<%=request.getContextPath()%>/server/goods/addGoods",
         area : [ w+'px', h+'px' ],
         maxmin : true
     });
@@ -259,27 +259,27 @@ function add() {
 
 //单位
 function unitDetail() {
-    layer_show("商品单位设置", "<%=request.getContextPath()%>/goods/goodsUnit", "600", "400");
+    layer_show("商品单位设置", "<%=request.getContextPath()%>/server/goods/goodsUnit", "600", "400");
 }
 
 //厨打
 function smallTicketDetail() {
-    layer_show("厨房小票机管理", "<%=request.getContextPath()%>/goods/smallTicket", "490", "440");
+    layer_show("厨房小票机管理", "<%=request.getContextPath()%>/server/goods/smallTicket", "490", "440");
 }
 
 //标签
 function tagsDetail() {
-    layer_show("商品标签设置", "<%=request.getContextPath()%>/goods/goodsTags", "600", "400");
+    layer_show("商品标签设置", "<%=request.getContextPath()%>/server/goods/goodsTags", "600", "400");
 }
 
 //导出
 function importOut() {
-    layer_show("批量导入", "<%=request.getContextPath()%>/goods/importOut", "480", "340");
+    layer_show("批量导入", "<%=request.getContextPath()%>/server/goods/importOut", "480", "340");
 }
 
 //导入
 function importIn() {
-    layer_show("批量导出", "<%=request.getContextPath()%>/goods/importIn", "480", "340");
+    layer_show("批量导出", "<%=request.getContextPath()%>/server/goods/importIn", "480", "340");
 }
 
 //商品编辑
@@ -289,7 +289,7 @@ function edit(){
     var index = layer.open({
         type : 2,
         title:'编辑商品',
-        content : "<%=request.getContextPath()%>/goods/editGoods",
+        content : "<%=request.getContextPath()%>/server/goods/editGoods",
         area : [ w+'px', h+'px' ],
         maxmin : true
     });
@@ -302,7 +302,7 @@ function del(id){
         "确定删除该商品？",
         ["确定","取消"],
         function(){
-            $.post("<%=request.getContextPath()%>/goods/delGoods", {id : id}, function (data) {
+            $.post("<%=request.getContextPath()%>/server/goods/delGoods", {id : id}, function (data) {
                 layer.msg(data.msg);
                 table.fnDraw();
             })

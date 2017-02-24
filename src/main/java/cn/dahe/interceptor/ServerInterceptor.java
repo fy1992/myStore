@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
-public class SessionInterceptor extends HandlerInterceptorAdapter {
+public class ServerInterceptor extends HandlerInterceptorAdapter {
 	
-	private static final Logger logger = LoggerFactory.getLogger(SessionInterceptor.class);
+	private static final Logger logger = LoggerFactory.getLogger(ServerInterceptor.class);
 
 	@Override
 	public boolean preHandle(HttpServletRequest request,
@@ -20,17 +20,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		String requestUri = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String url = requestUri.substring(contextPath.length());
-		if(!url.endsWith(".woff")) {
-			logger.info("url enter the sessinInterceptor : " + url);
-		}
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("loginUser");
-        if(url.contains("/login")){
-            return true;
-        }
-        if(url.contains("/resources")){
-            return true;
-        }
 		if(user == null){
 			redictLogin(request, response);
 		}

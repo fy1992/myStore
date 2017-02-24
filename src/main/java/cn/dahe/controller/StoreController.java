@@ -25,7 +25,7 @@ import java.util.List;
  * Created by fy on 2017/1/24.
  */
 @Controller
-@RequestMapping("store")
+@RequestMapping("server/store")
 public class StoreController {
     private static Logger logger = LoggerFactory.getLogger(StoreController.class);
     @Resource
@@ -77,9 +77,13 @@ public class StoreController {
     public AjaxObj addStore(Store store, HttpSession session){
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
-        storeService.add(store, user);
-        json.setInfo("添加成功");
-        json.setStatus("y");
+        if(storeService.add(store, user)){
+            json.setInfo("添加成功");
+            json.setStatus("y");
+        }else{
+            json.setInfo("该门店编号已存在");
+            json.setStatus("n");
+        }
         return json;
     }
 
@@ -139,7 +143,7 @@ public class StoreController {
      * 子门店货流设置
      * @return
      */
-    @RequestMapping(value = "storeGoodsTraffic", method = RequestMethod.POST)
+    @RequestMapping(value = "addGoodsTraffic", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj storeGoodsTraffic(StoreGoodsTraffic storeGoodsTraffic){
         AjaxObj json = new AjaxObj();

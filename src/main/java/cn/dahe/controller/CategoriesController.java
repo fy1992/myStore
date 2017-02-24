@@ -24,7 +24,7 @@ import java.util.List;
  * 商品类别
  * Created by fy on 2017/1/17.
  */
-@RequestMapping("categories")
+@RequestMapping("server/categories")
 @Controller
 public class CategoriesController {
     private static Logger logger = LoggerFactory.getLogger(CategoriesController.class);

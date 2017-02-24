@@ -122,7 +122,7 @@
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script>
     $(function () {
-        $.post("<%=request.getContextPath()%>/role/findAll", function(data){
+        $.post("<%=request.getContextPath()%>/server/role/findAll", function(data){
             for(var n in data){
                 $("#cashier_role").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");
             }

@@ -27,7 +27,7 @@ import java.util.Set;
  * Created by fy on 2017/1/23.
  */
 @Controller
-@RequestMapping("goodsTraffic")
+@RequestMapping("server/goodsTraffic")
 public class GoodsTrafficController {
     private static Logger logger = LoggerFactory.getLogger(GoodsTrafficController.class);
     @Resource

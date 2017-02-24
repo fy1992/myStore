@@ -38,12 +38,13 @@ public class StoreDaoImpl extends BaseDaoImpl<Store> implements IStoreDao {
 
     @Override
     public List<Store> findAll(int storeId) {
-        String hql = "from Store store";
+        StringBuffer hql = new StringBuffer("from Store store where 1=1");
         if(storeId != 0){
-            hql += " where store.parent.id = ? and store.id <> ?";
-            return this.list(hql, new Object[]{storeId, storeId});
+            hql.append(" and store.parent.id = ? and store.id <> ?");
+            return this.list(hql.toString(), new Object[]{storeId, storeId});
         }
-        return this.list(hql);
+        hql.append(" and store.id <> ?");
+        return this.list(hql.toString(), storeId);
     }
 
     @Override

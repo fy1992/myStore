@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <div class="form form-horizontal" id="form-goods-add">
+    <form class="form form-horizontal" id="form-permission-add" action="<%=request.getContextPath()%>/server/permission/add">
         <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>权限名称：</label>
             <div class="formControls col-6">
@@ -106,10 +106,10 @@
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="button" id="userAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="button" id="permissionAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>

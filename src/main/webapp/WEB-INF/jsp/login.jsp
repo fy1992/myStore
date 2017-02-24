@@ -33,7 +33,6 @@
     <meta name="description" content="">
 </head>
 <body>
-<iframe class="baniframe" sandbox="allow-scripts allow-same-origin" id="mh" src="${ctxResource}/js/a7.html" width="100%" height="100%" style="position: absolute; z-index: 1; border: 0;"></iframe>
 <div class="header"><a target="_blank" class="login_logo">GoldenLeopard后台系统</a></div>
 <div class="loginWraper">
   <div id="loginform" class="loginBox">
@@ -64,15 +63,9 @@ $(function(){
 
 	$('#btn').click(function(){
 			var name = $('#username').val();
-			if(name == "" || name == null){ $("#namek").show(150); return false;}
-			else{ $("#namek").hide();}
+			if(name == "" || name == null){return false;}
 			var pwd = $('#password').val();
-			if(pwd == "" || pwd == null){ $('#pwdk').show(250); return false; }
-			else{ $("#pwdk").hide();}
-			var ckt = $("#checkbox").is(':checked');
-			var ckv ;
-			if(ckt == true){ ckv = 0; }
-			else{ ckv = 1; }
+			if(pwd == "" || pwd == null){return false; }
 			$.post("<%=request.getContextPath()%>/login", { loginName : name, password: pwd },
 		   		function(data){
 					if(data.result == 1){

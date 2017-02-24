@@ -42,13 +42,6 @@ public class Role {
             inverseJoinColumns = {@JoinColumn(name="permission_id")})
     private Set<Permission> permissionSet = new HashSet<>();
 
-    //角色对应的登录用户
-    @ManyToMany
-    @JoinTable(name = "t_user_role",
-            joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private Set<User> userSet = new HashSet<>();
-
     //角色对应的导购员
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     private Set<Cashier> cashierSet = new HashSet<>();
@@ -103,14 +96,6 @@ public class Role {
 
     public void setPermissionSet(Set<Permission> permissionSet) {
         this.permissionSet = permissionSet;
-    }
-
-    public Set<User> getUserSet() {
-        return userSet;
-    }
-
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
     }
 
     public Set<Cashier> getCashierSet() {

@@ -94,7 +94,7 @@ var setting = {
 		dataType : "json",//Ajax 获取的数据类型。[setting.async.enable = true 时生效]
 		//otherParam:[],//Ajax 请求提交的静态参数键值对。[setting.async.enable = true 时生效]
 		type : "post", //Ajax 的 http 请求模式。[setting.async.enable = true 时生效]
-		url:"<%=request.getContextPath()%>/categories/tree"
+		url:"<%=request.getContextPath()%>/server/categories/tree"
 	},
 	callback: {
 		onClick : onClick,
@@ -112,7 +112,7 @@ function onClick(event, treeId, treeNode){
 }
 
 function zTreeOnDrop(event, treeId, treeNodes, targetNode){
-    $.post("<%=request.getContextPath()%>/categories/editCategories",
+    $.post("<%=request.getContextPath()%>/server/categories/editCategories",
         {"id" : treeNodes[0].id, "pid" : targetNode.id}, function(data){
             tree.reAsyncChildNodes(null, "refresh");
             table.fnDraw();
@@ -122,7 +122,7 @@ function zTreeOnDrop(event, treeId, treeNodes, targetNode){
 
 function ztreeOnRename(event, treeId, treeNode, isCancel){
     if(!isCancel){
-        $.post("<%=request.getContextPath()%>/categories/editCategories",
+        $.post("<%=request.getContextPath()%>/server/categories/editCategories",
         {"id" : treeNode[0].id, "name" : treeNode.name}, function(data){
             tree.reAsyncChildNodes(null, "refresh");
             table.fnDraw();
@@ -183,7 +183,7 @@ $(document).ready(function(){
         "fnFormatNumber": function(iIn){
             return iIn;//格式化数字显示方式
         },
-        "sAjaxSource" : "<%=request.getContextPath()%>/categories/list",
+        "sAjaxSource" : "<%=request.getContextPath()%>/server/categories/list",
         //服务器端，数据回调处理
         "fnServerData" : function(sSource, aDataSet, fnCallback) {
             $.ajax({
@@ -228,12 +228,12 @@ function add(){
     if(!pid){
         pid = 0;
     }
-    layer_show("分类添加", "<%=request.getContextPath()%>/categories/addCategories/"+pid, "400", "220");
+    layer_show("分类添加", "<%=request.getContextPath()%>/server/categories/addCategories/"+pid, "400", "220");
 }
 
 //删除
 function del(id){
-    $.post("<%=request.getContextPath()%>/categories/delCategories", {"id" : id}, function(data){
+    $.post("<%=request.getContextPath()%>/server/categories/delCategories", {"id" : id}, function(data){
         layer.msg(data.msg);
         table.fnDraw();
         tree.reAsyncChildNodes(null, "refresh");

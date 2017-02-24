@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-goods-add" action = "<%=request.getContextPath()%>/goods/addGoods" type = "post">
+    <form class="form form-horizontal" id="form-goods-add" action = "<%=request.getContextPath()%>/server/goods/addGoods" type = "post">
         <div class="row cl mb-30">
             <div class="col-8">
             	<div class="row cl">
@@ -231,7 +231,7 @@
 $(function(){
     //随机生成编号
     $("#randomNo").on("click", function () {
-        $.post("<%=request.getContextPath()%>/goods/newGoodsNo", function(data){
+        $.post("<%=request.getContextPath()%>/server/goods/newGoodsNo", function(data){
             if(data.result == 1){
                 $("#goodsNo").val(data.msg);
                 $("#goodsNo").removeClass("Validform_error");
@@ -285,7 +285,7 @@ $(function(){
 
 	$("#cardType").click(function(){
 	    var stsIds = $("#stsIds").val();
-	    var url = "<%=request.getContextPath()%>/goods/smallTicketSelect";
+	    var url = "<%=request.getContextPath()%>/server/goods/smallTicketSelect";
 	    if(stsIds){
             url += "?stsIds="+ stsIds;
         }
@@ -293,7 +293,7 @@ $(function(){
 	});
 	
 	$("#labelChange").click(function(){
-	    var url = "<%=request.getContextPath()%>/goods/goodsTagsSelect";
+	    var url = "<%=request.getContextPath()%>/server/goods/goodsTagsSelect";
         var tagsIds = [];
         $(".tagsIds").each(function(){
             if($(this).val()){
@@ -308,23 +308,23 @@ $(function(){
 
 	//编辑图片
 	$("#btnShowEditImages").click(function(){
-        layer_show("商品图片", "<%=request.getContextPath()%>/goods/uploadImg", "1000", "500");
+        layer_show("商品图片", "<%=request.getContextPath()%>/server/goods/uploadImg", "1000", "500");
 	});
 
     //分类
-    $.post("<%=request.getContextPath()%>/categories/categoriesList", function(data){
+    $.post("<%=request.getContextPath()%>/server/categories/categoriesList", function(data){
         for(var n in data){
             $("#categories").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
     });
     //供应商
-    $.post("<%=request.getContextPath()%>/supplier/allSupplier", function(data){
+    $.post("<%=request.getContextPath()%>/server/supplier/allSupplier", function(data){
         for(var n in data){
             $("#supplier").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
     });
     //单位
-    $.post("<%=request.getContextPath()%>/goods/getAllGoodsUnit", function(data){
+    $.post("<%=request.getContextPath()%>/server/goods/getAllGoodsUnit", function(data){
         for(var n in data){
             $("#mainUnit").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }

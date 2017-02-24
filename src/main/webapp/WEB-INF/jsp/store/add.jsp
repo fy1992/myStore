@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <div class="form form-horizontal" id="form-store-add">
+    <form class="form form-horizontal" id="form-store-add" action="<%=request.getContextPath()%>/server/store/add" type="POST">
         <div class="row cl">
             <label class="form-label col-3">是否启用：</label>
             <div class="formControls col-6">
@@ -67,6 +67,11 @@
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
+            <label class="form-label col-3">营业时间：</label>
+            <div class="formControls col-6"><input type = "text" class="input-text radius" id="store_workTime" name = "workTime"/></div>
+            <div class="col-3"> </div>
+        </div>
+        <div class="row cl">
             <label class="form-label col-3">所属行业：</label>
             <div class="formControls col-6">
                 <span class="select-box radius">
@@ -96,7 +101,7 @@
                 <input class="btn btn-primary radius" type="submit" id="storeAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
@@ -115,9 +120,9 @@
             ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
             tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
             btnSubmit:"#storeAddBtn",
-            callback:function(){
+            callback:function(data){
                 window.parent.table.fnDraw();
-                layer_close();
+                //layer_close();
             }
         });
 
@@ -145,10 +150,11 @@
 
     //随机生成编号
     $("#randomNo").on("click", function () {
-        $.post("<%=request.getContextPath()%>/store/newStoreNo", function(data){
+        $.post("<%=request.getContextPath()%>/server/store/newStoreNo", function(data){
             if(data.result == 1){
-                $("#store_no").removeClass("Validform_error");
                 $("#store_no").val(data.msg);
+                $("#store_no").removeClass("Validform_error");
+                $("#store_no").parent().find("span").removeClass("Validform_error").addClass("Validform_right").text("通过消息验证！").css("color", "black");
                 $("#randomNo").css("display", "none");
                 $("#help_tooltip").show();
             }

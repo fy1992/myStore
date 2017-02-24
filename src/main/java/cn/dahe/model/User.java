@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.HashSet;
@@ -49,10 +48,8 @@ public class User {
     private String addr;
     //状态  0 停用 1 启用
     private int status;
-    //用户对应的角色
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    //0 超管  1 总店店长 2 分店店长 3 收银员
+    private int rank;
     //用户对应的权限
     @ManyToMany
     @JoinTable(name = "t_user_permission",
@@ -140,14 +137,6 @@ public class User {
         this.status = status;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public Set<Permission> getPermissionSet() {
         return permissionSet;
     }
@@ -162,5 +151,13 @@ public class User {
 
     public void setStoreId(int storeId) {
         this.storeId = storeId;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 }

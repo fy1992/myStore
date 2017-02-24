@@ -35,7 +35,7 @@ public class RegisterServiceImpl implements IRegisterService{
         store.setStoreNo(Long.toString(NumberUtils.getNo(4)));
         store.setAddr(registerDto.getAddr());
         Industry industry = iIndustryDao.get(registerDto.getIndustryId());
-        store.setIndustry(industry);
+        store.setIndustry(industry.getId());
         int storeId = storeDao.addAndGetId4Integer(store);
 
         User user = new User();

@@ -27,6 +27,13 @@
             <span class="l">
                 <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增门店</a>
             </span>
+            <span class="select-box" style="width: 100px;">
+                <select class="select radius" id="store_status">
+                    <option value="1">启用</option>
+                    <option value="0">禁用</option>
+                </select>
+            </span>
+            <button id="store_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
             <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="store_table">
@@ -106,7 +113,7 @@ table = $('#store_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/store/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/store/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -120,8 +127,8 @@ table = $('#store_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	var newsId = $("#news_id").val();
-        aoData.push({"name":"nid","value":newsId});
+      	var status = $("#store_status").val();
+        aoData.push({"name":"status","value":status});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){
@@ -173,11 +180,11 @@ function formatDate(val){
 
 //新增
 function add() {
-    layer_show("新增门店", "<%=request.getContextPath()%>/store/add", "800", "600");
+    layer_show("新增门店", "<%=request.getContextPath()%>/server/store/add", "800", "600");
 }
 
 function goodsTraffic(id){
-    layer_show("门店货流配置", "<%=request.getContextPath()%>/store/findStoreGoodsTraffic/"+id, 800, 380);
+    layer_show("门店货流配置", "<%=request.getContextPath()%>/server/store/findStoreGoodsTraffic/"+id, 800, 400);
 }
 </script>
 </body>

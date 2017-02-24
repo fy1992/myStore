@@ -41,7 +41,7 @@
     $("#recommendBtn").click(function(){
         if(check()){
             $.ajax({
-                url : "<%=request.getContextPath()%>/categories/addCategories",
+                url : "<%=request.getContextPath()%>/server/categories/addCategories",
                 data : {
                     "pid" : ${pid},
                     "name" : $("#name").val()

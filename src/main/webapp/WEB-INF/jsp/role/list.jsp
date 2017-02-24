@@ -100,7 +100,7 @@ table = $('#role_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/role/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/role/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -176,7 +176,7 @@ function formatDate(val){
 
 //新增
 function add() {
-    layer_show("新增角色", "<%=request.getContextPath()%>/role/add", "800", "600");
+    layer_show("新增角色", "<%=request.getContextPath()%>/server/role/add", "800", "600");
 }
 </script>
 </body>

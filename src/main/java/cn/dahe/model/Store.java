@@ -47,9 +47,8 @@ public class Store {
     private String storeNo;
     //状态  0 非营业 1 营业
     private int status;
-    @ManyToOne
-    @JoinColumn(name = "industry_id")
-    private Industry industry;
+    @Column(name = "industry_id")
+    private int industry;
     //是否是连锁店 0 不是 1 是
     @Column(name = "is_multiple", columnDefinition = "INT DEFAULT 0")
     private int multiple;
@@ -149,11 +148,11 @@ public class Store {
         this.status = status;
     }
 
-    public Industry getIndustry() {
+    public int getIndustry() {
         return industry;
     }
 
-    public void setIndustry(Industry industry) {
+    public void setIndustry(int industry) {
         this.industry = industry;
     }
 

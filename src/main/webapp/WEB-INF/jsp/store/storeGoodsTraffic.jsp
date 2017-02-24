@@ -21,12 +21,13 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <div class="form form-horizontal" id="form-store-info">
+    <form class="form form-horizontal" action="<%=request.getContextPath()%>/server/store/addGoodsTraffic" method = "post">
         <div class="row cl mb-30">
             <div class="row cl">
                 <label class="form-label col-3">门店名称：</label>
                 <div class="formControls col-6">
                     <span>${store.name}</span>
+                    <input type="hidden" name = "id" value = "${store}">
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -82,20 +83,19 @@
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="button" id="storeGoodsTrafficBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="submit" id="storeGoodsTrafficBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
-<script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
     $(function(){
-        $.post("<%=request.getContextPath()%>/store/allStore", function (data) {
+        $.post("<%=request.getContextPath()%>/server/store/allStore", function (data) {
             for(var n in data){
                 $("#prepareStoreId").append("<option vale = '"+data[n].id+"'>"+data[n].name+"</option>");
             }

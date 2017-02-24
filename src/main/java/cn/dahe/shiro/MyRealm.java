@@ -37,8 +37,8 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //获取登录时输入的用户名
-        String loginName = SecurityUtils.getSubject().getPrincipal().toString();
-        if(StringUtils.isNotEmpty(loginName)){
+        /* String loginName = SecurityUtils.getSubject().getPrincipal().toString();
+       if(StringUtils.isNotEmpty(loginName)){
             //到数据库查是否有此对象
             User user = userDao.findByLoginName(loginName);
             //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
@@ -58,6 +58,7 @@ public class MyRealm extends AuthorizingRealm {
             info.addStringPermissions(permissionNameSet);
             return info;
         }
+        return null;*/
         return null;
     }
 
