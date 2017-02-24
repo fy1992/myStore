@@ -85,7 +85,7 @@ table = $('#supplier_table').dataTable({
        "aoColumns" : [
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
             var btn ="<a style='text-decoration:none' onclick='edit("+full.id+")'>编辑</a>";
-            btn += "<a style='text-decoration:none' onclick='del("+full.id+")'>删除</a>";
+            btn += "&nbsp;<a style='text-decoration:none' onclick='del("+full.id+")'>删除</a>";
             return btn;
         }},
         {"mData" : "supplierNo", "sDefaultContent" : "", "bSortable":false},

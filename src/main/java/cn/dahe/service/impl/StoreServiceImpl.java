@@ -5,6 +5,7 @@ import cn.dahe.dao.IStoreGoodsTrafficDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Store;
 import cn.dahe.model.StoreGoodsTraffic;
+import cn.dahe.model.User;
 import cn.dahe.service.IStoreService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.NumberUtils;
@@ -36,13 +37,23 @@ public class StoreServiceImpl implements IStoreService{
     @Override
     public void add(Store t) {
         t.setCreateDate(new Date());
-        t.setStoreNo(Long.toString(NumberUtils.getNo(5)));
         int storeId = storeDao.addAndGetId4Integer(t);
         Store store = get(storeId);
+
         StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();
         storeGoodsTraffic.setStoreId(storeId);
         storeGoodsTraffic.setStoreName(store.getName());
+        storeGoodsTraffic.setPrepareStoreId(0);
+        storeGoodsTraffic.setPrepareStoreName("");
+        storeGoodsTraffic.setPreparePriceType(0);
+        storeGoodsTraffic.setDifferentOpt(0);
+        storeGoodsTraffic.setPayOnline(0);
         storeGoodsTrafficDao.add(storeGoodsTraffic);
+    }
+
+    @Override
+    public void add(Store t, User user) {
+
     }
 
     @Override
@@ -108,6 +119,7 @@ public class StoreServiceImpl implements IStoreService{
 
     @Override
     public List<Store> findAll(int storeId) {
+
         return storeDao.findAll(storeId);
     }
 
@@ -132,17 +144,13 @@ public class StoreServiceImpl implements IStoreService{
     }
 
     @Override
-    public void updateStoreGoodsTraffics(String storeGoodsTraffics) {
-        List<StoreGoodsTraffic> storeGoodsTrafficList = JSON.parseArray(storeGoodsTraffics, StoreGoodsTraffic.class);
-        for(StoreGoodsTraffic storeGoodsTraffic : storeGoodsTrafficList){
-            StoreGoodsTraffic sgt = storeGoodsTrafficDao.get(storeGoodsTraffic.getId());
-            sgt.setDifferentOpt(storeGoodsTraffic.getDifferentOpt());
-            sgt.setPayOnline(storeGoodsTraffic.getPayOnline());
-            sgt.setPreparePriceType(storeGoodsTraffic.getPreparePriceType());
-            sgt.setPrepareStoreId(storeGoodsTraffic.getPrepareStoreId());
-            sgt.setPrepareStoreName(storeGoodsTraffic.getPrepareStoreName());
-            storeGoodsTrafficDao.update(sgt);
-        }
-        Map<String, String> map = new HashMap<>();
+    public void updateStoreGoodsTraffics(StoreGoodsTraffic storeGoodsTraffic) {
+        StoreGoodsTraffic sgt = storeGoodsTrafficDao.get(storeGoodsTraffic.getId());
+        sgt.setDifferentOpt(storeGoodsTraffic.getDifferentOpt());
+        sgt.setPayOnline(storeGoodsTraffic.getPayOnline());
+        sgt.setPreparePriceType(storeGoodsTraffic.getPreparePriceType());
+        sgt.setPrepareStoreId(storeGoodsTraffic.getPrepareStoreId());
+        sgt.setPrepareStoreName(storeGoodsTraffic.getPrepareStoreName());
+        storeGoodsTrafficDao.update(sgt);
     }
 }

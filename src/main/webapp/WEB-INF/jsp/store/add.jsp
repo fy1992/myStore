@@ -22,114 +22,78 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <div class="form form-horizontal" id="form-supplier-add">
-        <div class="row cl mb-30">
-            <div class="row cl">
-                <label class="form-label col-3">是否启用：</label>
-                <div class="formControls col-6">
-                    <div class="radio-box">
-                        <input type="radio" id="supplier_using-1" name="status" value = "1" checked>
-                        <label for="supplier_using-1">是</label>
-                    </div>
-                    <div class="radio-box">
-                        <input type="radio" id="supplier_using-2" name="status" value = "0">
-                        <label for="supplier_using-2">否</label>
-                    </div>
+    <div class="form form-horizontal" id="form-store-add">
+        <div class="row cl">
+            <label class="form-label col-3">是否启用：</label>
+            <div class="formControls col-6">
+                <div class="radio-box">
+                    <input type="radio" id="store_using-1" name="status" value = "1" checked>
+                    <label for="store_using-1">是</label>
                 </div>
-                <div class="col-3"></div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-3"><span class="c-red">* </span>门店编号：</label>
-                <div class="formControls col-6">
-                    <input type="text" class="input-text radius" id="supplier_no" name = "supplierNo" value="">
-                </div>
-                <div class="col-3">
-                    <input type="button" class="btn btn-primary size-S radius" value="随机生成" id="randomNo"/>
-                    <span style="display: none;" id="help_tooltip" data-toggle="tooltip" data-placement="bottom" title="编号是供货商信息的唯一标识，由不超过6位的数字、字母、下划线组成。
-                        连锁店之间相同的编号，系统识别为同一个供货商。">
-                        <i class="Hui-iconfont" style="cursor: pointer">&#xe633;</i>
-                    </span>
+                <div class="radio-box">
+                    <input type="radio" id="store_using-2" name="status" value = "0">
+                    <label for="store_using-2">否</label>
                 </div>
             </div>
-            <div class="row cl">
-                <label class="form-label col-3"><span class="c-red">* </span>供货商名称：</label>
-                <div class="formControls col-6">
-                    <input type="text" class="input-text radius" value=""  id="supplier_name" name = "name">
-                </div>
-                <div class="col-3"> </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">* </span>门店编号：</label>
+            <div class="formControls col-6">
+                <input type="text" class="input-text radius" id="store_no" name = "storeNo" value="">
             </div>
-            <div class="row cl">
-                <label class="form-label col-3">搜索拼音码：</label>
-                <div class="formControls col-6">
-                    <input type="text" class="input-text radius" value=""  id="supplier_pinyin" name = "pinyin">
-                </div>
-                <div class="col-3"> </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-3">联系人：</label>
-                <div class="formControls col-6"><input type = "text" class="input-text radius" name = "contacts" id = "supplier_contacts"/></div>
-                <div class="col-3"> </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-3">联系电话：</label>
-                <div class="formControls col-6"><input type = "text" class="input-text radius" id="supplier_phone" name = "phone"/></div>
-                <div class="col-3"> </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-3">联系邮箱：</label>
-                <div class="formControls col-6"><input type = "text" class="input-text radius" id="supplier_email" name = "email"/></div>
-                <div class="col-3"> </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-3">配送费返点：</label>
-                <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5" id="supplier_packingFeePoint" name="packingFeePoint" style="width: 90%;"/><label>&nbsp;%</label>
-                </div>
-                <div class="col-3"> </div>
-            </div>
-            <div class="row cl">
-                <label class="form-label col-3">固定返利点：</label>
-                <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5"  id="supplier_rebatePoint" name="rebatePoint" style="width: 90%;"/><label>&nbsp;%</label>
-                </div>
-                <div class="col-3"> </div>
+            <div class="col-3">
+                <input type="button" class="btn btn-primary size-S radius" value="随机生成" id="randomNo"/>
+                <span style="display: none;" id="help_tooltip" data-toggle="tooltip" data-placement="bottom" title="编号是门店信息的唯一标识，由不超过4位的数字、字母、下划线组成。">
+                    <i class="Hui-iconfont" style="cursor: pointer">&#xe633;</i>
+                </span>
             </div>
         </div>
         <div class="row cl">
-        	<div class="col-8">
-	            <label class="form-label col-3">地址：</label>
-	            <div class="formControls col-9">
-	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_addr" name = "addr"></textarea>
-	            </div>
-	        </div>
+            <label class="form-label col-3"><span class="c-red">* </span>门店名称：</label>
+            <div class="formControls col-6">
+                <input type="text" class="input-text radius" value=""  id="store_name" name = "name">
+            </div>
+            <div class="col-3"> </div>
         </div>
         <div class="row cl">
-            <div class="col-8">
-                <label class="form-label col-3">备注：</label>
-                <div class="formControls col-9">
-                    <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_description" name = "description"></textarea>
-                </div>
-            </div>
+            <label class="form-label col-3">联系人：</label>
+            <div class="formControls col-6"><input type = "text" class="input-text radius" name = "contacts" id = "store_contacts"/></div>
+            <div class="col-3"> </div>
         </div>
-        <div class="row cl" style="display: none;">
-            <div class="row cl">
-                <label class="form-label col-3">是否授权供货商：</label>
-                <div class="formControls col-6">
-                    <div class="radio-box">
-                        <input type="radio" id="supplier_isAuthorize-1" name="authorize" value = "1" checked>
-                        <label for="supplier_isAuthorize-1">是</label>
-                    </div>
-                    <div class="radio-box">
-                        <input type="radio" id="supplier_isAuthorize-2" name="authorize" value = "0">
-                        <label for="supplier_isAuthorize-2">否</label>
-                    </div>
-                </div>
-                <div class="col-3"></div>
+        <div class="row cl">
+            <label class="form-label col-3">联系电话：</label>
+            <div class="formControls col-6"><input type = "text" class="input-text radius" id="store_phone" name = "phone"/></div>
+            <div class="col-3"> </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-3">所属行业：</label>
+            <div class="formControls col-6">
+                <span class="select-box radius">
+                    <select id="industry" name = "industry" class="select">
+                        <option value = "0">- 餐饮行业 -</option>
+                    </select>
+                </span>
             </div>
+            <div class="col-3"> </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-3">地址：</label>
+            <div class="formControls col-6">
+                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="store_addr" name = "addr"></textarea>
+            </div>
+            <div class="col-3"> </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-3">备注：</label>
+            <div class="formControls col-6">
+                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="store_description" name = "description"></textarea>
+            </div>
+            <div class="col-3"> </div>
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="button" id="supplierAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="submit" id="storeAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
     </div>
@@ -143,89 +107,50 @@
 <script type="text/javascript" src="${ctxResource}/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
-    var validtor;
     $(function () {
-        validtor = $("#form-supplier-add").Validform({
-            btnSumbit : "#supplierAddBtn",
-            tiptype:2,
-            tipSweep:true,
-
+        var  validtor = $("#form-store-add").Validform({
+            tiptype:3,
+            showAllError:true,
+            ajaxPost: true,
+            ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
+            tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
+            btnSubmit:"#storeAddBtn",
+            callback:function(){
+                window.parent.table.fnDraw();
+                layer_close();
+            }
         });
+
+        validtor.addRule([
+            {
+                ele : "#store_no",
+                datatype : "n",
+                nullmsg : "门店编号必填"
+            },
+            {
+                ele : "#store_name",
+                datatype : "s",
+                nullmsg : "门店名称必填"
+            },
+            {
+                ele : "#store_phone",
+                datatype : "m",
+                errormsg : "请填写正确的手机号",
+                ignore : "ignore"
+            }
+        ]);
+
         $("[data-toggle='tooltip']").tooltip();
     });
-    validtor.addRule([
-        {
-            ele : "#pinyin",
-            datatype : "s"
-        },
-        {
-            ele : "#supplier_no",
-            datatype : "n",
-            nullmsg : "供货商编号必填"
-        },
-        {
-            ele : "#supplier_name",
-            datatype : "s",
-            nullmsg : "供货商姓名必填"
-        },
-        {
-            ele : "#supplier_email",
-            datatype : "e",
-            errormsg : "请填写正确的邮箱"
-        },
-        {
-            ele : "#supplier_phone",
-            datatype : "m",
-            errormsg : "请填写正确的手机号"
-        },
-        {
-            ele : "#supplier_rebatePoint",
-            datatype : "n",
-            errormsg : "请填写正确的数值"
-        },
-        {
-            ele : "#supplier_packingFeePoint",
-            datatype : "n",
-            errormsg : "请填写正确的数值"
-        }
-    ]);
 
     //随机生成编号
     $("#randomNo").on("click", function () {
-        $.post("<%=request.getContextPath()%>/supplier/newSupplierNo", function(data){
+        $.post("<%=request.getContextPath()%>/store/newStoreNo", function(data){
             if(data.result == 1){
-                $("#supplier_no").removeClass("Validform_error");
-                $("#supplier_no").val(data.msg);
+                $("#store_no").removeClass("Validform_error");
+                $("#store_no").val(data.msg);
                 $("#randomNo").css("display", "none");
                 $("#help_tooltip").show();
-            }
-        });
-    });
-
-    $("#supplierAddBtn").on("click", function (){
-        var supplier = new Object();
-        supplier.name = $("#supplier_name").val();
-        supplier.supplierNo = $("#supplier_No").val();
-        supplier.description = $("#supplier_desc").val();
-        supplier.contacts = $("#supplier_contacts").val();
-        supplier.phone = $("#supplier_phone").val();
-        supplier.email = $("#supplier_email").val();
-        supplier.rebatePoint = $("#supplier_rebatePoint").val();
-        supplier.packingFeePoint = $("#supplier_packingFeePoint").val();
-        supplier.authorize = $("input[name='supplier_isAuthorize']:checked").val();
-        supplier.status = $("input[name='supplier_using']:checked").val();
-        supplier.pinyin = $("#supplier_pinyin").val();
-        supplier.addr = $("#supplier_addr").val();
-        alert(JSON.stringify(supplier));
-        $.ajax({
-            url : "<%=request.getContextPath()%>/supplier/add",
-            type : "post",
-            dataType : "json",
-            data : JSON.stringify(supplier),
-            success : function (data) {
-                layer.msg(data.msg);
-                parent.table.fnDraw();
-                layer_close();
             }
         });
     });

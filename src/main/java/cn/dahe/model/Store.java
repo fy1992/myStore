@@ -53,6 +53,9 @@ public class Store {
     //是否是连锁店 0 不是 1 是
     @Column(name = "is_multiple", columnDefinition = "INT DEFAULT 0")
     private int multiple;
+    @ManyToOne
+    @JoinColumn(name = "pid")
+    private Store parent;
     @ManyToMany
     @JoinTable(name = "t_supplier_store",
             joinColumns = {@JoinColumn(name = "store_id")},
@@ -168,5 +171,13 @@ public class Store {
 
     public void setSupplierSet(Set<Supplier> supplierSet) {
         this.supplierSet = supplierSet;
+    }
+
+    public Store getParent() {
+        return parent;
+    }
+
+    public void setParent(Store parent) {
+        this.parent = parent;
     }
 }

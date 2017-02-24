@@ -28,14 +28,14 @@ public class StoreGoodsTraffic {
     @Column(name = "prepare_store_name")
     private String prepareStoreName;
     //配货价格
-    //0 配货门店销售价 1 配货门店进货价 2 无
+    //0 无 1 配货门店销售价 2 配货门店进货价
     @Column(name = "prepare_price_type", columnDefinition = "INT DEFAULT 0")
     private int preparePriceType;
     //是否开启在线支付 0 不开启 1 开启
     @Column(name = "is_pay_online", columnDefinition = "INT DEFAULT 0")
     private int payOnline;
     //调货差异操作
-    // 0  允许编辑数量，需出货方确认 1 允许编辑数量，直接完成进货 2  不允许编辑数量
+    // 0  不允许编辑数量 1 允许编辑数量，需出货方确认 2 允许编辑数量，直接完成进货
     @Column(name = "different_opt", columnDefinition = "INT DEFAULT 0")
     private int differentOpt;
 

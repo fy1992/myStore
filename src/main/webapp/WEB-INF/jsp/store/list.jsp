@@ -21,7 +21,7 @@
 </head>
 <body class="pos-r">
 <div>
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>  <span class="c-gray en">&gt;</span> 门店 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>  <span class="c-gray en">&gt;</span> 门店 <span class="c-gray en">&gt;</span>  <span class="c-gray en">&gt;</span> 门店信息 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="l">
@@ -73,7 +73,9 @@ table = $('#store_table').dataTable({
        "aoColumns" : [
         {"mData" : null, "sDefaultContent" : "", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
+            var btn ="<a style='text-decoration:none' onclick='edit("+full.id+")'>编辑</a>";
+            btn += "&nbsp;<a style='text-decoration:none' onclick='goodsTraffic("+full.id+")'>门店货流配置</a>";
+            return btn;
         }},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "storeNo", "sDefaultContent" : "", "bSortable":false},
@@ -172,6 +174,10 @@ function formatDate(val){
 //新增
 function add() {
     layer_show("新增门店", "<%=request.getContextPath()%>/store/add", "800", "600");
+}
+
+function goodsTraffic(id){
+    layer_show("门店货流配置", "<%=request.getContextPath()%>/store/findStoreGoodsTraffic/"+id, 800, 380);
 }
 </script>
 </body>
