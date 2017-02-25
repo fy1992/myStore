@@ -1,15 +1,21 @@
 package cn.dahe.service.impl;
 
+import cn.dahe.dao.IPermissionDao;
 import cn.dahe.dao.IRoleDao;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.Permission;
 import cn.dahe.model.Role;
 import cn.dahe.service.IRoleService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by fy on 2017/2/3.
@@ -18,8 +24,18 @@ import java.util.List;
 public class RoleServiceImpl implements IRoleService{
     @Resource
     private IRoleDao roleDao;
+    @Resource
+    private IPermissionDao permissionDao;
+
     @Override
     public void add(Role t, String permissions) {
+        String[] permissionArr = permissions.split(",");
+        Set<Permission> set = new HashSet<>();
+        for(int i = 0, len = permissionArr.length; i < len; i++){
+            Permission permission = permissionDao.get(Integer.parseInt(permissionArr[i]));
+            set.add(permission);
+        }
+        t.setPermissionSet(set);
         roleDao.add(t);
     }
 
@@ -29,8 +45,20 @@ public class RoleServiceImpl implements IRoleService{
     }
 
     @Override
-    public void update(Role t) {
-        roleDao.update(t);
+    public void update(Role t, String permissions) {
+        Role role = roleDao.get(t.getId());
+        String[] permissionArr = permissions.split(",");
+        Set<Permission> set = new HashSet<>();
+        for(int i = 0, len = permissionArr.length; i < len; i++){
+            Permission permission = permissionDao.get(Integer.parseInt(permissionArr[i]));
+            set.add(permission);
+        }
+        role.setPermissionSet(set);
+        role.setDescription(t.getDescription());
+        role.setRoleName(t.getRoleName());
+        role.setIsAsync(t.getIsAsync());
+        role.setStatus(t.getStatus());
+        roleDao.update(role);
     }
 
     @Override

@@ -21,19 +21,19 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-goods-add" method="post">
+    <form class="form form-horizontal" id="form-goods-edit" method="post">
         <div class="row cl mb-30">
             <div class="col-8">
             	<div class="row cl">
 		            <label class="form-label col-3">是否启用：</label>
 		            <div class="formControls col-6">
 		            	<div class="radio-box">
-				          	<input type="radio" id="sales_using-1" name="sales_using" value = "1" checked>
-				          	<label for="sales_using-1">是</label>
+                            <input type="radio" id="cashier_using-1" name="status" value = "1" <c:if test="${cashier.status} eq 1">checked</c:if>>>
+				          	<label for="cashier_using-1">是</label>
 				        </div>
 				        <div class="radio-box">
-				          	<input type="radio" id="sales_using-2" name="sales_using" value = "2">
-				          	<label for="sales_using-2">否</label>
+                            <input type="radio" id="cashier_using-2" name="status" value = "0" <c:if test="${cashier.status} eq 0"></c:if>>>
+				          	<label for="cashier_using-2">否</label>
 				        </div>
 		            </div>
 		            <div class="col-3"></div>
@@ -41,32 +41,55 @@
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>编号：</label>
                     <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value="" id="sales_No">
+                        <input type="text" class="input-text radius" value="${cashier.cashierNo}" id="cashier_No"/>
                     </div>
                     <div class="col-3"> </div>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>姓名：</label>
                     <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value=""  id="sales_name">
+                        <input type="text" class="input-text radius" value="${cashier.name}"  id="cashier_name"/>
                     </div>
                     <div class="col-3"> </div>
                 </div>
                 <div class="row cl">
-                	<label class="form-label col-3">手机：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="sales_phone"/></div>
+                    <label class="form-label col-3"><span class="c-red">* </span>密码：</label>
+                    <div class="formControls col-6">
+                        <input type="text" class="input-text radius" value="${cashier.password}" name="password" id="cashier_password"/>
+                    </div>
+                    <div class="col-3"> </div>
+                </div>
+                <div class="row cl">
+                	<label class="form-label col-3">电话：</label>
+                	<div class="formControls col-6">
+                        <input type = "text" class="input-text radius" id="cashier_phone" name = "mobile" value="${cashier.mobile}"/>
+                    </div>
                 	<div class="col-3"> </div>
                 </div>
                 <div class="row cl">
-                	<label class="form-label col-3">提成：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="sales_percentage"/> %</div>
-                	<div class="col-3"> </div>
+                    <label class="form-label col-3">角色：</label>
+                    <div class="formControls col-6">
+	            	<span class="select-box radius">
+		                <select class="select" id = "cashier_role">
+		                    <option value = "0">- 无 -</option>
+		                </select>
+	                </span>
+                    </div>
+                    <div class="col-3"> </div>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-8">
+                <label class="form-label col-3">备注：</label>
+                <div class="formControls col-9">
+                    <textarea rows="2" maxlength="200" class="edit_txt textarea radius" name="description" id="cashier_desc"></textarea>
                 </div>
             </div>
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="button" id="userAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="button" id="cashierEditBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
     </form>
@@ -78,6 +101,13 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script>
+    $(function () {
+        $.post("<%=request.getContextPath()%>/role/findAll", function(data){
+            for(var n in data){
+                $("#cashier_role").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");
+            }
+        })
+    })
 </script>
 </body>
 </html>

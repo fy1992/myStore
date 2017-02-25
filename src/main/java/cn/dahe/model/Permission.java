@@ -15,7 +15,6 @@ import java.util.Set;
 
 /**
  * 权限
- * Created by fy on 2016/12/30.
  */
 @Table(name = "t_permission")
 @Entity

@@ -11,7 +11,7 @@ import java.util.List;
 public interface IRoleService {
     void add(Role t, String permissions);
     void del(int id);
-    void update(Role t);
+    void update(Role t, String permissions);
     Role get(int id);
     Role load(int id);
     /**

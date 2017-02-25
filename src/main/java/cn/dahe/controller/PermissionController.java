@@ -10,6 +10,8 @@ import cn.dahe.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -88,17 +90,22 @@ public class PermissionController {
 
     /**
      *权限修改
-     * @param session
+     * @param id
+     * @param model
      * @return
      */
-    @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public String editPermission(HttpSession session){
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
+    public String editPermission(@PathVariable int id, Model model){
+        Permission permission = permissionService.get(id);
+        model.addAttribute("permission", permission);
         return "permission/edit";
     }
 
     /**
      * 权限修改
      * @param permission
+     * @param session
+     * @param request
      * @return
      */
     @RequestMapping(value = "edit", method = RequestMethod.POST)

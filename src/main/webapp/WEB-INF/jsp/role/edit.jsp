@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-role-add" method="post" action="<%=request.getContextPath()%>/role/addRole">
+    <form class="form form-horizontal" id="form-role-edit" method="post" action="<%=request.getContextPath()%>/role/editRole">
         <div class="row cl">
             <label class="form-label col-3">是否启用：</label>
             <div class="formControls col-6">
@@ -39,7 +39,8 @@
         <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>角色名称：</label>
             <div class="formControls col-6">
-                <input type="text" class="input-text radius" value="" id="roleName" name="roleName">
+                <input type="text" class="input-text radius" value="${role.roleName}" id="roleName" name="roleName">
+                <input type = "hidden" value = "${role.id}" name = "id"/>
             </div>
             <div class="col-3"> </div>
         </div>
@@ -47,7 +48,6 @@
             <label class="form-label col-3">角色权限：</label>
             <div class="formControls col-6">
                 <div class="mb-40 pd-20 clearfixs" id="perBox">
-                    <input type="hidden" name = "permissions" id="permissions"/>
                     <br clear="all" />
                 </div>
             </div>
@@ -56,7 +56,7 @@
         <div class="row cl">
             <label class="form-label col-3">备注：</label>
             <div class="formControls col-6">
-                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="role_desc" name="description"></textarea>
+                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="role_desc" name="description" value="${role.description}"></textarea>
             </div>
             <div class="col-3"> </div>
         </div>
@@ -65,11 +65,11 @@
                 <label class="form-label col-3">是否同步相应收银员的权限：</label>
                 <div class="formControls col-6">
                     <div class="radio-box">
-                        <input type="radio" id="isAsync-1" name="isAsync" value = "1" checked>
+                        <input type="radio" id="isAsync-1" name="isAsync" value = "1" <c:if test="${role.isAsync} eq 1">checked</c:if>>>
                         <label for="isAsync-1">是</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" id="isAsync-2" name="isAsync" value = "0">
+                        <input type="radio" id="isAsync-2" name="isAsync" value = "0" <c:if test="${role.isAsync} eq 0">checked</c:if>>>
                         <label for="isAsync-2">否</label>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="button" id="roleAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="button" id="roleEditBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
     </form>
@@ -89,16 +89,15 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
-<script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
     $(function () {
-        var  validtor = $("#form-role-add").Validform({
+        var  validtor = $("#form-role-edit").Validform({
             tiptype:3,
             showAllError:true,
             ajaxPost: true,
             ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
             tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
-            btnSubmit:"#roleAddBtn",
+            btnSubmit:"#roleEditBtn",
             callback:function (data) {
                 window.parent.table.fnDraw();
             }
@@ -112,23 +111,23 @@
             }
         ]);
 
-        $.post("<%=request.getContextPath()%>/permission/findAllPermission", {type : 0}, function(data){
+        $.post("<%=request.getContextPath()%>/permission/findAllPermission", {type : 1}, function(data){
             for(var n in data){
                 $("#perBox").append(
                     "<label><input type=\"checkbox\" name=\"ck1\" value = '"+data[n].id+"'/>"+data[n].name+"</label>"
                 );
             }
             $("#perBox").append("<br clear=\"all\"/>");
+            var result = "${permissions}";
+            if(result && result != 0){
+                var tagslist = result.split(",");
+                $("input[type='checkbox']").each(function() {
+                    if($.inArray($(this).val(), tagslist) != -1){
+                        $(this).attr("checked", true);
+                    }
+                });
+            }
         })
-
-        $("input[type='checkbox']").change(function() {
-            var ids = [];
-            $("input[type='checkbox']:checked").forEach(function (i) {
-                ids.push($(this).val());
-            })
-            $("#permissions").val(ids);
-            alert($("#permissions").val());
-        });
     })
 </script>
 </body>

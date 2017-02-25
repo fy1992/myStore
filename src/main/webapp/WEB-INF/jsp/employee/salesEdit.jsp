@@ -21,18 +21,18 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-goods-add" method="post">
+    <form class="form form-horizontal" id="form-goods-edit" method="post">
         <div class="row cl mb-30">
             <div class="col-8">
             	<div class="row cl">
 		            <label class="form-label col-3">是否启用：</label>
 		            <div class="formControls col-6">
 		            	<div class="radio-box">
-				          	<input type="radio" id="sales_using-1" name="sales_using" value = "1" checked>
+                            <input type="radio" id="sales_using-1" name="status" value = "1" <c:if test="${sales.status} eq 1">checked</c:if>>>
 				          	<label for="sales_using-1">是</label>
 				        </div>
 				        <div class="radio-box">
-				          	<input type="radio" id="sales_using-2" name="sales_using" value = "2">
+                            <input type="radio" id="sales_using-2" name="status" value = "0" <c:if test="${sales.status} eq 0"></c:if>>>
 				          	<label for="sales_using-2">否</label>
 				        </div>
 		            </div>
@@ -41,25 +41,29 @@
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>编号：</label>
                     <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value="" id="sales_No">
+                        <input type="text" class="input-text radius" value="${sales.salesNo}" id="sales_No">
                     </div>
                     <div class="col-3"> </div>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>姓名：</label>
                     <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value=""  id="sales_name">
+                        <input type="text" class="input-text radius" value="${sales.salesName}"  id="sales_name">
                     </div>
                     <div class="col-3"> </div>
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3">手机：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="sales_phone"/></div>
+                	<div class="formControls col-6">
+                        <input type = "text" class="input-text radius" id="sales_phone" value="${sales.phone}"/>
+                    </div>
                 	<div class="col-3"> </div>
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3">提成：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="sales_percentage"/> %</div>
+                	<div class="formControls col-6">
+                        <input type = "text" class="input-text radius" id="sales_percentage" value="${sales.percentage}" name = "percentage"/> %
+                    </div>
                 	<div class="col-3"> </div>
                 </div>
             </div>
