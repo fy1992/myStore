@@ -87,4 +87,9 @@ public class UserServiceImpl implements IUserService {
         user.setPassword(SecurityUtil.MD5(newPassword));
         update(user);
     }
+
+    @Override
+    public User findByStoreId(int storeId) {
+        return userDao.findByStoreId(storeId);
+    }
 }

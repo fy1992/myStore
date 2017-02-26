@@ -33,4 +33,10 @@ public interface IUserDao extends IBaseDao<User>{
      */
     List<User> findAll(int storeId);
 
+    /**
+     * 根据门店id查询
+     * @param storeId
+     * @return
+     */
+    User findByStoreId(int storeId);
 }

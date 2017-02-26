@@ -6,6 +6,7 @@ import cn.dahe.model.Store;
 import cn.dahe.model.StoreGoodsTraffic;
 import cn.dahe.model.User;
 import cn.dahe.service.IStoreService;
+import cn.dahe.service.IUserService;
 import cn.dahe.util.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,8 @@ public class StoreController {
     private static Logger logger = LoggerFactory.getLogger(StoreController.class);
     @Resource
     private IStoreService storeService;
+    @Resource
+    private IUserService userService;
     /**
      * 列表页查询
      */
@@ -65,7 +68,9 @@ public class StoreController {
      *店铺添加
      */
     @RequestMapping(value = "add", method = RequestMethod.GET)
-    public String addStore(){
+    public String addStore(HttpSession session, Model model){
+        User user = (User)session.getAttribute("loginUser");
+        model.addAttribute("user", user);
         return "store/add";
     }
 
@@ -97,6 +102,8 @@ public class StoreController {
     public String editStore(@PathVariable int id, Model model){
         Store store = storeService.get(id);
         model.addAttribute("store", store);
+        User user = userService.findByStoreId(store.getId());
+        model.addAttribute("user", user);
         return "store/edit";
     }
 

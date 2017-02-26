@@ -21,12 +21,12 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-permission-edit" action="<%=request.getContextPath()%>/permission/edit" method="post">
+    <form class="form form-horizontal" id="form-permission-edit" action="<%=request.getContextPath()%>/server/permission/edit" method="post">
         <div class="row cl">
             <label class="form-label col-3">权限类型：</label>
             <div class="formControls col-6">
-                <input type="radio" value="0" name="type" id="type-1" <c:if test="${permission.type} eq 0">checked</c:if>/> <label for="type-1">服务端</label>&nbsp;
-                <input type="radio" value="1" name="type" id="type-2" <c:if test="${permission.type} eq 1">checked</c:if>/> <label for="type-2">客户端</label>
+                <input type="radio" value="0" name="type" id="type-1" <c:if test="${permission.type eq 0}">checked</c:if>/> <label for="type-1">服务端</label>&nbsp;
+                <input type="radio" value="1" name="type" id="type-2" <c:if test="${permission.type eq 1}">checked</c:if>/> <label for="type-2">客户端</label>
             </div>
             <div class="col-3"></div>
         </div>
@@ -80,7 +80,7 @@
         initParent(0);
         $("input[name='type']").on("click", function () {
             initParent($(this).val());
-        })
+        });
 
         var  validtor = $("#form-permission-edit").Validform({
             tiptype:3,

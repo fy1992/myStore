@@ -21,18 +21,18 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-goods-edit" method="post">
+    <form class="form form-horizontal" id="form-goods-edit" method="post" action="<%=request.getContextPath()%>/server/employee/cashierEdit">
         <div class="row cl mb-30">
             <div class="col-8">
             	<div class="row cl">
 		            <label class="form-label col-3">是否启用：</label>
 		            <div class="formControls col-6">
 		            	<div class="radio-box">
-                            <input type="radio" id="cashier_using-1" name="status" value = "1" <c:if test="${cashier.status} eq 1">checked</c:if>>>
+                            <input type="radio" id="cashier_using-1" name="status" value = "1" <c:if test="${cashier.status eq 1}">checked</c:if>>
 				          	<label for="cashier_using-1">是</label>
 				        </div>
 				        <div class="radio-box">
-                            <input type="radio" id="cashier_using-2" name="status" value = "0" <c:if test="${cashier.status} eq 0"></c:if>>>
+                            <input type="radio" id="cashier_using-2" name="status" value = "0" <c:if test="${cashier.status eq 0}">checked</c:if>>
 				          	<label for="cashier_using-2">否</label>
 				        </div>
 		            </div>
@@ -70,7 +70,7 @@
                     <label class="form-label col-3">角色：</label>
                     <div class="formControls col-6">
 	            	<span class="select-box radius">
-		                <select class="select" id = "cashier_role">
+		                <select class="select" id = "cashier_role" name="role">
 		                    <option value = "0">- 无 -</option>
 		                </select>
 	                </span>

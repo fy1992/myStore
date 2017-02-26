@@ -3,6 +3,7 @@ package cn.dahe.service.impl;
 import cn.dahe.dao.IIndustryDao;
 import cn.dahe.dao.IStoreDao;
 import cn.dahe.dao.IStoreGoodsTrafficDao;
+import cn.dahe.dao.IUserDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Industry;
 import cn.dahe.model.Store;
@@ -37,12 +38,16 @@ public class StoreServiceImpl implements IStoreService{
     private IStoreDao storeDao;
     @Resource
     private IStoreGoodsTrafficDao storeGoodsTrafficDao;
+    @Resource
+    private IUserDao userDao;
+
     @Override
     public void add(Store t) {
         t.setCreateDate(new Date());
         int storeId = storeDao.addAndGetId4Integer(t);
         Store store = get(storeId);
 
+        //门店的供货设置
         StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();
         storeGoodsTraffic.setStoreId(storeId);
         storeGoodsTraffic.setStoreName(store.getName());
@@ -52,6 +57,10 @@ public class StoreServiceImpl implements IStoreService{
         storeGoodsTraffic.setDifferentOpt(0);
         storeGoodsTraffic.setPayOnline(0);
         storeGoodsTrafficDao.add(storeGoodsTraffic);
+
+        //门店的登录账号
+        User user = new User();
+        user.setRank(1);
     }
 
     @Override

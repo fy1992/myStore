@@ -19,11 +19,18 @@ public class StoreDaoImpl extends BaseDaoImpl<Store> implements IStoreDao {
     public Pager<Store> findByParam(int start, int pageSize, Pager<Object> params) {
         StringBuffer hql = new StringBuffer("from Store store where 1=1");
         int status = params.getStatus();
+        int storeId = params.getIntParam4();
         /*Date startTime = new java.sql.Date(params.getStartTime().getTime());
         Date endTime = new java.sql.Date(params.getEndTime().getTime());*/
         List<Object> list = new ArrayList<>();
         hql.append(" and store.status = ?");
         list.add(status);
+        if(storeId != 0){
+            hql.append(" and store.parent.id = ?");
+            list.add(storeId);
+        }else{
+            hql.append(" and store.parent.id is null");
+        }
         /*if(startTime != null){
             hql.append(" and store.createDate >= ?");
             list.add(startTime);

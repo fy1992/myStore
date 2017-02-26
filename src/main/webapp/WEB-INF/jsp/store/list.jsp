@@ -180,7 +180,7 @@ function formatDate(val){
 
 //新增
 function add() {
-    layer_show("新增门店", "<%=request.getContextPath()%>/server/store/add", "800", "600");
+    layer_show("新增账号", "<%=request.getContextPath()%>/server/store/add", "800", "600");
 }
 
 function goodsTraffic(id){

@@ -26,11 +26,11 @@
             <label class="form-label col-3">是否启用：</label>
             <div class="formControls col-6">
                 <div class="radio-box">
-                    <input type="radio" id="role_using-1" name="status" value = "1" checked>
+                    <input type="radio" id="role_using-1" name="status" value = "1" <c:if test="${role.status eq 1}">checked</c:if>>
                     <label for="role_using-1">是</label>
                 </div>
                 <div class="radio-box">
-                    <input type="radio" id="role_using-2" name="status" value = "0">
+                    <input type="radio" id="role_using-2" name="status" value = "0" <c:if test="${role.status eq 0}">checked</c:if>>
                     <label for="role_using-2">否</label>
                 </div>
             </div>
@@ -65,11 +65,11 @@
                 <label class="form-label col-3">是否同步相应收银员的权限：</label>
                 <div class="formControls col-6">
                     <div class="radio-box">
-                        <input type="radio" id="isAsync-1" name="isAsync" value = "1" <c:if test="${role.isAsync} eq 1">checked</c:if>>>
+                        <input type="radio" id="isAsync-1" name="isAsync" value = "1" <c:if test="${role.isAsync eq 1}">checked</c:if>>>
                         <label for="isAsync-1">是</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" id="isAsync-2" name="isAsync" value = "0" <c:if test="${role.isAsync} eq 0">checked</c:if>>>
+                        <input type="radio" id="isAsync-2" name="isAsync" value = "0" <c:if test="${role.isAsync eq 0}">checked</c:if>>>
                         <label for="isAsync-2">否</label>
                     </div>
                 </div>
