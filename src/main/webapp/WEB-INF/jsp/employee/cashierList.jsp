@@ -118,7 +118,7 @@ table = $('#cashier_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/employee/cashierList",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/employee/cashierList",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -194,7 +194,7 @@ function formatDate(val){
 
 //新增
 function add() {
-    layer_show("新增收银员", "<%=request.getContextPath()%>/employee/cashierAdd", "800", "600");
+    layer_show("新增收银员", "<%=request.getContextPath()%>/server/employee/cashierAdd", "800", "600");
 }
 
 //员工角色管理
@@ -204,7 +204,7 @@ function roleManager(){
     var index = layer.open({
         type : 2,
         title:'员工 > 员工角色',
-        content : "<%=request.getContextPath()%>/role/list",
+        content : "<%=request.getContextPath()%>/server/role/list",
         area : [ w+'px', h+'px' ],
         maxmin : true
     });

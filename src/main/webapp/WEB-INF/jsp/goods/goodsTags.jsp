@@ -32,7 +32,7 @@
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
 <script>
 $(function(){
-    $.post("<%=request.getContextPath()%>/goods/findAllGoodsTags", function(data){
+    $.post("<%=request.getContextPath()%>/server/goods/findAllGoodsTags", function(data){
         for(var n in data){
             $("#goodsTagsList").append(
                 "<tr class=\"text-c\">" +
@@ -50,7 +50,7 @@ $(function(){
 	$("#addxpj").click(function(){
 		var labelName = $("#labelName").val();
 		if(labelName){
-            $.post("<%=request.getContextPath()%>/goods/addGoodsTags", {"name" : labelName}, function (data) {
+            $.post("<%=request.getContextPath()%>/server/goods/addGoodsTags", {"name" : labelName}, function (data) {
                 if(data.result == 1){
                     layer.msg("标签添加成功");
                     //添加成功之后执行以下代码
@@ -79,7 +79,7 @@ function update(id){
         layer.msg("标签名称不能为空");
         return false;
     }
-    $.post("<%=request.getContextPath()%>/goods/editGoodsTags", {"id" : id, "name" : name}, function(data){
+    $.post("<%=request.getContextPath()%>/server/goods/editGoodsTags", {"id" : id, "name" : name}, function(data){
         layer.msg(data.msg);
         $("#goodsTags_" + id).val(name);
     });
@@ -96,7 +96,7 @@ function del(id){
         time: 0 ,//不自动关闭
         btn: ['确定', '取消'],
         yes: function(index){
-            $.post("<%=request.getContextPath()%>/goods/delGoodsTags", {"id" : id}, function(data){
+            $.post("<%=request.getContextPath()%>/server/goods/delGoodsTags", {"id" : id}, function(data){
                 layer.msg(data.msg);
                 layer_close();
             });

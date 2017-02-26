@@ -26,7 +26,7 @@ import java.util.Map;
  * Created by fy on 2017/1/23.
  */
 @Controller
-@RequestMapping("supplier")
+@RequestMapping("server/supplier")
 public class SupplierController {
     private static Logger logger = LoggerFactory.getLogger(SupplierController.class);
     @Resource

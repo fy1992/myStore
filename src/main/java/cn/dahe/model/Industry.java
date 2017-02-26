@@ -23,9 +23,6 @@ public class Industry {
     private int id;
     //行业名称
     private String name;
-    //行业对应
-    @OneToMany(mappedBy = "industry", cascade = CascadeType.ALL)
-    private Set<Store> storeSet = new HashSet<>();
 
     public int getId() {
         return id;
@@ -41,13 +38,5 @@ public class Industry {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<Store> getStoreSet() {
-        return storeSet;
-    }
-
-    public void setStoreSet(Set<Store> storeSet) {
-        this.storeSet = storeSet;
     }
 }

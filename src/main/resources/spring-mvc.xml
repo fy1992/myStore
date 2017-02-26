@@ -23,11 +23,17 @@
 
 	<!-- 拦截器 -->
 	<mvc:interceptors>
+        <!-- 服务器 -->
 	    <mvc:interceptor>
-	        <mvc:mapping path="/**" />
-			<bean class="cn.dahe.interceptor.SessionInterceptor">
-			</bean>
+	        <mvc:mapping path="/server/**" />
+			<bean class="cn.dahe.interceptor.ServerInterceptor"/>
 	    </mvc:interceptor>
+
+        <!-- 客户端 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/client/**" />
+            <bean class="cn.dahe.interceptor.ClientInterceptor"/>
+        </mvc:interceptor>
 	</mvc:interceptors>
 
 	<!-- spring异常处理 -->

@@ -120,7 +120,7 @@ public class LoginController {
     public AjaxObj cashierLogin(String cashierNo, String password, HttpSession session){
         AjaxObj json = employeeService.cashierLogin(cashierNo, password);
         if(json.getResult() == 1){
-            session.setAttribute("cashier", (Cashier)json.getObject());
+            session.setAttribute("clientUser", json.getObject());
         }
         return json;
     }
@@ -132,7 +132,7 @@ public class LoginController {
     @ResponseBody
     public AjaxObj cashierLogout(HttpSession session){
         AjaxObj json = new AjaxObj();
-        session.removeAttribute("cashier");
+        session.removeAttribute("clientUser");
         json.setResult(1);
         json.setMsg("成功退出");
         return json;

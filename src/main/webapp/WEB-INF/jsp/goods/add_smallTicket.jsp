@@ -31,7 +31,7 @@
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
 <script>
 $(function(){
-    $.post("<%=request.getContextPath()%>/goods/findAllSmallTicket", function(data){
+    $.post("<%=request.getContextPath()%>/server/goods/findAllSmallTicket", function(data){
         for(var n in data){
             $("#smallTicketBox").append(
                 "<tr class=\"text-c\">" +
@@ -56,7 +56,7 @@ $(function(){
 
 	//管理小票机
 	$("#xpj").click(function(){
-		$.get("<%=request.getContextPath()%>/goods/smallTicket",function(html){
+		$.get("<%=request.getContextPath()%>/server/goods/smallTicket",function(html){
 			$("body").html(html);
 		},"html");
 	});

@@ -85,7 +85,7 @@ table = $('#supplier_table').dataTable({
        "aoColumns" : [
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
             var btn ="<a style='text-decoration:none' onclick='edit("+full.id+")'>编辑</a>";
-            btn += "<a style='text-decoration:none' onclick='del("+full.id+")'>删除</a>";
+            btn += "&nbsp;<a style='text-decoration:none' onclick='del("+full.id+")'>删除</a>";
             return btn;
         }},
         {"mData" : "supplierNo", "sDefaultContent" : "", "bSortable":false},
@@ -123,7 +123,7 @@ table = $('#supplier_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/supplier/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/supplier/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -202,12 +202,12 @@ function formatDate(val){
 
 //新增
 function add() {
-    layer_show("新增供货商", "<%=request.getContextPath()%>/supplier/add", "700", "600");
+    layer_show("新增供货商", "<%=request.getContextPath()%>/server/supplier/add", "700", "600");
 }
 
 //编辑
 function edit(id){
-    layer_show("编辑供货商", "<%=request.getContextPath()%>/supplier/edit/"+id, "700", "600");
+    layer_show("编辑供货商", "<%=request.getContextPath()%>/server/supplier/edit/"+id, "700", "600");
 }
 
 //删除
@@ -216,7 +216,7 @@ function del(id){
         "确定删除该供货商？",
         ["确定","取消"],
         function(){
-            $.post("<%=request.getContextPath()%>/supplier/delSupplier", {id : id}, function (data) {
+            $.post("<%=request.getContextPath()%>/server/supplier/delSupplier", {id : id}, function (data) {
                 layer.msg(data.msg);
                 table.fnDraw();
             })
@@ -226,12 +226,12 @@ function del(id){
 
 //导出
 function importOut() {
-    layer_show("批量导入", "<%=request.getContextPath()%>/supplier/importOut", "480", "340");
+    layer_show("批量导入", "<%=request.getContextPath()%>/server/supplier/importOut", "480", "340");
 }
 
 //导入
 function importIn() {
-    layer_show("批量导出", "<%=request.getContextPath()%>/supplier/importIn", "480", "340");
+    layer_show("批量导出", "<%=request.getContextPath()%>/server/supplier/importIn", "480", "340");
 }
 </script>
 </body>

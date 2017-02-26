@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  * Created by fy on 2017/1/17.
  */
 @Controller
-@RequestMapping("employee")
+@RequestMapping("server/employee")
 public class EmployeeController {
     private static Logger logger = LoggerFactory.getLogger(EmployeeController.class);
     @Resource

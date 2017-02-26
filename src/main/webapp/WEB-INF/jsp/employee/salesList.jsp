@@ -121,7 +121,7 @@
         "fnFormatNumber": function(iIn){
             return iIn;//格式化数字显示方式
         },
-        "sAjaxSource" : "<%=request.getContextPath()%>/employee/salesList",
+        "sAjaxSource" : "<%=request.getContextPath()%>/server/employee/salesList",
         //服务器端，数据回调处理
         "fnServerData" : function(sSource, aDataSet, fnCallback) {
             $.ajax({
@@ -197,7 +197,7 @@
 
     //新增
     function add() {
-        layer_show("新增导购员", "<%=request.getContextPath()%>/employee/salesAdd", "800", "600");
+        layer_show("新增导购员", "<%=request.getContextPath()%>/server/employee/salesAdd", "800", "600");
     }
 </script>
 </body>

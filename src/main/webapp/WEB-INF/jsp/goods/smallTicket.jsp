@@ -31,7 +31,7 @@
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
 <script>
 $(function(){
-    $.post("<%=request.getContextPath()%>/goods/findAllSmallTicket", function(data){
+    $.post("<%=request.getContextPath()%>/server/goods/findAllSmallTicket", function(data){
         for(var n in data){
             $("#smallTicketList").append("<tr class=\"text-c\">" +
                 "<td><input type=\"text\" class=\"input-text smallTicketName\" value=\""+data[n].name+"\"></td>" +
@@ -111,12 +111,12 @@ $(function(){
                     $(".smallTicketId").eq(i).val()
                 ));
             }
-            $.post("<%=request.getContextPath()%>/goods/addSmallTicket", {"smallTicketList" : JSON.stringify(smallTicketArr)}, function (data) {
+            $.post("<%=request.getContextPath()%>/server/goods/addSmallTicket", {"smallTicketList" : JSON.stringify(smallTicketArr)}, function (data) {
                 layer.msg(data.msg);
                 layer_close();
             });
 		}else{
-			$.get("<%=request.getContextPath()%>/goods/goodsTagsSelect", function(html){
+			$.get("<%=request.getContextPath()%>/server/goods/goodsTagsSelect", function(html){
 				$("body").html(html);
 			},"html");
 		}
@@ -135,7 +135,7 @@ function del(id){
         time: 0 ,//不自动关闭
         btn: ['确定', '取消'],
         yes: function(index){
-            $.post("<%=request.getContextPath()%>/goods/delSmallTicket", {"id" : id}, function(data){
+            $.post("<%=request.getContextPath()%>/server/goods/delSmallTicket", {"id" : id}, function(data){
                 layer.msg(data.msg);
             });
         }

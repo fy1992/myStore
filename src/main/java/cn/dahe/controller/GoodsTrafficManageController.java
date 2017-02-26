@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  * Created by fy on 2017/1/30.
  */
 @Controller
-@RequestMapping("goodsTrafficManage")
+@RequestMapping("server/goodsTrafficManage")
 public class GoodsTrafficManageController {
     private static Logger logger = LoggerFactory.getLogger(GoodsTrafficManageController.class);
     @Resource

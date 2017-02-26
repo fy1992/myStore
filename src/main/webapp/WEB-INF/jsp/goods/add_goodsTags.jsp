@@ -22,7 +22,7 @@
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
 <script>
 $(function(){
-    $.post("<%=request.getContextPath()%>/goods/findAllGoodsTags", function(data){
+    $.post("<%=request.getContextPath()%>/server/goods/findAllGoodsTags", function(data){
         for(var n in data){
             $("#ckBox").append(
                 "<label><input type=\"checkbox\" name=\"ck1\" value = '"+data[n].id+"'/>"+data[n].name+"</label>"
@@ -42,7 +42,7 @@ $(function(){
 
 	//管理标签
 	$("#tags").click(function(){
-		$.get("<%=request.getContextPath()%>/goods/goodsTags",function(html){
+		$.get("<%=request.getContextPath()%>/server/goods/goodsTags",function(html){
 			$("body").html(html);
 		},"html");
 	});

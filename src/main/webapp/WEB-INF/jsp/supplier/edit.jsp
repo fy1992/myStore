@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-supplier-edit" action = "<%=request.getContextPath()%>/supplier/edit" type = "post">
+    <form class="form form-horizontal" id="form-supplier-edit" action = "<%=request.getContextPath()%>/server/supplier/edit" type = "post">
         <div class="row cl mb-30">
             <div class="row cl">
                 <label class="form-label col-3">是否启用：</label>
@@ -189,7 +189,7 @@
 
     //随机生成编号
     $("#randomNo").on("click", function () {
-        $.post("<%=request.getContextPath()%>/supplier/newSupplierNo", function(data){
+        $.post("<%=request.getContextPath()%>/server/supplier/newSupplierNo", function(data){
             if(data.result == 1){
                 $("#supplier_No").val(data.msg);
                 $("#supplier_No").removeClass("Validform_error");

@@ -54,7 +54,7 @@
 <script type="text/javascript" src="${resources}/js/layer/layer.js"></script>
 <script>
 $(function(){
-    $.post("<%=request.getContextPath()%>/goodsTraffic/findOrderGoodsInfosByGoodsTrafficId",
+    $.post("<%=request.getContextPath()%>/server/goodsTraffic/findOrderGoodsInfosByGoodsTrafficId",
         {"id" : ${goodsTrafficId}},
         function(data){
             var categoriesArr = [];
@@ -96,7 +96,7 @@ $(function(){
         }
         var orderGoodsInfoArr = [];
 
-        $.post("<%=request.getContextPath()%>/goodsTraffic/prepare", {"id": ${goodsTrafficId}, "orderGoodsInfos" : 1}, function (data) {
+        $.post("<%=request.getContextPath()%>/server/goodsTraffic/prepare", {"id": ${goodsTrafficId}, "orderGoodsInfos" : 1}, function (data) {
             $("body").html(data.msg);
         });
 		/*layer.msg('已配货!',{time:1000});

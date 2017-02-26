@@ -25,7 +25,7 @@ import java.util.List;
  * Created by fy on 2017/1/24.
  */
 @Controller
-@RequestMapping("store")
+@RequestMapping("server/store")
 public class StoreController {
     private static Logger logger = LoggerFactory.getLogger(StoreController.class);
     @Resource
@@ -64,13 +64,26 @@ public class StoreController {
     /**
      *店铺添加
      */
+    @RequestMapping(value = "add", method = RequestMethod.GET)
+    public String addStore(){
+        return "store/add";
+    }
+
+    /**
+     *店铺添加
+     */
     @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addStore(Store store){
+    public AjaxObj addStore(Store store, HttpSession session){
         AjaxObj json = new AjaxObj();
-        storeService.add(store);
-        json.setMsg("门店添加成功");
-        json.setResult(1);
+        User user = (User)session.getAttribute("loginUser");
+        if(storeService.add(store, user)){
+            json.setInfo("添加成功");
+            json.setStatus("y");
+        }else{
+            json.setInfo("该门店编号已存在");
+            json.setStatus("n");
+        }
         return json;
     }
 
@@ -127,35 +140,29 @@ public class StoreController {
     }
 
     /**
-     * 子门店货流设置列表
+     * 子门店货流设置
      * @return
      */
-    @RequestMapping(value = "storeGoodsTrafficList", method = RequestMethod.GET)
-    public String storeGoodsTraffic(){
-        return "store/storeGoodsTrafficList";
-    }
-
-    /**
-     * 子门店货流设置列表
-     * @return
-     */
-    @RequestMapping(value = "storeGoodsTrafficList", method = RequestMethod.POST)
+    @RequestMapping(value = "addGoodsTraffic", method = RequestMethod.POST)
     @ResponseBody
-    public List<StoreGoodsTraffic> storeGoodsTrafficData(){
-        return  storeService.findAllStoreGoodsTraffic();
+    public AjaxObj storeGoodsTraffic(StoreGoodsTraffic storeGoodsTraffic){
+        AjaxObj json = new AjaxObj();
+        storeService.updateStoreGoodsTraffics(storeGoodsTraffic);
+        json.setResult(1);
+        json.setMsg("自门店货流设置完成");
+        return json;
     }
 
     /**
      * 子门店货流设置
+     * @param id
+     * @param model
      * @return
      */
-    @RequestMapping(value = "storeGoodsTraffic", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxObj storeGoodsTraffic(String storeGoodsTraffics){
-        AjaxObj json = new AjaxObj();
-        storeService.updateStoreGoodsTraffics(storeGoodsTraffics);
-        json.setResult(1);
-        json.setMsg("自门店货流设置完成");
-        return json;
+    @RequestMapping(value = "findStoreGoodsTraffic/{id}", method = RequestMethod.GET)
+    public String getStoreGoodsTraffic(@PathVariable int id, Model model){
+        Store store = storeService.get(id);
+        model.addAttribute("store", store);
+        return "store/storeGoodsTraffic";
     }
 }

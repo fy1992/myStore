@@ -3,6 +3,7 @@ package cn.dahe.service;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Store;
 import cn.dahe.model.StoreGoodsTraffic;
+import cn.dahe.model.User;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  */
 public interface IStoreService {
     void add(Store t);
+    boolean add(Store t, User user);
     void del(int id);
     void update(Store t);
     Store get(int id);
@@ -44,7 +46,7 @@ public interface IStoreService {
 
     /**
      * 门店货流设置
-     * @param storeGoodsTraffics
+     * @param storeGoodsTraffic
      */
-    void updateStoreGoodsTraffics(String storeGoodsTraffics);
+    void updateStoreGoodsTraffics(StoreGoodsTraffic storeGoodsTraffic);
 }

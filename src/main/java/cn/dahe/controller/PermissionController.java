@@ -26,7 +26,7 @@ import java.util.List;
  * Created by fy on 2017/2/9.
  */
 @Controller
-@RequestMapping("permission")
+@RequestMapping("server/permission")
 public class PermissionController {
     private static Logger logger = LoggerFactory.getLogger(PermissionController.class);
     @Resource

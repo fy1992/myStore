@@ -50,11 +50,11 @@
 			<dt><i class="Hui-iconfont">&#xe6c0;</i> 商品<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-                    <li><a _href="<%=request.getContextPath()%>/goods/list" href="javascript:;">商品资料</a></li>
-                    <li><a _href="<%=request.getContextPath()%>/categories/treeAndList" href="javascript:;">商品分类</a></li>
-					<%--<li><a _href="<%=request.getContextPath()%>/channel/channelList/view" href="javascript:;">批量操作</a></li>
-					<li><a _href="<%=request.getContextPath()%>/goods/channelList/view" href="javascript:;">排序管理</a></li>
-					<li><a _href="<%=request.getContextPath()%>/taste/channelList/view" href="javascript:;">口味管理</a></li>--%>
+                    <li><a _href="<%=request.getContextPath()%>/server/goods/list" href="javascript:;">商品资料</a></li>
+                    <li><a _href="<%=request.getContextPath()%>/server/categories/treeAndList" href="javascript:;">商品分类</a></li>
+					<%--<li><a _href="<%=request.getContextPath()%>/server/channel/channelList/view" href="javascript:;">批量操作</a></li>
+					<li><a _href="<%=request.getContextPath()%>/server/goods/channelList/view" href="javascript:;">排序管理</a></li>
+					<li><a _href="<%=request.getContextPath()%>/server/taste/channelList/view" href="javascript:;">口味管理</a></li>--%>
 				</ul>
 			</dd>
 		</dl>
@@ -62,7 +62,7 @@
 			<dt><i class="Hui-iconfont">&#xe623;</i>库存<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="<%=request.getContextPath()%>/optLog/list" href="javascript:void(0)">日志记录</a></li>
+					<li><a _href="<%=request.getContextPath()%>/server/optLog/list" href="javascript:void(0)">日志记录</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -92,8 +92,8 @@
 			<dt><i class="Hui-iconfont">&#xe623;</i>员工<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="<%=request.getContextPath()%>/employee/cashierList" href="javascript:void(0)">收银员</a></li>
-					<li><a _href="<%=request.getContextPath()%>/employee/salesList" href="javascript:void(0)">导购员</a></li>
+					<li><a _href="<%=request.getContextPath()%>/server/employee/cashierList" href="javascript:void(0)">收银员</a></li>
+					<li><a _href="<%=request.getContextPath()%>/server/employee/salesList" href="javascript:void(0)">导购员</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -101,9 +101,9 @@
             <dt><i class="Hui-iconfont">&#xe623;</i>货流<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a _href="<%=request.getContextPath()%>/supplier/list" href="javascript:void(0)">供货商</a></li>
-                    <li><a _href="<%=request.getContextPath()%>/goodsTraffic/list" href="javascript:void(0)">门店订货</a></li>
-                    <li><a _href="<%=request.getContextPath()%>/goodsTrafficManage/list" href="javascript:void(0)">货流管理</a></li>
+                    <li><a _href="<%=request.getContextPath()%>/server/supplier/list" href="javascript:void(0)">供货商</a></li>
+                    <li><a _href="<%=request.getContextPath()%>/server/goodsTraffic/list" href="javascript:void(0)">门店订货</a></li>
+                    <li><a _href="<%=request.getContextPath()%>/server/goodsTrafficManage/list" href="javascript:void(0)">货流管理</a></li>
                     <%--<li><a _href="#" href="javascript:void(0)">供货商结算</a></li>
                     <li><a _href="#" href="javascript:void(0)">贷款汇总</a></li>--%>
                 </ul>
@@ -113,7 +113,7 @@
 			<dt><i class="Hui-iconfont">&#xe623;</i>门店<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="<%=request.getContextPath()%>/store/list" href="javascript:void(0)">门店信息</a></li>
+					<li><a _href="<%=request.getContextPath()%>/server/store/list" href="javascript:void(0)">门店信息</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -121,7 +121,7 @@
             <dt><i class="Hui-iconfont">&#xe623;</i>权限<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a _href="<%=request.getContextPath()%>/permission/list" href="javascript:void(0)">权限信息</a></li>
+                    <li><a _href="<%=request.getContextPath()%>/server/permission/list" href="javascript:void(0)">权限信息</a></li>
                 </ul>
             </dd>
         </dl>
@@ -129,7 +129,7 @@
 			<dt><i class="Hui-iconfont">&#xe623;</i>供货<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="<%=request.getContextPath()%>/supplier/list" href="javascript:void(0)">我的供货</a></li>
+					<li><a _href="<%=request.getContextPath()%>/server/supplier/list" href="javascript:void(0)">我的供货</a></li>
 				</ul>
 			</dd>
 		</dl>--%>

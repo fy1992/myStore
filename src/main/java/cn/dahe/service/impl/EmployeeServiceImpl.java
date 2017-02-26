@@ -56,7 +56,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
         cashierUser.setUsername(user.getUsername());
         cashierUser.setStoreName(store.getName());
         cashierUser.setPermissionSet(t.getPermissionSet());
-        cashierUser.setRole(t.getRole());
+        cashierUser.setRank(3);
         userDao.add(cashierUser);
     }
 

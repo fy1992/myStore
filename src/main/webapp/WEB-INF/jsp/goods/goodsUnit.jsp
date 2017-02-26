@@ -52,7 +52,7 @@
 //添加
 function add() {
     var unitName = $.trim($("#goods_unit_add").val());
-    $.post("<%=request.getContextPath()%>/goods/addGoodsUnit", {"name":unitName}, function (data) {
+    $.post("<%=request.getContextPath()%>/server/goods/addGoodsUnit", {"name":unitName}, function (data) {
         if(data.result == 1){
             layer.msg("单位添加成功");
             $("#goods_unit_add").val("");
@@ -69,7 +69,7 @@ function del(id){
         time: 0 ,//不自动关闭
         btn: ['确定', '取消'],
         yes: function(index){
-            $.post("<%=request.getContextPath()%>/goods/delGoodsUnit", {"id" : id}, function(data){
+            $.post("<%=request.getContextPath()%>/server/goods/delGoodsUnit", {"id" : id}, function(data){
                 layer.msg(data.msg);
                 table.fnDraw();
             });
@@ -113,7 +113,7 @@ table = $('#goods_unit_table').dataTable({
     "fnFormatNumber": function(iIn){
         return iIn;//格式化数字显示方式
     },
-    "sAjaxSource" : "<%=request.getContextPath()%>/goods/goodsUnitList",
+    "sAjaxSource" : "<%=request.getContextPath()%>/server/goods/goodsUnitList",
     //服务器端，数据回调处理
     "fnServerData" : function(sSource, aDataSet, fnCallback) {
         $.ajax({
@@ -145,7 +145,7 @@ table = $('#goods_unit_table').dataTable({
             }
         });
 
-        $(".editDiv").editable("<%=request.getContextPath()%>/goods/editGoodsUnit", {
+        $(".editDiv").editable("<%=request.getContextPath()%>/server/goods/editGoodsUnit", {
             width   : 120,
             height  : 18,
             cancel : "取消",
