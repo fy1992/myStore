@@ -50,7 +50,7 @@ public class EmployeeController {
 
     /**
      * 收银员添加页面路由
-     * @return
+     * @return string
      */
     @RequestMapping(value = "cashierAdd", method = RequestMethod.GET)
     public String cashierAdd(){
@@ -61,7 +61,7 @@ public class EmployeeController {
      * 收银员添加
      * @param cashier
      * @param session
-     * @return
+     * @return AjaxObj
      */
     @RequestMapping(value = "cashierAdd", method = RequestMethod.POST)
     @ResponseBody
@@ -76,7 +76,7 @@ public class EmployeeController {
 
     /**
      * 收银员编辑页面路由
-     * @return
+     * @return String
      */
     @RequestMapping(value = "cashierEdit/{id}", method = RequestMethod.GET)
     public String cashierEdit(@PathVariable int id, Model model){
@@ -88,7 +88,7 @@ public class EmployeeController {
     /**
      * 收银员编辑
      * @param cashier
-     * @return
+     * @return AjaxObj
      */
     @RequestMapping(value = "cashierEdit", method = RequestMethod.POST)
     @ResponseBody

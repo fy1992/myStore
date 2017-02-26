@@ -86,7 +86,7 @@ public class GoodsTrafficController {
         AjaxObj json = new AjaxObj();
         goodsTrafficService.auditGoodsTraffic(id, type);
         json.setResult(1);
-        json.setMsg("<%=request.getContextPath()%>/goodsTraffic/audit/2");
+        json.setMsg("<%=request.getContextPath()%>/server/goodsTraffic/audit/2");
         return json;
     }
 
@@ -99,7 +99,7 @@ public class GoodsTrafficController {
     public AjaxObj goodsPrepare(int id, String orderGoodsInfos){
         AjaxObj json = new AjaxObj();
         goodsTrafficService.prepareGoods(id, orderGoodsInfos);
-        json.setMsg("<%=request.getContextPath()%>/goodsTraffic/audit/3");
+        json.setMsg("<%=request.getContextPath()%>/server/goodsTraffic/audit/3");
         json.setResult(1);
         return json;
     }

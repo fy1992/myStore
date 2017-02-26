@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-permission-add" action="<%=request.getContextPath()%>/permission/add" method="post">
+    <form class="form form-horizontal" id="form-permission-add" action="<%=request.getContextPath()%>/server/permission/add" method="post">
         <div class="row cl">
             <label class="form-label col-3">权限类型：</label>
             <div class="formControls col-6">

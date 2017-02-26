@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-role-add" method="post" action="<%=request.getContextPath()%>/role/addRole">
+    <form class="form form-horizontal" id="form-role-add" method="post" action="<%=request.getContextPath()%>/server/role/addRole">
         <div class="row cl">
             <label class="form-label col-3">是否启用：</label>
             <div class="formControls col-6">
@@ -112,7 +112,7 @@
             }
         ]);
 
-        $.post("<%=request.getContextPath()%>/permission/findAllPermission", {type : 0}, function(data){
+        $.post("<%=request.getContextPath()%>/server/permission/findAllPermission", {type : 0}, function(data){
             for(var n in data){
                 $("#perBox").append(
                     "<label><input type=\"checkbox\" name=\"ck1\" value = '"+data[n].id+"'/>"+data[n].name+"</label>"
