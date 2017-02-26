@@ -49,7 +49,7 @@
         </div>
         <div class="row cl">
             <label class="form-label col-3">手机：</label>
-            <div class="formControls col-6"><input type = "text" class="input-text radius" id="phone" name = "phone"/></div>
+            <div class="formControls col-6"><input type = "text" class="input-text radius" id="phone" name = "mobile"/></div>
             <div class="col-3"> </div>
         </div>
         <div class="row cl">

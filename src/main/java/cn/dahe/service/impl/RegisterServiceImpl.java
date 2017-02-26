@@ -45,7 +45,7 @@ public class RegisterServiceImpl implements IRegisterService{
         user.setAddr(registerDto.getAddr());
         user.setEmail(registerDto.getEmail());
         user.setStoreId(storeId);
-        user.setPhone(registerDto.getMobile());
+        user.setMobile(registerDto.getMobile());
         userDao.addAndGetId4Integer(user);
     }
 }
