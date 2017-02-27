@@ -59,7 +59,6 @@
 
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script> 
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
-<script type="text/javascript" src="${ctxResource}/js/jquery.dragsort-0.5.2.min.js"></script> 
 <script type="text/javascript" src="${ctxResource}/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
@@ -85,7 +84,7 @@ table = $('#cashier_table').dataTable({
        "aoColumns" : [
         {"mData" : null, "sDefaultContent" : "", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
+            return "<a style='text-decoration:none' onclick='edit(\"" + full.id + "\")'>编辑</a>";
         }},
         {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "cashierNo", "sDefaultContent" : "", "bSortable":false},
@@ -132,15 +131,8 @@ table = $('#cashier_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	aoData.push({"name":"bNeedPaging", "value":true});
       	var static = $("#cashier_static").val();
       	var cashierInfo = $("#cashier_info").val();
-        var iDisplayStart = $("#news_tableStart").val();
-        if(!iDisplayStart){
-            iDisplayStart = 0;
-        }
-        iDisplayStart = Number(iDisplayStart);
-        aoData[3].value = iDisplayStart == 0 ? this.fnSettings()._iDisplayStart : iDisplayStart;
         aoData.push({"name":"static","value":static});
         aoData.push({"name":"cashierInfo","value":cashierInfo});
     },

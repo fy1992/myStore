@@ -202,12 +202,6 @@ $(document).ready(function(){
                 cid = 0;
             }
             aoData.push({"name":"pid", "value":cid});
-            var iDisplayStart = $("#categories_tableStart").val();
-            if(!iDisplayStart){
-                iDisplayStart = 0;
-            }
-            iDisplayStart = Number(iDisplayStart);
-            aoData[3].value = iDisplayStart == 0 ? this.fnSettings()._iDisplayStart : iDisplayStart;
         },
         "fnDrawCallback" : function () {
             $('#redirect').keyup(function(e){

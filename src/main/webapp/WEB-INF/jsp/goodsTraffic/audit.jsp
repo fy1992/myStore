@@ -32,16 +32,6 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-           	<td>奶茶粉</td>
-            <td>10001</td>
-            <td>3</td>
-            <td>无</td>
-            <td>5</td>
-            <td>100</td>
-            <td>300.00</td>
-            <td>-</td>
-       </tr>
 	</tbody>
 </table>
 
@@ -63,28 +53,27 @@ $(function(){
             layer_close();
         });
 	});
+	//恢复
 	$("#recover").click(function(){
 		layer.msg('确定要恢复吗？', {
 			time: 0 ,//不自动关闭
 			btn: ['确定', '取消'],
 			yes: function(index){
-				$("#pass,#nopass").css("display","block");
-				$("#recover,#obsolete").css("display","none");
-				layer.msg('已恢复!',{time:1000});
-			}
+                $.post("<%=request.getContextPath()%>/server/goodsTraffic/audit", {id : "${goodsTrafficId}", type : "2"}, function (data) {
+                    $("#pass,#nopass").css("display","block");
+                    $("#recover,#obsolete").css("display","none");
+                    layer.msg(data.msg,{time:1000});
+                    window.parent.table.fnDraw();
+                    layer_close();
+                })
+            }
 		});
 	});
 	//通过
 	$("#pass").click(function(){
-	    $.post("<%=request.getContextPath()%>/server/goodsTraffic/audit", {"id": ${goodsTrafficId}, "type" : 1}, function (data) {
+	    $.post("<%=request.getContextPath()%>/server/goodsTraffic/audit", {"id": "${goodsTrafficId}", "type" : 1}, function (data) {
             $("body").html(data.msg);
         });
-		/*layer.msg('审核通过!',{time:1000});
-		setTimeout(function(){
-			$.get("/goodsTraffic/audit/2",function(html){
-				$("body").html(html);
-			},"html");
-		},500);*/
 	});
 });
 </script>

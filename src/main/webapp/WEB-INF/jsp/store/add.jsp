@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-store-add" action="<%=request.getContextPath()%>/server/store/add" type="POST">
+    <form class="form form-horizontal" id="form-store-add" action="<%=request.getContextPath()%>/server/store/add" method="POST">
         <div class="row cl">
             <label class="form-label col-3">是否启用：</label>
             <div class="formControls col-6">

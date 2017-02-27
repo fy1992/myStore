@@ -47,7 +47,6 @@
 
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script> 
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
-<script type="text/javascript" src="${ctxResource}/js/jquery.dragsort-0.5.2.min.js"></script> 
 <script type="text/javascript" src="${ctxResource}/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
@@ -72,7 +71,7 @@ table = $('#role_table').dataTable({
        "aoColumns" : [
         {"mData" : null, "sDefaultContent" : "", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
+            return "<a style='text-decoration:none' onclick='edit(\"" + full.id + "\")'>编辑</a>";
         }},
         {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "roleName", "sDefaultContent" : "", "bSortable":false},
@@ -118,9 +117,9 @@ table = $('#role_table').dataTable({
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){
             var redirect = 0;
-            if(e.keyCode==13){
-                if($(this).val() && $(this).val()>0){
-                    redirect = $(this).val()-1;
+            if(e.keyCode == 13){
+                if($(this).val() && $(this).val() > 0){
+                    redirect = $(this).val() - 1;
                 }
                 table.fnPageChange(redirect);
             }
