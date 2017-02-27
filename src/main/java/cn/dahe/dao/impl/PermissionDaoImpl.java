@@ -42,4 +42,10 @@ public class PermissionDaoImpl extends BaseDaoImpl<Permission> implements IPermi
         String hql = "from Permission where parent.id = ?";
         return list(hql, parentId);
     }
+
+    @Override
+    public Permission findByPerKey(String perKey, int storeId) {
+        String hql = "from Permission where perKey = ? and storeId = ?";
+        return (Permission)this.queryByHql(hql, new Object[]{perKey, storeId});
+    }
 }

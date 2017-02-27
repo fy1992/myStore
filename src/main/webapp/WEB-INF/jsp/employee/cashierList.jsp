@@ -194,7 +194,7 @@ function formatDate(val){
 
 //新增
 function add() {
-    layer_show("新增收银员", "<%=request.getContextPath()%>/server/employee/cashierAdd", "800", "600");
+    layer_show("新增收银员", "<%=request.getContextPath()%>/server/employee/cashierAdd", "500", "600");
 }
 
 //员工角色管理

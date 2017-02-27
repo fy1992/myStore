@@ -46,11 +46,11 @@
             <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="goodsTraffic_table">
                 <thead>
                     <tr class="text-c">
-                        <th></th>
+                        <th width="30"><input type="checkbox" name="selectAll" id="selectAll"></th>
                         <th width="50">序号</th>
                         <th width="50">操作</th>
                         <th width="100">订货时间</th>
-                        <th width="50">期望发货时间</th>
+                        <th width="100">期望发货时间</th>
                         <th width="50">状态</th>
                         <th width="50">备注</th>
                     </tr>
@@ -68,12 +68,21 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 //搜索
 $(function(){
 	$("#goodsTraffic_search").click(function(){
 		table.fnDraw();
 	});
+
+    $("#selectAll").click(function () {
+        if(this.checked){
+            $("input[name=ids]").prop("checked",true);
+        } else{
+            $("input[name=ids]").prop("checked",false);
+        }
+    })
 });
 
 //table start here
@@ -87,7 +96,11 @@ table = $('#goodsTraffic_table').dataTable({
        "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数 
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
-        {"mData" : ""},
+        {
+           "mData": "", "sDefaultContent": "", "mRender": function (data, type, full) {
+               return "<input type='checkbox' name = 'ids' value='" + full.id + "'/>";
+            }, "bSortable": false
+        },
 	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
             return "<a style='text-decoration:none' onclick='detail(" + full.id + ")'>详情</a>";
@@ -117,7 +130,7 @@ table = $('#goodsTraffic_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/server/goods/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/goodsTraffic/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -131,26 +144,12 @@ table = $('#goodsTraffic_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	aoData.push({"name":"bNeedPaging", "value":true});
-      	var newsId = $("#news_id").val();
-      	var isTop = $("#news_isTop").val();
-      	var isMobile = $("#news_isMobile").val();
-      	var isFirstPage = $("#news_isFirstPage").val();
-      	var cid = $("#news_cid").val();
-      	if(cid == ""){
-      		cid = -1;
-      	}
-        var iDisplayStart = $("#news_tableStart").val();
-        if(!iDisplayStart){
-            iDisplayStart = 0;
-        }
-        iDisplayStart = Number(iDisplayStart);
-        aoData[3].value = iDisplayStart == 0 ? this.fnSettings()._iDisplayStart : iDisplayStart;
-        aoData.push({"name":"cid","value":cid});
-        aoData.push({"name":"nid","value":newsId});
-        aoData.push({"name":"isTop","value":isTop});
-        aoData.push({"name":"isMobile","value":isMobile});
-        aoData.push({"name":"isFirstPage","value":isFirstPage});
+      	var status = $("#traffic_static").val();
+      	var timeType = $("#traffic_time").val();
+      	var tafficDate = $("#tafficDate").val();
+        aoData.push({"name":"status","value":status});
+        aoData.push({"name":"timeType","value":timeType});
+        aoData.push({"name":"tafficDate","value":tafficDate});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){

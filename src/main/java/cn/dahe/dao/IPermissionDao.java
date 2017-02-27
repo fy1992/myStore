@@ -32,4 +32,6 @@ public interface IPermissionDao extends IBaseDao<Permission>{
      * @return
      */
     List<Permission> findByPid(int parentId);
+
+    Permission findByPerKey(String perKey, int storeId);
 }

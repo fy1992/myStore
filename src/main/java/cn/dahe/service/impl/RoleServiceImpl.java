@@ -28,15 +28,22 @@ public class RoleServiceImpl implements IRoleService{
     private IPermissionDao permissionDao;
 
     @Override
-    public void add(Role t, String permissions) {
-        String[] permissionArr = permissions.split(",");
-        Set<Permission> set = new HashSet<>();
-        for(int i = 0, len = permissionArr.length; i < len; i++){
-            Permission permission = permissionDao.get(Integer.parseInt(permissionArr[i]));
-            set.add(permission);
+    public boolean add(Role t, String permissions) {
+        String roleKey = t.getRoleKey();
+        Role r = roleDao.findByRoleKey(roleKey, t.getStoreId());
+        if(r == null){
+            String[] permissionArr = permissions.split(",");
+            Set<Permission> set = new HashSet<>();
+            for(int i = 0, len = permissionArr.length; i < len; i++){
+                Permission permission = permissionDao.get(Integer.parseInt(permissionArr[i]));
+                set.add(permission);
+            }
+            t.setPermissionSet(set);
+
+            roleDao.add(t);
+            return true;
         }
-        t.setPermissionSet(set);
-        roleDao.add(t);
+        return false;
     }
 
     @Override
@@ -45,8 +52,14 @@ public class RoleServiceImpl implements IRoleService{
     }
 
     @Override
-    public void update(Role t, String permissions) {
+    public boolean update(Role t, String permissions) {
         Role role = roleDao.get(t.getId());
+        if(!t.getRoleKey().equals(role.getRoleKey())){
+            Role r = roleDao.findByRoleKey(t.getRoleKey(), t.getStoreId());
+            if(r != null){
+                return false;
+            }
+        }
         String[] permissionArr = permissions.split(",");
         Set<Permission> set = new HashSet<>();
         for(int i = 0, len = permissionArr.length; i < len; i++){
@@ -58,7 +71,9 @@ public class RoleServiceImpl implements IRoleService{
         role.setRoleName(t.getRoleName());
         role.setIsAsync(t.getIsAsync());
         role.setStatus(t.getStatus());
+        role.setRoleKey(t.getRoleKey());
         roleDao.update(role);
+        return true;
     }
 
     @Override

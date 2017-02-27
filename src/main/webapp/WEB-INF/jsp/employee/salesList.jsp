@@ -197,7 +197,7 @@
 
     //新增
     function add() {
-        layer_show("新增导购员", "<%=request.getContextPath()%>/server/employee/salesAdd", "800", "600");
+        layer_show("新增导购员", "<%=request.getContextPath()%>/server/employee/salesAdd", "500", "500");
     }
 </script>
 </body>

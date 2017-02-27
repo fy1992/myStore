@@ -5,10 +5,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>门店订货审核</title>
-	<link href="resources/css/H-ui.css" rel="stylesheet" type="text/css" />
-    <link href="resources/css/admin.css" rel="stylesheet" type="text/css" />
-    <link href="resources/css/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
-    <link href="style.css" rel="stylesheet" type="text/css" />
+	<link href="${resources}/css/H-ui.css" rel="stylesheet" type="text/css" />
+	<link href="${resources}/css/admin.css" rel="stylesheet" type="text/css" />
+	<link href="${resources}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
+	<link href="${resources}/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <nav class="clearfix navbar">

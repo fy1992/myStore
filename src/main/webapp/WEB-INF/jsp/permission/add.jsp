@@ -38,6 +38,13 @@
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">* </span>授权key：</label>
+            <div class="formControls col-6">
+                <input type="text" class="input-text radius" value="" name="perKey" id="perKey">
+            </div>
+            <div class="col-3"> </div>
+        </div>
+        <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>权限url：</label>
             <div class="formControls col-6">
                 <input type="text" class="input-text radius" value="" name="url" id="permission_url">
@@ -45,11 +52,11 @@
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-3">所属权限：</label>
+            <label class="form-label col-3">所属目录：</label>
             <div class="formControls col-6">
                 <span class="select-box radius">
-                    <select id="parent" name = "pid" class="select">
-                        <option value = "0">- 请选择所属权限 -</option>
+                    <select id="parent" name = "parentId" class="select">
+                        <option value = "0">- 请选择所属目录 -</option>
                     </select>
                 </span>
             </div>
@@ -105,13 +112,18 @@
                 ele:"#permission_url",
                 datatype:"*",
                 nullmsg:"权限url必填"
+            },
+            {
+                ele:"#perKey",
+                datatype:"*",
+                nullmsg:"授权key必填"
             }
         ]);
     })
 
 
     function initParent(type){
-        $.post("<%=request.getContextPath()%>/server/permission/findAllPermission", {type : type}, function (data) {
+        $.post("<%=request.getContextPath()%>/server/permission/menu", function (data) {
             $("#parent").empty();
             for(var n in data){
                 $("#parent").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");

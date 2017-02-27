@@ -21,52 +21,50 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-goods-add" method="post">
+    <form class="form form-horizontal" id="form-sales-add" method="post" action="<%=request.getContextPath()%>/server/employee/salesAdd">
         <div class="row cl mb-30">
-            <div class="col-8">
-            	<div class="row cl">
-		            <label class="form-label col-3">是否启用：</label>
-		            <div class="formControls col-6">
-		            	<div class="radio-box">
-				          	<input type="radio" id="sales_using-1" name="sales_using" value = "1" checked>
-				          	<label for="sales_using-1">是</label>
-				        </div>
-				        <div class="radio-box">
-				          	<input type="radio" id="sales_using-2" name="sales_using" value = "2">
-				          	<label for="sales_using-2">否</label>
-				        </div>
-		            </div>
-		            <div class="col-3"></div>
-		        </div>
-                <div class="row cl">
-                    <label class="form-label col-3"><span class="c-red">* </span>编号：</label>
-                    <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value="" id="sales_No">
+            <div class="row cl">
+                <label class="form-label col-3">是否启用：</label>
+                <div class="formControls col-7">
+                    <div class="radio-box">
+                        <input type="radio" id="sales_using-1" name="status" value = "1" checked>
+                        <label for="sales_using-1">是</label>
                     </div>
-                    <div class="col-3"> </div>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-3"><span class="c-red">* </span>姓名：</label>
-                    <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value=""  id="sales_name">
+                    <div class="radio-box">
+                        <input type="radio" id="sales_using-2" name="status" value = "0">
+                        <label for="sales_using-2">否</label>
                     </div>
-                    <div class="col-3"> </div>
                 </div>
-                <div class="row cl">
-                	<label class="form-label col-3">手机：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="sales_phone"/></div>
-                	<div class="col-3"> </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">* </span>编号：</label>
+                <div class="formControls col-7">
+                    <input type="text" class="input-text radius" value="" id="sales_No" name = "salesNo">
                 </div>
-                <div class="row cl">
-                	<label class="form-label col-3">提成：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id="sales_percentage"/> %</div>
-                	<div class="col-3"> </div>
+                <div class="col-2"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">* </span>姓名：</label>
+                <div class="formControls col-7">
+                    <input type="text" class="input-text radius" value=""  id="sales_name" name = "salesName">
                 </div>
+                <div class="col-2"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3">手机：</label>
+                <div class="formControls col-7"><input type = "text" class="input-text radius" id="sales_phone" name = "phone"/></div>
+                <div class="col-2"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3">提成：</label>
+                <div class="formControls col-7"><input type = "text" class="input-text radius" id="sales_percentage" name = "percentage"/></div>
+                <div class="col-2"> %</div>
             </div>
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="button" id="userAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="submit" id="salesAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
     </form>
@@ -77,7 +75,32 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
+    $(function () {
+        var  validtor = $("#form-sales-add").Validform({
+            tiptype:3,
+            showAllError:true,
+            ajaxPost: true,
+            ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
+            tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
+            btnSubmit:"#salesAddBtn"
+        });
+
+        validtor.addRule([
+            {
+                ele:"#sales_No",
+                datatype:"n",
+                errormsg:"只能填写数字",
+                nullmsg:"导购员编号必填"
+            },
+            {
+                ele:"#sales_name",
+                datatype:"*",
+                nullmsg:"导购员姓名必填"
+            }
+        ]);
+    })
 </script>
 </body>
 </html>

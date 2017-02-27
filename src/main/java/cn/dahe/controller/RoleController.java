@@ -82,9 +82,14 @@ public class RoleController {
         String permissions = StringUtil.formatStr(request.getParameter("permissions"));
         User user = (User)session.getAttribute("loginUser");
         role.setStoreId(user.getStoreId());
-        roleService.add(role, permissions);
-        json.setInfo("角色添加成功");
-        json.setStatus("y");
+        boolean b = roleService.add(role, permissions);
+        if(b){
+            json.setInfo("角色添加成功");
+            json.setStatus("y");
+        }else{
+            json.setInfo("该角色key已存在");
+            json.setStatus("n");
+        }
         return json;
     }
 
@@ -120,9 +125,14 @@ public class RoleController {
         String permissions = StringUtil.formatStr(request.getParameter("permissions"));
         User user = (User)session.getAttribute("loginUser");
         role.setStoreId(user.getStoreId());
-        roleService.add(role, permissions);
-        json.setInfo("角色编辑成功");
-        json.setStatus("y");
+        boolean b = roleService.add(role, permissions);
+        if(b){
+            json.setInfo("角色编辑成功");
+            json.setStatus("y");
+        }else{
+            json.setInfo("该角色key已存在");
+            json.setStatus("n");
+        }
         return json;
     }
 }

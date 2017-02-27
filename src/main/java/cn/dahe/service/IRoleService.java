@@ -9,9 +9,9 @@ import java.util.List;
  * Created by fy on 2017/2/3.
  */
 public interface IRoleService {
-    void add(Role t, String permissions);
+    boolean add(Role t, String permissions);
     void del(int id);
-    void update(Role t, String permissions);
+    boolean update(Role t, String permissions);
     Role get(int id);
     Role load(int id);
     /**

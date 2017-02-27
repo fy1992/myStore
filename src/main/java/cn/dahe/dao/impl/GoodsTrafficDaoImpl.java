@@ -38,7 +38,7 @@ public class GoodsTrafficDaoImpl extends BaseDaoImpl<GoodsTraffic> implements IG
             list.add(endTime);
         }
         if(storeId != -1){
-            hql.append(" and goodsTraffic.storeId = ?");
+            hql.append(" and goodsTraffic.orderStoreId = ?");
             list.add(storeId);
         }
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());

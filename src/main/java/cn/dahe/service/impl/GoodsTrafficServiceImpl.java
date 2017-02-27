@@ -139,7 +139,7 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
             }
             params.setStatus(status);
             params.setIntParam1(timeType);
-            params.setOrderColumn("goodTraffic.id");
+            params.setOrderColumn("goodsTraffic.id");
             params.setOrderDir("desc");
             params.setIntParam4(storeId);
             return goodsTrafficDao.findByParam(start, pageSize, params);

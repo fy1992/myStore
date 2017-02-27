@@ -24,14 +24,11 @@ public class Permission {
     private int id;
     //权限名称
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "pid")
-    private Permission parent;
-    //权限key
+    @Column(name = "pid")
+    private int parentId;
+    //权限key 授权 （多个用逗号分隔）
     @Column(name = "per_key")
     private String perKey;
-    //权限等级
-    private int level;
     //权限描述
     private String description;
     //权限url
@@ -60,6 +57,7 @@ public class Permission {
     private int storeId;
     //权限类型  0 web 端权限 1 client 端权限
     private int type;
+
     public int getId() {
         return id;
     }
@@ -132,12 +130,12 @@ public class Permission {
         this.url = url;
     }
 
-    public Permission getParent() {
-        return parent;
+    public int getParentId() {
+        return parentId;
     }
 
-    public void setParent(Permission parent) {
-        this.parent = parent;
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
 
     public String getPerKey() {
@@ -148,22 +146,12 @@ public class Permission {
         this.perKey = perKey;
     }
 
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
     @Override
     public String toString() {
         return "Permission{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", parent=" + parent +
                 ", perKey='" + perKey + '\'' +
-                ", level=" + level +
                 ", description='" + description + '\'' +
                 ", url='" + url + '\'' +
                 ", roleSet=" + roleSet +

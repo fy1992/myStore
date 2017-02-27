@@ -79,7 +79,7 @@ table = $('#permission_table').dataTable({
        "aoColumns" : [
         {"mData" : null, "sDefaultContent" : "", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
+            return "<a style='text-decoration:none' onclick='edit(\""+full.id+"\")'>编辑</a>";
         }},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "url", "sDefaultContent" : "", "bSortable":false},
@@ -146,6 +146,10 @@ table = $('#permission_table').dataTable({
 //新增
 function add() {
     layer_show("新增权限", "<%=request.getContextPath()%>/server/permission/add", "800", "600");
+}
+
+function edit(id){
+    layer_show("编辑权限", "<%=request.getContextPath()%>/server/permission/edit/"+id, "800", "600");
 }
 </script>
 </body>

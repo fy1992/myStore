@@ -44,12 +44,9 @@
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-3">角色权限：</label>
+            <label class="form-label col-3"><span class="c-red">* </span>角色key：</label>
             <div class="formControls col-6">
-                <div class="mb-40 pd-20 clearfixs" id="perBox">
-                    <input type="hidden" name = "permissions" id="permissions"/>
-                    <br clear="all" />
-                </div>
+                <input type="text" class="input-text radius" value="" id="roleKey" name="roleKey">
             </div>
             <div class="col-3"> </div>
         </div>
@@ -57,6 +54,16 @@
             <label class="form-label col-3">备注：</label>
             <div class="formControls col-6">
                 <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="role_desc" name="description"></textarea>
+            </div>
+            <div class="col-3"> </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-3">角色权限：</label>
+            <div class="formControls col-6">
+                <div class="mb-40 pd-20 clearfixs" id="ckBox">
+                    <input type="hidden" name = "permissions" id="permissions"/>
+                    <br clear="all" />
+                </div>
             </div>
             <div class="col-3"> </div>
         </div>
@@ -106,26 +113,31 @@
 
         validtor.addRule([
             {
-                ele:"#role_name",
+                ele:"#roleName",
                 datatype:"*",
                 nullmsg:"角色名称必填"
+            },
+            {
+                ele:"#roleKey",
+                datatype:"*",
+                nullmsg:"角色key必填"
             }
         ]);
 
         $.post("<%=request.getContextPath()%>/server/permission/findAllPermission", {type : 0}, function(data){
             for(var n in data){
-                $("#perBox").append(
+                $("#ckBox").append(
                     "<label><input type=\"checkbox\" name=\"ck1\" value = '"+data[n].id+"'/>"+data[n].name+"</label>"
                 );
             }
-            $("#perBox").append("<br clear=\"all\"/>");
-        })
+            $("#ckBox").append("<br clear=\"all\"/>");
+        });
 
         $("input[type='checkbox']").change(function() {
             var ids = [];
             $("input[type='checkbox']:checked").forEach(function (i) {
                 ids.push($(this).val());
-            })
+            });
             $("#permissions").val(ids);
             alert($("#permissions").val());
         });

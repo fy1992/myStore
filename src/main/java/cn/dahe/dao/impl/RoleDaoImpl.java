@@ -31,4 +31,10 @@ public class RoleDaoImpl extends BaseDaoImpl<Role> implements IRoleDao{
         String hql = "from Role where storeId = ?";
         return this.list(hql, storeId);
     }
+
+    @Override
+    public Role findByRoleKey(String roleKey, int storeId) {
+        String hql = "from Role where roleKey = ? and storeId = ?";
+        return (Role)this.queryByHql(hql, new Object[]{roleKey, storeId});
+    }
 }

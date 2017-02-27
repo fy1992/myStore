@@ -24,4 +24,6 @@ public interface IRoleDao extends IBaseDao<Role>{
      * @return
      */
     List<Role> findAll(int storeId);
+
+    Role findByRoleKey(String roleKey, int storeId);
 }

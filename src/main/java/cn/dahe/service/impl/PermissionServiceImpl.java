@@ -1,8 +1,10 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.IPermissionDao;
+import cn.dahe.dao.ISysMenuDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
+import cn.dahe.model.SysMenu;
 import cn.dahe.service.IPermissionService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -18,10 +20,17 @@ import java.util.List;
 public class PermissionServiceImpl implements IPermissionService{
     @Resource
     private IPermissionDao permissionDao;
+    @Resource
+    private ISysMenuDao sysMenuDao;
 
     @Override
-    public void add(Permission t) {
-        permissionDao.add(t);
+    public boolean add(Permission t) {
+        Permission p = permissionDao.findByPerKey(t.getPerKey(), t.getStoreId());
+        if(p == null){
+            permissionDao.add(t);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -30,17 +39,22 @@ public class PermissionServiceImpl implements IPermissionService{
     }
 
     @Override
-    public void update(Permission t, int parentId) {
+    public boolean update(Permission t) {
         Permission p = permissionDao.get(t.getId());
+        if(!t.getPerKey().equals(p.getPerKey())){
+            Permission r = permissionDao.findByPerKey(t.getPerKey(), t.getStoreId());
+            if(r != null){
+                return false;
+            }
+        }
         p.setName(t.getName());
         p.setDescription(t.getDescription());
         p.setType(t.getType());
         p.setUrl(t.getUrl());
-        Permission parent = permissionDao.get(parentId);
-        if(parent != null){
-            p.setParent(parent);
-        }
+        p.setParentId(t.getParentId());
+        p.setPerKey(t.getPerKey());
         permissionDao.update(t);
+        return true;
     }
 
     @Override
@@ -86,5 +100,15 @@ public class PermissionServiceImpl implements IPermissionService{
     @Override
     public List<Permission> findAll(int storeId, int type) {
         return permissionDao.findAll(storeId, type);
+    }
+
+    @Override
+    public List<SysMenu> findAllSysMenu() {
+        return sysMenuDao.queryAllMenu();
+    }
+
+    @Override
+    public SysMenu findByName(String name) {
+        return sysMenuDao.queryByName(name);
     }
 }

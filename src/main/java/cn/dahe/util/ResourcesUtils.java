@@ -46,4 +46,18 @@ public class ResourcesUtils {
 	public static String getCashierPassword(){
 		return bundel.getString("cashier_password");
 	}
+
+    /**
+     * 获取全部目录
+     * @return
+     */
+	public static String getMenu(){
+        String str= null;
+        try{
+            str = new String(bundel.getString("menu").getBytes("ISO-8859-1"), "UTF-8");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return str;
+	}
 }

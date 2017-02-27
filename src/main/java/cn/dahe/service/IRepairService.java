@@ -8,4 +8,6 @@ public interface IRepairService {
     void repairUser();
 
     void repairPermission();
+
+    void repairMenu();
 }

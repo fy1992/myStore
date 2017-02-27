@@ -2,6 +2,7 @@ package cn.dahe.service;
 
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
+import cn.dahe.model.SysMenu;
 
 import java.util.List;
 
@@ -9,9 +10,9 @@ import java.util.List;
  * Created by fy on 2017/2/9.
  */
 public interface IPermissionService {
-    void add(Permission t);
+    boolean add(Permission t);
     void del(int id);
-    void update(Permission t, int parentId);
+    boolean update(Permission t);
     Permission get(int id);
     Permission load(int id);
     /**
@@ -28,4 +29,12 @@ public interface IPermissionService {
      * @return
      */
     List<Permission> findAll(int storeId, int type);
+
+    /**
+     * 所有目录
+     * @return
+     */
+    List<SysMenu> findAllSysMenu();
+
+    SysMenu findByName(String name);
 }

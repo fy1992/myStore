@@ -21,56 +21,54 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-goods-edit" method="post" action="<%=request.getContextPath()%>/server/employee/salesEdit">
+    <form class="form form-horizontal" id="form-sales-edit" method="post" action="<%=request.getContextPath()%>/server/employee/salesEdit">
         <div class="row cl mb-30">
-            <div class="col-8">
-            	<div class="row cl">
-		            <label class="form-label col-3">是否启用：</label>
-		            <div class="formControls col-6">
-		            	<div class="radio-box">
-                            <input type="radio" id="sales_using-1" name="status" value = "1" <c:if test="${sales.status eq 1}">checked</c:if>>
-				          	<label for="sales_using-1">是</label>
-				        </div>
-				        <div class="radio-box">
-                            <input type="radio" id="sales_using-2" name="status" value = "0" <c:if test="${sales.status eq 0}">checked</c:if>>
-				          	<label for="sales_using-2">否</label>
-				        </div>
-		            </div>
-		            <div class="col-3"></div>
-		        </div>
-                <div class="row cl">
-                    <label class="form-label col-3"><span class="c-red">* </span>编号：</label>
-                    <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value="${sales.salesNo}" id="sales_No">
+            <div class="row cl">
+                <label class="form-label col-3">是否启用：</label>
+                <div class="formControls col-7">
+                    <div class="radio-box">
+                        <input type="radio" id="sales_using-1" name="status" value = "1" <c:if test="${sales.status eq 1}">checked</c:if>>
+                        <label for="sales_using-1">是</label>
                     </div>
-                    <div class="col-3"> </div>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-3"><span class="c-red">* </span>姓名：</label>
-                    <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value="${sales.salesName}"  id="sales_name">
+                    <div class="radio-box">
+                        <input type="radio" id="sales_using-2" name="status" value = "0" <c:if test="${sales.status eq 0}">checked</c:if>>
+                        <label for="sales_using-2">否</label>
                     </div>
-                    <div class="col-3"> </div>
                 </div>
-                <div class="row cl">
-                	<label class="form-label col-3">手机：</label>
-                	<div class="formControls col-6">
-                        <input type = "text" class="input-text radius" id="sales_phone" value="${sales.phone}"/>
-                    </div>
-                	<div class="col-3"> </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">* </span>编号：</label>
+                <div class="formControls col-7">
+                    <input type="text" class="input-text radius" value="${sales.salesNo}" id="sales_No" name = "salesNo">
                 </div>
-                <div class="row cl">
-                	<label class="form-label col-3">提成：</label>
-                	<div class="formControls col-6">
-                        <input type = "text" class="input-text radius" id="sales_percentage" value="${sales.percentage}" name = "percentage"/> %
-                    </div>
-                	<div class="col-3"> </div>
+                <div class="col-2"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3"><span class="c-red">* </span>姓名：</label>
+                <div class="formControls col-7">
+                    <input type="text" class="input-text radius" value="${sales.salesName}"  id="sales_name" name = "salesName">
                 </div>
+                <div class="col-2"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3">手机：</label>
+                <div class="formControls col-7">
+                    <input type = "text" class="input-text radius" id="sales_phone" value="${sales.phone}" name ="phone"/>
+                </div>
+                <div class="col-2"> </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-3">提成：</label>
+                <div class="formControls col-7">
+                    <input type = "text" class="input-text radius" id="sales_percentage" value="${sales.percentage}" name = "percentage"/> %
+                </div>
+                <div class="col-2"> </div>
             </div>
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="button" id="userAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="submit" id="salesEditBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
     </form>
@@ -81,7 +79,32 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
+    $(function () {
+        var  validtor = $("#form-sales-edit").Validform({
+            tiptype:3,
+            showAllError:true,
+            ajaxPost: true,
+            ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
+            tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
+            btnSubmit:"#salesEditBtn"
+        });
+
+        validtor.addRule([
+            {
+                ele:"#sales_No",
+                datatype:"n",
+                errormsg:"只能填写数字",
+                nullmsg:"导购员编号必填"
+            },
+            {
+                ele:"#sales_name",
+                datatype:"*",
+                nullmsg:"导购员姓名必填"
+            }
+        ]);
+    })
 </script>
 </body>
 </html>

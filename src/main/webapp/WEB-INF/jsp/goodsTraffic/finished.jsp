@@ -1,12 +1,14 @@
+<%@page language="java" pageEncoding="utf-8"%>
+<%@include file="/WEB-INF/jsp/taglib.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>门店订货详情</title>
-	<link href="resources/css/H-ui.css" rel="stylesheet" type="text/css" />
-    <link href="resources/css/admin.css" rel="stylesheet" type="text/css" />
-    <link href="resources/css/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="${resources}/css/H-ui.css" rel="stylesheet" type="text/css" />
+    <link href="${resources}/css/admin.css" rel="stylesheet" type="text/css" />
+    <link href="${resources}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
+    <link href="${resources}/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <nav class="clearfix navbar">
@@ -30,16 +32,6 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-           	<td>奶茶粉</td>
-            <td>10001</td>
-            <td>3</td>
-            <td>无</td>
-            <td>5</td>
-            <td>100</td>
-            <td>300.00</td>
-            <td>-</td>
-       </tr>
 	</tbody>
 </table>
 
@@ -48,4 +40,7 @@
 	<a class="btn btn-default size-M f-r disabled">已完成</a>
 </div>
 </body>
+<script>
+
+</script>
 </html>

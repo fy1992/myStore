@@ -4,6 +4,7 @@ package cn.dahe.controller;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
+import cn.dahe.model.SysMenu;
 import cn.dahe.model.User;
 import cn.dahe.service.IPermissionService;
 import cn.dahe.util.StringUtil;
@@ -34,7 +35,6 @@ public class PermissionController {
 
     /**
      * 查询全部权限
-     * @return
      */
     @RequestMapping(value = "findAllPermission", method = RequestMethod.POST)
     @ResponseBody
@@ -64,7 +64,6 @@ public class PermissionController {
     /**
      *权限添加
      * @param session
-     * @return
      */
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String addPermission(HttpSession session){
@@ -74,7 +73,6 @@ public class PermissionController {
     /**
      * 权限添加
      * @param permission
-     * @return
      */
     @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
@@ -82,9 +80,14 @@ public class PermissionController {
         AjaxObj json = new AjaxObj();
         User user = (User) session.getAttribute("loginUser");
         permission.setStoreId(user.getStoreId());
-        permissionService.add(permission);
-        json.setInfo("权限添加成功");
-        json.setStatus("y");
+        boolean b = permissionService.add(permission);
+        if(b){
+            json.setInfo("权限添加成功");
+            json.setStatus("y");
+        }else{
+            json.setInfo("该权限key已存在");
+            json.setStatus("n");
+        }
         return json;
     }
 
@@ -92,7 +95,6 @@ public class PermissionController {
      *权限修改
      * @param id
      * @param model
-     * @return
      */
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public String editPermission(@PathVariable int id, Model model){
@@ -106,7 +108,6 @@ public class PermissionController {
      * @param permission
      * @param session
      * @param request
-     * @return
      */
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     @ResponseBody
@@ -114,10 +115,23 @@ public class PermissionController {
         AjaxObj json = new AjaxObj();
         User user = (User) session.getAttribute("loginUser");
         permission.setStoreId(user.getStoreId());
-        int parentId = StringUtil.formatStr2Int(request.getParameter("parentId"));
-        permissionService.update(permission, parentId);
-        json.setInfo("权限添加成功");
-        json.setStatus("y");
+        boolean b = permissionService.update(permission);
+        if(b) {
+            json.setInfo("权限修改成功");
+            json.setStatus("y");
+        }else{
+            json.setInfo("该权限key已存在");
+            json.setStatus("n");
+        }
         return json;
+    }
+
+    /**
+     * 得到所有目录
+     */
+    @RequestMapping(value = "menu", method = RequestMethod.POST)
+    @ResponseBody
+    public List<SysMenu> queryAllMenu(){
+        return permissionService.findAllSysMenu();
     }
 }

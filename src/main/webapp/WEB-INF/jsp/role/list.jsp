@@ -32,11 +32,11 @@
             <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="role_table">
                 <thead>
                     <tr class="text-c">
-                        <th >序号</th>
-                        <th >操作</th>
-                        <th >所属门店</th>
-                        <th >角色名称</th>
-                        <th >状态</th>
+                        <th width="50">序号</th>
+                        <th width="50">操作</th>
+                        <th width="100">所属门店</th>
+                        <th width="100">角色名称</th>
+                        <th width="50">状态</th>
                     </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -165,7 +165,7 @@ function formatDate(val){
 
 //新增
 function add() {
-    layer_show("新增角色", "<%=request.getContextPath()%>/server/role/addRole", "800", "600");
+    layer_show("新增角色", "<%=request.getContextPath()%>/server/role/addRole", "700", "600");
 }
 </script>
 </body>

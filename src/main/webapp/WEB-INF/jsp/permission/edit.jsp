@@ -34,6 +34,7 @@
             <label class="form-label col-3"><span class="c-red">* </span>权限名称：</label>
             <div class="formControls col-6">
                 <input type="text" class="input-text radius" value="${permission.name}" id="permission_name" name="name">
+                <input type="hidden" class="input-text radius" value="${permission.id}"  name="id">
             </div>
             <div class="col-3"> </div>
         </div>
@@ -45,20 +46,27 @@
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-3">所属权限：</label>
+            <label class="form-label col-3"><span class="c-red">* </span>授权key：</label>
             <div class="formControls col-6">
-                <span class="select-box radius">
-                    <select id="parent" name = "pid" class="select">
-                        <option value = "0">- 请选择所属权限 -</option>
-                    </select>
-                </span>
+                <input type="text" class="input-text radius" name="perKey" id="perKey" value="${permission.perKey}">
             </div>
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">备注：</label>
             <div class="formControls col-6">
-                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="description" name = "description" value="${permission.description}"></textarea>
+                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="description" name = "description" value="${permission.description}">${permission.description}</textarea>
+            </div>
+            <div class="col-3"> </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-3">所属目录：</label>
+            <div class="formControls col-6">
+                <span class="select-box radius">
+                    <select id="parent" name = "parentId" class="select">
+                        <option value = "0">- 请选择所属目录 -</option>
+                    </select>
+                </span>
             </div>
             <div class="col-3"> </div>
         </div>
@@ -104,20 +112,24 @@
                 ele:"#permission_url",
                 datatype:"*",
                 nullmsg:"权限url必填"
+            },
+            {
+                ele:"#perKey",
+                datatype:"*",
+                nullmsg:"授权key必填"
             }
         ]);
     })
 
 
     function initParent(type){
-        $.post("<%=request.getContextPath()%>/server/permission/findAllPermission", {type : type}, function (data) {
+        $.post("<%=request.getContextPath()%>/server/permission/menu", function (data) {
             $("#parent").empty();
             for(var n in data){
                 $("#parent").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");
             }
-        })
-
-        $("#parent").val(${permission.parent.id});
+            $("#parent").val(${permission.parentId});
+        });
     }
 </script>
 </body>
