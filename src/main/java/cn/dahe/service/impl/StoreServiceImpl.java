@@ -64,7 +64,7 @@ public class StoreServiceImpl implements IStoreService{
     }
 
     @Override
-    public boolean add(Store t, User user) {
+    public boolean add(Store t, User u, User user) {
         if(user.getRank() > 0){
             Store store = storeDao.get(user.getStoreId());
             t.setParent(store);
