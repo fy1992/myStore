@@ -115,5 +115,4 @@ public class GoodsTrafficController {
         return  orderGoodsInfoService.findOrderGoodsInfosByGoodsTrafficId(id);
     }
 
-
 }
