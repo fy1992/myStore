@@ -29,9 +29,8 @@ public class Goods {
     //商品名称
     private String name;
     //商品类型
-    @ManyToOne
-    @JoinColumn(name = "categories_id")
-    private Categories categories;
+    @Column(name = "categories_id")
+    private int categoriesId;
     //图片访问链接
     @Column(name = "img_url")
     private String imgUrl;
@@ -143,12 +142,12 @@ public class Goods {
         this.storeId = storeId;
     }
 
-    public Categories getCategories() {
-        return categories;
+    public int getCategoriesId() {
+        return categoriesId;
     }
 
-    public void setCategories(Categories categories) {
-        this.categories = categories;
+    public void setCategoriesId(int categoriesId) {
+        this.categoriesId = categoriesId;
     }
 
     public int getPrice() {
@@ -364,7 +363,7 @@ public class Goods {
         return "Goods{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", categories=" + categories +
+                ", categories=" + categoriesId +
                 ", imgUrl='" + imgUrl + '\'' +
                 ", tasteGroupSet=" + tasteGroupSet +
                 ", goodsNo='" + goodsNo + '\'' +

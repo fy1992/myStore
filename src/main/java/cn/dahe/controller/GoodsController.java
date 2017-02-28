@@ -470,20 +470,7 @@ public class GoodsController {
         return goodsService.goodsList(aDataSet, user.getStoreId());
     }
 
-    /**
-     * 通过类别查询(客户端用)
-     * @param categoriesId
-     * @return
-     */
-    @RequestMapping(value = "/mobile/goodsist", method = RequestMethod.GET)
-    @ResponseBody
-    public AjaxObj getGoodsListByCategorise(int categoriesId){
-        AjaxObj json = new AjaxObj();
-        List<GoodsDtoSimple> list = goodsService.goodsListByCategories(categoriesId);
-        json.setResult(1);
-        json.setObject(list);
-        return json;
-    }
+
 
     /**
      * 商品排序页面路由
