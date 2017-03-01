@@ -32,8 +32,7 @@ public class Categories {
     //所属店面
     @Column(name = "store_id")
     private int storeId;
-    @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
-    private Set<Goods> goodsSet = new HashSet<>();
+
     private int seq;
     //排序
     public int getId() {
@@ -68,14 +67,6 @@ public class Categories {
         this.storeId = storeId;
     }
 
-    public Set<Goods> getGoodsSet() {
-        return goodsSet;
-    }
-
-    public void setGoodsSet(Set<Goods> goodsSet) {
-        this.goodsSet = goodsSet;
-    }
-
     public int getSeq() {
         return seq;
     }
@@ -93,7 +84,6 @@ public class Categories {
                 ", name='" + name + '\'' +
                 ", parent=" + parent +
                 ", storeId=" + storeId +
-                ", goodsSet=" + goodsSet +
                 ", seq=" + seq +
                 '}';
     }

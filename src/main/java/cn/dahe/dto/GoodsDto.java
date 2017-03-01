@@ -8,6 +8,7 @@ import java.util.Date;
  * Created by fy on 2017/1/13.
  */
 public class GoodsDto {
+    private int id;
     //是否启用
     private int status;
     //商品名称
@@ -240,6 +241,18 @@ public class GoodsDto {
 
     public void setStockDown(String stockDown) {
         this.stockDown = stockDown;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTradePrice() {
+        return tradePrice;
     }
 
     @Override
