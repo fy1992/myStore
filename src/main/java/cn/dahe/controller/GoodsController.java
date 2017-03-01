@@ -17,6 +17,8 @@ import cn.dahe.service.IGoodsUnitService;
 import cn.dahe.service.ISmallTicketService;
 import cn.dahe.util.ExcelTemplateUtils;
 import cn.dahe.util.NumberUtils;
+import cn.dahe.util.PoiUtils;
+import cn.dahe.util.ResourcesUtils;
 import cn.dahe.util.UploadsUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
@@ -31,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
@@ -559,9 +562,22 @@ public class GoodsController {
      */
     @RequestMapping("exportExcel")
     @ResponseBody
-    public AjaxObj exportExcel(){
+    public AjaxObj exportExcel(HttpServletResponse response, HttpSession session){
         AjaxObj json = new AjaxObj();
-
+        User user = (User) session.getAttribute("loginUser");
+        try {
+            String tableName = "商品信息";
+            List<Goods> goodsList = goodsService.findAll(user.getStoreId());
+            HSSFWorkbook wb = PoiUtils.exportExcel(tableName, null, null, null);
+            response.setHeader("Content-disposition", "attachment;filename=" + new String(tableName.getBytes("gb2312"), "iso8859-1") + ".xls");
+            response.setContentType("application/vnd.ms-excel");
+            OutputStream outputStream = response.getOutputStream();
+            wb.write(outputStream);
+            outputStream.flush();
+            outputStream.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return json;
     }
 
@@ -602,7 +618,7 @@ public class GoodsController {
 
     /**
      * 商品图片上传
-     * @return
+     * @return String
      */
     @RequestMapping(value = "uploadImg", method = RequestMethod.GET)
     public String uploadImgView(){
@@ -610,14 +626,26 @@ public class GoodsController {
     }
 
     /**
-     * 商品图片上传
-     * @return
-     */
+     * 图片上传
+     * @param file 图片
+     * */
     @RequestMapping(value = "uploadImg", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj uploadImg(){
+    public AjaxObj uploadImg(MultipartFile file){
         AjaxObj json = new AjaxObj();
-
+        if(file == null || file.isEmpty()){
+            json.setMsg("请选择图片");
+            json.setResult(0);
+            return json;
+        }
+        if(file.getSize() > Long.parseLong(ResourcesUtils.getFileSize())){
+            json.setMsg("图片大小不能超过3m");
+            json.setResult(0);
+            return json;
+        }
+        String url = goodsService.upload(file);
+        json.setMsg(url);
+        json.setResult(1);
         return json;
     }
     //=======================================goods end=========================================================

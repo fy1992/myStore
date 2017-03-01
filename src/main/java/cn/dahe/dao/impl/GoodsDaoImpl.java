@@ -82,4 +82,14 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
         String hql = "from Goods goods where goods.goodsNo = ?";
         return (Goods)this.queryByHql(hql, goodsNo);
     }
+
+    @Override
+    public List<Goods> findAll(int storeId) {
+        String hql = "from Goods goods";
+        if(storeId != 0){
+            hql += " where goods.storeId = ?";
+            return this.list(hql, storeId);
+        }
+        return this.list(hql);
+    }
 }

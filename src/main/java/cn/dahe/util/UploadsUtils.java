@@ -3,6 +3,12 @@ package cn.dahe.util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * 文件上传工具类
@@ -42,4 +48,17 @@ public class UploadsUtils {
             return false;
         }
     }
+
+
+    public static void upload(MultipartFile file, String path){
+        try {
+            byte[] bytes = file.getBytes();
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File(path)));
+            bos.write(bytes);
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

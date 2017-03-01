@@ -32,4 +32,11 @@ public interface IGoodsDao extends IBaseDao<Goods>{
      * @return
      */
     Goods findByGoodsNo(String goodsNo);
+
+    /**
+     * 查询全部商品
+     * @param storeId
+     * @return
+     */
+    List<Goods> findAll(int storeId);
 }

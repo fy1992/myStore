@@ -7,6 +7,7 @@ import cn.dahe.dao.IGoodsUnitDao;
 import cn.dahe.dao.ISmallTicketDao;
 import cn.dahe.dao.IStockDao;
 import cn.dahe.dao.IStoreDao;
+import cn.dahe.dao.impl.CategoriesDaoImpl;
 import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.GoodsDtoSimple;
 import cn.dahe.dto.Pager;
@@ -36,10 +37,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by fy on 2017/1/13.
@@ -301,7 +309,8 @@ public class GoodsServiceImpl implements IGoodsService{
         goodsDto.setShelfLife (Integer.toString(goods.getShelfLife()));
         goodsDto.setTradePrice(Integer.toString(goods.getTradePrice()));
         goodsDto.setPrice(goods.getPrice());
-        goodsDto.setCategoriesId(goods.getCategoriesId());
+        goodsDto.setCategoriesName(goods.getCategories().getName());
+        goodsDto.setCategoriesId(goods.getCategories().getId());
         GoodsUnit goodsUnit = goods.getMainUnit();
         int mainUnit = 0;
         String mainUnitName = "";
@@ -333,7 +342,8 @@ public class GoodsServiceImpl implements IGoodsService{
         Stock stock = new Stock();
         stock.setGoodNum(Long.parseLong(goodsDto.getStock()));
 
-        goods.setCategoriesId(goodsDto.getCategoriesId());
+        Categories categories = categoriesDao.get(goodsDto.getCategoriesId());
+        goods.setCategories(categories);
         goods.setBid(goodsDto.getBid());
         goods.setDescription(goodsDto.getDescription());
         goods.setGoodsNo(goodsDto.getGoodsNo());
@@ -374,5 +384,31 @@ public class GoodsServiceImpl implements IGoodsService{
             goods.setGoodsTagsSet(goodsTagsSet);
         }
         return goods;
+    }
+
+    @Override
+    public String upload(MultipartFile file) {
+        String dateStr = DateUtil.format(new Date(), "yyyy-MM-dd").replace("-", "/");
+        String fileName = UploadsUtils.changeFileName(file.getOriginalFilename());
+        String path = ResourcesUtils.getFilePath() + dateStr;
+        String saveUrl = ResourcesUtils.getFileUrl() + dateStr + "/" + fileName;
+        String filePath =  path + "/" + fileName;
+        //判断文件夹是否存在
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        try {
+            logger.info("--- filePath : "+filePath+" ---");
+            UploadsUtils.upload(file, filePath);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return saveUrl;
+    }
+
+    @Override
+    public List<Goods> findAll(int storeId) {
+        return goodsDao.findAll(storeId);
     }
 }
