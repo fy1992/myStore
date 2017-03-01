@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-store-edit" action="<%=request.getContextPath()%>/server/store/edit" type="POST">
+    <form class="form form-horizontal" id="form-store-edit" action="<%=request.getContextPath()%>/server/store/edit" method="POST">
         <div class="row cl">
             <label class="form-label col-3">是否启用：</label>
             <div class="formControls col-6">
@@ -44,7 +44,7 @@
         </div>
         <div class="row cl">
             <label class="form-label col-3">手机：</label>
-            <div class="formControls col-6"><input type = "text" class="input-text radius" id="phone" name = "phone" value="${user.phone}"/></div>
+            <div class="formControls col-6"><input type = "text" class="input-text radius" id="phone" name = "mobile" value="${user.mobile}"/></div>
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
@@ -112,14 +112,14 @@
         <div class="row cl">
             <label class="form-label col-3">地址：</label>
             <div class="formControls col-6">
-                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="store_addr" name = "addr" value="${store.addr}"></textarea>
+                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="store_addr" name = "addr" value="${store.addr}">${store.addr}</textarea>
             </div>
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">备注：</label>
             <div class="formControls col-6">
-                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="store_description" name = "description" value = ${store.description}></textarea>
+                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="store_description" name = "description" value = "${store.description}">${store.description}</textarea>
             </div>
             <div class="col-3"> </div>
         </div>

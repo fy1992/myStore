@@ -38,10 +38,10 @@
                 </select>
             </span>
             <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'tafficDate\')||\'%y-%M-%d\'}'})" id="tafficDate" class="input-text Wdate radius" style="width:120px;"/>
-            <button id="goodsTraffic_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+            <button id="trafficManage_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
-            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="goodsTraffic_table">
+            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="trafficManage_table">
                 <thead>
                     <tr class="text-c">
                         <th width="30"><input type="checkbox" name="selectAll" id="selectAll"></th>
@@ -61,7 +61,6 @@
 
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script> 
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
-<script type="text/javascript" src="${ctxResource}/js/jquery.dragsort-0.5.2.min.js"></script> 
 <script type="text/javascript" src="${ctxResource}/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
@@ -70,7 +69,7 @@
 <script type="text/javascript">
 //搜索
 $(function(){
-	$("#goodsTraffic_search").click(function(){
+	$("#trafficManage_search").click(function(){
 		table.fnDraw();
 	});
 
@@ -84,7 +83,7 @@ $(function(){
 });
 
 //table start here
-table = $('#goodsTraffic_table').dataTable({
+table = $('#trafficManage_table').dataTable({
 	   "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示  
        "bPaginate": true,//是否显示（应用）分页器  
        "bLengthChange": false,
@@ -128,7 +127,7 @@ table = $('#goodsTraffic_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/server/goodsTraffic/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/trafficManage/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -206,7 +205,7 @@ function detail() {
         shade: false,
         maxmin: true, //开启最大化最小化按钮
         area: ['950px', '350px'],
-        content: '<%=request.getContextPath()%>/server/goodsTraffic/audit/1'
+        content: '<%=request.getContextPath()%>/server/trafficManage/audit/1'
     });
 }
 </script>

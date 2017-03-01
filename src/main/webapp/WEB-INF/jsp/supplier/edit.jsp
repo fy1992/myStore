@@ -92,7 +92,7 @@
         	<div class="col-8">
 	            <label class="form-label col-3">地址：</label>
 	            <div class="formControls col-9">
-	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_addr" name = "addr" value = "${supplier.addr}"></textarea>
+	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_addr" name = "addr" value = "${supplier.addr}">${supplier.addr}</textarea>
 	            </div>
 	        </div>
         </div>
@@ -100,7 +100,7 @@
             <div class="col-8">
                 <label class="form-label col-3">备注：</label>
                 <div class="formControls col-9">
-                    <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_description" name = "description" value = "${supplier.description}"></textarea>
+                    <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="supplier_description" name = "description" value = "${supplier.description}">${supplier.description}</textarea>
                 </div>
             </div>
         </div>

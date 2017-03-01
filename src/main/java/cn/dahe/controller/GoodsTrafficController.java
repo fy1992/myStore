@@ -77,7 +77,7 @@ public class GoodsTrafficController {
     /**
      * 门店订单审核
      * @param id
-     * @param type 0 作废 1 审核通过
+     * @param type 0 作废 1 审核通过 2 恢复
      * @return
      */
     @RequestMapping(value = "audit", method = RequestMethod.POST)
@@ -85,8 +85,16 @@ public class GoodsTrafficController {
     public AjaxObj audit(int id, int type){
         AjaxObj json = new AjaxObj();
         goodsTrafficService.auditGoodsTraffic(id, type);
-        json.setResult(1);
-        json.setMsg("<%=request.getContextPath()%>/server/goodsTraffic/audit/2");
+        if(type == 0){
+            json.setResult(0);
+            json.setMsg("该订单已作废");
+        }else if(type == 2){
+            json.setResult(1);
+            json.setMsg("<%=request.getContextPath()%>/server/goodsTraffic/audit/2");
+        }else{
+            json.setResult(2);
+            json.setMsg("该订单已恢复");
+        }
         return json;
     }
 

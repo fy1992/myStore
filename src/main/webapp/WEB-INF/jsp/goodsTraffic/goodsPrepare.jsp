@@ -32,21 +32,11 @@
 		</tr>
 	</thead>
 	<tbody id = "orderGoodsInfos">
-		<tr>
-           	<td>奶茶粉</td>
-            <td>10001</td>
-            <td>3</td>
-            <td>无</td>
-            <td><input type="text" class="input-text text-r" class="num" value="5" /></td>
-            <td><input type="text" class="input-text text-r" class="price" value="300" /></td>
-            <td id="total">300.00</td>
-            <td>-</td>
-       </tr>
 	</tbody>
 </table>
 
 <div class="cfpdBtnbox">
-	<div class="f-l ml-20">共 <b class="c-primary" id="categoriesNum">1</b> 种商品， <b class="c-primary" id="goodsNum">5</b> 件， 总计 <b class="c-primary" id="priceTotal">1000.00</b> 元。</div>
+	<div class="f-l ml-20">共 <b class="c-primary" id="categoriesNum"></b> 种商品， <b class="c-primary" id="goodsNum"></b> 件， 总计 <b class="c-primary" id="priceTotal"></b> 元。</div>
 	<a class="btn btn-primary size-M f-r" id="pgoods">配货</a>
 </div>
 <script type="text/javascript" src="${resources}/js/jquery.min.js"></script>
@@ -64,7 +54,7 @@ $(function(){
                 }
                 $("#orderGoodsInfos").append(
                     "<tr>" +
-                    "<td>"+data[n].goodsName+"</td>" +
+                    "<td>"+data[n].goodsName+"<input type = 'hidden' value='"+data[n].id+"' class='orderGoodsInfo_id'></td>" +
                     "<td>"+data[n].goodsNo+"</td>" +
                     "<td>"+data[n].orderNum+"</td>" +
                     "<td>"+ (data[n].mainUnit == null || data[n].mainUnit == "" ? "无" : data[n].mainUnit) +"</td>" +
@@ -89,22 +79,25 @@ $(function(){
     );
 	//配货
 	$("#pgoods").click(function(){
-	    function orderGoodsInfo(distributeNum, price, priceSum){
+	    function orderGoodsInfo(id, distributeNum, price, priceSum){
+	        this.id = id;
             this.distributeNum = distributeNum;
             this.price = price;
             this.priceSum = priceSum;
         }
         var orderGoodsInfoArr = [];
+        var len = $(".orderGoodsInfo_id").length;
+        for(var i = 0; i < len; i++){
+            var id = $(".orderGoodsInfo_id").eq(i).val();
+            var distributeNum = $(".num").eq(i).val();
+            var price = $(".price").eq(i).val();
+            var total = $(".total").eq(i).text();
+            orderGoodsInfoArr.push(new orderGoodsInfo(id, distributeNum, price, total));
+        }
 
-        $.post("<%=request.getContextPath()%>/server/goodsTraffic/prepare", {"id": ${goodsTrafficId}, "orderGoodsInfos" : 1}, function (data) {
+        $.post("<%=request.getContextPath()%>/server/goodsTraffic/prepare", {"id": ${goodsTrafficId}, "orderGoodsInfos" : JSON.stringify(orderGoodsInfoArr)}, function (data) {
             $("body").html(data.msg);
         });
-		/*layer.msg('已配货!',{time:1000});
-		setTimeout(function(){
-			$.get("step3.html",function(html){
-				$("body").html(html);
-			},"html");
-		},500);*/
 	});
 
 	$("#num,#price").blur(function(){

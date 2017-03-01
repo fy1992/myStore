@@ -56,7 +56,7 @@
         <div class="row cl">
             <label class="form-label col-3">备注：</label>
             <div class="formControls col-6">
-                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="role_desc" name="description" value="${role.description}"></textarea>
+                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="role_desc" name="description" value="${role.description}">${role.description}</textarea>
             </div>
             <div class="col-3"> </div>
         </div>
