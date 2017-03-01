@@ -32,11 +32,19 @@ public class ResourcesUtils {
 	}
 
 	/**
-	 * 读取文件路径
+	 * 读取文件路径（图片）
 	 * @return
 	 */
 	public static String getFilePath(){
 		return bundel.getString("filePath");
+	}
+
+	/**
+	 * 文件链接（图片）
+	 * @return
+	 */
+	public static String getFileUrl(){
+		return bundel.getString("fileUrl");
 	}
 
 	/**
@@ -60,4 +68,12 @@ public class ResourcesUtils {
         }
         return str;
 	}
+
+    /**
+     * 上传文件的大小限制
+     * @return
+     */
+	public static String getFileSize(){
+	    return bundel.getString("fileSize");
+    }
 }

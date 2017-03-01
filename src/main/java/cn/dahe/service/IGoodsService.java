@@ -64,4 +64,17 @@ public interface IGoodsService{
      * @return
      */
     GoodsDto formatGoodsToGoodsDto(Goods goods);
+
+    /**
+     * 商品图片上传
+     * @param file
+     */
+    String upload(MultipartFile file);
+
+    /**
+     * 查询全部商品
+     * @param storeId
+     * @return
+     */
+    List<Goods> findAll(int storeId);
 }

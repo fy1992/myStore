@@ -23,6 +23,7 @@ import cn.dahe.service.IGoodsService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.PoiUtils;
 import cn.dahe.util.ResourcesUtils;
+import cn.dahe.util.UploadsUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.beanutils.BeanUtils;
@@ -37,10 +38,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -379,5 +382,31 @@ public class GoodsServiceImpl implements IGoodsService{
             goods.setGoodsTagsSet(goodsTagsSet);
         }
         return goods;
+    }
+
+    @Override
+    public String upload(MultipartFile file) {
+        String dateStr = DateUtil.format(new Date(), "yyyy-MM-dd").replace("-", "/");
+        String fileName = UploadsUtils.changeFileName(file.getOriginalFilename());
+        String path = ResourcesUtils.getFilePath() + dateStr;
+        String saveUrl = ResourcesUtils.getFileUrl() + dateStr + "/" + fileName;
+        String filePath =  path + "/" + fileName;
+        //判断文件夹是否存在
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        try {
+            logger.info("--- filePath : "+filePath+" ---");
+            UploadsUtils.upload(file, filePath);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return saveUrl;
+    }
+
+    @Override
+    public List<Goods> findAll(int storeId) {
+        return goodsDao.findAll(storeId);
     }
 }
