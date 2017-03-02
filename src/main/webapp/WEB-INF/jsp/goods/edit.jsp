@@ -314,18 +314,21 @@ $(function(){
         for(var n in data){
             $("#categories").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
+        $("#categories").val(${goodsDto.categoriesId});
     });
     //供应商
     $.post("<%=request.getContextPath()%>/server/supplier/allSupplier", function(data){
         for(var n in data){
             $("#supplier").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
+        $("#supplier").val(${goodsDto.supplierId});
     });
     //单位
     $.post("<%=request.getContextPath()%>/server/goods/getAllGoodsUnit", function(data){
         for(var n in data){
             $("#mainUnit").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
+        $("#mainUnit").val(${goodsDto.mainUnit});
     });
 
     if($("input[name='vipSet']:checked").val() == 0){

@@ -86,7 +86,6 @@
 
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script> 
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
-<script type="text/javascript" src="${ctxResource}/js/jquery.dragsort-0.5.2.min.js"></script> 
 <script type="text/javascript" src="${ctxResource}/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
@@ -112,8 +111,8 @@ table = $('#goods_table').dataTable({
        "aoColumns" : [
 	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-	       var btn ="<a style='text-decoration:none' onclick='edit("+full.id+")'>编辑</a>";
-	       btn += "&nbsp;<a style='text-decoration:none' onclick='del("+full.id+")'>删除</a>";
+	       var btn ="<a style='text-decoration:none' onclick='edit(\""+full.id+"\")'>编辑</a>";
+	       btn += "&nbsp;<a style='text-decoration:none' onclick='del(\""+full.id+"\")'>删除</a>";
 	       return btn;
         }},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
@@ -174,26 +173,16 @@ table = $('#goods_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	aoData.push({"name":"bNeedPaging", "value":true});
-      	var newsId = $("#news_id").val();
-      	var isTop = $("#news_isTop").val();
-      	var isMobile = $("#news_isMobile").val();
-      	var isFirstPage = $("#news_isFirstPage").val();
-      	var cid = $("#news_cid").val();
-      	if(cid == ""){
-      		cid = -1;
-      	}
-        var iDisplayStart = $("#news_tableStart").val();
-        if(!iDisplayStart){
-            iDisplayStart = 0;
-        }
-        iDisplayStart = Number(iDisplayStart);
-        aoData[3].value = iDisplayStart == 0 ? this.fnSettings()._iDisplayStart : iDisplayStart;
-        aoData.push({"name":"cid","value":cid});
-        aoData.push({"name":"nid","value":newsId});
-        aoData.push({"name":"isTop","value":isTop});
-        aoData.push({"name":"isMobile","value":isMobile});
-        aoData.push({"name":"isFirstPage","value":isFirstPage});
+      	var status = $("#goods_status").val();
+      	var categoriesId = $("#goods_categories").val();
+      	var supplierId = $("#goods_supplier").val();
+      	var goodsTags = $("#goods_tags").val();
+      	var goodsInfo = $("#goods_info").val();
+        aoData.push({"name":"status","value":status});
+        aoData.push({"name":"categoriesId","value":categoriesId});
+        aoData.push({"name":"supplierId","value":supplierId});
+        aoData.push({"name":"goodsTags","value":goodsTags});
+        aoData.push({"name":"goodsInfo","value":goodsInfo});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){
@@ -283,14 +272,14 @@ function importIn() {
 }
 
 //商品编辑
-function edit(){
+function edit(id){
     var w = 800;
     var	h = ($(window).height() - 50);
     var index = layer.open({
         type : 2,
         title:'编辑商品',
-        content : "<%=request.getContextPath()%>/server/goods/editGoods",
-        area : [ w+'px', h+'px' ],
+        content : "<%=request.getContextPath()%>/server/goods/editGoods/"+id,
+        area : [w+'px', h+'px'],
         maxmin : true
     });
     layer.full(index);

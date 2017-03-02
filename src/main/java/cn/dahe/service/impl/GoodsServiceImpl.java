@@ -42,13 +42,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by fy on 2017/1/13.
@@ -297,10 +291,13 @@ public class GoodsServiceImpl implements IGoodsService{
     @Override
     public GoodsDto formatGoodsToGoodsDto(Goods goods){
         GoodsDto goodsDto = new GoodsDto();
+        goodsDto.setId(goods.getId());
         goodsDto.setName(goods.getName());
         goodsDto.setBid(goods.getBid());
         goodsDto.setPinyin(goods.getPinyin());
         goodsDto.setVipSet(goods.getVipSet());
+        goodsDto.setStatus(1);
+        goodsDto.setProductionDate(DateUtil.format(new Date(), "yyy-MM-dd"));
         Stock stock = goods.getStock();
         String goodsNum = "";
         if(stock != null){
@@ -310,8 +307,7 @@ public class GoodsServiceImpl implements IGoodsService{
         goodsDto.setShelfLife (Integer.toString(goods.getShelfLife()));
         goodsDto.setTradePrice(Integer.toString(goods.getTradePrice()));
         goodsDto.setPrice(goods.getPrice());
-        goodsDto.setCategoriesName(goods.getCategories().getName());
-        goodsDto.setCategoriesId(goods.getCategories().getId());
+        goodsDto.setCategoriesId(goods.getCategoriesId());
         GoodsUnit goodsUnit = goods.getMainUnit();
         int mainUnit = 0;
         String mainUnitName = "";
@@ -343,8 +339,11 @@ public class GoodsServiceImpl implements IGoodsService{
         Stock stock = new Stock();
         stock.setGoodNum(Long.parseLong(goodsDto.getStock()));
 
-        Categories categories = categoriesDao.get(goodsDto.getCategoriesId());
-        goods.setCategories(categories);
+        goods.setCategoriesId(goodsDto.getCategoriesId());
+        goods.setProductionDate(
+                StringUtils.isNotBlank(goodsDto.getProductionDate())
+                        ? DateUtil.format(goodsDto.getProductionDate(), "yyyy-MM-dd")
+                        : new Date());
         goods.setBid(goodsDto.getBid());
         goods.setDescription(goodsDto.getDescription());
         goods.setGoodsNo(goodsDto.getGoodsNo());
@@ -366,19 +365,22 @@ public class GoodsServiceImpl implements IGoodsService{
         if(StringUtils.isNotBlank(smallTicketsStr)){
             String[] smallticketIds = smallTicketsStr.split(",");
             Set<SmallTicket> smallTicketSet = new HashSet<>();
-            for(int i = 0, len = smallticketIds.length; i < len; i++){
-                SmallTicket smallTicket = smallTicketDao.get(Integer.parseInt(smallticketIds[i]));
+            List<String> smallticketIdsList = Arrays.asList(smallticketIds);
+            smallticketIdsList.forEach(str -> {
+                SmallTicket smallTicket = smallTicketDao.get(Integer.parseInt(str));
                 smallTicketSet.add(smallTicket);
-            }
+            });
             goods.setSmallTicketSet(smallTicketSet);
         }
+
         if(StringUtils.isNotBlank(goodsTagsStr)){
             String[] goodsTagsIds = goodsTagsStr.split(",");
             Set<GoodsTags> goodsTagsSet = new HashSet<>();
-            for(int i = 0, len = goodsTagsIds.length; i < len; i++){
-                GoodsTags goodsTags = goodsTagsDao.get(Integer.parseInt(goodsTagsIds[i]));
+            List<String> goodsTagsList = Arrays.asList(goodsTagsIds);
+            goodsTagsList.forEach(str -> {
+                GoodsTags goodsTags = goodsTagsDao.get(Integer.parseInt(str));
                 goodsTagsSet.add(goodsTags);
-            }
+            });
             goods.setGoodsTagsSet(goodsTagsSet);
         }
         return goods;
