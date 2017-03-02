@@ -36,7 +36,7 @@ public class StoreDaoImpl extends BaseDaoImpl<Store> implements IStoreDao {
             list.add(startTime);
         }
         if(endTime != null){
-            hql.append(" and store.createDate >= ?");
+            hql.append(" and store.createDate <= ?");
             list.add(endTime);
         }*/
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());

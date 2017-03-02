@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,11 +21,21 @@ public class StockLogDaoImpl extends BaseDaoImpl<StockLog> implements IStockLogD
         List<Object> list = new ArrayList<>();
         int status = params.getStatus();
         int storeId = params.getIntParam1();
-        hql.append(" and sl.status = ?");
+        Date startTime = new java.sql.Date(params.getStartTime().getTime());
+        Date endTime = new java.sql.Date(params.getEndTime().getTime());
+        hql.append(" and sl.optType = ?");
         list.add(status);
         if(storeId != -1){
             hql.append(" and sl.storeId = ? ");
             list.add(storeId);
+        }
+        if(startTime != null){
+            hql.append(" and sl.optDate >= ?");
+            list.add(startTime);
+        }
+        if(endTime != null){
+            hql.append(" and sl.optDate <= ?");
+            list.add(endTime);
         }
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);

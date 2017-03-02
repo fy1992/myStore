@@ -23,21 +23,28 @@
 <div>
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>  <span class="c-gray en">&gt;</span> 库存 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
-        <%--<div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
-            <span class="l">
-                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增门店</a>
+        <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
+            <span class="select-box" style="width: 100px;">
+                <select class="select radius" id="stock_type">
+                    <option value="0">进货</option>
+                    <option value="1">出货</option>
+                </select>
             </span>
-        </div>--%>
+            <span class="select-box" style="width: 100px;">
+                <input id = "opt_time" />
+            </span>
+        </div>
         <div class="pd-20 clearfix">
             <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="store_table">
                 <thead>
                     <tr class="text-c">
-                        <th >序号</th>
-                        <th >操作</th>
-                        <th >商品名称</th>
-                        <th >库存</th>
-                        <th >操作记录</th>
-                        <th >状态</th>
+                        <th width="50">序号</th>
+                        <th width="50">操作</th>
+                        <th width="300">商品名称</th>
+                        <th width="100">库存</th>
+                        <th width="200">交易类型</th>
+                        <th width="100">交易时间</th>
+                        <th width="50">备注</th>
                     </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -75,14 +82,14 @@ table = $('#store_table').dataTable({
             return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
         }},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "storeNo", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "type", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return data == 1 ? "是" : "否" ;
+        {"mData" : "optNum", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "optType", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return data == 1 ? "进货" : "出货" ;
         }},
-        {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return data == 1 ? "启用" : "停用" ;
-        }}
+        {"mData" : "optDate", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return format(data) ;
+        }},
+        {"mData" : "description", "sDefaultContent" : "", "bSortable":false}
     ],
     "language":{
        "oPaginate": {
@@ -97,14 +104,13 @@ table = $('#store_table').dataTable({
         "sProcessing": "处理中..."
    	},
    	//"deferRender": true, //当处理大数据时，延迟渲染数据，有效提高Datatables处理能力
-       "order" : [[1, "desc"]],
        "iDisplayLength" : 20, //每页显示条数
-       //"iDisplayStart": 0,
+       "iDisplayStart": 0,
        "bServerSide": true,
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/server/stockLog/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/stock/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -118,26 +124,18 @@ table = $('#store_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	aoData.push({"name":"bNeedPaging", "value":true});
-      	var newsId = $("#news_id").val();
-      	var isTop = $("#news_isTop").val();
-      	var isMobile = $("#news_isMobile").val();
-      	var isFirstPage = $("#news_isFirstPage").val();
-      	var cid = $("#news_cid").val();
-      	if(cid == ""){
-      		cid = -1;
-      	}
-        var iDisplayStart = $("#news_tableStart").val();
-        if(!iDisplayStart){
-            iDisplayStart = 0;
+      	var optType = $("#stock_type").val();
+      	var startTime = $("#startTime").val();
+      	var endTime = $("#endTime").val();
+      	if(!startTime){
+      	    startTime = format(new Date());
         }
-        iDisplayStart = Number(iDisplayStart);
-        aoData[3].value = iDisplayStart == 0 ? this.fnSettings()._iDisplayStart : iDisplayStart;
-        aoData.push({"name":"cid","value":cid});
-        aoData.push({"name":"nid","value":newsId});
-        aoData.push({"name":"isTop","value":isTop});
-        aoData.push({"name":"isMobile","value":isMobile});
-        aoData.push({"name":"isFirstPage","value":isFirstPage});
+        if(!endTime){
+            endTime = format(new Date());;
+        }
+        aoData.push({"name":"optType","value":optType});
+        aoData.push({"name":"startTime","value":startTime});
+        aoData.push({"name":"endTime","value":endTime});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){
@@ -185,11 +183,6 @@ function formatDate(val){
 		val = '00';
 	}
 	return val;
-}
-
-//新增
-function add() {
-    layer_show("新增角色", "<%=request.getContextPath()%>/store/add", "800", "600");
 }
 </script>
 </body>

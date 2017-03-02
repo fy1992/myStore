@@ -101,4 +101,17 @@ public class StockLog {
     public void setStoreId(int storeId) {
         this.storeId = storeId;
     }
+
+    public StockLog() {
+    }
+
+    public StockLog(int optType, Goods goods, int optNum, String description, int storeId) {
+        this.goodsId = goods.getId();
+        this.goodsName = goods.getName();
+        this.optDate = new Date();
+        this.optNum = optNum;
+        this.description = description;
+        this.storeId = storeId;
+        this.optType = optType;
+    }
 }
