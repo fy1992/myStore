@@ -62,7 +62,7 @@
 			<dt><i class="Hui-iconfont">&#xe623;</i>库存<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="<%=request.getContextPath()%>/server/optLog/list" href="javascript:void(0)">日志记录</a></li>
+					<li><a _href="<%=request.getContextPath()%>/server/stock/list" href="javascript:void(0)">日志记录</a></li>
 				</ul>
 			</dd>
 		</dl>

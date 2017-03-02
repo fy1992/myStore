@@ -22,19 +22,20 @@ public class ClientInterceptor extends HandlerInterceptorAdapter {
 		String url = requestUri.substring(contextPath.length());
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("clientUser");
-		if(user == null){
+		return user != null;
+		/*if(user == null){
 			redictLogin(request, response);
 		}
-		return true;
+		return true;*/
 	}
 
 
 
     //登录页面跳出iframe
-    private boolean redictLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+   /* private boolean redictLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         out.write("<script>window.parent.location.href='" + request.getContextPath() + "/login'</script>");
         logger.info(request.getContextPath() + "/login");
         return false;
-    }
+    }*/
 }

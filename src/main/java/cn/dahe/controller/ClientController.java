@@ -77,6 +77,4 @@ public class ClientController {
         json.setObject(categoriesList);
         return json;
     }
-
-
 }

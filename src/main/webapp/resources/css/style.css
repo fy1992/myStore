@@ -72,3 +72,7 @@ input#ExpirationDate[type='text']{width: 90%;}
 }
 
 .navbar{ background: #F8F8F8;padding: 10px 20px; }
+
+.form{
+    overflow-x: hidden;
+}

@@ -98,7 +98,6 @@ public class StoreController {
      * @return
      */
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    @ResponseBody
     public String editStore(@PathVariable int id, Model model){
         Store store = storeService.get(id);
         model.addAttribute("store", store);

@@ -12,6 +12,7 @@ import cn.dahe.model.User;
 import cn.dahe.service.IStoreService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.NumberUtils;
+import cn.dahe.util.SecurityUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -43,6 +44,11 @@ public class StoreServiceImpl implements IStoreService{
 
     @Override
     public void add(Store t) {
+        storeDao.add(t);
+    }
+
+    @Override
+    public void add(Store t, User user) {
         t.setCreateDate(new Date());
         int storeId = storeDao.addAndGetId4Integer(t);
         Store store = get(storeId);
@@ -59,8 +65,14 @@ public class StoreServiceImpl implements IStoreService{
         storeGoodsTrafficDao.add(storeGoodsTraffic);
 
         //门店的登录账号
-        User user = new User();
-        user.setRank(1);
+        User u = new User();
+        u.setRank(1);
+        u.setStatus(1);
+        u.setPassword(SecurityUtil.MD5(user.getPassword()));
+        u.setUsername(user.getUsername());
+        u.setMobile(user.getMobile());
+        u.setEmail(user.getEmail());
+
     }
 
     @Override

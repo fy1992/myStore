@@ -25,7 +25,7 @@
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="l">
-                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增门店</a>
+                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增账号</a>
             </span>
             <span class="select-box" style="width: 100px;">
                 <select class="select radius" id="store_status">
@@ -79,8 +79,8 @@ table = $('#store_table').dataTable({
        "aoColumns" : [
         {"mData" : null, "sDefaultContent" : "", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            var btn ="<a style='text-decoration:none' onclick='edit("+full.id+")'>编辑</a>";
-            btn += "&nbsp;<a style='text-decoration:none' onclick='goodsTraffic("+full.id+")'>门店货流配置</a>";
+            var btn ="<a style='text-decoration:none' onclick='edit(\""+full.id+"\")'>编辑</a>";
+            btn += "&nbsp;<a style='text-decoration:none' onclick='goodsTraffic(\""+full.id+"\")'>门店货流配置</a>";
             return btn;
         }},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
@@ -180,6 +180,10 @@ function formatDate(val){
 //新增
 function add() {
     layer_show("新增账号", "<%=request.getContextPath()%>/server/store/add", "800", "600");
+}
+
+function edit(id){
+    layer_show("编辑", "<%=request.getContextPath()%>/server/store/edit/"+id, "800", "600");
 }
 
 function goodsTraffic(id){

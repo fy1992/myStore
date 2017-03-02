@@ -27,11 +27,11 @@
             <label class="form-label col-3">是否启用：</label>
             <div class="formControls col-6">
                 <div class="radio-box">
-                    <input type="radio" id="store_using-1" name="status" value = "1" checked>
+                    <input type="radio" id="store_using-1" name="status" value = "1" <c:if test="${store.status eq 1}">checked</c:if>>
                     <label for="store_using-1">是</label>
                 </div>
                 <div class="radio-box">
-                    <input type="radio" id="store_using-2" name="status" value = "0">
+                    <input type="radio" id="store_using-2" name="status" value = "0" <c:if test="${store.status eq 0}">checked</c:if>>
                     <label for="store_using-2">否</label>
                 </div>
             </div>
