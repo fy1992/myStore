@@ -41,4 +41,5 @@ public class StockController {
         User user = (User) session.getAttribute("loginUser");
         return stockService.findByParams(aDataSet, user.getStoreId());
     }
+
 }
