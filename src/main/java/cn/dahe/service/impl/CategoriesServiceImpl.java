@@ -91,7 +91,7 @@ public class CategoriesServiceImpl implements ICategoriesService{
         List<Categories> categoriesList = categoriesDao.findByPid(id);
         int mark = 0;
         Pager<Object> params = new Pager<>();
-        List<Goods> goodsList = null;
+        List<Goods> goodsList;
         if(categoriesList != null && categoriesList.size() > 0) {
             for (int i = 0, len = categoriesList.size(); i < len; i++) {
                 int cid = categoriesList.get(i).getId();

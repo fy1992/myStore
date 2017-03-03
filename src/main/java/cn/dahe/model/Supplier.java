@@ -50,9 +50,6 @@ public class Supplier {
     //是否授权  0  没有授权  1  授权
     @Column(name = "is_authorize")
     private int authorize;
-    //供货商对应的商品
-    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
-    private Set<Goods> goods = new HashSet<>();
     //拼音
     private String pinyin;
     //供货商对应的店铺
@@ -166,14 +163,6 @@ public class Supplier {
         this.storeSet = storeSet;
     }
 
-    public Set<Goods> getGoods() {
-        return goods;
-    }
-
-    public void setGoods(Set<Goods> goods) {
-        this.goods = goods;
-    }
-
     public String getPinyin() {
         return pinyin;
     }
@@ -197,7 +186,6 @@ public class Supplier {
                 ", addr='" + addr + '\'' +
                 ", description='" + description + '\'' +
                 ", authorize=" + authorize +
-                ", goods=" + goods +
                 ", pinyin='" + pinyin + '\'' +
                 ", storeSet=" + storeSet +
                 '}';

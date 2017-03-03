@@ -116,7 +116,7 @@ public class CategoriesController {
      */
     @RequestMapping(value = "delCategories", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addCategories(int id, HttpSession session){
+    public AjaxObj addCategories(int id){
         AjaxObj json = new AjaxObj();
         categoriesService.del(id);
         json.setMsg("分类删除成功");

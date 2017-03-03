@@ -112,6 +112,7 @@ table = $('#supplier_table').dataTable({
        "sLoadingRecords": "载入中...",
         "sEmptyTable": "表中数据为空",
         "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
         "sProcessing": "处理中..."
    	},
    	//"deferRender": true, //当处理大数据时，延迟渲染数据，有效提高Datatables处理能力

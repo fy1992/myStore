@@ -189,7 +189,7 @@ public class OrderGoodsInfo {
         this.mainUnit = goods.getMainUnit().getName();
         this.description = goods.getDescription();
         this.categoriesId = goods.getCategoriesId();
-        this.supplierId = goods.getSupplier().getId();
-        this.supplierName = goods.getSupplier().getName();
+        this.supplierId = goods.getSupplierId();
+        this.supplierName = goods.getSupplierName();
     }
 }

@@ -317,15 +317,8 @@ public class GoodsServiceImpl implements IGoodsService{
         }
         goodsDto.setMainUnit(mainUnit);
         goodsDto.setMainUnitName(mainUnitName);
-        Supplier supplier = goods.getSupplier();
-        String supplierId = "";
-        String supplierName = "";
-        if(supplier != null){
-            supplierId = Integer.toString(supplier.getId());
-            supplierName = supplier.getName();
-        }
-        goodsDto.setSupplierName(supplierName);
-        goodsDto.setSupplierId(supplierId);
+        goodsDto.setSupplierName(goods.getSupplierName());
+        goodsDto.setSupplierId(Integer.toString(goods.getSupplierId()));
         goodsDto.setVipPrice(goods.getVipPrice());
         goodsDto.setProductionDate(DateUtil.format(goods.getProductionDate(), "yyyy-MM-dd"));
         goodsDto.setGoodsNo(goods.getGoodsNo());

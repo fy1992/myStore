@@ -39,12 +39,12 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
             }
         }
         if(categoriesId != -1){
-            hql.append(" and goods.categories.id = ?");
+            hql.append(" and goods.categoriesId = ?");
             objectList.add(categoriesId);
         }
         if(supplierId != -1){
-            hql.append(" and goods.categories.id = ?");
-            objectList.add(categoriesId);
+            hql.append(" and goods.supplierId = ?");
+            objectList.add(supplierId);
         }
         if(tagsId != -1){
             hql.append(" and goods.tags.id = ?");
@@ -67,7 +67,7 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
         int unitId = params.getIntParam2(); //单位id
         String hql = "from Goods goods where 1=1";
         if(categoriesId != 0){
-            hql += " and goods.categories.id = ?";
+            hql += " and goods.categoriesId = ?";
             return this.list(hql, categoriesId);
         }
         if(unitId != 0){

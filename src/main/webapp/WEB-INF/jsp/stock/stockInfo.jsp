@@ -25,26 +25,31 @@
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="select-box" style="width: 100px;">
-                <select class="select radius" id="stock_type">
-                    <option value="0">进货</option>
-                    <option value="1">出货</option>
+                <select class="select radius" id="categoriesId">
+                    <option value="0">全部分类</option>
                 </select>
             </span>
             <span class="select-box" style="width: 100px;">
-                <input id = "opt_time" />
+                <select class="select radius" id="supplierId">
+                    <option value="0">全部供货商</option>
+                </select>
             </span>
+            <button id="stock_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
-            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="store_table">
+            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="stock_table">
                 <thead>
                     <tr class="text-c">
                         <th width="50">序号</th>
-                        <th width="50">操作</th>
-                        <th width="300">商品名称</th>
-                        <th width="100">库存</th>
-                        <th width="200">交易类型</th>
-                        <th width="100">交易时间</th>
-                        <th width="50">备注</th>
+                        <th width="200">商品名称</th>
+                        <th width="100">条码</th>
+                        <th width="100">商品分类</th>
+                        <th width="100">供货商</th>
+                        <th width="100">现有库存</th>
+                        <th width="50">单位</th>
+                        <th width="50">库存上限</th>
+                        <th width="50">库存下限</th>
+                        <th width="50">保质期</th>
                     </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -59,16 +64,39 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/laydate/laydate.js"></script>
 <script type="text/javascript">
 //搜索
 $(function(){
-	$("#store_search").click(function(){
+	$("#stock_search").click(function(){
 		table.fnDraw();
 	});
+
+    var start = {
+        elem : "#startTime",
+        format : 'YYYY-MM-DD hh:mm:ss',
+        max : laydate.now(),
+        istime : true,
+        choose : function(data){
+
+        }
+    };
+
+    var end = {
+        elem : "#endTime",
+        format : 'YYYY-MM-DD hh:mm:ss',
+        max : laydate.now(),
+        istime : true,
+        choose : function(data){
+
+        }
+    };
+    laydate(start);
+    laydate(end);
 });
 
 //table start here
-table = $('#store_table').dataTable({
+table = $('#stock_table').dataTable({
 	   "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示  
        "bPaginate": true,//是否显示（应用）分页器  
        "bLengthChange": false,
@@ -78,18 +106,15 @@ table = $('#store_table').dataTable({
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
         {"mData" : null, "sDefaultContent" : "", "bSortable":false},
-	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='edit(full.id)'>编辑</a>";
-        }},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "optNum", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "optType", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return data == 1 ? "进货" : "出货" ;
-        }},
-        {"mData" : "optDate", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return format(data) ;
-        }},
-        {"mData" : "description", "sDefaultContent" : "", "bSortable":false}
+        {"mData" : "goodsNo", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "categoriesName", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "supplierName", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "stock", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "mainUnitName", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "stockUp", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "stockDown", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "shelfLife", "sDefaultContent" : "", "bSortable":false}
     ],
     "language":{
        "oPaginate": {
@@ -101,6 +126,7 @@ table = $('#store_table').dataTable({
        "sLoadingRecords": "载入中...",
         "sEmptyTable": "表中数据为空",
         "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
         "sProcessing": "处理中..."
    	},
    	//"deferRender": true, //当处理大数据时，延迟渲染数据，有效提高Datatables处理能力
@@ -110,7 +136,7 @@ table = $('#store_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/server/stock/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/goods/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -124,18 +150,10 @@ table = $('#store_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	var optType = $("#stock_type").val();
-      	var startTime = $("#startTime").val();
-      	var endTime = $("#endTime").val();
-      	if(!startTime){
-      	    startTime = format(new Date());
-        }
-        if(!endTime){
-            endTime = format(new Date());;
-        }
-        aoData.push({"name":"optType","value":optType});
-        aoData.push({"name":"startTime","value":startTime});
-        aoData.push({"name":"endTime","value":endTime});
+      	var categoriesId = $("#categoriesId").val();
+      	var supplierId = $("#supplierId").val();
+      	aoData.push({"name":"categories","value":categoriesId});
+      	aoData.push({"name":"supplier","value":supplierId});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){

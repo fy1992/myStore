@@ -1,5 +1,6 @@
 package cn.dahe.controller;
 
+import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Stock;
 import cn.dahe.model.StockLog;
@@ -28,7 +29,7 @@ public class StockController {
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(){
-        return "stock/list";
+        return "stock/stockInfo";
     }
 
     /**

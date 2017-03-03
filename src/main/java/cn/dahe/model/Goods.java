@@ -72,9 +72,10 @@ public class Goods {
     //拼音码
     private String pinyin;
     //供货商
-    @ManyToOne
-    @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
+    @Column(name = "supplier_id")
+    private int supplierId;
+    @Column(name = "supplier_name")
+    private String supplierName;
     //生产日期
     @Column(name = "production_date")
     private Date productionDate;
@@ -254,12 +255,20 @@ public class Goods {
         this.pinyin = pinyin;
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public int getSupplierId() {
+        return supplierId;
     }
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
 
     public Date getProductionDate() {
@@ -377,7 +386,6 @@ public class Goods {
                 ", unitIds='" + unitIds + '\'' +
                 ", orderUnit=" + orderUnit +
                 ", pinyin='" + pinyin + '\'' +
-                ", supplier=" + supplier +
                 ", productionDate=" + productionDate +
                 ", shelfLife=" + shelfLife +
                 ", stock=" + stock +

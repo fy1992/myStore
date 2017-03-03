@@ -100,6 +100,7 @@ var setting = {
 		onClick : onClick,
         onDrop: zTreeOnDrop,//拖拽结束后
         beforeRemove : zTreeBeforeRemove, //删除时
+        beforeRename : zTreeBeforeRename, //编辑前
         onRename : ztreeOnRename, //编辑后
         onRemove : zTreeOnRemove //删除后
 	}
@@ -120,10 +121,21 @@ function zTreeOnDrop(event, treeId, treeNodes, targetNode){
     });
 }
 
+function zTreeBeforeRename(treeId, treeNode, newName, isCancel){
+    if(treeNode.id == 0){
+        layer.msg("根目录无法重命名");
+        return false;
+    }
+}
+
 function ztreeOnRename(event, treeId, treeNode, isCancel){
+    var id = treeNode.id;
+    if(id == 0){
+        return false;
+    }
     if(!isCancel){
         $.post("<%=request.getContextPath()%>/server/categories/editCategories",
-        {"id" : treeNode[0].id, "name" : treeNode.name}, function(data){
+        {"id" : id, "name" : treeNode.name}, function(data){
             tree.reAsyncChildNodes(null, "refresh");
             table.fnDraw();
             layer.msg(data.msg);
@@ -132,7 +144,7 @@ function ztreeOnRename(event, treeId, treeNode, isCancel){
 }
 
 function zTreeBeforeRemove(treeId, treeNode){
-    if(treeNode.name == "根目录'"){
+    if(treeNode.name == "根目录"){
         layer.msg("根节点无法删除");
         return false;
     }
@@ -146,7 +158,7 @@ function zTreeBeforeRemove(treeId, treeNode){
 }
 
 function zTreeOnRemove(event, treeId, treeNode){
-    del(treeNode[0].id);
+    del(treeNode.id);
 }
 
 // Z-Tree 树生成结束
@@ -174,6 +186,7 @@ $(document).ready(function(){
             "sLoadingRecords": "载入中...",
             "sEmptyTable": "表中数据为空",
             "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
             "sProcessing": "处理中..."
         },
         "order" : [[0, "desc"]],
