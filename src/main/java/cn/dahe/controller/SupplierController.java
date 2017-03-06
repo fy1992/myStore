@@ -69,11 +69,11 @@ public class SupplierController {
         AjaxObj json = new AjaxObj();
         boolean b = supplierService.add(supplier);
         if(b){
-            json.setMsg("供应商添加成功");
-            json.setResult(1);
+            json.setInfo("供应商添加成功");
+            json.setStatus("y");
         }else{
-            json.setMsg("该供应商编码已存在");
-            json.setResult(0);
+            json.setStatus("n");
+            json.setInfo("该供应商编码已存在");
         }
         return json;
     }
@@ -98,8 +98,8 @@ public class SupplierController {
     public AjaxObj editSupplier(Supplier supplier){
         AjaxObj json = new AjaxObj();
         supplierService.update(supplier);
-        json.setMsg("供应商修改成功");
-        json.setResult(1);
+        json.setStatus("y");
+        json.setInfo("供应商修改成功");
         return json;
     }
 

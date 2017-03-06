@@ -32,8 +32,12 @@ public class GoodsUnitDaoImpl extends BaseDaoImpl<GoodsUnit> implements IGoodsUn
     }
 
     @Override
-    public List<GoodsUnit> findAll() {
+    public List<GoodsUnit> findAll(int storeId) {
         String hql = "from GoodsUnit";
+        if(storeId != 0){
+            hql += " where storeId = ?";
+            return list(hql, storeId);
+        }
         return list(hql);
     }
 }

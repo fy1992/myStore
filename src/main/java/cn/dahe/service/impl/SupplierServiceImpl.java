@@ -49,7 +49,19 @@ public class SupplierServiceImpl implements ISupplierService{
 
     @Override
     public void update(Supplier t) {
-        supplierDao.update(t);
+        Supplier supplier = get(t.getId());
+        supplier.setAddr(t.getAddr());
+        supplier.setAuthorize(t.getAuthorize());
+        supplier.setContacts(t.getContacts());
+        supplier.setDescription(t.getDescription());
+        supplier.setEmail(t.getEmail());
+        supplier.setName(t.getName());
+        supplier.setPackingFeePoint(t.getPackingFeePoint());
+        supplier.setPhone(t.getPhone());
+        supplier.setPinyin(t.getPinyin());
+        supplier.setRebatePoint(t.getRebatePoint());
+        supplier.setStatus(t.getStatus());
+        supplierDao.update(supplier);
     }
 
     @Override

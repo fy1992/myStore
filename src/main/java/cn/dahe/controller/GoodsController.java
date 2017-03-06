@@ -151,8 +151,9 @@ public class GoodsController {
      */
     @RequestMapping(value = "getAllGoodsUnit", method = RequestMethod.POST)
     @ResponseBody
-    public List<GoodsUnit> goodsUnitList(){
-        return goodsUnitService.findAll();
+    public List<GoodsUnit> goodsUnitList(HttpSession session){
+        User user = (User) session.getAttribute("loginUser");
+        return goodsUnitService.findAll(user.getStoreId());
     }
     //=====================================goodsUnit end=====================================================
     //商品标签
@@ -433,7 +434,7 @@ public class GoodsController {
     @ResponseBody
     public AjaxObj editGoods(GoodsDto goodsDto){
         AjaxObj json = new AjaxObj();
-        goodsService.add(goodsDto);
+        goodsService.update(goodsDto);
         json.setInfo("商品编辑成功");
         json.setStatus("y");
         return json;
