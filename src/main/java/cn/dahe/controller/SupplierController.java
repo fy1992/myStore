@@ -98,8 +98,8 @@ public class SupplierController {
     public AjaxObj editSupplier(Supplier supplier){
         AjaxObj json = new AjaxObj();
         supplierService.update(supplier);
-        json.setMsg("供应商修改成功");
-        json.setResult(1);
+        json.setStatus("y");
+        json.setInfo("供应商修改成功");
         return json;
     }
 
@@ -119,7 +119,7 @@ public class SupplierController {
     }
 
     /**
-     *查询所有供应商
+     * 查询所有供应商
      */
     @RequestMapping(value = "allSupplier", method = RequestMethod.POST)
     @ResponseBody

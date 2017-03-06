@@ -41,9 +41,10 @@ public interface IGoodsUnitService{
 
     /**
      * 查询每个店铺下所有的
+     * @param storeId
      * @return
      */
-    List<GoodsUnit> findAll();
+    List<GoodsUnit> findAll(int storeId);
 
     /**
      * 修改

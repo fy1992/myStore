@@ -17,7 +17,6 @@
     <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
-    <link href="${ctxResource}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <title></title>
 </head>
 <body>
@@ -42,6 +41,7 @@
                 <label class="form-label col-3"><span class="c-red">* </span>供货商编号：</label>
                 <div class="formControls col-6">
                     <span>${supplier.supplierNo}</span>
+                    <input value = "${supplier.id}" name = "id" type="hidden"/>
                 </div>
             </div>
             <div class="row cl">
@@ -133,7 +133,6 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
-<script type="text/javascript" src="${ctxResource}/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
     $(function () {
@@ -184,20 +183,6 @@
         ]);
 
         $("[data-toggle='tooltip']").tooltip();
-    });
-
-
-    //随机生成编号
-    $("#randomNo").on("click", function () {
-        $.post("<%=request.getContextPath()%>/server/supplier/newSupplierNo", function(data){
-            if(data.result == 1){
-                $("#supplier_No").val(data.msg);
-                $("#supplier_No").removeClass("Validform_error");
-                $("#supplier_No").parent().find("span").removeClass("Validform_error").addClass("Validform_right").text("通过消息验证！").css("color", "black");
-                $("#randomNo").css("display", "none");
-                $("#help_tooltip").show();
-            }
-        });
     });
 </script>
 </body>

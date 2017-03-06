@@ -99,8 +99,8 @@ public class GoodsUnitServiceImpl implements IGoodsUnitService{
     }
 
     @Override
-    public List<GoodsUnit> findAll() {
-        return goodsUnitDao.findAll();
+    public List<GoodsUnit> findAll(int storeId) {
+        return goodsUnitDao.findAll(storeId);
     }
 
     @Override

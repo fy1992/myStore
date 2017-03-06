@@ -43,6 +43,7 @@
                     <label class="form-label col-3"><span class="c-red">* </span>条码：</label>
                     <div class="formControls col-6">
                         <span>${goodsDto.goodsNo}</span>
+                        <input name = "id" value = "${goodsDto.id}" type = "hidden"/>
                     </div>
                     <div class="col-3"></div>
                 </div>
@@ -212,7 +213,7 @@
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="submit" id="goodsAddBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="submit" id="goodsEditBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
     </form>
@@ -241,13 +242,13 @@ $(function(){
     });
 
 
-    var  validtor = $("#form-goods-add").Validform({
+    var  validtor = $("#form-goods-edit").Validform({
         tiptype:3,
         showAllError:true,
         ajaxPost: true,
         ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
         tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
-        btnSubmit:"#goodsAddBtn"
+        btnSubmit:"#goodsEdiBtn"
     });
 
     validtor.addRule([
@@ -323,11 +324,13 @@ $(function(){
         }
         $("#supplier").val(${goodsDto.supplierId});
     });
+
     //单位
     $.post("<%=request.getContextPath()%>/server/goods/getAllGoodsUnit", function(data){
         for(var n in data){
             $("#mainUnit").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
+        alert(${goodsDto.mainUnit});
         $("#mainUnit").val(${goodsDto.mainUnit});
     });
 

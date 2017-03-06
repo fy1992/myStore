@@ -32,5 +32,5 @@ public interface IGoodsUnitDao extends IBaseDao<GoodsUnit>{
      *查询全部
      * @return
      */
-     List<GoodsUnit> findAll();
+     List<GoodsUnit> findAll(int storeId);
 }
