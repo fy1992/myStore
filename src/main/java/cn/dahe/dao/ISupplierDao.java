@@ -29,7 +29,7 @@ public interface ISupplierDao extends IBaseDao<Supplier>{
      * 查询全部
      * @return
      */
-    List<Supplier> findAll();
+    List<Supplier> findAll(int storeId);
 
     /**
      * 根据编号查询

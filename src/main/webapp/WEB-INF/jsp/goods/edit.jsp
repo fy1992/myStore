@@ -88,7 +88,7 @@
                 	<div id="btnShowEditImages" class="defaultImage">
                     	<h1>编辑图片</h1>
 	                	<img src="${goodsDto.goodsImg}" id="imgPath"/>
-                        <input type = "hidden" value="" name = "goodsImg">
+                        <input type = "hidden" value="${goodsDto.goodsImg}" name = "goodsImg">
                 	</div>
                 </div>
             </div>
@@ -330,7 +330,6 @@ $(function(){
         for(var n in data){
             $("#mainUnit").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
-        alert(${goodsDto.mainUnit});
         $("#mainUnit").val(${goodsDto.mainUnit});
     });
 

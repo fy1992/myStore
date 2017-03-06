@@ -151,7 +151,7 @@
             swf: '../../dist/Uploader.swf',
             chunked: false,
             chunkSize: 512 * 1024,
-            server: '<%=request.getContextPath()%>/goods/uploadImg/',
+            server: 'uploadImg',
             // runtimeOrder: 'flash',
 
             // accept: {
@@ -392,7 +392,6 @@
 
             percent = total ? loaded / total : 0;
 
-
             spans.eq( 0 ).text( Math.round( percent * 100 ) + '%' );
             spans.eq( 1 ).css( 'width', Math.round( percent * 100 ) + '%' );
             updateStatus();
@@ -477,7 +476,7 @@
                 case 'finish':
                     stats = uploader.getStats();
                     if ( stats.successNum ) {
-                        alert( '上传成功' );
+                        //alert( '上传成功' );
                         layer_close();
                     } else {
                         // 没有成功的图片，重设
@@ -498,6 +497,12 @@
             percentages[ file.id ][ 1 ] = percentage;
             updateTotalProgress();
         };
+
+        uploader.on( 'uploadSuccess', function(file, response) {
+            if(response.result == 1){
+                parent.$('#imgPath').attr("src", response.msg);
+            }
+        });
 
         uploader.onFileQueued = function( file ) {
             fileCount++;

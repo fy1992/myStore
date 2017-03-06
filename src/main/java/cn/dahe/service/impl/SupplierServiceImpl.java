@@ -160,8 +160,8 @@ public class SupplierServiceImpl implements ISupplierService{
     }
 
     @Override
-    public List<Supplier> findAll() {
-        return supplierDao.findAll();
+    public List<Supplier> findAll(int storeId) {
+        return supplierDao.findAll(storeId);
     }
 
     @Override

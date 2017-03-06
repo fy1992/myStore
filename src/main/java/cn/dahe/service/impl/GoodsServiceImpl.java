@@ -93,6 +93,36 @@ public class GoodsServiceImpl implements IGoodsService{
     }
 
     @Override
+    public void update(GoodsDto goodsDto) {
+        Goods goods = formatGoodsDtoToGoods(goodsDto);
+        Goods g = goodsDao.get(goodsDto.getId());
+        g.setStatus(goods.getStatus());
+        g.setShelfLife(goods.getShelfLife());
+        g.setOrderUnit(goods.getOrderUnit());
+        g.setName(goods.getName());
+        g.setStockDown(goods.getStockDown());
+        g.setBid(goods.getBid());
+        g.setStockUp(goods.getStockUp());
+        g.setCategoriesId(goods.getCategoriesId());
+        g.setEx(goods.getEx());
+        g.setVipSet(goods.getVipSet());
+        g.setVipPrice(goods.getVipPrice());
+        g.setDescription(goods.getDescription());
+        g.setImgUrl(goods.getImgUrl());
+        g.setSupplierId(goods.getSupplierId());
+        g.setSupplierName(goods.getSupplierName());
+        g.setMainUnitId(goods.getMainUnitId());
+        g.setMainUnitName(goods.getMainUnitName());
+        g.setPinyin(goods.getPinyin());
+        g.setPrint(goods.getPrint());
+        g.setProductionDate(goods.getProductionDate());
+        g.setTradePrice(goods.getTradePrice());
+        g.setScore(goods.getScore());
+        g.setUnitIds(goods.getUnitIds());
+        update(g);
+    }
+
+    @Override
     public Goods get(int id) {
         return goodsDao.get(id);
     }
@@ -296,7 +326,7 @@ public class GoodsServiceImpl implements IGoodsService{
         goodsDto.setBid(goods.getBid());
         goodsDto.setPinyin(goods.getPinyin());
         goodsDto.setVipSet(goods.getVipSet());
-        goodsDto.setStatus(1);
+        goodsDto.setStatus(goods.getStatus());
         goodsDto.setProductionDate(DateUtil.format(new Date(), "yyy-MM-dd"));
         Stock stock = goods.getStock();
         String goodsNum = "";
@@ -308,15 +338,8 @@ public class GoodsServiceImpl implements IGoodsService{
         goodsDto.setTradePrice(Integer.toString(goods.getTradePrice()));
         goodsDto.setPrice(goods.getPrice());
         goodsDto.setCategoriesId(goods.getCategoriesId());
-        GoodsUnit goodsUnit = goods.getMainUnit();
-        int mainUnit = 0;
-        String mainUnitName = "";
-        if(stock != null){
-            mainUnit = goodsUnit.getId();
-            mainUnitName = goodsUnit.getName();
-        }
-        goodsDto.setMainUnit(mainUnit);
-        goodsDto.setMainUnitName(mainUnitName);
+        goodsDto.setMainUnit(goods.getMainUnitId());
+        goodsDto.setMainUnitName(goods.getMainUnitName());
         goodsDto.setSupplierName(goods.getSupplierName());
         goodsDto.setSupplierId(Integer.toString(goods.getSupplierId()));
         goodsDto.setVipPrice(goods.getVipPrice());
@@ -349,9 +372,11 @@ public class GoodsServiceImpl implements IGoodsService{
         goods.setPinyin(goodsDto.getPinyin());
         goods.setShelfLife(StringUtils.isNotBlank(goodsDto.getShelfLife())?Integer.parseInt(goodsDto.getShelfLife()):0);
         goods.setStatus(goodsDto.getStatus());
-        //单位
-        GoodsUnit goodsUnit = goodsUnitDao.get(goodsDto.getMainUnit());
-        goods.setMainUnit(goodsUnit);
+        goods.setMainUnitId(goodsDto.getMainUnit());
+        GoodsUnit mainUnit = goodsUnitDao.get(goodsDto.getMainUnit());
+        if(mainUnit != null){
+            goods.setMainUnitName(mainUnit.getName());
+        }
         String smallTicketsStr = goodsDto.getSmallTickets();
         String goodsTagsStr = goodsDto.getGoodsTagss();
         //小票

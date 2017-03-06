@@ -16,14 +16,23 @@ public class GoodsDtoSimple {
     //商品价格（销售价）
     private int price;
     //主单位
-    private String mainUnit;
+    private String mainUnitName;
+    private int mainUnitId;
 
-    public String getMainUnit() {
-        return mainUnit;
+    public String getMainUnitName() {
+        return mainUnitName;
     }
 
-    public void setMainUnit(String mainUnit) {
-        this.mainUnit = mainUnit;
+    public void setMainUnitName(String mainUnitName) {
+        this.mainUnitName = mainUnitName;
+    }
+
+    public int getMainUnitId() {
+        return mainUnitId;
+    }
+
+    public void setMainUnitId(int mainUnitId) {
+        this.mainUnitId = mainUnitId;
     }
 
     public int getId() {
@@ -75,7 +84,7 @@ public class GoodsDtoSimple {
         this.goodsNum = goods.getStock().getGoodNum();
         this.goodsImg = goods.getImgUrl();
         this.price = goods.getPrice();
-        this.mainUnit = goods.getMainUnit().getName();
+        this.mainUnitName = goods.getMainUnitName();
     }
 
     @Override
@@ -86,7 +95,6 @@ public class GoodsDtoSimple {
                 ", goodsNum=" + goodsNum +
                 ", goodsImg='" + goodsImg + '\'' +
                 ", price=" + price +
-                ", mainUnit='" + mainUnit + '\'' +
                 '}';
     }
 }

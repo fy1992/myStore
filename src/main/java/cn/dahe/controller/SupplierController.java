@@ -3,6 +3,7 @@ package cn.dahe.controller;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Supplier;
+import cn.dahe.model.User;
 import cn.dahe.service.ISupplierService;
 import cn.dahe.util.NumberUtils;
 import cn.dahe.util.UploadsUtils;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -123,8 +125,9 @@ public class SupplierController {
      */
     @RequestMapping(value = "allSupplier", method = RequestMethod.POST)
     @ResponseBody
-    public List<Supplier> allSupplier(){
-        List<Supplier> suppliers =  supplierService.findAll();
+    public List<Supplier> allSupplier(HttpSession session){
+        User user = (User) session.getAttribute("loginUser");
+        List<Supplier> suppliers =  supplierService.findAll(user.getStoreId());
         if(suppliers == null){
             suppliers = new ArrayList<>();
         }

@@ -30,7 +30,7 @@ public interface ISupplierService {
      */
     Map<String, Object> importSupplierExcel(MultipartFile file);
 
-    List<Supplier> findAll();
+    List<Supplier> findAll(int storeId);
 
     /**
      * 根据名称查询

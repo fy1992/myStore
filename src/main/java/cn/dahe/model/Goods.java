@@ -1,5 +1,6 @@
 package cn.dahe.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
@@ -60,9 +60,10 @@ public class Goods {
     //商品进价
     private int bid;
     //主单位
-    @ManyToOne
-    @JoinColumn(name = "main_unit")
-    private GoodsUnit mainUnit;
+    @Column(name = "main_unit_id")
+    private int mainUnitId;
+    @Column(name = "main_unit_name")
+    private String mainUnitName;
     //副单位
     @Column(name = "unit_ids")
     private String unitIds;
@@ -231,12 +232,20 @@ public class Goods {
         this.tradePrice = tradePrice;
     }
 
-    public GoodsUnit getMainUnit() {
-        return mainUnit;
+    public int getMainUnitId() {
+        return mainUnitId;
     }
 
-    public void setMainUnit(GoodsUnit mainUnit) {
-        this.mainUnit = mainUnit;
+    public void setMainUnitId(int mainUnitId) {
+        this.mainUnitId = mainUnitId;
+    }
+
+    public String getMainUnitName() {
+        return mainUnitName;
+    }
+
+    public void setMainUnitName(String mainUnitName) {
+        this.mainUnitName = mainUnitName;
     }
 
     public int getOrderUnit() {
@@ -372,7 +381,7 @@ public class Goods {
         return "Goods{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", categories=" + categoriesId +
+                ", categoriesId=" + categoriesId +
                 ", imgUrl='" + imgUrl + '\'' +
                 ", tasteGroupSet=" + tasteGroupSet +
                 ", goodsNo='" + goodsNo + '\'' +
@@ -382,18 +391,19 @@ public class Goods {
                 ", tradePrice=" + tradePrice +
                 ", price=" + price +
                 ", bid=" + bid +
-                ", mainUnit=" + mainUnit +
+                ", mainUnitId=" + mainUnitId +
+                ", mainUnitName='" + mainUnitName + '\'' +
                 ", unitIds='" + unitIds + '\'' +
                 ", orderUnit=" + orderUnit +
                 ", pinyin='" + pinyin + '\'' +
+                ", supplierId=" + supplierId +
+                ", supplierName='" + supplierName + '\'' +
                 ", productionDate=" + productionDate +
                 ", shelfLife=" + shelfLife +
                 ", stock=" + stock +
                 ", stockUp=" + stockUp +
                 ", stockDown=" + stockDown +
                 ", description='" + description + '\'' +
-                ", smallTicketSet=" + smallTicketSet +
-                ", goodsTagsSet=" + goodsTagsSet +
                 ", storeId=" + storeId +
                 ", status=" + status +
                 ", seq=" + seq +

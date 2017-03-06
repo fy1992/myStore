@@ -42,8 +42,12 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements ISupplierD
     }
 
     @Override
-    public List<Supplier> findAll() {
-        String hql = "from  Supplier supplier where supplier.status = 1";
+    public List<Supplier> findAll(int storeId) {
+        String hql = "from Supplier supplier where supplier.status = 1";
+        if(storeId != 0){
+            hql += " and supplier.storeId = ?";
+            return this.list(hql, storeId);
+        }
         return this.list(hql);
     }
 

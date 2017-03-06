@@ -1,5 +1,7 @@
 package cn.dahe.model;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,8 +38,10 @@ public class OrderGoodsInfo {
     //配货价格
     private int price;
     //单位
-    @Column(name = "main_unit")
-    private String mainUnit;
+    @Column(name = "main_unit_name")
+    private String mainUnitName;
+    @Column(name = "main_unit_id")
+    private int mainUnitId;
     //价格小计
     @Column(name = "price_sum")
     private int priceSum;
@@ -115,12 +119,20 @@ public class OrderGoodsInfo {
         this.price = price;
     }
 
-    public String getMainUnit() {
-        return mainUnit;
+    public String getMainUnitName() {
+        return mainUnitName;
     }
 
-    public void setMainUnit(String mainUnit) {
-        this.mainUnit = mainUnit;
+    public void setMainUnitName(String mainUnitName) {
+        this.mainUnitName = mainUnitName;
+    }
+
+    public int getMainUnitId() {
+        return mainUnitId;
+    }
+
+    public void setMainUnitId(int mainUnitId) {
+        this.mainUnitId = mainUnitId;
     }
 
     public int getPriceSum() {
@@ -186,10 +198,11 @@ public class OrderGoodsInfo {
         this.goodsId = goods.getId();
         this.price = goods.getPrice();
         this.goodsNo = goods.getGoodsNo();
-        this.mainUnit = goods.getMainUnit().getName();
         this.description = goods.getDescription();
         this.categoriesId = goods.getCategoriesId();
         this.supplierId = goods.getSupplierId();
         this.supplierName = goods.getSupplierName();
+        this.mainUnitId = goods.getMainUnitId();
+        this.mainUnitName = goods.getMainUnitName();
     }
 }

@@ -26,8 +26,6 @@ public class GoodsUnit {
     //所属店面
     @Column(name = "store_id")
     private int storeId;
-    @OneToMany(mappedBy = "mainUnit", cascade = CascadeType.ALL)
-    private Set<Goods> goodsSet = new HashSet<>();
 
     public int getId() {
         return id;
@@ -53,21 +51,12 @@ public class GoodsUnit {
         this.storeId = storeId;
     }
 
-    public Set<Goods> getGoodsSet() {
-        return goodsSet;
-    }
-
-    public void setGoodsSet(Set<Goods> goodsSet) {
-        this.goodsSet = goodsSet;
-    }
-
     @Override
     public String toString() {
         return "GoodsUnit{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", storeId=" + storeId +
-                ", goodsSet=" + goodsSet +
                 '}';
     }
 }
