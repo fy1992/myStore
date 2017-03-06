@@ -45,8 +45,8 @@ public class SalesDaoImpl extends BaseDaoImpl<Sales> implements ISalesDao{
     }
 
     @Override
-    public Sales findBySalesNo(String salesNo) {
-        String hql = "from Sales sales where sales.salesNo = ?";
-        return (Sales)this.queryByHql(hql, salesNo);
+    public Sales findBySalesNo(String salesNo, int storeId) {
+        String hql = "from Sales sales where sales.salesNo = ? and sales.storeId = ?";
+        return (Sales)this.queryByHql(hql, new Object[]{salesNo, storeId});
     }
 }

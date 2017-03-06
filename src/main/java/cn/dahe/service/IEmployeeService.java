@@ -12,7 +12,7 @@ import cn.dahe.model.User;
  * Created by fy on 2017/1/27.
  */
 public interface IEmployeeService {
-    void addCashier(Cashier t, User user);
+    boolean addCashier(Cashier t, User user);
     void delCashier(int id);
     void updateCashier(Cashier t);
     Cashier getCashier(int id);
@@ -32,9 +32,9 @@ public interface IEmployeeService {
      */
     AjaxObj cashierLogin(String cashierNo, String password);
 
-    void addSales(Sales t, User user);
+    boolean addSales(Sales t, User user);
     void delSales(int id);
-    void updateSales(Sales t);
+    void updateSales(Sales t, User user);
     Sales getSales(int id);
     Sales loadSales(int id);
 
@@ -43,7 +43,7 @@ public interface IEmployeeService {
      * @param salesNo
      * @return
      */
-    Sales findBySalesNo(String salesNo);
+    Sales findBySalesNo(String salesNo, int storeId);
     /**
      * 收银员列表
      * @param aDataSet

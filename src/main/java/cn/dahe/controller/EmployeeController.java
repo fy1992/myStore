@@ -143,8 +143,8 @@ public class EmployeeController {
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
         employeeService.addSales(sales, user);
-        json.setResult(1);
-        json.setMsg("导购员添加成功");
+        json.setInfo("导购员添加成功");
+        json.setStatus("y");
         return json;
     }
 
@@ -165,9 +165,10 @@ public class EmployeeController {
      */
     @RequestMapping(value = "salesEdit", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj salesEdit(Sales sales){
+    public AjaxObj salesEdit(Sales sales, HttpSession session){
         AjaxObj json = new AjaxObj();
-        employeeService.updateSales(sales);
+        User user = (User)session.getAttribute("loginUser");
+        employeeService.updateSales(sales, user);
         json.setMsg("导购员编辑成功");
         json.setResult(1);
         return json;

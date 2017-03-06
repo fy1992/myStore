@@ -22,5 +22,5 @@ public interface ISalesDao extends IBaseDao<Sales>{
      * @param salesNo
      * @return
      */
-    Sales findBySalesNo(String salesNo);
+    Sales findBySalesNo(String salesNo, int storeId);
 }

@@ -42,11 +42,16 @@ public class EmployeeServiceImpl implements IEmployeeService{
     @Resource
     private IStoreDao storeDao;
     @Override
-    public void addCashier(Cashier t, User user) {
+    public boolean addCashier(Cashier t, User user) {
+        Cashier c = cashierDao.findByCashierNo(t.getCashierNo());
+        if(c != null){
+            return false;
+        }
         Store store = storeDao.get(user.getStoreId());
         t.setStoreId(store.getId());
         t.setPassword(SecurityUtil.MD5(t.getPassword()));
         cashierDao.add(t);
+
         User cashierUser = new User();
         cashierUser.setPassword(SecurityUtil.MD5(ResourcesUtils.getCashierPassword()));
         cashierUser.setRegisterDate(new Date());
@@ -58,6 +63,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
         cashierUser.setPermissionSet(t.getPermissionSet());
         cashierUser.setRank(3);
         userDao.add(cashierUser);
+        return true;
     }
 
     @Override
@@ -68,7 +74,11 @@ public class EmployeeServiceImpl implements IEmployeeService{
 
     @Override
     public void updateCashier(Cashier t) {
-        cashierDao.update(t);
+        Cashier c = getCashier(t.getId());
+        c.setStatus(t.getStatus());
+        c.setName(t.getName());
+
+        cashierDao.update(c);
     }
 
     @Override
@@ -82,9 +92,19 @@ public class EmployeeServiceImpl implements IEmployeeService{
     }
 
     @Override
-    public void addSales(Sales t, User user) {
-        t.setStoreId(user.getStoreId());
-        salesDao.add(t);
+    public boolean addSales(Sales t, User user) {
+        Sales s = salesDao.findBySalesNo(t.getSalesNo(), user.getStoreId());
+        if(s == null){
+            Sales sales = getSales(t.getId());
+            sales.setPhone(t.getPhone());
+            sales.setStatus(t.getStatus());
+            sales.setSalesName(t.getSalesName());
+            sales.setPercentage(t.getPercentage());
+            sales.setPreMark(t.getPreMark());
+            salesDao.add(sales);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -93,8 +113,15 @@ public class EmployeeServiceImpl implements IEmployeeService{
     }
 
     @Override
-    public void updateSales(Sales t) {
-        salesDao.update(t);
+    public void updateSales(Sales t, User user) {
+        Sales s = salesDao.findBySalesNo(t.getSalesNo(), user.getStoreId());
+        s.setPercentage(t.getPercentage());
+        s.setStatus(t.getStatus());
+        s.setSalesName(t.getSalesName());
+        s.setPhone(t.getPhone());
+        s.setPreMark(t.getPreMark());
+        s.setPreMarkTime(t.getPreMarkTime());
+        salesDao.update(s);
     }
 
     @Override
@@ -177,7 +204,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
     }
 
     @Override
-    public Sales findBySalesNo(String salesNo) {
-        return salesDao.findBySalesNo(salesNo);
+    public Sales findBySalesNo(String salesNo, int storeId) {
+        return salesDao.findBySalesNo(salesNo, storeId);
     }
 }

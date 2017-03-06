@@ -40,7 +40,7 @@ public class Sales {
     @Column(name = "store_id")
     private int storeId;
     @Column(name = "store_name")
-    private int storeIName;
+    private int storeName;
     public int getId() {
         return id;
     }
@@ -105,12 +105,12 @@ public class Sales {
         this.storeId = storeId;
     }
 
-    public int getStoreIName() {
-        return storeIName;
+    public int getStoreName() {
+        return storeName;
     }
 
-    public void setStoreIName(int storeIName) {
-        this.storeIName = storeIName;
+    public void setStoreName(int storeName) {
+        this.storeName = storeName;
     }
 
     public Date getPreMarkTime() {
@@ -120,4 +120,5 @@ public class Sales {
     public void setPreMarkTime(Date preMarkTime) {
         this.preMarkTime = preMarkTime;
     }
+
 }
