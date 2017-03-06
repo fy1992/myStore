@@ -96,6 +96,24 @@ $(function(){
 	$("#news_search").click(function(){
 		table.fnDraw();
 	});
+
+	$.post("<%=request.getContextPath()%>/server/categories/categoriesList", function (data) {
+	    for(var n in data){
+            $("#goods_categories").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
+        }
+    });
+
+    $.post("<%=request.getContextPath()%>/server/supplier/allSupplier", function (data) {
+        for(var n in data){
+            $("#goods_supplier").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
+        }
+    });
+
+    $.post("<%=request.getContextPath()%>/server/goods/allSupplier", function (data) {
+        for(var n in data){
+            $("#goods_supplier").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
+        }
+    });
 });
 
 //table start here
@@ -224,7 +242,7 @@ function format(time){
 }
 
 function formatDate(val){
-	if(val >=1 && val <= 9){
+	if(val >= 1 && val <= 9){
 		val = '0' + val;
 	}
 	if(val == 0){

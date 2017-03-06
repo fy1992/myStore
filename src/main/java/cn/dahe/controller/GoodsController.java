@@ -283,6 +283,13 @@ public class GoodsController {
         model.addAttribute("tagsIds", tagsIds);
         return "goods/add_goodsTags";
     }
+
+    @RequestMapping(value = "allGoodsTags", method = RequestMethod.POST)
+    @ResponseBody
+    public List<GoodsTags> findGoodsTags(HttpSession session){
+        User user  = (User)session.getAttribute("loginUser");
+        return goodsTagsService.findAll(user.getStoreId());
+    }
     //=====================================goodsTags end=====================================================
     //厨打小票
     //=====================================smallTicket begin=====================================================

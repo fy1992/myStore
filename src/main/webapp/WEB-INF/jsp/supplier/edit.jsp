@@ -32,7 +32,7 @@
                         <label for="supplier_using-1">是</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" id="supplier_using-2" name="status" value = "0" <c:if test="${supplier.status eq 1}">checked</c:if>>
+                        <input type="radio" id="supplier_using-2" name="status" value = "0" <c:if test="${supplier.status eq 0}">checked</c:if>>
                         <label for="supplier_using-2">否</label>
                     </div>
                 </div>

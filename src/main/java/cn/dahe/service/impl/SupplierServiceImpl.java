@@ -79,7 +79,7 @@ public class SupplierServiceImpl implements ISupplierService{
                     pageSize = (Integer) jsonObject.get("value");
                 } else if (jsonObject.get("name").equals("status")) {
                     status = Integer.parseInt(jsonObject.get("value").toString());
-                } else if (jsonObject.get("name").equals("keywords")) {
+                } else if (jsonObject.get("name").equals("supplierInfo")) {
                     keywords = jsonObject.get("value").toString();
                 }
             }
