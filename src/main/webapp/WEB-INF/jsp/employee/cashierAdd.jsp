@@ -47,7 +47,7 @@
             <div class="row cl">
                 <label class="form-label col-3"><span class="c-red">* </span>姓名：</label>
                 <div class="formControls col-7">
-                    <input type="text" class="input-text radius" value="" name="cashierName" id="cashier_name"/>
+                    <input type="text" class="input-text radius" value="" name="name" id="cashier_name"/>
                 </div>
                 <div class="col-2"> </div>
             </div>
@@ -69,20 +69,23 @@
                 <label class="form-label col-3">角色：</label>
                 <div class="formControls col-7">
                 <span class="select-box radius">
-                    <select class="select" id = "cashier_role" name = "roles">
+                    <select class="select" id = "cashier_role" name = "roleId">
                         <option value = "0">- 无 -</option>
                     </select>
                 </span>
                 </div>
                 <div class="col-2"> </div>
             </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-3">备注：</label>
-            <div class="formControls col-7">
-                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="cashier_desc" name = "description"></textarea>
+            <div class="row cl">
+                <label class="form-label col-3">角色权限：</label>
+                <div class="formControls col-8 l">
+                    <div class="mb-40 pd-20 clearfixs" id="ckBox">
+                        <input type="hidden" name = "permissionIds" id="permissions" value/>
+                        <br clear="all" />
+                    </div>
+                </div>
+                <div class="col-1"> </div>
             </div>
-            <div class="col-2"> </div>
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
@@ -102,7 +105,7 @@
     $(function () {
         $.post("<%=request.getContextPath()%>/server/role/findAll", function(data){
             for(var n in data){
-                $("#cashier_role").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");
+                $("#cashier_role").append("<option value = '"+data[n].id+"'>"+data[n].roleName+"</option>");
             }
         });
 
@@ -112,7 +115,10 @@
             ajaxPost: true,
             ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
             tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
-            btnSubmit:"#cashierAddBtn"
+            btnSubmit:"#cashierAddBtn",
+            callback:function (data) {
+                window.parent.table.fnDraw();
+            }
         });
 
         validtor.addRule([
@@ -133,6 +139,23 @@
                 nullmsg:"密码必填"
             }
         ]);
+
+        $.post("<%=request.getContextPath()%>/server/permission/findAllPermission", {type : 0}, function(data){
+            for(var n in data){
+                $("#ckBox").append(
+                    "<label><input type=\"checkbox\" name=\"ck1\" value = '"+data[n].id+"'/>"+data[n].name+"</label>"
+                );
+            }
+            $("#ckBox").append("<br clear=\"all\"/>");
+
+            $("input[type='checkbox']").on("click", function() {
+                var ids = [];
+                $("input[type='checkbox']:checked").each(function (i) {
+                    ids.push($(this).val());
+                });
+                $("#permissions").val(ids);
+            });
+        });
     })
 </script>
 </body>

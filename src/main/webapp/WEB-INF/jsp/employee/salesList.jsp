@@ -88,12 +88,12 @@
             }},
             {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
             {"mData" : "salesNo", "sDefaultContent" : "", "bSortable":false},
-            {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
+            {"mData" : "salesName", "sDefaultContent" : "", "bSortable":false},
             {"mData" : "phone", "sDefaultContent" : ""},
             {"mData" : "percentage", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
                 return data + " %" ;
             }},
-            {"mData" : "isPreMark", "sDefaultContent" : "", "mRender" : function (data, type, full) {
+            {"mData" : "preMark", "sDefaultContent" : "", "mRender" : function (data, type, full) {
                 return data == 0 ? "<a style='text-decoration:none'>开通</a>" : "有效期至" + full.preMarkTime ;
             }},
             {"mData" : "status", "sDefaultContent" : "", "mRender" : function (data, type, full) {
@@ -191,6 +191,11 @@
     //新增
     function add() {
         layer_show("新增导购员", "<%=request.getContextPath()%>/server/employee/salesAdd", "500", "500");
+    }
+
+    //编辑
+    function edit(id) {
+        layer_show("编辑导购员", "<%=request.getContextPath()%>/server/employee/salesEdit/"+id, "500", "500");
     }
 </script>
 </body>

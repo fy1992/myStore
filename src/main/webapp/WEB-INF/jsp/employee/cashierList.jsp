@@ -89,8 +89,8 @@ table = $('#cashier_table').dataTable({
         {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "cashierNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "role", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return data.name ;
+        {"mData" : "roleName", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return  !data ? "-" : data ;
         }},
         {"mData" : "phone", "sDefaultContent" : ""},
         {"mData" : "status", "sDefaultContent" : "", "mRender" : function (data, type, full) {
@@ -188,6 +188,11 @@ function formatDate(val){
 //新增
 function add() {
     layer_show("新增收银员", "<%=request.getContextPath()%>/server/employee/cashierAdd", "500", "600");
+}
+
+//编辑
+function edit(id) {
+    layer_show("编辑收银员", "<%=request.getContextPath()%>/server/employee/cashierEdit/" + id, "500", "600");
 }
 
 //员工角色管理

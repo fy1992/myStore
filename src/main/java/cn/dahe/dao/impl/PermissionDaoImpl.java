@@ -17,24 +17,19 @@ public class PermissionDaoImpl extends BaseDaoImpl<Permission> implements IPermi
     public Pager<Permission> findByParam(int start, int pageSize, Pager<Object> params) {
         StringBuffer hql = new StringBuffer("from Permission permission where 1=1");
         List<Object> list = new ArrayList<>();
-        int storeId = params.getIntParam1();
-        int type = params.getIntParam2();
+        int type = params.getIntParam1();
         if(type != -1 && type != 2){
             hql.append(" and permission.type = ?");
             list.add(type);
-        }
-        if(storeId != -1){
-            hql.append(" and permission.storeId = ? ");
-            list.add(storeId);
         }
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);
     }
 
     @Override
-    public List<Permission> findAll(int storeId, int type) {
-        String hql = "from Permission where storeId = ? and type = ?";
-        return this.list(hql, new Object[]{storeId, type});
+    public List<Permission> findAll(int type) {
+        String hql = "from Permission where type = ?";
+        return this.list(hql, type);
     }
 
     @Override
@@ -44,8 +39,8 @@ public class PermissionDaoImpl extends BaseDaoImpl<Permission> implements IPermi
     }
 
     @Override
-    public Permission findByPerKey(String perKey, int storeId) {
-        String hql = "from Permission where perKey = ? and storeId = ?";
-        return (Permission)this.queryByHql(hql, new Object[]{perKey, storeId});
+    public Permission findByPerKey(String perKey) {
+        String hql = "from Permission where perKey = ?";
+        return (Permission)this.queryByHql(hql, perKey);
     }
 }

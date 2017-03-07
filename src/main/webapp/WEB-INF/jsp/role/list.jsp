@@ -29,7 +29,7 @@
             </span>
         </div>
         <div class="pd-20 clearfix">
-            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="role_table">
+            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="role_table" style="width: 1679px;">
                 <thead>
                     <tr class="text-c">
                         <th width="50">序号</th>
@@ -71,7 +71,7 @@ table = $('#role_table').dataTable({
        "aoColumns" : [
         {"mData" : null, "sDefaultContent" : "", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='edit(\"" + full.id + "\")'>编辑</a>";
+	       return "<a style='text-decoration:none' onclick='edit(\"" + full.id + "\")'>编辑</a>";
         }},
         {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "roleName", "sDefaultContent" : "", "bSortable":false},
@@ -166,6 +166,11 @@ function formatDate(val){
 //新增
 function add() {
     layer_show("新增角色", "<%=request.getContextPath()%>/server/role/addRole", "700", "600");
+}
+
+//新增
+function edit(id) {
+    layer_show("编辑角色", "<%=request.getContextPath()%>/server/role/editRole/" + id, "700", "600");
 }
 </script>
 </body>

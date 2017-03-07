@@ -51,19 +51,19 @@
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-3">备注：</label>
+            <label class="form-label col-3">角色权限：</label>
             <div class="formControls col-6">
-                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="role_desc" name="description"></textarea>
+                <div class="mb-40 pd-20 clearfixs" id="ckBox">
+                    <input type="hidden" name = "permissionIds" id="permissions" value/>
+                    <br clear="all" />
+                </div>
             </div>
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-3">角色权限：</label>
+            <label class="form-label col-3">备注：</label>
             <div class="formControls col-6">
-                <div class="mb-40 pd-20 clearfixs" id="ckBox">
-                    <input type="hidden" name = "permissions" id="permissions"/>
-                    <br clear="all" />
-                </div>
+                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="role_desc" name="description"></textarea>
             </div>
             <div class="col-3"> </div>
         </div>
@@ -131,15 +131,14 @@
                 );
             }
             $("#ckBox").append("<br clear=\"all\"/>");
-        });
 
-        $("input[type='checkbox']").change(function() {
-            var ids = [];
-            $("input[type='checkbox']:checked").forEach(function (i) {
-                ids.push($(this).val());
+            $("input[type='checkbox']").on("click", function() {
+                var ids = [];
+                $("input[type='checkbox']:checked").each(function (i) {
+                    ids.push($(this).val());
+                });
+                $("#permissions").val(ids);
             });
-            $("#permissions").val(ids);
-            alert($("#permissions").val());
         });
     })
 </script>

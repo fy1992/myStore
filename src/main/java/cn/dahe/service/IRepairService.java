@@ -10,4 +10,6 @@ public interface IRepairService {
     void repairPermission();
 
     void repairMenu();
+
+    void repairRole();
 }

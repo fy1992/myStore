@@ -25,7 +25,7 @@ public class PermissionServiceImpl implements IPermissionService{
 
     @Override
     public boolean add(Permission t) {
-        Permission p = permissionDao.findByPerKey(t.getPerKey(), t.getStoreId());
+        Permission p = permissionDao.findByPerKey(t.getPerKey());
         if(p == null){
             permissionDao.add(t);
             return true;
@@ -42,7 +42,7 @@ public class PermissionServiceImpl implements IPermissionService{
     public boolean update(Permission t) {
         Permission p = permissionDao.get(t.getId());
         if(!t.getPerKey().equals(p.getPerKey())){
-            Permission r = permissionDao.findByPerKey(t.getPerKey(), t.getStoreId());
+            Permission r = permissionDao.findByPerKey(t.getPerKey());
             if(r != null){
                 return false;
             }
@@ -68,7 +68,7 @@ public class PermissionServiceImpl implements IPermissionService{
     }
 
     @Override
-    public Pager<Permission> findByParams(String aDataSet, int storeId) {
+    public Pager<Permission> findByParams(String aDataSet) {
         int start = 0;// 起始
         int pageSize = 20;// size
         int type = -1;
@@ -88,8 +88,7 @@ public class PermissionServiceImpl implements IPermissionService{
             Pager<Object> params = new Pager<>();
             params.setOrderColumn("permission.id");
             params.setOrderDir("desc");
-            params.setIntParam1(storeId);
-            params.setIntParam2(type);
+            params.setIntParam1(type);
             return permissionDao.findByParam(start, pageSize, params);
         }catch (Exception e){
             e.printStackTrace();
@@ -98,8 +97,8 @@ public class PermissionServiceImpl implements IPermissionService{
     }
 
     @Override
-    public List<Permission> findAll(int storeId, int type) {
-        return permissionDao.findAll(storeId, type);
+    public List<Permission> findAll(int type) {
+        return permissionDao.findAll(type);
     }
 
     @Override

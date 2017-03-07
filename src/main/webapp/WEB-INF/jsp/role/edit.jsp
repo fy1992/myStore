@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-role-edit" method="post" action="<%=request.getContextPath()%>/role/editRole">
+    <form class="form form-horizontal" id="form-role-edit" method="post" action="<%=request.getContextPath()%>/server/role/editRole">
         <div class="row cl">
             <label class="form-label col-3">是否启用：</label>
             <div class="formControls col-6">
@@ -47,7 +47,8 @@
         <div class="row cl">
             <label class="form-label col-3">角色权限：</label>
             <div class="formControls col-6">
-                <div class="mb-40 pd-20 clearfixs" id="perBox">
+                <div class="mb-40 pd-20 clearfixs" id="ckBox">
+                    <input type="hidden" name = "permissionIds" id="permissions" value/>
                     <br clear="all" />
                 </div>
             </div>
@@ -89,6 +90,7 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
     $(function () {
         var  validtor = $("#form-role-edit").Validform({
@@ -111,13 +113,13 @@
             }
         ]);
 
-        $.post("<%=request.getContextPath()%>/permission/findAllPermission", {type : 1}, function(data){
+        $.post("<%=request.getContextPath()%>/server/permission/findAllPermission", {type : 0}, function(data){
             for(var n in data){
-                $("#perBox").append(
+                $("#ckBox").append(
                     "<label><input type=\"checkbox\" name=\"ck1\" value = '"+data[n].id+"'/>"+data[n].name+"</label>"
                 );
             }
-            $("#perBox").append("<br clear=\"all\"/>");
+            $("#ckBox").append("<br clear=\"all\"/>");
             var result = "${permissions}";
             if(result && result != 0){
                 var tagslist = result.split(",");
@@ -127,6 +129,14 @@
                     }
                 });
             }
+
+            $("input[type='checkbox']").on("click", function() {
+                var ids = [];
+                $("input[type='checkbox']:checked").each(function (i) {
+                    ids.push($(this).val());
+                });
+                $("#permissions").val(ids);
+            });
         })
     })
 </script>

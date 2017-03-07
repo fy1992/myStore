@@ -77,12 +77,12 @@ public class RoleController {
      */
     @RequestMapping(value = "addRole", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addRole(Role role, HttpSession session, HttpServletRequest request){
+    public AjaxObj addRole(Role role, String permissionIds, HttpSession session, HttpServletRequest request){
         AjaxObj json = new AjaxObj();
-        String permissions = StringUtil.formatStr(request.getParameter("permissions"));
+       // String permissions = StringUtil.formatStr(request.getParameter("permissionIds"));
         User user = (User)session.getAttribute("loginUser");
         role.setStoreId(user.getStoreId());
-        boolean b = roleService.add(role, permissions);
+        boolean b = roleService.add(role, permissionIds);
         if(b){
             json.setInfo("角色添加成功");
             json.setStatus("y");
@@ -101,7 +101,7 @@ public class RoleController {
     public String editRole(@PathVariable int id, Model model){
         Role role = roleService.get(id);
         model.addAttribute("role", role);
-        Set<Permission> permissionSet = role.getPermissionSet();
+        Set<Permission> permissionSet = role.getPermissions();
         StringBuffer permissionSb = new StringBuffer();
         permissionSet.forEach(permission -> {
             permissionSb.append(permission.getId() + ",");
@@ -120,12 +120,12 @@ public class RoleController {
      */
     @RequestMapping(value = "editRole", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj editRole(Role role, HttpSession session, HttpServletRequest request){
+    public AjaxObj editRole(Role role, String permissionIds, HttpSession session, HttpServletRequest request){
         AjaxObj json = new AjaxObj();
-        String permissions = StringUtil.formatStr(request.getParameter("permissions"));
+        //String permissions = StringUtil.formatStr(request.getParameter("permissionIds"));
         User user = (User)session.getAttribute("loginUser");
         role.setStoreId(user.getStoreId());
-        boolean b = roleService.add(role, permissions);
+        boolean b = roleService.update(role, permissionIds);
         if(b){
             json.setInfo("角色编辑成功");
             json.setStatus("y");

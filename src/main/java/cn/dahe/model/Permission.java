@@ -1,16 +1,18 @@
 package cn.dahe.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,27 +36,27 @@ public class Permission {
     //权限url
     private String url;
     //权限对应的角色
-    @ManyToMany
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "t_role_permission",
             joinColumns = {@JoinColumn(name = "permission_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<Role> roleSet;
+    @JsonIgnore
+    private Set<Role> roles;
     //权限对应的用户
-    @ManyToMany
+    @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "t_user_permission",
             joinColumns = {@JoinColumn(name = "permission_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private Set<User> userSet;
+    @JsonIgnore
+    private Set<User> users;
     //权限对应的收银员
-    @ManyToMany
+    @ManyToMany(targetEntity = Cashier.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "t_cashier_permission",
             joinColumns = {@JoinColumn(name = "permission_id")},
             inverseJoinColumns = {@JoinColumn(name = "cashier_id")})
-    private Set<Cashier> cashierSet;
+    @JsonIgnore
+    private Set<Cashier> cashiers;
 
-    //所属分店
-    @Column(name = "store_id")
-    private int storeId;
     //权限类型  0 web 端权限 1 client 端权限
     private int type;
 
@@ -82,36 +84,28 @@ public class Permission {
         this.description = description;
     }
 
-    public Set<Role> getRoleSet() {
-        return roleSet;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRoleSet(Set<Role> roleSet) {
-        this.roleSet = roleSet;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
-    public Set<User> getUserSet() {
-        return userSet;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
-    public Set<Cashier> getCashierSet() {
-        return cashierSet;
+    public Set<Cashier> getCashiers() {
+        return cashiers;
     }
 
-    public void setCashierSet(Set<Cashier> cashierSet) {
-        this.cashierSet = cashierSet;
-    }
-
-    public int getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
+    public void setCashiers(Set<Cashier> cashiers) {
+        this.cashiers = cashiers;
     }
 
     public int getType() {
@@ -144,21 +138,5 @@ public class Permission {
 
     public void setPerKey(String perKey) {
         this.perKey = perKey;
-    }
-
-    @Override
-    public String toString() {
-        return "Permission{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", perKey='" + perKey + '\'' +
-                ", description='" + description + '\'' +
-                ", url='" + url + '\'' +
-                ", roleSet=" + roleSet +
-                ", userSet=" + userSet +
-                ", cashierSet=" + cashierSet +
-                ", storeId=" + storeId +
-                ", type=" + type +
-                '}';
     }
 }

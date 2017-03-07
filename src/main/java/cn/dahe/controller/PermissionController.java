@@ -38,9 +38,8 @@ public class PermissionController {
      */
     @RequestMapping(value = "findAllPermission", method = RequestMethod.POST)
     @ResponseBody
-    public List<Permission> findAllPermission(int type, HttpSession session){
-        User user = (User)session.getAttribute("loginUser");
-        return permissionService.findAll(user.getStoreId(), type);
+    public List<Permission> findAllPermission(int type){
+        return permissionService.findAll(type);
     }
     /**
      * 列表页查询
@@ -55,10 +54,9 @@ public class PermissionController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public Pager<Permission> getPermissionList(HttpSession session, String aDataSet) {
+    public Pager<Permission> getPermissionList(String aDataSet) {
         logger.info("--- permission list begin ---");
-        User user = (User) session.getAttribute("loginUser");
-        return permissionService.findByParams(aDataSet, user.getStoreId());
+        return permissionService.findByParams(aDataSet);
     }
 
     /**
@@ -76,10 +74,8 @@ public class PermissionController {
      */
     @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addPermission(Permission permission, HttpSession session){
+    public AjaxObj addPermission(Permission permission){
         AjaxObj json = new AjaxObj();
-        User user = (User) session.getAttribute("loginUser");
-        permission.setStoreId(user.getStoreId());
         boolean b = permissionService.add(permission);
         if(b){
             json.setInfo("权限添加成功");
@@ -106,15 +102,11 @@ public class PermissionController {
     /**
      * 权限修改
      * @param permission
-     * @param session
-     * @param request
      */
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj editPermission(Permission permission, HttpSession session, HttpServletRequest request){
+    public AjaxObj editPermission(Permission permission){
         AjaxObj json = new AjaxObj();
-        User user = (User) session.getAttribute("loginUser");
-        permission.setStoreId(user.getStoreId());
         boolean b = permissionService.update(permission);
         if(b) {
             json.setInfo("权限修改成功");

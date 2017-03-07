@@ -1,14 +1,17 @@
 package cn.dahe.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.HashSet;
@@ -41,22 +44,24 @@ public class Cashier {
     @Column(name = "open_id")
     private String openId;
     //收银员角色
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @Column(name = "role_id")
+    private int roleId;
+    @Column(name = "role_name")
+    private String roleName;
     //状态 0 停用 1 启用
     private int status;
     //收银员对应的权限
-    @ManyToMany
+    @ManyToMany(targetEntity = Permission.class, fetch = FetchType.EAGER)
     @JoinTable(name = "t_cashier_permission",
-            joinColumns = {@JoinColumn(name = "user_id")},
+            joinColumns = {@JoinColumn(name = "cashier_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")})
-    private Set<Permission> permissionSet;
+    @JsonIgnore
+    private Set<Permission> permissions;
 
     //获取权限名称
     @Transient
     public Set<String> getPermissionName(){
-        Set<Permission> permissions = getPermissionSet();
+        Set<Permission> permissions = getPermissions();
         Set<String> set = new HashSet<String>();
         for (Permission permission : permissions) {
             set.add(permission.getName());
@@ -110,20 +115,28 @@ public class Cashier {
         this.mobile = mobile;
     }
 
-    public Role getRole() {
-        return role;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
-    public Set<Permission> getPermissionSet() {
-        return permissionSet;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setPermissionSet(Set<Permission> permissionSet) {
-        this.permissionSet = permissionSet;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     public int getStatus() {

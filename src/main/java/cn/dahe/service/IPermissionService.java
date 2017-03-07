@@ -18,17 +18,15 @@ public interface IPermissionService {
     /**
      * 根据参数查询
      * @param aDataSet
-     * @param storeId
      * @return
      */
-    Pager<Permission> findByParams(String aDataSet, int storeId);
+    Pager<Permission> findByParams(String aDataSet);
 
     /**
      * 查询全部
-     * @param storeId
      * @return
      */
-    List<Permission> findAll(int storeId, int type);
+    List<Permission> findAll(int type);
 
     /**
      * 所有目录

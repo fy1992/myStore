@@ -8,6 +8,7 @@ import cn.dahe.model.Role;
 import cn.dahe.service.IRoleService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,14 +33,15 @@ public class RoleServiceImpl implements IRoleService{
         String roleKey = t.getRoleKey();
         Role r = roleDao.findByRoleKey(roleKey, t.getStoreId());
         if(r == null){
-            String[] permissionArr = permissions.split(",");
-            Set<Permission> set = new HashSet<>();
-            for(int i = 0, len = permissionArr.length; i < len; i++){
-                Permission permission = permissionDao.get(Integer.parseInt(permissionArr[i]));
-                set.add(permission);
+            if(StringUtils.isNotBlank(permissions)){
+                String[] permissionArr = permissions.split(",");
+                Set<Permission> set = new HashSet<>();
+                for(int i = 0, len = permissionArr.length; i < len; i++){
+                    Permission permission = permissionDao.get(Integer.parseInt(permissionArr[i]));
+                    set.add(permission);
+                }
+                t.setPermissions(set);
             }
-            t.setPermissionSet(set);
-
             roleDao.add(t);
             return true;
         }
@@ -54,19 +56,21 @@ public class RoleServiceImpl implements IRoleService{
     @Override
     public boolean update(Role t, String permissions) {
         Role role = roleDao.get(t.getId());
-        if(!t.getRoleKey().equals(role.getRoleKey())){
+        /*if(!t.getRoleKey().equals(role.getRoleKey())){
             Role r = roleDao.findByRoleKey(t.getRoleKey(), t.getStoreId());
             if(r != null){
                 return false;
             }
+        }*/
+        if(StringUtils.isNotBlank(permissions)){
+            String[] permissionArr = permissions.split(",");
+            Set<Permission> set = new HashSet<>();
+            for(int i = 0, len = permissionArr.length; i < len; i++){
+                Permission permission = permissionDao.get(Integer.parseInt(permissionArr[i]));
+                set.add(permission);
+            }
+            role.setPermissions(set);
         }
-        String[] permissionArr = permissions.split(",");
-        Set<Permission> set = new HashSet<>();
-        for(int i = 0, len = permissionArr.length; i < len; i++){
-            Permission permission = permissionDao.get(Integer.parseInt(permissionArr[i]));
-            set.add(permission);
-        }
-        role.setPermissionSet(set);
         role.setDescription(t.getDescription());
         role.setRoleName(t.getRoleName());
         role.setIsAsync(t.getIsAsync());
@@ -104,7 +108,7 @@ public class RoleServiceImpl implements IRoleService{
             Pager<Object> params = new Pager<>();
             params.setOrderColumn("role.id");
             params.setOrderDir("desc");
-            params.setIntParam4(storeId);
+            params.setIntParam1(storeId);
             return roleDao.findByParam(start, pageSize, params);
         }catch (Exception e){
             e.printStackTrace();

@@ -1,8 +1,12 @@
 package cn.dahe.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,12 +54,17 @@ public class User {
     private int status;
     //0 超管  1 总店店长 2 分店店长 3 收银员
     private int rank;
+    @Column(name = "role_id")
+    private int roleId;
+    @Column(name = "role_name")
+    private String roleName;
     //用户对应的权限
-    @ManyToMany
+    @ManyToMany(targetEntity = Permission.class, fetch = FetchType.EAGER)
     @JoinTable(name = "t_user_permission",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")})
-    private Set<Permission> permissionSet = new HashSet<>();
+    @JsonIgnore
+    private Set<Permission> permissions = new HashSet<>();
 
     public int getId() {
         return id;
@@ -137,12 +146,12 @@ public class User {
         this.status = status;
     }
 
-    public Set<Permission> getPermissionSet() {
-        return permissionSet;
+    public Set<Permission> getPermissions() {
+        return permissions;
     }
 
-    public void setPermissionSet(Set<Permission> permissionSet) {
-        this.permissionSet = permissionSet;
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     public int getStoreId() {
@@ -159,5 +168,21 @@ public class User {
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

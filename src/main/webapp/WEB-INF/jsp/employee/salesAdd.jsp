@@ -47,7 +47,7 @@
             <div class="row cl">
                 <label class="form-label col-3"><span class="c-red">* </span>姓名：</label>
                 <div class="formControls col-7">
-                    <input type="text" class="input-text radius" value=""  id="sales_name" name = "salesName">
+                    <input type="text" class="input-text radius" value=""  id="sales_name" name="salesName">
                 </div>
                 <div class="col-2"> </div>
             </div>
@@ -84,7 +84,10 @@
             ajaxPost: true,
             ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
             tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
-            btnSubmit:"#salesAddBtn"
+            btnSubmit:"#salesAddBtn",
+            callback:function (data) {
+                window.parent.table.fnDraw();
+            }
         });
 
         validtor.addRule([
@@ -98,6 +101,12 @@
                 ele:"#sales_name",
                 datatype:"*",
                 nullmsg:"导购员姓名必填"
+            },
+            {
+                ele:"#sales_phone",
+                datatype:"m",
+                errormsg:"请填写正确的手机号码",
+                ignore : "ignore"
             }
         ]);
     })

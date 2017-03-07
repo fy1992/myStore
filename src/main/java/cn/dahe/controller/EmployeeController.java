@@ -3,6 +3,7 @@ package cn.dahe.controller;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Cashier;
+import cn.dahe.model.Permission;
 import cn.dahe.model.Sales;
 import cn.dahe.model.User;
 import cn.dahe.service.IEmployeeService;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Set;
 
 /**
  * 员工
@@ -65,12 +68,15 @@ public class EmployeeController {
      */
     @RequestMapping(value = "cashierAdd", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj cashierAdd(Cashier cashier, HttpSession session){
+    public AjaxObj cashierAdd(Cashier cashier, String permissionIds, HttpSession session, HttpServletRequest request){
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
-        employeeService.addCashier(cashier, user);
-        json.setMsg("收银员添加成功");
-        json.setResult(1);
+        request.getParameter("permissionIds");
+        employeeService.addCashier(cashier, user, permissionIds);
+        /*json.setMsg("收银员添加成功");
+        json.setResult(1);*/
+        json.setInfo("收银员添加成功");
+        json.setStatus("y");
         return json;
     }
 
@@ -82,6 +88,15 @@ public class EmployeeController {
     public String cashierEdit(@PathVariable int id, Model model){
         Cashier cashier = employeeService.getCashier(id);
         model.addAttribute("cashier", cashier);
+        Set<Permission> permissionSet = cashier.getPermissions();
+        StringBuffer permissionSb = new StringBuffer();
+        permissionSet.forEach(permission -> {
+            permissionSb.append(permission.getId() + ",");
+        });
+        if(permissionSb.length() > 0){
+            permissionSb.deleteCharAt(permissionSb.length() - 1);
+        }
+        model.addAttribute("permissions", permissionSb.toString());
         return "employee/cashierEdit";
     }
 
@@ -92,11 +107,13 @@ public class EmployeeController {
      */
     @RequestMapping(value = "cashierEdit", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj cashierEdit(Cashier cashier){
+    public AjaxObj cashierEdit(Cashier cashier, String permissionIds){
         AjaxObj json = new AjaxObj();
-        employeeService.updateCashier(cashier);
-        json.setMsg("收银员编辑成功");
-        json.setResult(1);
+        employeeService.updateCashier(cashier, permissionIds);
+        /*json.setMsg("收银员编辑成功");
+        json.setResult(1);*/
+        json.setInfo("收银员编辑成功");
+        json.setStatus("y");
         return json;
     }
 
@@ -169,8 +186,10 @@ public class EmployeeController {
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
         employeeService.updateSales(sales, user);
-        json.setMsg("导购员编辑成功");
-        json.setResult(1);
+       /* json.setMsg("导购员编辑成功");
+        json.setResult(1);*/
+        json.setInfo("导购员编辑成功");
+        json.setStatus("y");
         return json;
     }
     //========================================sales end========================================================

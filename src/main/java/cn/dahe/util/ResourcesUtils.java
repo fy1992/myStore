@@ -76,4 +76,18 @@ public class ResourcesUtils {
 	public static String getFileSize(){
 	    return bundel.getString("fileSize");
     }
+
+    public static String getPermissions(){
+		String str= null;
+		try{
+			str = new String(bundel.getString("permissions").getBytes("ISO-8859-1"), "UTF-8");
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return str;
+	}
+
+	public static String getRole(){
+        return bundel.getString("role");
+    }
 }

@@ -121,7 +121,7 @@ table = $('#permission_table').dataTable({
                "success" : fnCallback
            });  
        },
-    "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
+    "fnServerParams" : function(aoData){
       	var type = $("#permission_type").val();
         aoData.push({"name":"type","value":type});
     },

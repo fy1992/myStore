@@ -1,20 +1,18 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.ICashierDao;
+import cn.dahe.dao.IPermissionDao;
 import cn.dahe.dao.ISalesDao;
-import cn.dahe.dao.IStoreDao;
 import cn.dahe.dao.IUserDao;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Cashier;
+import cn.dahe.model.Permission;
 import cn.dahe.model.Sales;
-import cn.dahe.model.Store;
 import cn.dahe.model.User;
 import cn.dahe.service.IEmployeeService;
-import cn.dahe.service.IStoreService;
 import cn.dahe.util.ResourcesUtils;
 import cn.dahe.util.SecurityUtil;
-import cn.dahe.util.StringUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +23,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by fy on 2017/1/27.
@@ -40,27 +40,42 @@ public class EmployeeServiceImpl implements IEmployeeService{
     @Resource
     private IUserDao userDao;
     @Resource
-    private IStoreDao storeDao;
+    private IPermissionDao permissionDao;
+
     @Override
-    public boolean addCashier(Cashier t, User user) {
+    public boolean addCashier(Cashier t, User user, String permissionIds) {
         Cashier c = cashierDao.findByCashierNo(t.getCashierNo());
         if(c != null){
             return false;
         }
-        Store store = storeDao.get(user.getStoreId());
-        t.setStoreId(store.getId());
-        t.setPassword(SecurityUtil.MD5(t.getPassword()));
+        t.setStoreId(user.getStoreId());
+        t.setStoreName(user.getStoreName());
+        t.setPassword(t.getPassword());
+        if(StringUtils.isNotBlank(permissionIds)){
+            String[] permissionArr = permissionIds.split(",");
+            Set<Permission> set = new HashSet<>();
+            for(int i = 0, len = permissionArr.length; i < len; i++){
+                Permission permission = permissionDao.get(Integer.parseInt(permissionArr[i]));
+                set.add(permission);
+            }
+            t.setPermissions(set);
+        }
         cashierDao.add(t);
 
         User cashierUser = new User();
         cashierUser.setPassword(SecurityUtil.MD5(ResourcesUtils.getCashierPassword()));
         cashierUser.setRegisterDate(new Date());
-        cashierUser.setStoreId(store.getId());
+        cashierUser.setStoreId(user.getStoreId());
         cashierUser.setStatus(1);
+        cashierUser.setEmail(t.getEmail());
+        cashierUser.setMobile(t.getMobile());
         cashierUser.setLoginName(user.getLoginName() + ":" + t.getCashierNo());
-        cashierUser.setUsername(user.getUsername());
-        cashierUser.setStoreName(store.getName());
-        cashierUser.setPermissionSet(t.getPermissionSet());
+        cashierUser.setUsername("收银员");
+        cashierUser.setStoreName(user.getStoreName());
+        Set<Permission> permissionSet = t.getPermissions();
+        Set<Permission> newSet = new HashSet<>(permissionSet.size());
+        permissionSet.forEach(permission -> newSet.add(permission));
+        cashierUser.setPermissions(newSet);
         cashierUser.setRank(3);
         userDao.add(cashierUser);
         return true;
@@ -73,11 +88,19 @@ public class EmployeeServiceImpl implements IEmployeeService{
 
 
     @Override
-    public void updateCashier(Cashier t) {
+    public void updateCashier(Cashier t, String permissionIds) {
         Cashier c = getCashier(t.getId());
         c.setStatus(t.getStatus());
         c.setName(t.getName());
-
+        if(StringUtils.isNotBlank(permissionIds)){
+            String[] permissionArr = permissionIds.split(",");
+            Set<Permission> set = new HashSet<>();
+            for(int i = 0, len = permissionArr.length; i < len; i++){
+                Permission permission = permissionDao.get(Integer.parseInt(permissionArr[i]));
+                set.add(permission);
+            }
+            c.setPermissions(set);
+        }
         cashierDao.update(c);
     }
 
@@ -100,7 +123,9 @@ public class EmployeeServiceImpl implements IEmployeeService{
             sales.setStatus(t.getStatus());
             sales.setSalesName(t.getSalesName());
             sales.setPercentage(t.getPercentage());
-            sales.setPreMark(t.getPreMark());
+            sales.setPreMark(0);
+            sales.setStoreId(user.getStoreId());
+            sales.setSalesName(user.getStoreName());
             salesDao.add(sales);
             return true;
         }
@@ -119,8 +144,6 @@ public class EmployeeServiceImpl implements IEmployeeService{
         s.setStatus(t.getStatus());
         s.setSalesName(t.getSalesName());
         s.setPhone(t.getPhone());
-        s.setPreMark(t.getPreMark());
-        s.setPreMarkTime(t.getPreMarkTime());
         salesDao.update(s);
     }
 

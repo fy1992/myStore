@@ -1,15 +1,16 @@
 package cn.dahe.model;
 
-import javax.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.HashSet;
@@ -36,29 +37,27 @@ public class Role {
     private String description;
 
     //角色对应的权限
-    @ManyToMany
+    @ManyToMany(targetEntity = Permission.class, fetch = FetchType.EAGER)
     @JoinTable(name = "t_role_permission",
             joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name="permission_id")})
-    private Set<Permission> permissionSet = new HashSet<>();
-
-    //角色对应的导购员
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    private Set<Cashier> cashierSet = new HashSet<>();
+            inverseJoinColumns = {@JoinColumn(name = "permission_id")})
+    @JsonIgnore
+    private Set<Permission> permissions = new HashSet<>();
 
     //所属分店
     @Column(name = "store_id")
     private int storeId;
     @Column(name = "store_name")
-    private int storeName;
+    private String storeName;
     //状态  0  停用 1 启用
     private int status;
     //是否同步相应收银员的权限 0 不同步 1 同步
     @Column(name = "is_asyne")
     private int isAsync;
+
     @Transient
     public Set<String> getPermissionsName(){
-        Set<Permission> permissions = getPermissionSet();
+        Set<Permission> permissions = getPermissions();
         Set<String> set = new HashSet<String>();
         for (Permission permission : permissions) {
             set.add(permission.getName());
@@ -90,20 +89,12 @@ public class Role {
         this.description = description;
     }
 
-    public Set<Permission> getPermissionSet() {
-        return permissionSet;
+    public Set<Permission> getPermissions() {
+        return permissions;
     }
 
-    public void setPermissionSet(Set<Permission> permissionSet) {
-        this.permissionSet = permissionSet;
-    }
-
-    public Set<Cashier> getCashierSet() {
-        return cashierSet;
-    }
-
-    public void setCashierSet(Set<Cashier> cashierSet) {
-        this.cashierSet = cashierSet;
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     public int getStoreId() {
@@ -114,11 +105,11 @@ public class Role {
         this.storeId = storeId;
     }
 
-    public int getStoreName() {
+    public String getStoreName() {
         return storeName;
     }
 
-    public void setStoreName(int storeName) {
+    public void setStoreName(String storeName) {
         this.storeName = storeName;
     }
 
