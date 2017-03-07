@@ -92,7 +92,7 @@ table = $('#cashier_table').dataTable({
         {"mData" : "cashierNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "roleName", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return  !data ? "-" : data ;
+            return  !data ? "无" : data ;
         }},
         {"mData" : "mobile", "sDefaultContent" : ""},
         {"mData" : "status", "sDefaultContent" : "", "mRender" : function (data, type, full) {

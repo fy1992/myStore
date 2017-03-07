@@ -51,7 +51,7 @@ public class ClientController {
     }
 
     /**
-     * 通过类别查询
+     * 通过类别查询商品
      * @param categoriesId
      */
     @RequestMapping(value = "goodsList", method = RequestMethod.GET)

@@ -1,5 +1,7 @@
 package cn.dahe.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +31,7 @@ public class GoodsTags {
     @JoinTable(name = "t_goods_goodsTags",
             joinColumns = {@JoinColumn(name = "tags_id")},
             inverseJoinColumns = {@JoinColumn(name = "goods_id")})
+    @JsonIgnore
     private Set<Goods> goodsSet = new HashSet<>();
     //所属店面Id
     @Column(name = "store_id")

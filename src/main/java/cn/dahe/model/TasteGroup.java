@@ -1,5 +1,7 @@
 package cn.dahe.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,6 +39,7 @@ public class TasteGroup {
     @JoinTable(name = "t_goods_taste",
             joinColumns = {@JoinColumn(name = "taste_id")},
             inverseJoinColumns = {@JoinColumn(name = "goods_id")})
+    @JsonIgnore
     private Set<Goods> goodsSet = new HashSet<>();
     //口味组对应的口味
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

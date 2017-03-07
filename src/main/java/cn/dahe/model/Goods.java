@@ -1,17 +1,9 @@
 package cn.dahe.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,6 +31,7 @@ public class Goods {
     @JoinTable(name = "t_goods_tasteGroup",
             joinColumns = {@JoinColumn(name = "goods_id")},
             inverseJoinColumns = {@JoinColumn(name = "tasteGroup_id")})
+    @JsonIgnore
     private Set<TasteGroup> tasteGroupSet = new HashSet<>();
     //条码
     @Column(name = "goods_no")
@@ -84,7 +77,8 @@ public class Goods {
     @Column(name = "shelf_life")
     private int shelfLife;
     //库存
-    @OneToOne(mappedBy = "goods", fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stock_id")
     private Stock stock;
     //库存上限
     @Column(name = "stock_up")
@@ -95,16 +89,18 @@ public class Goods {
     //备注
     private String description;
     //小票
-    @ManyToMany
+    @ManyToMany(targetEntity = SmallTicket.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "t_goods_smallTicket",
             joinColumns = {@JoinColumn(name = "goods_id")},
             inverseJoinColumns = {@JoinColumn(name = "ticket_id")})
+    @JsonIgnore
     private Set<SmallTicket> smallTicketSet = new HashSet<>();
     //商品标签
-    @ManyToMany
+    @ManyToMany(targetEntity = GoodsTags.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "t_goods_goodsTags",
             joinColumns = {@JoinColumn(name = "goods_id")},
             inverseJoinColumns = {@JoinColumn(name = "tags_id")})
+    @JsonIgnore
     private Set<GoodsTags> goodsTagsSet = new HashSet<>();
     //所属店面
     @Column(name = "store_id")

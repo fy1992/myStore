@@ -1,13 +1,8 @@
 package cn.dahe.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 /**
  * 库存
@@ -20,8 +15,7 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     //商品
-    @OneToOne
-    @JoinColumn(name = "goods_id", insertable = true, unique = true)
+    @OneToOne(mappedBy = "stock")
     private Goods goods;
     //商品库存
     @Column(name = "good_num")

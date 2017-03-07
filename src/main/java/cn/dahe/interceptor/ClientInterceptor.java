@@ -1,5 +1,6 @@
 package cn.dahe.interceptor;
 
+import cn.dahe.model.Cashier;
 import cn.dahe.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,21 +22,11 @@ public class ClientInterceptor extends HandlerInterceptorAdapter {
 		String contextPath = request.getContextPath();
 		String url = requestUri.substring(contextPath.length());
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("clientUser");
-		return user != null;
+		Cashier cashier = (Cashier) session.getAttribute("clientUser");
+		return cashier != null;
 		/*if(user == null){
 			redictLogin(request, response);
 		}
 		return true;*/
 	}
-
-
-
-    //登录页面跳出iframe
-   /* private boolean redictLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        PrintWriter out = response.getWriter();
-        out.write("<script>window.parent.location.href='" + request.getContextPath() + "/login'</script>");
-        logger.info(request.getContextPath() + "/login");
-        return false;
-    }*/
 }

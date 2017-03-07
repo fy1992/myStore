@@ -96,22 +96,22 @@ $(function(){
 	$("#news_search").click(function(){
 		table.fnDraw();
 	});
-
+    //类别
 	$.post("<%=request.getContextPath()%>/server/categories/categoriesList", function (data) {
 	    for(var n in data){
             $("#goods_categories").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
         }
     });
-
+    //供货商
     $.post("<%=request.getContextPath()%>/server/supplier/allSupplier", function (data) {
         for(var n in data){
             $("#goods_supplier").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
         }
     });
-
-    $.post("<%=request.getContextPath()%>/server/goods/allSupplier", function (data) {
+    //标签
+    $.post("<%=request.getContextPath()%>/server/goods/findAllGoodsTags", function (data) {
         for(var n in data){
-            $("#goods_supplier").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
+            $("#goods_tags").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
         }
     });
 });

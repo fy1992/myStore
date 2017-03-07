@@ -94,6 +94,7 @@ public class StoreServiceImpl implements IStoreService{
 
     @Override
     public void update(Store t) {
+
         storeDao.update(t);
     }
 

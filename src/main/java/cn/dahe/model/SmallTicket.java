@@ -1,14 +1,8 @@
 package cn.dahe.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
@@ -27,10 +21,11 @@ public class SmallTicket {
     //小票类型 0 一品一切 1 一单一切
     private int type;
     //小票对应的商品
-    @ManyToMany
+    @ManyToMany(targetEntity = Goods.class, fetch = FetchType.EAGER)
     @JoinTable(name = "t_goods_smallTicket",
             joinColumns = {@JoinColumn(name = "ticket_id")},
             inverseJoinColumns = {@JoinColumn(name = "goods_id")})
+    @JsonIgnore
     private Set<Goods> goodsSet;
     //所属分店
     @Column(name = "store_id")

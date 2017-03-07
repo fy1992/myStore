@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" action="<%=request.getContextPath()%>/server/store/addGoodsTraffic" method = "post">
+    <form class="form form-horizontal" id="form-storeGoodsTrafficInfo-edit" action="<%=request.getContextPath()%>/server/store/addGoodsTraffic" method = "post">
         <div class="row cl mb-30">
             <div class="row cl">
                 <label class="form-label col-3">门店名称：</label>
@@ -94,17 +94,28 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
     $(function(){
         $.post("<%=request.getContextPath()%>/server/store/allStore", function (data) {
             for(var n in data){
-                $("#prepareStoreId").append("<option vale = '"+data[n].id+"'>"+data[n].name+"</option>");
+                $("#prepareStoreId").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");
             }
             $("#prepareStoreId").val(${storeGoodsTraffic.prepareStoreId});
         });
         $("#differentOpt").val(${storeGoodsTraffic.differentOpt});
         $("#payOnline").val(${storeGoodsTraffic.payOnline});
         $("#preparePriceType").val(${storeGoodsTraffic.preparePriceType});
+
+        var  validtor = $("#form-storeGoodsTrafficInfo-edit").Validform({
+            tiptype:3,
+            showAllError:true,
+            ajaxPost: true,
+            btnSubmit:"#storeGoodsTrafficBtn",
+            callback:function(data){
+                window.parent.table.fnDraw();
+            }
+        });
     })
 </script>
 </body>

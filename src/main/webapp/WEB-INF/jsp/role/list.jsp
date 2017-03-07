@@ -29,7 +29,7 @@
             </span>
         </div>
         <div class="pd-20 clearfix">
-            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="role_table" style="width: 1679px;">
+            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="role_table">
                 <thead>
                     <tr class="text-c">
                         <th width="50">序号</th>
