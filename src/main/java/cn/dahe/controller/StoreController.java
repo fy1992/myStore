@@ -2,6 +2,7 @@ package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.GoodsTraffic;
 import cn.dahe.model.Store;
 import cn.dahe.model.StoreGoodsTraffic;
 import cn.dahe.model.User;
@@ -114,8 +115,10 @@ public class StoreController {
     public AjaxObj editStore(Store store){
         AjaxObj json = new AjaxObj();
         storeService.update(store);
-        json.setMsg("门店信息修改成功");
-        json.setResult(1);
+       /* json.setMsg("门店信息修改成功");
+        json.setResult(1);*/
+        json.setInfo("门店信息修改成功");
+        json.setStatus("y");
         return json;
     }
 
@@ -154,8 +157,10 @@ public class StoreController {
     public AjaxObj storeGoodsTraffic(StoreGoodsTraffic storeGoodsTraffic){
         AjaxObj json = new AjaxObj();
         storeService.updateStoreGoodsTraffics(storeGoodsTraffic);
-        json.setResult(1);
-        json.setMsg("自门店货流设置完成");
+        /*json.setResult(1);
+        json.setMsg("门店货流设置完成");*/
+        json.setStatus("y");
+        json.setInfo("门店货流设置完成");
         return json;
     }
 
@@ -167,8 +172,8 @@ public class StoreController {
      */
     @RequestMapping(value = "findStoreGoodsTraffic/{id}", method = RequestMethod.GET)
     public String getStoreGoodsTraffic(@PathVariable int id, Model model){
-        Store store = storeService.get(id);
-        model.addAttribute("store", store);
+        StoreGoodsTraffic storeGoodsTraffic = storeService.findByStoreId(id);
+        model.addAttribute("storeGoodsTraffic", storeGoodsTraffic);
         return "store/storeGoodsTraffic";
     }
 }

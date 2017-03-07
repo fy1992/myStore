@@ -40,7 +40,7 @@ public class Sales {
     @Column(name = "store_id")
     private int storeId;
     @Column(name = "store_name")
-    private int storeName;
+    private String storeName;
     public int getId() {
         return id;
     }
@@ -105,11 +105,11 @@ public class Sales {
         this.storeId = storeId;
     }
 
-    public int getStoreName() {
+    public String getStoreName() {
         return storeName;
     }
 
-    public void setStoreName(int storeName) {
+    public void setStoreName(String storeName) {
         this.storeName = storeName;
     }
 

@@ -35,7 +35,7 @@ public class EmployeeController {
     /**
      * 收银员列表页查询
      * */
-    @RequestMapping(value = "/cashierList", method = RequestMethod.GET)
+    @RequestMapping(value = "cashierList", method = RequestMethod.GET)
     public String cashierList(){
         return "employee/cashierList";
     }
@@ -43,7 +43,7 @@ public class EmployeeController {
     /**
      * 收银员列表页查询
      * */
-    @RequestMapping(value = "/cashierList", method = RequestMethod.POST)
+    @RequestMapping(value = "cashierList", method = RequestMethod.POST)
     @ResponseBody
     public Pager<Cashier> cashierList(HttpSession session, String aDataSet){
         logger.info("--- cashier list begin ---");
@@ -182,10 +182,9 @@ public class EmployeeController {
      */
     @RequestMapping(value = "salesEdit", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj salesEdit(Sales sales, HttpSession session){
+    public AjaxObj salesEdit(Sales sales){
         AjaxObj json = new AjaxObj();
-        User user = (User)session.getAttribute("loginUser");
-        employeeService.updateSales(sales, user);
+        employeeService.updateSales(sales);
        /* json.setMsg("导购员编辑成功");
         json.setResult(1);*/
         json.setInfo("导购员编辑成功");

@@ -86,7 +86,9 @@
             {"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
                 return "<a style='text-decoration:none' onclick='edit(\"" + full.id + "\")'>编辑</a>";
             }},
-            {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
+            {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+                return  !data ? "-" : data ;
+            }},
             {"mData" : "salesNo", "sDefaultContent" : "", "bSortable":false},
             {"mData" : "salesName", "sDefaultContent" : "", "bSortable":false},
             {"mData" : "phone", "sDefaultContent" : ""},
@@ -138,7 +140,7 @@
             var static = $("#sales_static").val();
             var salesInfo = $("#sales_info").val();
             aoData.push({"name":"static","value":static});
-            aoData.push({"name":"salesInfo","value":salesInfo});
+            aoData.push({"name":"employeeInfo","value":salesInfo});
         },
         "fnDrawCallback" : function () {
             $('#redirect').keyup(function(e){

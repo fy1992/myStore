@@ -48,42 +48,39 @@ public class StoreServiceImpl implements IStoreService{
     }
 
     @Override
-    public void add(Store t, User user) {
-        t.setCreateDate(new Date());
-        int storeId = storeDao.addAndGetId4Integer(t);
-        Store store = get(storeId);
-
-        //门店的供货设置
-        StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();
-        storeGoodsTraffic.setStoreId(storeId);
-        storeGoodsTraffic.setStoreName(store.getName());
-        storeGoodsTraffic.setPrepareStoreId(0);
-        storeGoodsTraffic.setPrepareStoreName("");
-        storeGoodsTraffic.setPreparePriceType(0);
-        storeGoodsTraffic.setDifferentOpt(0);
-        storeGoodsTraffic.setPayOnline(0);
-        storeGoodsTrafficDao.add(storeGoodsTraffic);
-
-        //门店的登录账号
-        User u = new User();
-        u.setRank(1);
-        u.setStatus(1);
-        u.setPassword(SecurityUtil.MD5(user.getPassword()));
-        u.setUsername(user.getUsername());
-        u.setMobile(user.getMobile());
-        u.setEmail(user.getEmail());
-
-    }
-
-    @Override
-    public boolean add(Store t, User u, User user) {
-        if(user.getRank() > 0){
-            Store store = storeDao.get(user.getStoreId());
-            t.setParent(store);
-        }
+    public boolean add(Store t, User user, User currentUser) {
         Store store = storeDao.findByStoreNo(t.getStoreNo());
         if(store == null){
-            add(t);
+            if(currentUser.getRank() > 0){
+                Store parent = storeDao.get(currentUser.getStoreId());
+                t.setParent(parent);
+            }
+            t.setCreateDate(new Date());
+            int storeId = storeDao.addAndGetId4Integer(t);
+            store = get(storeId);
+
+            //门店的供货设置
+            StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();
+            storeGoodsTraffic.setStoreId(storeId);
+            storeGoodsTraffic.setStoreName(store.getName());
+            storeGoodsTraffic.setPrepareStoreId(0);
+            storeGoodsTraffic.setPrepareStoreName("");
+            storeGoodsTraffic.setPreparePriceType(0);
+            storeGoodsTraffic.setDifferentOpt(0);
+            storeGoodsTraffic.setPayOnline(0);
+            storeGoodsTrafficDao.add(storeGoodsTraffic);
+
+            //门店的登录账号
+            User u = new User();
+            u.setRank(1);
+            u.setStatus(1);
+            u.setPassword(SecurityUtil.MD5(user.getPassword()));
+            u.setUsername(user.getUsername());
+            u.setMobile(user.getMobile());
+            u.setEmail(user.getEmail());
+            u.setRegisterDate(new Date());
+            u.setLoginName(user.getUsername());
+            userDao.addAndGetId4Integer(u);
             return true;
         }else{
             return false;

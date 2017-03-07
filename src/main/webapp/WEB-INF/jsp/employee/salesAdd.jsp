@@ -47,7 +47,7 @@
             <div class="row cl">
                 <label class="form-label col-3"><span class="c-red">* </span>姓名：</label>
                 <div class="formControls col-7">
-                    <input type="text" class="input-text radius" value=""  id="sales_name" name="salesName">
+                    <input type="text" class="input-text radius"  id="sales_name" name="salesName">
                 </div>
                 <div class="col-2"> </div>
             </div>

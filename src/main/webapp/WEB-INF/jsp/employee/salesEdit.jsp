@@ -40,7 +40,8 @@
             <div class="row cl">
                 <label class="form-label col-3"><span class="c-red">* </span>编号：</label>
                 <div class="formControls col-7">
-                    <input type="text" class="input-text radius" value="${sales.salesNo}" id="sales_No" name = "salesNo">
+                    <span>${sales.salesNo}</span>
+                    <input type = "hidden" name = "id" value = "${sales.id}">
                 </div>
                 <div class="col-2"> </div>
             </div>
@@ -61,9 +62,9 @@
             <div class="row cl">
                 <label class="form-label col-3">提成：</label>
                 <div class="formControls col-7">
-                    <input type = "text" class="input-text radius" id="sales_percentage" value="${sales.percentage}" name = "percentage"/> %
+                    <input type = "text" class="input-text radius" id="sales_percentage" value="${sales.percentage}" name = "percentage"/>
                 </div>
-                <div class="col-2"> </div>
+                <div class="col-2">%</div>
             </div>
         </div>
         <div class="row cl">
@@ -88,16 +89,13 @@
             ajaxPost: true,
             ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
             tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
-            btnSubmit:"#salesEditBtn"
+            btnSubmit:"#salesEditBtn",
+            callback:function (data) {
+                window.parent.table.fnDraw();
+            }
         });
 
         validtor.addRule([
-            {
-                ele:"#sales_No",
-                datatype:"n",
-                errormsg:"只能填写数字",
-                nullmsg:"导购员编号必填"
-            },
             {
                 ele:"#sales_name",
                 datatype:"*",

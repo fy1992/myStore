@@ -40,14 +40,15 @@
             <div class="row cl">
                 <label class="form-label col-3"><span class="c-red">* </span>编号：</label>
                 <div class="formControls col-7">
-                    <input type="text" class="input-text radius" value="${cashier.cashierNo}" id="cashier_No" name = "cashierNo"/>
+                    <input type="hidden" name = "id" value = "${cashier.id}"/>
+                    <span>${cashier.cashierNo}</span>
                 </div>
                 <div class="col-2"> </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-3"><span class="c-red">* </span>姓名：</label>
                 <div class="formControls col-7">
-                    <input type="text" class="input-text radius" value="${cashier.name}"  id="cashier_name" name = "cashierName"/>
+                    <input type="text" class="input-text radius" value="${cashier.name}"  id="cashier_name" name = "name"/>
                 </div>
                 <div class="col-2"> </div>
             </div>
@@ -122,12 +123,6 @@
         });
 
         validtor.addRule([
-            {
-                ele:"#cashier_No",
-                datatype:"n",
-                errormsg:"只能填写数字",
-                nullmsg:"收银员编号必填"
-            },
             {
                 ele:"#cashier_name",
                 datatype:"*",

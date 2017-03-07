@@ -78,7 +78,7 @@
         </div>
         <div class="row cl">
             <label class="form-label col-3">联系人：</label>
-            <div class="formControls col-6"><input type = "text" class="input-text radius" name = "contacts" id = "store_contacts"/></div>
+            <div class="formControls col-6"><input type = "text" class="input-text radius" name = "contact" id = "store_contacts"/></div>
             <div class="col-3"> </div>
         </div>
         <div class="row cl">

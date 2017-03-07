@@ -12,8 +12,7 @@ import java.util.List;
  */
 public interface IStoreService {
     void add(Store t);
-    void add(Store t, User u);
-    boolean add(Store t, User u, User user);
+    boolean add(Store t, User u, User currentUser);
     void del(int id);
     void update(Store t);
     Store get(int id);

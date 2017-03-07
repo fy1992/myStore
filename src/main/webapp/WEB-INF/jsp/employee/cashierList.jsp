@@ -86,13 +86,15 @@ table = $('#cashier_table').dataTable({
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
             return "<a style='text-decoration:none' onclick='edit(\"" + full.id + "\")'>编辑</a>";
         }},
-        {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return  !data ? "-" : data ;
+        }},
         {"mData" : "cashierNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "roleName", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
             return  !data ? "-" : data ;
         }},
-        {"mData" : "phone", "sDefaultContent" : ""},
+        {"mData" : "mobile", "sDefaultContent" : ""},
         {"mData" : "status", "sDefaultContent" : "", "mRender" : function (data, type, full) {
             return data == 0 ? "停用" : "启用" ;
         }}
@@ -126,16 +128,16 @@ table = $('#cashier_table').dataTable({
                "type" : "post",
                "url" : sSource,
                "data": {
-               	aDataSet : JSON.stringify(aDataSet)
+               	    aDataSet : JSON.stringify(aDataSet)
                },
                "success" : fnCallback
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	var static = $("#cashier_static").val();
+      	var s = $("#cashier_static").val();
       	var cashierInfo = $("#cashier_info").val();
-        aoData.push({"name":"static","value":static});
-        aoData.push({"name":"cashierInfo","value":cashierInfo});
+        aoData.push({"name":"static","value":s});
+        aoData.push({"name":"employeeInfo","value":cashierInfo});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){

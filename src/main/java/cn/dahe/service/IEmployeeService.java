@@ -34,7 +34,7 @@ public interface IEmployeeService {
 
     boolean addSales(Sales t, User user);
     void delSales(int id);
-    void updateSales(Sales t, User user);
+    void updateSales(Sales t);
     Sales getSales(int id);
     Sales loadSales(int id);
 

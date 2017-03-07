@@ -73,7 +73,9 @@ table = $('#role_table').dataTable({
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
 	       return "<a style='text-decoration:none' onclick='edit(\"" + full.id + "\")'>编辑</a>";
         }},
-        {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return  !data ? "-" : data ;
+        }},
         {"mData" : "roleName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
             return data == 1 ? "启用" : "停用" ;

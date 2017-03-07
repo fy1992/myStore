@@ -26,8 +26,9 @@
             <div class="row cl">
                 <label class="form-label col-3">门店名称：</label>
                 <div class="formControls col-6">
-                    <span>${store.name}</span>
-                    <input type="hidden" name = "id" value = "${store}">
+                    <span>${storeGoodsTraffic.storeName}</span>
+                    <input type="hidden" name = "storeId" value = "${storeGoodsTraffic.storeId}">
+                    <input type="hidden" name = "id" value = "${storeGoodsTraffic.id}">
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -99,7 +100,11 @@
             for(var n in data){
                 $("#prepareStoreId").append("<option vale = '"+data[n].id+"'>"+data[n].name+"</option>");
             }
+            $("#prepareStoreId").val(${storeGoodsTraffic.prepareStoreId});
         });
+        $("#differentOpt").val(${storeGoodsTraffic.differentOpt});
+        $("#payOnline").val(${storeGoodsTraffic.payOnline});
+        $("#preparePriceType").val(${storeGoodsTraffic.preparePriceType});
     })
 </script>
 </body>

@@ -2,12 +2,14 @@ package cn.dahe.service.impl;
 
 import cn.dahe.dao.ICashierDao;
 import cn.dahe.dao.IPermissionDao;
+import cn.dahe.dao.IRoleDao;
 import cn.dahe.dao.ISalesDao;
 import cn.dahe.dao.IUserDao;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Cashier;
 import cn.dahe.model.Permission;
+import cn.dahe.model.Role;
 import cn.dahe.model.Sales;
 import cn.dahe.model.User;
 import cn.dahe.service.IEmployeeService;
@@ -41,6 +43,8 @@ public class EmployeeServiceImpl implements IEmployeeService{
     private IUserDao userDao;
     @Resource
     private IPermissionDao permissionDao;
+    @Resource
+    private IRoleDao roleDao;
 
     @Override
     public boolean addCashier(Cashier t, User user, String permissionIds) {
@@ -51,6 +55,10 @@ public class EmployeeServiceImpl implements IEmployeeService{
         t.setStoreId(user.getStoreId());
         t.setStoreName(user.getStoreName());
         t.setPassword(t.getPassword());
+        Role r = roleDao.get(t.getRoleId());
+        if(r != null){
+            t.setRoleName(r.getRoleName());
+        }
         if(StringUtils.isNotBlank(permissionIds)){
             String[] permissionArr = permissionIds.split(",");
             Set<Permission> set = new HashSet<>();
@@ -92,6 +100,13 @@ public class EmployeeServiceImpl implements IEmployeeService{
         Cashier c = getCashier(t.getId());
         c.setStatus(t.getStatus());
         c.setName(t.getName());
+        c.setMobile(t.getMobile());
+        c.setPassword(t.getPassword());
+        c.setRoleId(t.getRoleId());
+        Role r = roleDao.get(c.getRoleId());
+        if(r != null){
+            c.setRoleName(r.getRoleName());
+        }
         if(StringUtils.isNotBlank(permissionIds)){
             String[] permissionArr = permissionIds.split(",");
             Set<Permission> set = new HashSet<>();
@@ -118,15 +133,10 @@ public class EmployeeServiceImpl implements IEmployeeService{
     public boolean addSales(Sales t, User user) {
         Sales s = salesDao.findBySalesNo(t.getSalesNo(), user.getStoreId());
         if(s == null){
-            Sales sales = getSales(t.getId());
-            sales.setPhone(t.getPhone());
-            sales.setStatus(t.getStatus());
-            sales.setSalesName(t.getSalesName());
-            sales.setPercentage(t.getPercentage());
-            sales.setPreMark(0);
-            sales.setStoreId(user.getStoreId());
-            sales.setSalesName(user.getStoreName());
-            salesDao.add(sales);
+            t.setPreMark(0);
+            t.setStoreId(user.getStoreId());
+            t.setStoreName(user.getStoreName());
+            salesDao.add(t);
             return true;
         }
         return false;
@@ -138,8 +148,8 @@ public class EmployeeServiceImpl implements IEmployeeService{
     }
 
     @Override
-    public void updateSales(Sales t, User user) {
-        Sales s = salesDao.findBySalesNo(t.getSalesNo(), user.getStoreId());
+    public void updateSales(Sales t) {
+        Sales s = getSales(t.getId());
         s.setPercentage(t.getPercentage());
         s.setStatus(t.getStatus());
         s.setSalesName(t.getSalesName());
@@ -173,7 +183,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
                 pageSize = (Integer) jsonObject.get("value");
             } else if (jsonObject.get("name").equals("employeeInfo")) {
                 employeeInfo = jsonObject.get("value").toString();
-            } else if (jsonObject.get("name").equals("status")) {
+            } else if (jsonObject.get("name").equals("static")) {
                 status = Integer.parseInt(jsonObject.get("value").toString());
             }
         }
