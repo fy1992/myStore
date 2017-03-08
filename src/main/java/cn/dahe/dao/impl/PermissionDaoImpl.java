@@ -46,8 +46,11 @@ public class PermissionDaoImpl extends BaseDaoImpl<Permission> implements IPermi
     }
 
     @Override
-    public List<Permission> findByLevel(int level){
-        String hql = "from Permission where level = ?";
-        return this.list(hql, level);
+    public List<Permission> findByResourceType(int resourceType, int storeId){
+        String hql = "from Permission where resourceType = ?";
+        if(storeId != 0){
+            hql += " and level = 2";
+        }
+        return this.list(hql, resourceType);
     }
 }

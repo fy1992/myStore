@@ -23,6 +23,7 @@
 <body>
 <div class="pd-20 minwidth">
     <form class="form form-horizontal" id="form-store-add" action="<%=request.getContextPath()%>/server/store/add" method="POST">
+        <b>账号信息</b>
         <div class="row cl">
             <label class="form-label col-3">是否启用：</label>
             <div class="formControls col-6">
@@ -48,6 +49,17 @@
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
+            <label class="form-label col-3">角色：</label>
+            <div class="formControls col-6">
+                <span class="select-box radius">
+                    <select class="select" id = "user_role" name = "roleId">
+                        <option value = "0">- 无 -</option>
+                    </select>
+                </span>
+            </div>
+            <div class="col-3"> </div>
+        </div>
+        <div class="row cl">
             <label class="form-label col-3">手机：</label>
             <div class="formControls col-6"><input type = "text" class="input-text radius" id="phone" name = "mobile"/></div>
             <div class="col-3"> </div>
@@ -57,6 +69,8 @@
             <div class="formControls col-6"><input type = "text" class="input-text radius" id="email" name = "email"/></div>
             <div class="col-3"> </div>
         </div>
+        <div class=""><hr/></div>
+        <b>店面信息</b>
         <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>门店编号：</label>
             <div class="formControls col-6">
@@ -149,6 +163,12 @@
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
     $(function () {
+        $.post("<%=request.getContextPath()%>/server/role/findAll", function(data){
+            for(var n in data){
+                $("#user_role").append("<option value = '"+data[n].id+"'>"+data[n].roleName+"</option>");
+            }
+        });
+
         var  validtor = $("#form-store-add").Validform({
             tiptype:3,
             showAllError:true,

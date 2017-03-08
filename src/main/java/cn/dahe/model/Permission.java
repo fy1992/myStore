@@ -42,7 +42,7 @@ public class Permission {
     private String description;
     //权限url
     private String url;
-    //资源等级
+    //资源等级  1 一级（只有超管可见） 2 门店可见
     private int level;
     //权限对应的角色
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)

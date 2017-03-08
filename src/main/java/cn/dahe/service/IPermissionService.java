@@ -16,22 +16,16 @@ public interface IPermissionService {
     Permission load(int id);
     /**
      * 根据参数查询
-     * @param aDataSet
-     * @return
      */
     Pager<Permission> findByParams(String aDataSet);
 
     /**
      * 查询全部
-     * @return
      */
     List<Permission> findAll(int type);
 
     /**
      * 所有目录
-     * @return
      */
-    List<Permission> findAllSysMenu();
-
-    List<Permission> findByLevel(int level);
+    List<Permission> findByResourceType(int resourceType, int storeId);
 }

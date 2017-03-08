@@ -80,10 +80,10 @@ public class StoreController {
      */
     @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addStore(Store store, User u, HttpSession session){
+    public AjaxObj addStore(Store store, User u, int roleId, HttpSession session){
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
-        if(storeService.add(store, u, user)){
+        if(storeService.add(store, u, user, roleId)){
             json.setInfo("添加成功");
             json.setStatus("y");
         }else{

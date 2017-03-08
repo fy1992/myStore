@@ -1,14 +1,8 @@
 package cn.dahe.service.impl;
 
-import cn.dahe.dao.IIndustryDao;
-import cn.dahe.dao.IStoreDao;
-import cn.dahe.dao.IStoreGoodsTrafficDao;
-import cn.dahe.dao.IUserDao;
+import cn.dahe.dao.*;
 import cn.dahe.dto.Pager;
-import cn.dahe.model.Industry;
-import cn.dahe.model.Store;
-import cn.dahe.model.StoreGoodsTraffic;
-import cn.dahe.model.User;
+import cn.dahe.model.*;
 import cn.dahe.service.IStoreService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.NumberUtils;
@@ -41,6 +35,8 @@ public class StoreServiceImpl implements IStoreService{
     private IStoreGoodsTrafficDao storeGoodsTrafficDao;
     @Resource
     private IUserDao userDao;
+    @Resource
+    private IRoleDao roleDao;
 
     @Override
     public void add(Store t) {
@@ -48,7 +44,7 @@ public class StoreServiceImpl implements IStoreService{
     }
 
     @Override
-    public boolean add(Store t, User user, User currentUser) {
+    public boolean add(Store t, User user, User currentUser, int roleId) {
         Store store = storeDao.findByStoreNo(t.getStoreNo());
         if(store == null){
             if(currentUser.getRank() > 0){
@@ -57,12 +53,11 @@ public class StoreServiceImpl implements IStoreService{
             }
             t.setCreateDate(new Date());
             int storeId = storeDao.addAndGetId4Integer(t);
-            store = get(storeId);
 
             //门店的供货设置
             StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();
             storeGoodsTraffic.setStoreId(storeId);
-            storeGoodsTraffic.setStoreName(store.getName());
+            storeGoodsTraffic.setStoreName(t.getName());
             storeGoodsTraffic.setPrepareStoreId(0);
             storeGoodsTraffic.setPrepareStoreName("");
             storeGoodsTraffic.setPreparePriceType(0);
@@ -70,12 +65,17 @@ public class StoreServiceImpl implements IStoreService{
             storeGoodsTraffic.setPayOnline(0);
             storeGoodsTrafficDao.add(storeGoodsTraffic);
 
+            Role role = roleDao.get(roleId);
+
             //门店的登录账号
             User u = new User();
             u.setRank(1);
             u.setStatus(1);
+            u.setStoreId(storeId);
+            u.setStoreName(t.getName());
             u.setPassword(SecurityUtil.MD5(user.getPassword()));
             u.setUsername(user.getUsername());
+            u.setRole(role);
             u.setMobile(user.getMobile());
             u.setEmail(user.getEmail());
             u.setRegisterDate(new Date());

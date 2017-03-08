@@ -72,7 +72,7 @@ public class RepairServiceImpl implements IRepairService {
                 permission.setPerKey(p[1]);
                 permission.setUrl(p[2]);
                 permission.setParentId(Integer.parseInt(p[3]));
-                permission.setLevel(1);
+                permission.setLevel(Integer.parseInt(p[4]));
                 permission.setResourceType(1);
                 permissionDao.add(permission);
             }
@@ -92,7 +92,7 @@ public class RepairServiceImpl implements IRepairService {
                     permission.setPerKey(menu[1]);
                     permission.setUrl("#");
                     permission.setType(0);
-                    permission.setLevel(0);
+                    permission.setLevel(Integer.parseInt(menu[3]));
                     permission.setName(menu[0]);
                     permission.setIconType(menu[2]);
                     permission.setResourceType(0);

@@ -66,7 +66,7 @@
             </div>
             <div class="col-3"> </div>
         </div>
-        <div class="row cl">
+        <div class="row cl" id = "parentPer" style = "display: none">
             <label class="form-label col-3">所属目录：</label>
             <div class="formControls col-6">
                 <span class="select-box radius">
@@ -134,11 +134,19 @@
                 nullmsg:"授权key必填"
             }
         ]);
+        
+        $("input[name = 'resourceType']").on("click", function () {
+            if($(this).val() == 0){
+                $("#parentPer").hide();
+            }else{
+                $("#parentPer").show();
+            }
+        })
     })
 
 
     function initParent(type){
-        $.post("<%=request.getContextPath()%>/server/permission/menu", function (data) {
+        $.post("<%=request.getContextPath()%>/server/permission/menu", {resourceType : 0}, function (data) {
             $("#parent").empty();
             for(var n in data){
                 $("#parent").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");

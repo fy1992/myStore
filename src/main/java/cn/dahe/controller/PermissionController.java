@@ -4,6 +4,7 @@ package cn.dahe.controller;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
+import cn.dahe.model.User;
 import cn.dahe.service.IPermissionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,11 +115,14 @@ public class PermissionController {
     }
 
     /**
-     * 得到所有目录
+     * 根据类型得到所有目录
+     *@param resourceType 0 所有的栏目
+     *                    1 所有的二级栏目
      */
     @RequestMapping(value = "menu", method = RequestMethod.POST)
     @ResponseBody
-    public List<Permission> queryAllMenu(){
-        return permissionService.findAllSysMenu();
+    public List<Permission> queryAllMenu(int resourceType, HttpSession session){
+        User user = (User) session.getAttribute("loginUser");
+        return permissionService.findByResourceType(resourceType, user.getStoreId());
     }
 }

@@ -37,7 +37,6 @@ public class Role {
     private String roleKey;
     //角色描述
     private String description;
-
     //角色对应的权限
     @ManyToMany(targetEntity = Permission.class, fetch = FetchType.EAGER)
     @JoinTable(name = "t_role_permission",

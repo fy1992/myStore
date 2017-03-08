@@ -98,12 +98,7 @@ public class PermissionServiceImpl implements IPermissionService{
     }
 
     @Override
-    public List<Permission> findAllSysMenu() {
-        return permissionDao.findByLevel(0);
-    }
-
-    @Override
-    public List<Permission> findByLevel(int level) {
-        return null;
+    public List<Permission> findByResourceType(int resourceType, int storeId) {
+        return permissionDao.findByResourceType(resourceType, storeId);
     }
 }

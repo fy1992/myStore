@@ -39,19 +39,19 @@ public class IndexController {
                 Set<Permission> permissions = role.getPermissions();
                 permissionSet.addAll(permissions);
             }
-            List<Permission> level0 = new ArrayList<>();
-			List<Permission> level1 = new ArrayList<>();
+            List<Permission> channel = new ArrayList<>();
+			List<Permission> menu = new ArrayList<>();
             permissionSet.forEach(permission -> {
-                if(permission.getLevel() == 0){
-                    level0.add(permission);
+                if(permission.getResourceType() == 0){
+					channel.add(permission);
                 }
-                if(permission.getLevel() == 1){
-                    level1.add(permission);
+                if(permission.getResourceType() == 1){
+					menu.add(permission);
                 }
             });
-            Collections.sort(level0, Comparator.comparing(Permission::getId));
-			model.addAttribute("channel", level0);
-			model.addAttribute("menu", level1);
+            Collections.sort(channel, Comparator.comparing(Permission::getId));
+			model.addAttribute("channel", channel);
+			model.addAttribute("menu", menu);
 			return "backstage/index";
 		}else{
 			return "login";

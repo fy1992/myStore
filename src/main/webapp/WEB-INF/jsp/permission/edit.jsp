@@ -52,13 +52,7 @@
             </div>
             <div class="col-3"> </div>
         </div>
-        <div class="row cl">
-            <label class="form-label col-3">备注：</label>
-            <div class="formControls col-6">
-                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="description" name = "description" value="${permission.description}">${permission.description}</textarea>
-            </div>
-            <div class="col-3"> </div>
-        </div>
+        <c:if test="${permission.resourceType eq 1}">
         <div class="row cl">
             <label class="form-label col-3">所属目录：</label>
             <div class="formControls col-6">
@@ -67,6 +61,14 @@
                         <option value = "0">- 请选择所属目录 -</option>
                     </select>
                 </span>
+            </div>
+            <div class="col-3"> </div>
+        </div>
+        </c:if>
+        <div class="row cl">
+            <label class="form-label col-3">备注：</label>
+            <div class="formControls col-6">
+                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="description" name = "description" value="${permission.description}">${permission.description}</textarea>
             </div>
             <div class="col-3"> </div>
         </div>
@@ -123,7 +125,7 @@
 
 
     function initParent(type){
-        $.post("<%=request.getContextPath()%>/server/permission/menu", function (data) {
+        $.post("<%=request.getContextPath()%>/server/permission/menu", {resourceType : 0}, function (data) {
             $("#parent").empty();
             for(var n in data){
                 $("#parent").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");
