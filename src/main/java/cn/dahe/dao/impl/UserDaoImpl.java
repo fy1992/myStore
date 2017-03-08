@@ -40,7 +40,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao{
             hql.append(" and user.registerDate <= ? ");
             list.add(endTime);
         }
-        if(storeId != -1){
+        if(storeId != -1 && storeId != 0){
             hql.append(" and user.storeId = ?");
             list.add(storeId);
         }
@@ -48,10 +48,10 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao{
             hql.append(" and user.username like ?");
             list.add("%" + userInfo + "%");
         }
-        hql.append(" adn user.status = ?");
+        hql.append(" and user.status = ?");
         list.add(status);
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
-        return null;
+        return this.find(hql.toString(), list, start, pageSize);
     }
 
     @Override

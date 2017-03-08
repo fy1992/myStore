@@ -2,16 +2,13 @@ package cn.dahe.service.impl;
 
 import cn.dahe.dao.IPermissionDao;
 import cn.dahe.dao.IRoleDao;
-import cn.dahe.dao.ISysMenuDao;
 import cn.dahe.dao.IUserDao;
 import cn.dahe.model.Permission;
 import cn.dahe.model.Role;
-import cn.dahe.model.SysMenu;
 import cn.dahe.model.User;
 import cn.dahe.service.IRepairService;
 import cn.dahe.util.ResourcesUtils;
 import cn.dahe.util.SecurityUtil;
-import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +25,6 @@ public class RepairServiceImpl implements IRepairService {
 	private static Logger logger = LoggerFactory.getLogger(RepairServiceImpl.class);
 	@Resource
 	private IUserDao userDao;
-	@Resource
-	private ISysMenuDao sysMenuDao;
 	@Resource
     private IPermissionDao permissionDao;
 	@Resource
@@ -56,7 +51,8 @@ public class RepairServiceImpl implements IRepairService {
             role.setRoleName("系统管理员");
             role.setRoleKey("sys:admin");
             List<Permission> permissionList = permissionDao.findAll(0);
-            role.setPermissions(new HashSet(permissionList));
+            Set<Permission> permissions = new HashSet<>(permissionList);
+            role.setPermissions(permissions);
             roleDao.add(role);
         }
     }
@@ -75,6 +71,9 @@ public class RepairServiceImpl implements IRepairService {
                 permission.setName(p[0]);
                 permission.setPerKey(p[1]);
                 permission.setUrl(p[2]);
+                permission.setParentId(Integer.parseInt(p[3]));
+                permission.setLevel(1);
+                permission.setResourceType(1);
                 permissionDao.add(permission);
             }
         }
@@ -84,13 +83,20 @@ public class RepairServiceImpl implements IRepairService {
     public void repairMenu() {
         String menuStr = ResourcesUtils.getMenu();
         if(StringUtils.isNotBlank(menuStr)){
-            String[] menuArr= menuStr.split(",");
+            String[] menuArr= menuStr.split("@");
             for(int i = 0, len = menuArr.length; i < len; i++) {
-                SysMenu sysMenu = sysMenuDao.queryByName(menuArr[i]);
-                if(sysMenu == null){
-                    sysMenu = new SysMenu();
-                    sysMenu.setName(menuArr[i]);
-                    sysMenuDao.add(sysMenu);
+                String[] menu = menuArr[i].split(",");
+                Permission permission =  permissionDao.findByPerKey(menu[1]);
+                if(permission == null){
+                    permission = new Permission();
+                    permission.setPerKey(menu[1]);
+                    permission.setUrl("#");
+                    permission.setType(0);
+                    permission.setLevel(0);
+                    permission.setName(menu[0]);
+                    permission.setIconType(menu[2]);
+                    permission.setResourceType(0);
+                    permissionDao.add(permission);
                 }
             }
         }
@@ -106,8 +112,7 @@ public class RepairServiceImpl implements IRepairService {
         user.setRank(0);
 		user.setPassword(SecurityUtil.MD5(ResourcesUtils.getAdminPassword()));
         Role role = roleDao.findByRoleKey(ResourcesUtils.getRole(), 0);
-        user.setRoleId(role.getId());
-        user.setRoleName(role.getRoleName());
+        user.setRole(role);
         userDao.add(user);
     }
 }

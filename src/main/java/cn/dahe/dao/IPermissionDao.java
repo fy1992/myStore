@@ -33,4 +33,6 @@ public interface IPermissionDao extends IBaseDao<Permission>{
     List<Permission> findByPid(int parentId);
 
     Permission findByPerKey(String perKey);
+
+    List<Permission> findByLevel(int level);
 }

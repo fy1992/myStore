@@ -26,8 +26,15 @@ public class Permission {
     private int id;
     //权限名称
     private String name;
+    //所属父资源
     @Column(name = "pid")
     private int parentId;
+    //资源类型  0  栏目  1 菜单
+    @Column(name = "resource_type")
+    private int resourceType;
+    //图标类型
+    @Column(name = "icon_type")
+    private String iconType;
     //权限key 授权 （多个用逗号分隔）
     @Column(name = "per_key")
     private String perKey;
@@ -35,6 +42,8 @@ public class Permission {
     private String description;
     //权限url
     private String url;
+    //资源等级
+    private int level;
     //权限对应的角色
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "t_role_permission",
@@ -138,5 +147,29 @@ public class Permission {
 
     public void setPerKey(String perKey) {
         this.perKey = perKey;
+    }
+
+    public int getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(int resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public String getIconType() {
+        return iconType;
+    }
+
+    public void setIconType(String iconType) {
+        this.iconType = iconType;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

@@ -19,9 +19,9 @@ public interface IGoodsService{
     Goods get(int id);
     Goods load(int id);
 
-    boolean add(GoodsDto goodsDto);
+    boolean add(GoodsDto goodsDto, int storeId);
 
-    void update(GoodsDto goodsDto);
+    void update(GoodsDto goodsDto, int storeId);
     /**
      * 商品列表
      * @param aDataSet

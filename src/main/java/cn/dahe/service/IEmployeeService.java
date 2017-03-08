@@ -12,9 +12,9 @@ import cn.dahe.model.User;
  * Created by fy on 2017/1/27.
  */
 public interface IEmployeeService {
-    boolean addCashier(Cashier t, User user, String permissionIds);
+    boolean addCashier(Cashier t, User user, String permissionIds, int roleId);
     void delCashier(int id);
-    void updateCashier(Cashier t, String permissionIds);
+    void updateCashier(Cashier t, String permissionIds, int roleId);
     Cashier getCashier(int id);
     Cashier loadCashier(int id);
     /**

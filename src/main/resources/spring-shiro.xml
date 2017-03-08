@@ -23,7 +23,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         <!-- 使用下面配置的缓存管理器 -->
         <property name="cacheManager" ref="shiroEncacheManager"/>
     </bean>
-
+    <!-- 缓存管理器 使用Ehcache实现 -->
     <bean id="shiroEncacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <property name="cacheManager" ref="ehCacheManager"/>
     </bean>
@@ -47,8 +47,12 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         <property name="filterChainDefinitions">
             <value>
                 <!-- anon表示此地址不需要任何权限即可访问 -->
-                /resources/**=anon
-                /login=anon
+                /resources/** = anon
+                /login = anon
+                <!--/server/permission/list = roles[admin]
+                /server/permission/add = roles[admin]
+                /server/permission/edit/** = roles[admin]
+                /server/store/** = roles[admin]-->
                 <!--所有的请求(除去配置的静态资源请求或请求地址为anon的请求)都要通过登录验证,如果未登录则跳到/login-->
                 /** = authc
             </value>

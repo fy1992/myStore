@@ -17,34 +17,31 @@
 <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 
-<title>店面列表</title>
+<title>商品列表</title>
 </head>
 <body class="pos-r">
 <div>
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 门店 <span class="c-gray en">&gt;</span> 门店信息 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户 <span class="c-gray en">&gt;</span> 用户列表 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
-            <span class="l">
-                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增账号</a>
-            </span>
             <span class="select-box" style="width: 100px;">
-                <select class="select radius" id="store_status">
-                    <option value="1">启用</option>
-                    <option value="0">禁用</option>
+                <select class="select" id="user_static">
+                    <option value = "1">启用</option>
+                    <option value = "0">禁用</option>
                 </select>
             </span>
-            <button id="store_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+            <button id="user_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
-            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="store_table">
+            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="user_table">
                 <thead>
                     <tr class="text-c">
-                        <th >序号</th>
-                        <th >操作</th>
-                        <th >名称</th>
-                        <th >门店编号</th>
-                        <th >是否是连锁店</th>
-                        <th >状态</th>
+                        <th width="50">序号</th>
+                        <th width="50">操作</th>
+                        <th width="100">用户名</th>
+                        <th width="100">所属店面</th>
+                        <th width="50">状态</th>
+                        <th width="50">角色</th>
                     </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -62,34 +59,33 @@
 <script type="text/javascript">
 //搜索
 $(function(){
-	$("#store_search").click(function(){
+	$("#user_search").click(function(){
 		table.fnDraw();
 	});
 });
 
 //table start here
-table = $('#store_table').dataTable({
+table = $('#user_table').dataTable({
 	   "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示  
        "bPaginate": true,//是否显示（应用）分页器  
        "bLengthChange": false,
-       "bScrollCollapse" : true,//是否开启DataTables的高度自适应，当数据条数不够分页数据条数的时候，插件高度是否随数据条数而改变
+       "bAutoWidth" : true,
+       "bScrollCollapse" : true,//是否开启DataTables的高度自适应，当数据条数不够分页数据条数的时候，插件高度是否随数据条数而改变  
        "bDestroy" : true,
        "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数 
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
-        {"mData" : null, "sDefaultContent" : "", "bSortable":false},
+	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            var btn ="<a style='text-decoration:none' onclick='edit(\""+full.id+"\")'>编辑</a>";
-            btn += "&nbsp;<a style='text-decoration:none' onclick='goodsTraffic(\""+full.id+"\")'>门店货流配置</a>";
-            return btn;
+            return "<a style='text-decoration:none' onclick='edit(" + full.id + ")'>编辑</a>";
         }},
-        {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "storeNo", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "multiple", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return data == 1 ? "是" : "否" ;
+        {"mData" : "username", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
+            return data == 1 ? "启用" : "禁用";
         }},
-        {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return data == 1 ? "启用" : "停用" ;
+        {"mData" : "role", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
+            return data.name;
         }}
     ],
     "language":{
@@ -113,7 +109,7 @@ table = $('#store_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/server/store/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/user/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -127,7 +123,7 @@ table = $('#store_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	var status = $("#store_status").val();
+      	var status = $("#user_static").val();
         aoData.push({"name":"status","value":status});
     },
     "fnDrawCallback" : function () {
@@ -178,17 +174,9 @@ function formatDate(val){
 	return val;
 }
 
-//新增
-function add() {
-    layer_show("新增账号", "<%=request.getContextPath()%>/server/store/add", "800", "600");
-}
-
+//编辑
 function edit(id){
-    layer_show("编辑", "<%=request.getContextPath()%>/server/store/edit/"+id, "800", "600");
-}
-
-function goodsTraffic(id){
-    layer_show("门店货流配置", "<%=request.getContextPath()%>/server/store/findStoreGoodsTraffic/"+id, 800, 400);
+    layer_show("编辑用户", "<%=request.getContextPath()%>/server/user/edit/"+id, "700", "600");
 }
 </script>
 </body>

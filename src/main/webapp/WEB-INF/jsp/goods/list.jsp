@@ -138,7 +138,7 @@ table = $('#goods_table').dataTable({
         {"mData" : "pinyin", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "categoriesName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "goodsNum", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "mainUnit", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "mainUnitName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "bid", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "price", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "tradePrice", "sDefaultContent" : "", "bSortable":false},

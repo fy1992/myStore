@@ -59,6 +59,7 @@ public class UserServiceImpl implements IUserService {
     public Pager<User> findByParams(String aDataSet, int storeId) {
         int start = 0;// 起始
         int pageSize = 20;// size
+        int status = 1;
         try{
             JSONArray json = JSONArray.parseArray(aDataSet);
             int len = json.size();
@@ -68,11 +69,14 @@ public class UserServiceImpl implements IUserService {
                     start = (Integer) jsonObject.get("value");
                 } else if (jsonObject.get("name").equals("iDisplayLength")) {
                     pageSize = (Integer) jsonObject.get("value");
+                } else if (jsonObject.get("name").equals("status")) {
+                    status = Integer.parseInt(jsonObject.get("value").toString());
                 }
             }
             Pager<Object> params = new Pager<>();
             params.setOrderColumn("user.id");
             params.setOrderDir("desc");
+            params.setStatus(status);
             params.setIntParam1(storeId);
             return userDao.findByParam(start, pageSize, params);
         }catch (Exception e){

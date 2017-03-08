@@ -22,7 +22,6 @@
 </head>
 <body>
 <header class="Hui-header cl">
-	<%--<iframe class="baniframe" sandbox="allow-scripts allow-same-origin" id="mh" src="${ctxResource}/js/cavans.html" width="100%" height="50" style="position: absolute; z-index: -1; border: 0;"></iframe>--%>
 	<a class="Hui-logo" href="<%=request.getContextPath()%>/index">GoldenLeopard后台系统</a>
 	<ul class="Hui-userbar">
 		<li class="dropDown dropDown_hover"><a href="#" class="dropDown_A">${user.storeName} | ${user.username}<i class="Hui-iconfont">&#xe6d5;</i></a>
@@ -36,9 +35,23 @@
 
 <aside class="Hui-aside">
 	<div class="menu_dropdown bk_2 f-16">
-		<dl id="menu-sale">
+        <c:forEach items="${channel}" var="c">
+            <dl>
+                <dt><i class="Hui-iconfont">${c.iconType}</i> ${c.name}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                <dd>
+                    <ul>
+                        <c:forEach items="${menu}" var="m">
+                            <c:if test="${c.id eq m.parentId}">
+                                <li><a _href="<%=request.getContextPath()%>/${m.url}" href="javascript:void(0)">${m.name}</a></li>
+                            </c:if>
+                        </c:forEach>
+                    </ul>
+                </dd>
+            </dl>
+        </c:forEach>
+		<%--<dl id="menu-sale">
 			<dt><i class="Hui-iconfont">&#xe616;</i> 销售<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
+			<dd id = "">
 				<ul>
 					<li><a _href="#" href="javascript:void(0)">营业概况</a></li>
 					<li><a _href="#" href="javascript:void(0)">销售单据</a></li>
@@ -52,9 +65,9 @@
 				<ul>
                     <li><a _href="<%=request.getContextPath()%>/server/goods/list" href="javascript:;">商品资料</a></li>
                     <li><a _href="<%=request.getContextPath()%>/server/categories/treeAndList" href="javascript:;">商品分类</a></li>
-					<%--<li><a _href="<%=request.getContextPath()%>/server/channel/channelList/view" href="javascript:;">批量操作</a></li>
+					&lt;%&ndash;<li><a _href="<%=request.getContextPath()%>/server/channel/channelList/view" href="javascript:;">批量操作</a></li>
 					<li><a _href="<%=request.getContextPath()%>/server/goods/channelList/view" href="javascript:;">排序管理</a></li>
-					<li><a _href="<%=request.getContextPath()%>/server/taste/channelList/view" href="javascript:;">口味管理</a></li>--%>
+					<li><a _href="<%=request.getContextPath()%>/server/taste/channelList/view" href="javascript:;">口味管理</a></li>&ndash;%&gt;
 				</ul>
 			</dd>
 		</dl>
@@ -66,7 +79,7 @@
 				</ul>
 			</dd>
 		</dl>
-		<%--<dl id="menu-vip">
+		&lt;%&ndash;<dl id="menu-vip">
 			<dt><i class="Hui-iconfont">&#xe623;</i>会员<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -78,8 +91,8 @@
 					<li><a _href="#" href="javascript:void(0)">购物卡管理</a></li>
 				</ul>
 			</dd>
-		</dl>--%>
-		<%--<dl id="menu-salePro">
+		</dl>&ndash;%&gt;
+		&lt;%&ndash;<dl id="menu-salePro">
 			<dt><i class="Hui-iconfont">&#xe623;</i>营销<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -87,7 +100,7 @@
 					<li><a _href="#" href="javascript:void(0)">促销活动</a></li>
 				</ul>
 			</dd>
-		</dl>--%>
+		</dl>&ndash;%&gt;
 		<dl id="menu-member">
 			<dt><i class="Hui-iconfont">&#xe623;</i>员工<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
@@ -104,8 +117,8 @@
                     <li><a _href="<%=request.getContextPath()%>/server/supplier/list" href="javascript:void(0)">供货商</a></li>
                     <li><a _href="<%=request.getContextPath()%>/server/goodsTraffic/list" href="javascript:void(0)">门店订货</a></li>
                     <li><a _href="<%=request.getContextPath()%>/server/goodsTrafficManage/list" href="javascript:void(0)">货流管理</a></li>
-                    <%--<li><a _href="#" href="javascript:void(0)">供货商结算</a></li>
-                    <li><a _href="#" href="javascript:void(0)">贷款汇总</a></li>--%>
+                    &lt;%&ndash;<li><a _href="#" href="javascript:void(0)">供货商结算</a></li>
+                    <li><a _href="#" href="javascript:void(0)">贷款汇总</a></li>&ndash;%&gt;
                 </ul>
             </dd>
         </dl>
@@ -124,7 +137,7 @@
                     <li><a _href="<%=request.getContextPath()%>/server/permission/list" href="javascript:void(0)">权限信息</a></li>
                 </ul>
             </dd>
-        </dl>
+        </dl>--%>
 		<%--<dl id="menu-supplier">
 			<dt><i class="Hui-iconfont">&#xe623;</i>供货<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>

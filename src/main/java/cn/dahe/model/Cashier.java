@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.HashSet;
@@ -44,10 +45,9 @@ public class Cashier {
     @Column(name = "open_id")
     private String openId;
     //收银员角色
-    @Column(name = "role_id")
-    private int roleId;
-    @Column(name = "role_name")
-    private String roleName;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
     //状态 0 停用 1 启用
     private int status;
     //收银员对应的权限
@@ -115,20 +115,12 @@ public class Cashier {
         this.mobile = mobile;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Set<Permission> getPermissions() {

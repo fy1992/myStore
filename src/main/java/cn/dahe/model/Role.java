@@ -2,6 +2,7 @@ package cn.dahe.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.HashSet;
@@ -41,9 +43,15 @@ public class Role {
     @JoinTable(name = "t_role_permission",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")})
-    @JsonIgnore
     private Set<Permission> permissions = new HashSet<>();
-
+    //角色对应的用户
+    @OneToMany(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "role")
+    @JsonIgnore
+    private Set<User> users = new HashSet<>();
+    //角色对应的收银员
+    @OneToMany(targetEntity = Cashier.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "role")
+    @JsonIgnore
+    private Set<Cashier> cashiers = new HashSet<>();
     //所属分店
     @Column(name = "store_id")
     private int storeId;
@@ -135,5 +143,21 @@ public class Role {
 
     public void setRoleKey(String roleKey) {
         this.roleKey = roleKey;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public Set<Cashier> getCashiers() {
+        return cashiers;
+    }
+
+    public void setCashiers(Set<Cashier> cashiers) {
+        this.cashiers = cashiers;
     }
 }

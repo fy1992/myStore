@@ -261,7 +261,6 @@ public class GoodsController {
     public String goodsTagsSelect(@RequestParam(required = false, defaultValue = "0") String id,
                                   @RequestParam(required = false, defaultValue = "0") String tagsIds,
                                   Model model){
-        logger.info("--- tagsIds " + tagsIds + " ---");
         if(!id.equals("0")){
             Goods goods = goodsService.get(Integer.parseInt(id));
             if(goods != null){
@@ -280,7 +279,6 @@ public class GoodsController {
         }else{
             model.addAttribute("type", "add");
         }
-        logger.info("--- tagsIds " + tagsIds + " ---");
         model.addAttribute("tagsIds", tagsIds);
         return "goods/add_goodsTags";
     }
@@ -369,7 +367,6 @@ public class GoodsController {
     public String smallTicketSelect(@RequestParam(required = false, defaultValue = "0") String id,
                                     @RequestParam(required = false, defaultValue = "0") String stsIds,
                                     Model model){
-        logger.info("--- stsIds : "+stsIds+" ---");
         if(!id.equals("0")){
             Goods goods = goodsService.get(Integer.parseInt(id));
             if(goods != null){
@@ -389,7 +386,6 @@ public class GoodsController {
             model.addAttribute("type", "add");
         }
         model.addAttribute("stsIds", stsIds);
-        logger.info("--- stsIds : "+stsIds+" ---");
         return "goods/add_smallTicket";
     }
 
@@ -412,9 +408,10 @@ public class GoodsController {
      */
     @RequestMapping(value = "addGoods", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addGoods(GoodsDto goodsDto){
+    public AjaxObj addGoods(GoodsDto goodsDto, HttpSession session){
         AjaxObj json = new AjaxObj();
-        goodsService.add(goodsDto);
+        User user =  (User) session.getAttribute("loginUser");
+        goodsService.add(goodsDto, user.getStoreId());
         json.setInfo("商品添加成功");
         json.setStatus("y");
         return json;
@@ -439,9 +436,10 @@ public class GoodsController {
      */
     @RequestMapping(value = "editGoods", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj editGoods(GoodsDto goodsDto){
+    public AjaxObj editGoods(GoodsDto goodsDto, HttpSession session){
         AjaxObj json = new AjaxObj();
-        goodsService.update(goodsDto);
+        User user = (User) session.getAttribute("loginUser");
+        goodsService.update(goodsDto, user.getStoreId());
         json.setInfo("商品编辑成功");
         json.setStatus("y");
         return json;

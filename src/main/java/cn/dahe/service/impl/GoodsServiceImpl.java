@@ -7,7 +7,6 @@ import cn.dahe.dao.IGoodsUnitDao;
 import cn.dahe.dao.ISmallTicketDao;
 import cn.dahe.dao.IStockDao;
 import cn.dahe.dao.IStoreDao;
-import cn.dahe.dao.impl.CategoriesDaoImpl;
 import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.GoodsDtoSimple;
 import cn.dahe.dto.Pager;
@@ -18,7 +17,7 @@ import cn.dahe.model.GoodsTags;
 import cn.dahe.model.GoodsUnit;
 import cn.dahe.model.SmallTicket;
 import cn.dahe.model.Stock;
-import cn.dahe.model.Supplier;
+import cn.dahe.model.Store;
 import cn.dahe.service.IGoodsService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.PoiUtils;
@@ -77,8 +76,8 @@ public class GoodsServiceImpl implements IGoodsService{
     }
 
     @Override
-    public boolean add(GoodsDto goodsDto) {
-        Goods goods = formatGoodsDtoToGoods(goodsDto);
+    public boolean add(GoodsDto goodsDto, int storeId) {
+        Goods goods = formatGoodsDtoToGoods(goodsDto, storeId);
         return add(goods);
     }
 
@@ -93,9 +92,9 @@ public class GoodsServiceImpl implements IGoodsService{
     }
 
     @Override
-    public void update(GoodsDto goodsDto) {
-        Goods goods = formatGoodsDtoToGoods(goodsDto);
-        Goods g = goodsDao.get(goodsDto.getId());
+    public void update(GoodsDto goodsDto, int storeId) {
+        Goods goods = formatGoodsDtoToGoods(goodsDto, storeId);
+        /*Goods g = goodsDao.get(goodsDto.getId());
         g.setStatus(goods.getStatus());
         g.setShelfLife(goods.getShelfLife());
         g.setOrderUnit(goods.getOrderUnit());
@@ -118,8 +117,8 @@ public class GoodsServiceImpl implements IGoodsService{
         g.setProductionDate(goods.getProductionDate());
         g.setTradePrice(goods.getTradePrice());
         g.setScore(goods.getScore());
-        g.setUnitIds(goods.getUnitIds());
-        update(g);
+        g.setUnitIds(goods.getUnitIds());*/
+        update(goods);
     }
 
     @Override
@@ -349,13 +348,15 @@ public class GoodsServiceImpl implements IGoodsService{
         return goodsDto;
     }
 
-    private Goods formatGoodsDtoToGoods(GoodsDto goodsDto){
+    private Goods formatGoodsDtoToGoods(GoodsDto goodsDto, int storeId){
         Goods goods = new Goods();
         goods.setPrice(goodsDto.getPrice());
         Stock stock = new Stock();
         stock.setGoodNum(Long.parseLong(goodsDto.getStock()));
-
+        goods.setStock(stock);
         goods.setCategoriesId(goodsDto.getCategoriesId());
+        Categories c = categoriesDao.get(goodsDto.getCategoriesId());
+        goods.setCategoriesName(c.getName());
         goods.setProductionDate(
                 StringUtils.isNotBlank(goodsDto.getProductionDate())
                         ? DateUtil.format(goodsDto.getProductionDate(), "yyyy-MM-dd")
@@ -365,6 +366,7 @@ public class GoodsServiceImpl implements IGoodsService{
         goods.setGoodsNo(goodsDto.getGoodsNo());
         goods.setImgUrl(goodsDto.getGoodsImg());
         goods.setVipSet(goodsDto.getVipSet());
+        goods.setStoreId(storeId);
         goods.setVipPrice(goodsDto.getVipPrice());
         goods.setName(goodsDto.getName());
         goods.setStockDown(StringUtils.isNotBlank(goodsDto.getStockDown())?Integer.parseInt(goodsDto.getStockDown()):0);

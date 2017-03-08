@@ -31,6 +31,14 @@
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
+            <label class="form-label col-3">资源类型：</label>
+            <div class="formControls col-6">
+                <input type="radio" value="0" name="resourceType" id="types-1" checked/> <label for="types-1">栏目</label>&nbsp;
+                <input type="radio" value="1" name="resourceType" id="types-2"/> <label for="types-2">菜单</label>
+            </div>
+            <div class="col-3"> </div>
+        </div>
+        <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>权限名称：</label>
             <div class="formControls col-6">
                 <input type="text" class="input-text radius" value="" id="permission_name" name="name">
@@ -48,6 +56,13 @@
             <label class="form-label col-3"><span class="c-red">* </span>权限url：</label>
             <div class="formControls col-6">
                 <input type="text" class="input-text radius" value="" name="url" id="permission_url">
+            </div>
+            <div class="col-3"> </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-3">图标：</label>
+            <div class="formControls col-6">
+                <input type="text" class="input-text radius" value="" name="iconType" id="permission_icon">
             </div>
             <div class="col-3"> </div>
         </div>

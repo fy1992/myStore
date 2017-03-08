@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.HashSet;
@@ -54,10 +55,9 @@ public class User {
     private int status;
     //0 超管  1 总店店长 2 分店店长 3 收银员
     private int rank;
-    @Column(name = "role_id")
-    private int roleId;
-    @Column(name = "role_name")
-    private String roleName;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
     //用户对应的权限
     @ManyToMany(targetEntity = Permission.class, fetch = FetchType.EAGER)
     @JoinTable(name = "t_user_permission",
@@ -170,19 +170,11 @@ public class User {
         this.rank = rank;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

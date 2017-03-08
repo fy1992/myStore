@@ -68,11 +68,11 @@ public class EmployeeController {
      */
     @RequestMapping(value = "cashierAdd", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj cashierAdd(Cashier cashier, String permissionIds, HttpSession session, HttpServletRequest request){
+    public AjaxObj cashierAdd(Cashier cashier, String permissionIds, int roleId, HttpSession session, HttpServletRequest request){
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
         request.getParameter("permissionIds");
-        employeeService.addCashier(cashier, user, permissionIds);
+        employeeService.addCashier(cashier, user, permissionIds, roleId);
         /*json.setMsg("收银员添加成功");
         json.setResult(1);*/
         json.setInfo("收银员添加成功");
@@ -107,9 +107,9 @@ public class EmployeeController {
      */
     @RequestMapping(value = "cashierEdit", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj cashierEdit(Cashier cashier, String permissionIds){
+    public AjaxObj cashierEdit(Cashier cashier, String permissionIds, int roleId){
         AjaxObj json = new AjaxObj();
-        employeeService.updateCashier(cashier, permissionIds);
+        employeeService.updateCashier(cashier, permissionIds, roleId);
         /*json.setMsg("收银员编辑成功");
         json.setResult(1);*/
         json.setInfo("收银员编辑成功");

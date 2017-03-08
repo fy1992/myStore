@@ -1,10 +1,8 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.IPermissionDao;
-import cn.dahe.dao.ISysMenuDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
-import cn.dahe.model.SysMenu;
 import cn.dahe.service.IPermissionService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -20,8 +18,6 @@ import java.util.List;
 public class PermissionServiceImpl implements IPermissionService{
     @Resource
     private IPermissionDao permissionDao;
-    @Resource
-    private ISysMenuDao sysMenuDao;
 
     @Override
     public boolean add(Permission t) {
@@ -102,12 +98,12 @@ public class PermissionServiceImpl implements IPermissionService{
     }
 
     @Override
-    public List<SysMenu> findAllSysMenu() {
-        return sysMenuDao.queryAllMenu();
+    public List<Permission> findAllSysMenu() {
+        return permissionDao.findByLevel(0);
     }
 
     @Override
-    public SysMenu findByName(String name) {
-        return sysMenuDao.queryByName(name);
+    public List<Permission> findByLevel(int level) {
+        return null;
     }
 }

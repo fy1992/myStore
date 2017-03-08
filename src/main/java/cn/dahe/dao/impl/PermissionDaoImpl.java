@@ -5,6 +5,7 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class PermissionDaoImpl extends BaseDaoImpl<Permission> implements IPermi
 
     @Override
     public List<Permission> findByPid(int parentId) {
-        String hql = "from Permission where parent.id = ?";
+        String hql = "from Permission where parentId = ?";
         return list(hql, parentId);
     }
 
@@ -42,5 +43,11 @@ public class PermissionDaoImpl extends BaseDaoImpl<Permission> implements IPermi
     public Permission findByPerKey(String perKey) {
         String hql = "from Permission where perKey = ?";
         return (Permission)this.queryByHql(hql, perKey);
+    }
+
+    @Override
+    public List<Permission> findByLevel(int level){
+        String hql = "from Permission where level = ?";
+        return this.list(hql, level);
     }
 }

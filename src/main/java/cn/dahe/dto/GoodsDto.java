@@ -54,6 +54,8 @@ public class GoodsDto {
     private String goodsTagss;
     //备注
     private String description;
+    //所属店面
+    private int storeId;
 
     public String getName() {
         return name;
@@ -253,6 +255,14 @@ public class GoodsDto {
 
     public String getTradePrice() {
         return tradePrice;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 
     @Override

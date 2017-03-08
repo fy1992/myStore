@@ -51,9 +51,9 @@ public class InitListener implements ServletContextListener,
         logger.info("--enter the listener--");
         ctx = WebApplicationContextUtils.getWebApplicationContext(evt.getServletContext());
         IRepairService repairService = (IRepairService) ctx.getBean("repairServiceImpl");
+        repairService.repairMenu(); //菜单
         repairService.repairPermission(); //权限
         repairService.repairRole(); //角色
-        repairService.repairMenu(); //菜单
         repairService.repairUser(); //超管
     }
 }

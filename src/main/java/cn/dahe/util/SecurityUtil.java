@@ -1,5 +1,8 @@
 package cn.dahe.util;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,7 +11,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class SecurityUtil {
-	
 	private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
 	public static String MD5(String password){
 		try {
@@ -20,6 +22,19 @@ public class SecurityUtil {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	//密码加盐加密
+	public static String encryptPassword(String username, String password){
+	    if(StringUtils.isBlank(username)){
+            return "";
+        }
+        if(StringUtils.isBlank(password)){
+            return "";
+        }
+        SecureRandomNumberGenerator secureRandomNumberGenerator=new SecureRandomNumberGenerator();
+        String salt = secureRandomNumberGenerator.nextBytes().toHex();
+        return new Md5Hash(password, username + salt, 2).toBase64();
 	}
 
 	public static String getHash(String str) {
@@ -39,5 +54,6 @@ public class SecurityUtil {
 	}
 
 	public static void main(String[] args) {
-	}
+        System.out.println(encryptPassword("大河网", "dahewang123"));
+    }
 }

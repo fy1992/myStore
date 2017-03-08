@@ -47,7 +47,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
     private IRoleDao roleDao;
 
     @Override
-    public boolean addCashier(Cashier t, User user, String permissionIds) {
+    public boolean addCashier(Cashier t, User user, String permissionIds, int roleId) {
         Cashier c = cashierDao.findByCashierNo(t.getCashierNo());
         if(c != null){
             return false;
@@ -55,9 +55,9 @@ public class EmployeeServiceImpl implements IEmployeeService{
         t.setStoreId(user.getStoreId());
         t.setStoreName(user.getStoreName());
         t.setPassword(t.getPassword());
-        Role r = roleDao.get(t.getRoleId());
+        Role r = roleDao.get(roleId);
         if(r != null){
-            t.setRoleName(r.getRoleName());
+            t.setRole(r);
         }
         if(StringUtils.isNotBlank(permissionIds)){
             String[] permissionArr = permissionIds.split(",");
@@ -96,16 +96,15 @@ public class EmployeeServiceImpl implements IEmployeeService{
 
 
     @Override
-    public void updateCashier(Cashier t, String permissionIds) {
+    public void updateCashier(Cashier t, String permissionIds, int roleId) {
         Cashier c = getCashier(t.getId());
         c.setStatus(t.getStatus());
         c.setName(t.getName());
         c.setMobile(t.getMobile());
         c.setPassword(t.getPassword());
-        c.setRoleId(t.getRoleId());
-        Role r = roleDao.get(c.getRoleId());
+        Role r = roleDao.get(roleId);
         if(r != null){
-            c.setRoleName(r.getRoleName());
+            c.setRole(r);
         }
         if(StringUtils.isNotBlank(permissionIds)){
             String[] permissionArr = permissionIds.split(",");

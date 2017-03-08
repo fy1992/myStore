@@ -23,6 +23,8 @@ public class Goods {
     //商品类型
     @Column(name = "categories_id")
     private int categoriesId;
+    @Column(name = "categories_name")
+    private String categoriesName;
     //图片访问链接
     @Column(name = "img_url")
     private String imgUrl;
@@ -370,6 +372,14 @@ public class Goods {
 
     public void setSeq(int seq) {
         this.seq = seq;
+    }
+
+    public String getCategoriesName() {
+        return categoriesName;
+    }
+
+    public void setCategoriesName(String categoriesName) {
+        this.categoriesName = categoriesName;
     }
 
     @Override

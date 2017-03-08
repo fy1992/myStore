@@ -4,10 +4,7 @@ package cn.dahe.controller;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
-import cn.dahe.model.SysMenu;
-import cn.dahe.model.User;
 import cn.dahe.service.IPermissionService;
-import cn.dahe.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -123,7 +118,7 @@ public class PermissionController {
      */
     @RequestMapping(value = "menu", method = RequestMethod.POST)
     @ResponseBody
-    public List<SysMenu> queryAllMenu(){
+    public List<Permission> queryAllMenu(){
         return permissionService.findAllSysMenu();
     }
 }
