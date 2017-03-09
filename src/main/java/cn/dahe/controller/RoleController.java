@@ -79,7 +79,6 @@ public class RoleController {
     @ResponseBody
     public AjaxObj addRole(Role role, String permissionIds, HttpSession session, HttpServletRequest request){
         AjaxObj json = new AjaxObj();
-       // String permissions = StringUtil.formatStr(request.getParameter("permissionIds"));
         User user = (User)session.getAttribute("loginUser");
         role.setStoreId(user.getStoreId());
         boolean b = roleService.add(role, permissionIds);
@@ -122,7 +121,6 @@ public class RoleController {
     @ResponseBody
     public AjaxObj editRole(Role role, String permissionIds, HttpSession session, HttpServletRequest request){
         AjaxObj json = new AjaxObj();
-        //String permissions = StringUtil.formatStr(request.getParameter("permissionIds"));
         User user = (User)session.getAttribute("loginUser");
         role.setStoreId(user.getStoreId());
         boolean b = roleService.update(role, permissionIds);

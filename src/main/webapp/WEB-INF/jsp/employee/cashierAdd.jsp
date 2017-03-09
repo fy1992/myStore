@@ -109,6 +109,47 @@
             }
         });
 
+        $.post("<%=request.getContextPath()%>/server/permission/menu", {resourceType : 1}, function(data){
+            for(var n in data){
+                $("#ckBox").append(
+                    "<label><input type=\"checkbox\" name=\"ck1\" value = '"+data[n].id+"'/>"+data[n].name+"</label>"
+                );
+            }
+            $("#ckBox").append("<br clear=\"all\"/>");
+
+            $("input[type='checkbox']").on("click", function() {
+                var ids = [];
+                $("input[type='checkbox']:checked").each(function (i) {
+                    ids.push($(this).val());
+                });
+                $("#permissions").val(ids);
+            });
+        });
+
+        $("#cashier_role").on("change", function(){
+            $.post("<%=request.getContextPath()%>/server/permission/findByRoleId", {roleId : $(this).val()}, function (data) {
+                if(data){
+                    var arr = [];
+                    data.forEach(function(result){
+                        arr.push(result.id);
+                    });
+                    $("#permissions").val(arr);
+                    $("input[type='checkbox']").each(function() {
+                        if(existsInArr($(this).val(), arr)){
+                            $(this).prop("checked", true);
+                        }else{
+                            $(this).prop("checked", false);
+                        }
+                    });
+                }else{
+                    $("#permissions").val("");
+                    $("input[type='checkbox']").each(function() {
+                        $(this).prop("checked", false);
+                    });
+                }
+            });
+        });
+
         var  validtor = $("#form-cashier-add").Validform({
             tiptype:3,
             showAllError:true,
@@ -139,23 +180,6 @@
                 nullmsg:"密码必填"
             }
         ]);
-
-        $.post("<%=request.getContextPath()%>/server/permission/findAllPermission", {type : 0}, function(data){
-            for(var n in data){
-                $("#ckBox").append(
-                    "<label><input type=\"checkbox\" name=\"ck1\" value = '"+data[n].id+"'/>"+data[n].name+"</label>"
-                );
-            }
-            $("#ckBox").append("<br clear=\"all\"/>");
-
-            $("input[type='checkbox']").on("click", function() {
-                var ids = [];
-                $("input[type='checkbox']:checked").each(function (i) {
-                    ids.push($(this).val());
-                });
-                $("#permissions").val(ids);
-            });
-        });
     })
 </script>
 </body>

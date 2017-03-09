@@ -28,4 +28,6 @@ public interface IPermissionService {
      * 所有目录
      */
     List<Permission> findByResourceType(int resourceType, int storeId);
+
+    List<Permission> findByRoleId(int roleId);
 }

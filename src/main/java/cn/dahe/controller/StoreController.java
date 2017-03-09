@@ -112,9 +112,9 @@ public class StoreController {
      */
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj editStore(Store store){
+    public AjaxObj editStore(Store store, User user){
         AjaxObj json = new AjaxObj();
-        storeService.update(store);
+        storeService.update(store, user);
        /* json.setMsg("门店信息修改成功");
         json.setResult(1);*/
         json.setInfo("门店信息修改成功");

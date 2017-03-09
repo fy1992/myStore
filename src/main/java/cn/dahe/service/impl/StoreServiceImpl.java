@@ -70,7 +70,7 @@ public class StoreServiceImpl implements IStoreService{
             //门店的登录账号
             User u = new User();
             u.setRank(1);
-            u.setStatus(1);
+            u.setStatus(store.getStatus());
             u.setStoreId(storeId);
             u.setStoreName(t.getName());
             u.setPassword(SecurityUtil.MD5(user.getPassword()));
@@ -93,8 +93,12 @@ public class StoreServiceImpl implements IStoreService{
     }
 
     @Override
-    public void update(Store t) {
-
+    public void update(Store t, User user) {
+        User u = userDao.findByStoreId(t.getId());
+        u.setStatus(t.getStatus());
+        u.setMobile(user.getMobile());
+        u.setEmail(user.getEmail());
+        userDao.update(u);
         storeDao.update(t);
     }
 

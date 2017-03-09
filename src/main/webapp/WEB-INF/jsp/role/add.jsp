@@ -124,7 +124,7 @@
             }
         ]);
 
-        $.post("<%=request.getContextPath()%>/server/permission/menu", {resourceType : 0}, function(data){
+        $.post("<%=request.getContextPath()%>/server/permission/menu", {resourceType : 1}, function(data){
             for(var n in data){
                 $("#ckBox").append(
                     "<label><input type=\"checkbox\" name=\"ck1\" value = '"+data[n].id+"'/>"+data[n].name+"</label>"

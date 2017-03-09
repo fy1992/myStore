@@ -6,3 +6,16 @@ function reflush(table, areaId) {
     table.fnPageChange(currentPage - 1);
     $("#"+areaId+"").val("");
 }
+
+var existsInArr = function(item, arr){
+    if(!arr || !item){
+        return false;
+    }
+    var result = false;
+    arr.forEach(function (data) {
+        if(item == data){
+            result = true;
+        }
+    });
+    return result;
+};

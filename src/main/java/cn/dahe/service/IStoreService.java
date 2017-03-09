@@ -14,7 +14,7 @@ public interface IStoreService {
     void add(Store t);
     boolean add(Store t, User u, User currentUser, int roleId);
     void del(int id);
-    void update(Store t);
+    void update(Store t, User user);
     Store get(int id);
     Store load(int id);
     /**

@@ -24,20 +24,16 @@
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 货流 <span class="c-gray en">&gt;</span> 门店订货 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
-            <span class="select-box" style="width: 100px;">
+            <span class="select-box" style="width: 120px;">
                 <select class="select" id="traffic_static">
                     <option value="-1">全部货单</option>
                     <option value = "0">门店进货单</option>
                     <option value = "1">门店退货单</option>
                 </select>
             </span>
-            <span class="select-box" style="width: 100px;">
-                <select class="select" id="traffic_time">
-                    <option value="0">订货时间</option>
-                    <option value="1">发货时间</option>
-                </select>
-            </span>
-            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'tafficDate\')||\'%y-%M-%d\'}'})" id="tafficDate" class="input-text Wdate radius" style="width:120px;"/>
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'startTafficDate\')||\'%y-%M-%d\'}'})" id="startTafficDate" class="input-text Wdate radius" style="width:120px;"/> 至
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTafficDate\')||\'%y-%M-%d\'}'})" id="endTafficDate" class="input-text Wdate radius" style="width:120px;"/>
+            <input type="text" id="trafficNo" placeholder="货单编号" style="width:160px" class="input-text radius">
             <button id="trafficManage_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
@@ -128,7 +124,7 @@ table = $('#trafficManage_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/server/trafficManage/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/goodsTrafficManage/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -143,11 +139,16 @@ table = $('#trafficManage_table').dataTable({
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
       	var status = $("#traffic_static").val();
-      	var timeType = $("#traffic_time").val();
-      	var tafficDate = $("#tafficDate").val();
+      	var trafficNo = $("#trafficNo").val();
+      	var startTime = $("#startTafficDate").val();
+      	var endTime = $("#endTafficDate").val();
+      	if(!trafficNo){
+      	    trafficNo = "";
+        }
         aoData.push({"name":"status","value":status});
-        aoData.push({"name":"timeType","value":timeType});
-        aoData.push({"name":"tafficDate","value":tafficDate});
+        aoData.push({"name":"trafficNo","value":trafficNo});
+        aoData.push({"name":"startTime","value":startTime});
+        aoData.push({"name":"endTime","value":endTime});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){

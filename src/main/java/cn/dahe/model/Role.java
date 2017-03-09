@@ -38,7 +38,7 @@ public class Role {
     //角色描述
     private String description;
     //角色对应的权限
-    @ManyToMany(targetEntity = Permission.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Permission.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "t_role_permission",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")})

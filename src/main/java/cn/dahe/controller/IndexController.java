@@ -50,6 +50,7 @@ public class IndexController {
                 }
             });
             Collections.sort(channel, Comparator.comparing(Permission::getId));
+            Collections.sort(menu, Comparator.comparing(Permission::getId));
 			model.addAttribute("channel", channel);
 			model.addAttribute("menu", menu);
 			return "backstage/index";

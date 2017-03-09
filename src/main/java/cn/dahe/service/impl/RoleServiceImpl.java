@@ -2,9 +2,11 @@ package cn.dahe.service.impl;
 
 import cn.dahe.dao.IPermissionDao;
 import cn.dahe.dao.IRoleDao;
+import cn.dahe.dao.IStoreDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
 import cn.dahe.model.Role;
+import cn.dahe.model.Store;
 import cn.dahe.service.IRoleService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -27,6 +29,8 @@ public class RoleServiceImpl implements IRoleService{
     private IRoleDao roleDao;
     @Resource
     private IPermissionDao permissionDao;
+    @Resource
+    private IStoreDao storeDao;
 
     @Override
     public boolean add(Role t, String permissions) {
@@ -36,12 +40,23 @@ public class RoleServiceImpl implements IRoleService{
             if(StringUtils.isNotBlank(permissions)){
                 String[] permissionArr = permissions.split(",");
                 Set<Permission> set = new HashSet<>();
+                Set<Integer> idSet = new HashSet<>();
                 for(int i = 0, len = permissionArr.length; i < len; i++){
                     Permission permission = permissionDao.get(Integer.parseInt(permissionArr[i]));
+                    int pid = permission.getParentId();
+                    idSet.add(pid);
                     set.add(permission);
                 }
+                idSet.forEach(i -> {
+                    Permission permission = permissionDao.get(i);
+                    if(permission != null){
+                        set.add(permission);
+                    }
+                });
                 t.setPermissions(set);
             }
+            Store store = storeDao.get(t.getStoreId());
+            t.setStoreName(store.getName());
             roleDao.add(t);
             return true;
         }
@@ -56,20 +71,25 @@ public class RoleServiceImpl implements IRoleService{
     @Override
     public boolean update(Role t, String permissions) {
         Role role = roleDao.get(t.getId());
-        /*if(!t.getRoleKey().equals(role.getRoleKey())){
-            Role r = roleDao.findByRoleKey(t.getRoleKey(), t.getStoreId());
-            if(r != null){
-                return false;
-            }
-        }*/
         if(StringUtils.isNotBlank(permissions)){
             String[] permissionArr = permissions.split(",");
             Set<Permission> set = new HashSet<>();
+            Set<Integer> idSet = new HashSet<>();
             for(int i = 0, len = permissionArr.length; i < len; i++){
                 Permission permission = permissionDao.get(Integer.parseInt(permissionArr[i]));
+                int pid = permission.getParentId();
+                idSet.add(pid);
                 set.add(permission);
             }
+            idSet.forEach(i -> {
+                Permission permission = permissionDao.get(i);
+                if(permission != null){
+                    set.add(permission);
+                }
+            });
             role.setPermissions(set);
+        }else{
+            role.setPermissions(null);
         }
         role.setDescription(t.getDescription());
         role.setRoleName(t.getRoleName());

@@ -39,7 +39,8 @@
                     <option value="1">发货时间</option>
                 </select>
             </span>
-            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'tafficDate\')||\'%y-%M-%d\'}'})" id="tafficDate" class="input-text Wdate radius" style="width:120px;"/>
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'startTafficDate\')||\'%y-%M-%d\'}'})" id="startTafficDate" class="input-text Wdate radius" style="width:120px;"/> 至
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTafficDate\')||\'%y-%M-%d\'}'})" id="endTafficDate" class="input-text Wdate radius" style="width:120px;"/>
             <button id="goodsTraffic_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
@@ -146,10 +147,12 @@ table = $('#goodsTraffic_table').dataTable({
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
       	var status = $("#traffic_static").val();
       	var timeType = $("#traffic_time").val();
-      	var tafficDate = $("#tafficDate").val();
+      	var startTime = $("#startTafficDate").val();
+      	var endTime = $("#endTafficDate").val();
         aoData.push({"name":"status","value":status});
         aoData.push({"name":"timeType","value":timeType});
-        aoData.push({"name":"tafficDate","value":tafficDate});
+        aoData.push({"name":"startTime","value":startTime});
+        aoData.push({"name":"endTime","value":endTime});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){

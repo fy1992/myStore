@@ -1,14 +1,17 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.IPermissionDao;
+import cn.dahe.dao.IRoleDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
+import cn.dahe.model.Role;
 import cn.dahe.service.IPermissionService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +21,8 @@ import java.util.List;
 public class PermissionServiceImpl implements IPermissionService{
     @Resource
     private IPermissionDao permissionDao;
+    @Resource
+    private IRoleDao roleDao;
 
     @Override
     public boolean add(Permission t) {
@@ -100,5 +105,16 @@ public class PermissionServiceImpl implements IPermissionService{
     @Override
     public List<Permission> findByResourceType(int resourceType, int storeId) {
         return permissionDao.findByResourceType(resourceType, storeId);
+    }
+
+    @Override
+    public List<Permission> findByRoleId(int roleId) {
+        Role role = roleDao.get(roleId);
+        if(role == null){
+            return null;
+        }
+        List<Permission> list = new ArrayList<>();
+        list.addAll(role.getPermissions());
+        return list;
     }
 }

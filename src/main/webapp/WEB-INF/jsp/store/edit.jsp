@@ -23,6 +23,7 @@
 <body>
 <div class="pd-20 minwidth">
     <form class="form form-horizontal" id="form-store-edit" action="<%=request.getContextPath()%>/server/store/edit" method="POST">
+        <b>账号信息</b>
         <div class="row cl">
             <label class="form-label col-3">是否启用：</label>
             <div class="formControls col-6">
@@ -52,6 +53,8 @@
             <div class="formControls col-6"><input type = "text" class="input-text radius" id="email" name = "email" value = "${user.email}"/></div>
             <div class="col-3"> </div>
         </div>
+        <div class=""><hr/></div>
+        <b>店面信息</b>
         <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>门店编号：</label>
             <div class="formControls col-6">

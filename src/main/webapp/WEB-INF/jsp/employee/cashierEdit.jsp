@@ -108,6 +108,31 @@
             for(var n in data){
                 $("#cashier_role").append("<option value = '"+data[n].id+"'>"+data[n].roleName+"</option>");
             }
+            $("#cashier_role").val(${cashier.role.id});
+        });
+
+        $("#cashier_role").on("change", function(){
+            $.post("<%=request.getContextPath()%>/server/permission/findByRoleId", {roleId : $(this).val()}, function (data) {
+                if(data){
+                    var arr = [];
+                    data.forEach(function(result){
+                        arr.push(result.id);
+                    });
+                    $("#permissions").val(arr);
+                    $("input[type='checkbox']").each(function() {
+                        if(existsInArr($(this).val(), arr)){
+                            $(this).prop("checked", true);
+                        }else{
+                            $(this).prop("checked", false);
+                        }
+                    });
+                }else{
+                    $("#permissions").val("");
+                    $("input[type='checkbox']").each(function() {
+                        $(this).prop("checked", false);
+                    });
+                }
+            });
         });
 
         var  validtor = $("#form-cashier-edit").Validform({
@@ -135,7 +160,7 @@
             }
         ]);
 
-        $.post("<%=request.getContextPath()%>/server/permission/findAllPermission", {type : 0}, function(data){
+        $.post("<%=request.getContextPath()%>/server/permission/menu", {resourceType : 1}, function(data){
             for(var n in data){
                 $("#ckBox").append(
                     "<label><input type=\"checkbox\" name=\"ck1\" value = '"+data[n].id+"'/>"+data[n].name+"</label>"
@@ -143,10 +168,11 @@
             }
             $("#ckBox").append("<br clear=\"all\"/>");
             var result = "${permissions}";
+            $("#permissions").val(result);
             if(result && result != 0){
                 var tagslist = result.split(",");
                 $("input[type='checkbox']").each(function() {
-                    if($.inArray($(this).val(), tagslist) != -1){
+                    if(existsInArr($(this).val(), tagslist)){
                         $(this).attr("checked", true);
                     }
                 });

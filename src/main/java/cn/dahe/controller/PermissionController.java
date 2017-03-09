@@ -6,6 +6,7 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
 import cn.dahe.model.User;
 import cn.dahe.service.IPermissionService;
+import jdk.nashorn.internal.ir.RuntimeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -124,5 +125,17 @@ public class PermissionController {
     public List<Permission> queryAllMenu(int resourceType, HttpSession session){
         User user = (User) session.getAttribute("loginUser");
         return permissionService.findByResourceType(resourceType, user.getStoreId());
+    }
+
+
+    /**
+     * 通过roleId获取权限
+     * @param roleId
+     * @return
+     */
+    @RequestMapping(value = "findByRoleId", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Permission> findByRoleId(int roleId){
+        return permissionService.findByRoleId(roleId);
     }
 }
