@@ -71,7 +71,7 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
             return this.list(hql, categoriesId);
         }
         if(unitId != 0){
-            hql += " and goods.mainUnit.id = ?";
+            hql += " and goods.mainUnitId = ?";
             return this.list(hql, unitId);
         }
         return null;

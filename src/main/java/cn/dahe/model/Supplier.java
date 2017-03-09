@@ -58,6 +58,9 @@ public class Supplier {
             joinColumns = {@JoinColumn(name = "supplier_id")},
             inverseJoinColumns = {@JoinColumn(name = "store_id")})
     private Set<Store> storeSet = new HashSet<>();
+    //所属店面
+    @Column(name = "store_id")
+    private int storeId;
 
     public int getId() {
         return id;
@@ -169,6 +172,14 @@ public class Supplier {
 
     public void setPinyin(String pinyin) {
         this.pinyin = pinyin;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 
     @Override

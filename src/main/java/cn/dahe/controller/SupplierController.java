@@ -66,10 +66,11 @@ public class SupplierController {
      */
     @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addUser(Supplier supplier){
+    public AjaxObj addUser(Supplier supplier, HttpSession session){
         logger.info(supplier.toString());
         AjaxObj json = new AjaxObj();
-        boolean b = supplierService.add(supplier);
+        User user = (User)session.getAttribute("loginUser");
+        boolean b = supplierService.add(supplier, user.getStoreId());
         if(b){
             json.setInfo("供应商添加成功");
             json.setStatus("y");
@@ -141,7 +142,7 @@ public class SupplierController {
      */
     @RequestMapping("importExcel")
     @ResponseBody
-    public AjaxObj importExcel(MultipartFile file){
+    public AjaxObj importExcel(MultipartFile file, HttpSession session){
         AjaxObj json = new AjaxObj();
         if(file == null){
             json.setMsg("请选择文件上传");
@@ -158,7 +159,8 @@ public class SupplierController {
             json.setResult(0);
             return json;
         }
-        Map<String, Object> map = supplierService.importSupplierExcel(file);
+        User user = (User) session.getAttribute("loginUser");
+        Map<String, Object> map = supplierService.importSupplierExcel(file, user.getStoreId());
 
         return json;
     }

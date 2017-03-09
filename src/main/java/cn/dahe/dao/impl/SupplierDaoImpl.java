@@ -52,8 +52,8 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements ISupplierD
     }
 
     @Override
-    public Supplier findByNo(String supplierNo) {
-        String hql = "from Supplier supplier where supplier.supplierNo = ?";
-        return (Supplier)this.queryByHql(hql, supplierNo);
+    public Supplier findByNo(String supplierNo, int storeId) {
+        String hql = "from Supplier supplier where supplier.supplierNo = ? and supplier.storeId = ?";
+        return (Supplier)this.queryByHql(hql, new Object[]{supplierNo, storeId});
     }
 }

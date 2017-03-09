@@ -36,5 +36,5 @@ public interface ISupplierDao extends IBaseDao<Supplier>{
      * @param supplierNo
      * @return
      */
-    Supplier findByNo(String supplierNo);
+    Supplier findByNo(String supplierNo, int storeId);
 }

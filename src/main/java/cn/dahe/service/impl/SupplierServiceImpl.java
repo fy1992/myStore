@@ -32,10 +32,11 @@ public class SupplierServiceImpl implements ISupplierService{
     private ISupplierDao supplierDao;
 
     @Override
-    public boolean add(Supplier t) {
-        Supplier supplier = supplierDao.findByNo(t.getSupplierNo());
+    public boolean add(Supplier t, int storeId) {
+        Supplier supplier = supplierDao.findByNo(t.getSupplierNo(), storeId);
         if(supplier == null){
             logger.info("供应商编码还没有被使用");
+            supplier.setStoreId(storeId);
             supplierDao.add(t);
             return true;
         }
@@ -109,7 +110,7 @@ public class SupplierServiceImpl implements ISupplierService{
     }
 
     @Override
-    public Map<String, Object> importSupplierExcel(MultipartFile file) {
+    public Map<String, Object> importSupplierExcel(MultipartFile file, int storeId) {
         Supplier supplier;
         Map<String, Object> map = new HashMap<>();
         try{
@@ -124,7 +125,7 @@ public class SupplierServiceImpl implements ISupplierService{
                     HSSFRow hssfRow = hssfSheet.getRow(rowNum);
                     if (hssfRow != null) {
                         HSSFCell supplierNo = hssfRow.getCell(0);
-                        supplier = supplierDao.findByNo(PoiUtils.getValue(supplierNo));
+                        supplier = supplierDao.findByNo(PoiUtils.getValue(supplierNo), storeId);
                         if(supplier == null){
                             supplier = new Supplier();
                             HSSFCell name = hssfRow.getCell(1);

@@ -219,7 +219,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
             json.setMsg("很抱歉，您输入的工号不存在");
             return json;
         }
-        if(!SecurityUtil.MD5(password).equals(cashier.getPassword())){
+        if(!password.equals(cashier.getPassword())){
             json.setResult(0);
             json.setMsg("密码输入有误，请重新输入");
             return json;

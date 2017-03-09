@@ -11,7 +11,7 @@ import java.util.Map;
  * Created by fy on 2017/1/23.
  */
 public interface ISupplierService {
-    boolean add(Supplier t);
+    boolean add(Supplier t, int storeId);
     void del(int id);
     void update(Supplier t);
     Supplier get(int id);
@@ -28,7 +28,7 @@ public interface ISupplierService {
      * 通过excel导入供应商
      * @param file
      */
-    Map<String, Object> importSupplierExcel(MultipartFile file);
+    Map<String, Object> importSupplierExcel(MultipartFile file, int storeId);
 
     List<Supplier> findAll(int storeId);
 

@@ -80,6 +80,7 @@ public class SmallTicketServiceImpl implements ISmallTicketService{
             if(id == 0){
                 smallTicket1 = findByName(smallTicket.getName(), storeId);
                 if(smallTicket1 == null) {
+                    smallTicket.setStoreId(storeId);
                     add(smallTicket);
                 }
             }else{

@@ -115,7 +115,7 @@ public class LoginController {
      * @param password
      * @return
      */
-    @RequestMapping(value = "cashierLogin", method = RequestMethod.POST)
+    @RequestMapping(value = "cashierLogin", method = RequestMethod.GET)
     @ResponseBody
     public AjaxObj cashierLogin(String cashierNo, String password, HttpSession session){
         AjaxObj json = employeeService.cashierLogin(cashierNo, password);
