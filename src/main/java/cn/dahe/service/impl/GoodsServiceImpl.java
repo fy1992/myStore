@@ -7,6 +7,7 @@ import cn.dahe.dao.IGoodsUnitDao;
 import cn.dahe.dao.ISmallTicketDao;
 import cn.dahe.dao.IStockDao;
 import cn.dahe.dao.IStoreDao;
+import cn.dahe.dao.ISupplierDao;
 import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.GoodsDtoSimple;
 import cn.dahe.dto.Pager;
@@ -17,7 +18,7 @@ import cn.dahe.model.GoodsTags;
 import cn.dahe.model.GoodsUnit;
 import cn.dahe.model.SmallTicket;
 import cn.dahe.model.Stock;
-import cn.dahe.model.Store;
+import cn.dahe.model.Supplier;
 import cn.dahe.service.IGoodsService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.PoiUtils;
@@ -64,6 +65,8 @@ public class GoodsServiceImpl implements IGoodsService{
     private ISmallTicketDao smallTicketDao;
     @Resource
     private IGoodsTagsDao goodsTagsDao;
+    @Resource
+    private ISupplierDao supplierDao;
 
     @Override
     public boolean add(Goods t) {
@@ -94,31 +97,7 @@ public class GoodsServiceImpl implements IGoodsService{
     @Override
     public void update(GoodsDto goodsDto, int storeId) {
         Goods goods = formatGoodsDtoToGoods(goodsDto, storeId);
-        /*Goods g = goodsDao.get(goodsDto.getId());
-        g.setStatus(goods.getStatus());
-        g.setShelfLife(goods.getShelfLife());
-        g.setOrderUnit(goods.getOrderUnit());
-        g.setName(goods.getName());
-        g.setStockDown(goods.getStockDown());
-        g.setBid(goods.getBid());
-        g.setStockUp(goods.getStockUp());
-        g.setCategoriesId(goods.getCategoriesId());
-        g.setEx(goods.getEx());
-        g.setVipSet(goods.getVipSet());
-        g.setVipPrice(goods.getVipPrice());
-        g.setDescription(goods.getDescription());
-        g.setImgUrl(goods.getImgUrl());
-        g.setSupplierId(goods.getSupplierId());
-        g.setSupplierName(goods.getSupplierName());
-        g.setMainUnitId(goods.getMainUnitId());
-        g.setMainUnitName(goods.getMainUnitName());
-        g.setPinyin(goods.getPinyin());
-        g.setPrint(goods.getPrint());
-        g.setProductionDate(goods.getProductionDate());
-        g.setTradePrice(goods.getTradePrice());
-        g.setScore(goods.getScore());
-        g.setUnitIds(goods.getUnitIds());*/
-        update(goods);
+        goodsDao.update(goods);
     }
 
     @Override
@@ -148,11 +127,11 @@ public class GoodsServiceImpl implements IGoodsService{
                     pageSize = (Integer) jsonObject.get("value");
                 } else if (jsonObject.get("name").equals("goodsInfo")) {
                     goodsInfo = jsonObject.get("value").toString();
-                } else if (jsonObject.get("name").equals("categories")) {
+                } else if (jsonObject.get("name").equals("categoriesId")) {
                     categories = Integer.parseInt(jsonObject.get("value").toString());
-                } else if (jsonObject.get("name").equals("supplier")) {
+                } else if (jsonObject.get("name").equals("supplierId")) {
                     supplier = Integer.parseInt(jsonObject.get("value").toString());
-                } else if (jsonObject.get("name").equals("tags")) {
+                } else if (jsonObject.get("name").equals("goodsTags")) {
                     tags = Integer.parseInt(jsonObject.get("value").toString());
                 } else if (jsonObject.get("name").equals("status")) {
                     status = Integer.parseInt(jsonObject.get("value").toString());
@@ -337,19 +316,50 @@ public class GoodsServiceImpl implements IGoodsService{
         goodsDto.setTradePrice(Integer.toString(goods.getTradePrice()));
         goodsDto.setPrice(goods.getPrice());
         goodsDto.setCategoriesId(goods.getCategoriesId());
+        goodsDto.setCategoriesName(goods.getCategoriesName());
         goodsDto.setMainUnit(goods.getMainUnitId());
         goodsDto.setMainUnitName(goods.getMainUnitName());
         goodsDto.setSupplierName(goods.getSupplierName());
+        goodsDto.setTradePrice(Integer.toString(goods.getTradePrice()));
+        goodsDto.setStockDown(Integer.toString(goods.getStockDown()));
+        goodsDto.setStockUp(Integer.toString(goods.getStockUp()));
+        goodsDto.setDescription(goods.getDescription());
         goodsDto.setSupplierId(Integer.toString(goods.getSupplierId()));
         goodsDto.setVipPrice(goods.getVipPrice());
         goodsDto.setProductionDate(DateUtil.format(goods.getProductionDate(), "yyyy-MM-dd"));
         goodsDto.setGoodsNo(goods.getGoodsNo());
         goodsDto.setGoodsImg(goods.getImgUrl());
+        Set<SmallTicket> smallTicketSet = goods.getSmallTicketSet();
+        Set<GoodsTags> goodsTagsSet = goods.getGoodsTagsSet();
+        if(smallTicketSet != null && smallTicketSet.size() > 0){
+            StringBuffer stsb = new StringBuffer();
+            smallTicketSet.forEach(smallTicket -> stsb.append(smallTicket.getId() + ","));
+            stsb.deleteCharAt(stsb.length() - 1);
+            goodsDto.setSmallTickets(stsb.toString());
+        }else{
+            goodsDto.setSmallTickets("0");
+        }
+
+        if(goodsTagsSet != null && goodsTagsSet.size() > 0){
+            StringBuffer gtsb = new StringBuffer();
+            StringBuffer gtsb_name = new StringBuffer();
+            goodsTagsSet.forEach(goodsTags -> {
+                gtsb.append(goodsTags.getId() + ",");
+                gtsb_name.append(goodsTags.getName() + ",");
+            });
+            gtsb.deleteCharAt(gtsb.length() - 1);
+            gtsb_name.deleteCharAt(gtsb_name.length() - 1);
+            goodsDto.setGoodsTagss(gtsb.toString());
+            goodsDto.setGoodsTagsName(gtsb_name.toString());
+        }else{
+            goodsDto.setGoodsTagss("0");
+        }
         return goodsDto;
     }
 
     private Goods formatGoodsDtoToGoods(GoodsDto goodsDto, int storeId){
         Goods goods = new Goods();
+        goods.setId(goodsDto.getId());
         goods.setPrice(goodsDto.getPrice());
         Stock stock = new Stock();
         stock.setGoodNum(Long.parseLong(goodsDto.getStock()));
@@ -364,9 +374,16 @@ public class GoodsServiceImpl implements IGoodsService{
         goods.setBid(goodsDto.getBid());
         goods.setDescription(goodsDto.getDescription());
         goods.setGoodsNo(goodsDto.getGoodsNo());
+        goods.setTradePrice(Integer.parseInt(goodsDto.getTradePrice()));
         goods.setImgUrl(goodsDto.getGoodsImg());
         goods.setVipSet(goodsDto.getVipSet());
         goods.setStoreId(storeId);
+        int supplierId = Integer.parseInt(goodsDto.getSupplierId());
+        Supplier supplier = supplierDao.get(storeId);
+        if(supplier != null){
+            goods.setSupplierName(supplier.getName());
+        }
+        goods.setSupplierId(supplierId);
         goods.setVipPrice(goodsDto.getVipPrice());
         goods.setName(goodsDto.getName());
         goods.setStockDown(StringUtils.isNotBlank(goodsDto.getStockDown())?Integer.parseInt(goodsDto.getStockDown()):0);

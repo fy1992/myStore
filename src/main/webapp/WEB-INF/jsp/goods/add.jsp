@@ -89,7 +89,7 @@
                 	<div id="btnShowEditImages" class="defaultImage">
                     	<h1>编辑图片</h1>
 	                	<img src="" id="imgPath"/>
-                        <input type = "hidden" value="" name = "goodsImg">
+                        <input type = "hidden" value="" name = "goodsImg" id = "goodsImg">
                 	</div>
                 </div>
             </div>
@@ -294,12 +294,15 @@ $(function(){
 	
 	$("#labelChange").click(function(){
 	    var url = "<%=request.getContextPath()%>/server/goods/goodsTagsSelect";
-        var tagsIds = [];
+        var tagsIds = $("#tagsIds").val();
         $(".tagsIds").each(function(){
             if($(this).val()){
                 tagsIds.push($(this).val());
             }
         });
+        if(!tagsIds){
+            tagsIds = [];
+        }
         if(tagsIds.length > 0){
             url += "?tagsIds=" + tagsIds.toString();
         }

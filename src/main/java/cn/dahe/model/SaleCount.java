@@ -30,5 +30,43 @@ public class SaleCount {
     @Column(name = "paid_by_money")
     private int paidByMoney;
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getCountDate() {
+        return countDate;
+    }
+
+    public void setCountDate(Date countDate) {
+        this.countDate = countDate;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
+
+    public int getPaidByMoney() {
+        return paidByMoney;
+    }
+
+    public void setPaidByMoney(int paidByMoney) {
+        this.paidByMoney = paidByMoney;
+    }
 }

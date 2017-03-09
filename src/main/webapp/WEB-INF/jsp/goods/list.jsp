@@ -137,7 +137,7 @@ table = $('#goods_table').dataTable({
         {"mData" : "goodsNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "pinyin", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "categoriesName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "goodsNum", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "stock", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "mainUnitName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "bid", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "price", "sDefaultContent" : "", "bSortable":false},
@@ -147,7 +147,7 @@ table = $('#goods_table').dataTable({
         	return data == 1?"是":"否";
         	},"bSortable":false,"sClass":"center"
         },
-        {"mData" : "supplier", "sDefaultContent" : "","bSortable":false,"sClass":"center"},
+        {"mData" : "supplierName", "sDefaultContent" : "","bSortable":false,"sClass":"center"},
         {"mData" : "productionDate", "sDefaultContent" : "", "mRender":function(data, type, full){
                return format(data);
            },"bSortable":false,"sClass":"center"

@@ -497,9 +497,10 @@
             percentages[ file.id ][ 1 ] = percentage;
             updateTotalProgress();
         };
-
+        //上传成功后，把图片赋值到图片框
         uploader.on( 'uploadSuccess', function(file, response) {
             if(response.result == 1){
+                parent.$("#goodsImg").val(response.msg);
                 parent.$('#imgPath').attr("src", response.msg);
             }
         });

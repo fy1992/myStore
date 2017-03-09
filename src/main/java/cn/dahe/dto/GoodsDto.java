@@ -52,6 +52,8 @@ public class GoodsDto {
     private String smallTickets;
     //商品标签ids
     private String goodsTagss;
+    //商品标签names
+    private String goodsTagsName;
     //备注
     private String description;
     //所属店面
@@ -263,6 +265,14 @@ public class GoodsDto {
 
     public void setStoreId(int storeId) {
         this.storeId = storeId;
+    }
+
+    public String getGoodsTagsName() {
+        return goodsTagsName;
+    }
+
+    public void setGoodsTagsName(String goodsTagsName) {
+        this.goodsTagsName = goodsTagsName;
     }
 
     @Override

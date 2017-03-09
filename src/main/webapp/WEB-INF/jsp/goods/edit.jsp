@@ -29,11 +29,11 @@
 		            <label class="form-label col-3">是否启用：</label>
 		            <div class="formControls col-6">
 		            	<div class="radio-box">
-                            <input type="radio" id="using-1" name="status" value = "1" <c:if test="${goodsDto.status} eq 1">checked</c:if>>
+                            <input type="radio" id="using-1" name="status" value = "1" <c:if test="${goodsDto.status eq 1}">checked</c:if>>
 				          	<label for="using-1">是</label>
 				        </div>
 				        <div class="radio-box">
-				          	<input type="radio" id="using-2" name="status" value = "0" <c:if test="${goodsDto.status} eq 0">checked</c:if>>
+				          	<input type="radio" id="using-2" name="status" value = "0" <c:if test="${goodsDto.status eq 0}">checked</c:if>>
 				          	<label for="using-2">否</label>
 				        </div>
 		            </div>
@@ -44,6 +44,7 @@
                     <div class="formControls col-6">
                         <span>${goodsDto.goodsNo}</span>
                         <input name = "id" value = "${goodsDto.id}" type = "hidden"/>
+                        <input name = "goodsNo" value = "${goodsDto.goodsNo}" type = "hidden"/>
                     </div>
                     <div class="col-3"></div>
                 </div>
@@ -88,7 +89,7 @@
                 	<div id="btnShowEditImages" class="defaultImage">
                     	<h1>编辑图片</h1>
 	                	<img src="${goodsDto.goodsImg}" id="imgPath"/>
-                        <input type = "hidden" value="${goodsDto.goodsImg}" name = "goodsImg">
+                        <input type = "hidden" value="${goodsDto.goodsImg}" name = "goodsImg" id = "goodsImg">
                 	</div>
                 </div>
             </div>
@@ -99,11 +100,11 @@
                 <label class="form-label f-l col-3">会员折扣：</label>
                 <div class="formControls f-l col-6">
                     <div class="radio-box">
-                        <input type="radio" id="vip-1" name="vipSet" value = "1" <c:if test="${goodsDto.vipSet} eq 1">checked</c:if>>
+                        <input type="radio" id="vip-1" name="vipSet" value = "1" <c:if test="${goodsDto.vipSet eq 1}">checked</c:if>>
                         <label for="vip-1">是</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" id="vip-2" name="vipSet" value = "0" <c:if test="${goodsDto.vipSet} eq 0">checked</c:if>>
+                        <input type="radio" id="vip-2" name="vipSet" value = "0" <c:if test="${goodsDto.vipSet eq 0}">checked</c:if>>
                         <label for="vip-2">否</label>
                     </div>
                 </div>
@@ -207,7 +208,7 @@
         	<div class="col-8">
 	            <label class="form-label col-3">备注：</label>
 	            <div class="formControls col-9">
-	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="goodsDescription" name = "description"  value = "${goodsDto.description}"></textarea>
+	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="goodsDescription" name = "description"  value = "${goodsDto.description}">${goodsDto.description}</textarea>
 	            </div>
 	        </div>
         </div>
@@ -240,7 +241,24 @@ $(function(){
             }
         });
     });
+    if(${goodsDto.smallTickets ne "0"}){
+        var sts = "${goodsDto.smallTickets}";
+        $("#smallTicketNum").text("${goodsDto.smallTickets}".split(",").length);
+        $("#smallTicketNum").append("<input type = 'hidden' value = '"+sts+"' id = 'stsIds' name = 'smallTickets'>");
+    }
 
+    if(${goodsDto.goodsTagss ne "0"}){
+        var arr = "${goodsDto.goodsTagsName}".split(",");
+        var gts = "${goodsDto.goodsTagss}";
+        arr.forEach(function (result) {
+            $("#showGoodsTags").append(
+                "<a class=\"btn btn-primary size-MINI mr-5\">"+result+"</a>"
+            );
+        });
+        $("#showGoodsTags").append(
+            "<input type = 'hidden' value = '"+gts+"' id = 'tagsIds' name ='goodsTagss'/>"
+        );
+    }
 
     var  validtor = $("#form-goods-edit").Validform({
         tiptype:3,
@@ -284,6 +302,9 @@ $(function(){
 
 	$("#cardType").click(function(){
 	    var stsIds = $("#stsIds").val();
+	    if(!stsIds){
+            stsIds = "${goodsDto.smallTickets}";
+        }
 	    var url = "<%=request.getContextPath()%>/server/goods/smallTicketSelect";
 	    if(stsIds){
             url += "?stsIds="+ stsIds;
@@ -293,15 +314,16 @@ $(function(){
 	
 	$("#labelChange").click(function(){
 	    var url = "<%=request.getContextPath()%>/server/goods/goodsTagsSelect";
-        var tagsIds = [];
+        var tagsIds = $("#tagsIds").val();
         $(".tagsIds").each(function(){
             if($(this).val()){
                 tagsIds.push($(this).val());
             }
         });
-        if(tagsIds.length > 0){
-            url += "?tagsIds=" + tagsIds.toString();
+        if(!tagsIds || tagsIds.length == 0){
+            tagsIds = "${goodsDto.goodsTagss}";
         }
+        url += "?tagsIds=" + tagsIds.toString();
         layer_show("选择标签", url, "550", "400");
 	});
 

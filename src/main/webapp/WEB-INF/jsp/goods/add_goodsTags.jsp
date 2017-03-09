@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>厨房票打设置</title>
+	<title>商品标签设置</title>
 	<link href="${ctxResource}/css/H-ui.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
@@ -66,7 +66,9 @@ $(function(){
             parent.$("#showGoodsTags").append(
                 "<input type = 'hidden' value = '"+tagsIds+"' id = 'tagsIds' name ='goodsTagss'/>"
             );
-        }
+        }else{
+            parent.$("#showGoodsTags").empty();
+		}
 		layer_close();
 	});
 });

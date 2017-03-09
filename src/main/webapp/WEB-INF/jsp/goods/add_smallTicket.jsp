@@ -67,6 +67,7 @@ $(function(){
         for(var i = 0; i < n; i++){
             stsids.push($("input[type = 'checkbox']:checked").eq(i).val());
         }
+        parent.$("#smallTicketNum").empty();
         parent.$("#smallTicketNum").text(n);
         parent.$("#smallTicketNum").append("<input type = 'hidden' value = '"+stsids.toString()+"' id = 'stsIds' name = 'smallTickets'>");
 		layer_close();

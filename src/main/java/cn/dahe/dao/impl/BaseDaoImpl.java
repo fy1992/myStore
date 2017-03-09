@@ -64,7 +64,8 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T> {
 	public boolean update(T t) {
 		boolean b = false;
 		try {
-			this.getHibernateTemplate().update(t);
+			this.getHibernateTemplate().merge(t);
+			//this.getHibernateTemplate().update(t);
 			b = true;
 		} catch (DataAccessException e) {
 			e.printStackTrace();
