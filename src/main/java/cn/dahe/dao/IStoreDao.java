@@ -23,7 +23,7 @@ public interface IStoreDao extends IBaseDao<Store>{
      * @param storeId
      * @return
      */
-    List<Store> findAll(int storeId);
+    List<Store> findAll(int storeId, int removeId);
 
     /**
      * 根据店面编号查询

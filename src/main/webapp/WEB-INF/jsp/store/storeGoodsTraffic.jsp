@@ -97,7 +97,7 @@
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
     $(function(){
-        $.post("<%=request.getContextPath()%>/server/store/allStore", function (data) {
+        $.post("<%=request.getContextPath()%>/server/store/allStore/" + ${id}, function (data) {
             for(var n in data){
                 $("#prepareStoreId").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");
             }
@@ -108,12 +108,21 @@
         $("#preparePriceType").val(${storeGoodsTraffic.preparePriceType});
 
         var  validtor = $("#form-storeGoodsTrafficInfo-edit").Validform({
-            tiptype:3,
+            tiptype:4,
             showAllError:true,
             ajaxPost: true,
+            ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
+            tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
             btnSubmit:"#storeGoodsTrafficBtn",
-            callback:function(data){
-                window.parent.table.fnDraw();
+            callback:function (data) {
+                if(data.result == 1){
+                    window.parent.table.fnDraw();
+                    layer.msg(data.msg, {time : 2000, icon : 6}, function () {
+                        layer_close();
+                    });
+                }else{
+                    layer.msg(data.msg, {time : 2000, icon : 5});
+                }
             }
         });
     })

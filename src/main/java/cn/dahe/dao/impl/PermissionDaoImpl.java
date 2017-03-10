@@ -5,7 +5,6 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
 import org.springframework.stereotype.Repository;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 

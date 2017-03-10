@@ -76,7 +76,7 @@ public class SupplierServiceImpl implements ISupplierService{
     }
 
     @Override
-    public Pager<Supplier> findByParams(String aDataSet) {
+    public Pager<Supplier> findByParams(String aDataSet, int storeId) {
         int start = 0;// 起始
         int pageSize = 20;// size
         int status = 1;
@@ -100,7 +100,7 @@ public class SupplierServiceImpl implements ISupplierService{
             params.setStatus(status);
             params.setOrderColumn("supplier.id");
             params.setOrderDir("desc");
-            params.setIntParam4(-1);
+            params.setIntParam1(storeId);
             params.setStringParam1(keywords);
             return supplierDao.findByParam(start, pageSize, params);
         }catch (Exception e){

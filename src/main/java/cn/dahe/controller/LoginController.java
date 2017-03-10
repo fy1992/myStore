@@ -1,7 +1,6 @@
 package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
-import cn.dahe.model.Cashier;
 import cn.dahe.model.User;
 import cn.dahe.service.IEmployeeService;
 import cn.dahe.util.SecurityUtil;

@@ -6,7 +6,6 @@ import cn.dahe.model.Permission;
 import cn.dahe.model.Role;
 import cn.dahe.model.User;
 import cn.dahe.service.IRoleService;
-import cn.dahe.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -83,11 +82,11 @@ public class RoleController {
         role.setStoreId(user.getStoreId());
         boolean b = roleService.add(role, permissionIds);
         if(b){
-            json.setInfo("角色添加成功");
-            json.setStatus("y");
+            json.setMsg("角色添加成功");
+            json.setResult(1);
         }else{
-            json.setInfo("该角色key已存在");
-            json.setStatus("n");
+            json.setMsg("该角色key已存在");
+            json.setResult(0);
         }
         return json;
     }
@@ -125,11 +124,11 @@ public class RoleController {
         role.setStoreId(user.getStoreId());
         boolean b = roleService.update(role, permissionIds);
         if(b){
-            json.setInfo("角色编辑成功");
-            json.setStatus("y");
+            json.setMsg("角色编辑成功");
+            json.setResult(1);
         }else{
-            json.setInfo("该角色key已存在");
-            json.setStatus("n");
+            json.setMsg("该角色key已存在");
+            json.setResult(0);
         }
         return json;
     }

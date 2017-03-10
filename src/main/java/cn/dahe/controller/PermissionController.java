@@ -6,7 +6,6 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
 import cn.dahe.model.User;
 import cn.dahe.service.IPermissionService;
-import jdk.nashorn.internal.ir.RuntimeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -75,11 +74,11 @@ public class PermissionController {
         AjaxObj json = new AjaxObj();
         boolean b = permissionService.add(permission);
         if(b){
-            json.setInfo("权限添加成功");
-            json.setStatus("y");
+            json.setMsg("权限添加成功");
+            json.setResult(1);
         }else{
-            json.setInfo("该权限key已存在");
-            json.setStatus("n");
+            json.setMsg("该权限key已存在");
+            json.setResult(0);
         }
         return json;
     }
@@ -106,11 +105,11 @@ public class PermissionController {
         AjaxObj json = new AjaxObj();
         boolean b = permissionService.update(permission);
         if(b) {
-            json.setInfo("权限修改成功");
-            json.setStatus("y");
+            json.setMsg("权限修改成功");
+            json.setResult(1);
         }else{
-            json.setInfo("该权限key已存在");
-            json.setStatus("n");
+            json.setMsg("该权限key已存在");
+            json.setResult(0);
         }
         return json;
     }

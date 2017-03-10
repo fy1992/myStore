@@ -47,9 +47,10 @@ public class SupplierController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public Pager<Supplier> getSupplierList(String aDataSet) {
+    public Pager<Supplier> getSupplierList(String aDataSet, HttpSession session) {
         logger.info("--- Supplier list begin ---");
-        return supplierService.findByParams(aDataSet);
+        User user = (User) session.getAttribute("loginUser");
+        return supplierService.findByParams(aDataSet, user.getStoreId());
     }
 
     /**
@@ -72,11 +73,11 @@ public class SupplierController {
         User user = (User)session.getAttribute("loginUser");
         boolean b = supplierService.add(supplier, user.getStoreId());
         if(b){
-            json.setInfo("供应商添加成功");
-            json.setStatus("y");
+            json.setMsg("供应商添加成功");
+            json.setResult(1);
         }else{
-            json.setInfo("该供应商编码已存在");
-            json.setStatus("n");
+            json.setMsg("该供应商编码已存在");
+            json.setResult(0);
         }
         return json;
     }
@@ -101,8 +102,8 @@ public class SupplierController {
     public AjaxObj editSupplier(Supplier supplier){
         AjaxObj json = new AjaxObj();
         supplierService.update(supplier);
-        json.setStatus("y");
-        json.setInfo("供应商修改成功");
+        json.setMsg("供应商修改成功");
+        json.setResult(1);
         return json;
     }
 

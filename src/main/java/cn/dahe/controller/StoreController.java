@@ -2,7 +2,6 @@ package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
-import cn.dahe.model.GoodsTraffic;
 import cn.dahe.model.Store;
 import cn.dahe.model.StoreGoodsTraffic;
 import cn.dahe.model.User;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,11 +56,11 @@ public class StoreController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "/allStore", method = RequestMethod.POST)
+    @RequestMapping(value = "/allStore/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public List<Store> getAllStore(HttpSession session){
+    public List<Store> getAllStore(@PathVariable int id,  HttpSession session){
         User user = (User)session.getAttribute("loginUser");
-        return storeService.findAll(user.getStoreId());
+        return storeService.findAll(user.getStoreId(), id);
     }
 
     /**
@@ -83,12 +81,16 @@ public class StoreController {
     public AjaxObj addStore(Store store, User u, int roleId, HttpSession session){
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
-        if(storeService.add(store, u, user, roleId)){
-            json.setInfo("添加成功");
-            json.setStatus("y");
+        int mark = storeService.add(store, u, user, roleId);
+        if(mark == 0){
+            json.setMsg("添加成功");
+            json.setResult(1);
+        }else if(mark == 1){
+            json.setMsg("该门店编号已存在");
+            json.setResult(0);
         }else{
-            json.setInfo("该门店编号已存在");
-            json.setStatus("n");
+            json.setMsg("该账号名已存在");
+            json.setResult(0);
         }
         return json;
     }
@@ -115,10 +117,8 @@ public class StoreController {
     public AjaxObj editStore(Store store, User user){
         AjaxObj json = new AjaxObj();
         storeService.update(store, user);
-       /* json.setMsg("门店信息修改成功");
-        json.setResult(1);*/
-        json.setInfo("门店信息修改成功");
-        json.setStatus("y");
+        json.setMsg("门店信息修改成功");
+        json.setResult(1);
         return json;
     }
 
@@ -157,10 +157,8 @@ public class StoreController {
     public AjaxObj storeGoodsTraffic(StoreGoodsTraffic storeGoodsTraffic){
         AjaxObj json = new AjaxObj();
         storeService.updateStoreGoodsTraffics(storeGoodsTraffic);
-        /*json.setResult(1);
-        json.setMsg("门店货流设置完成");*/
-        json.setStatus("y");
-        json.setInfo("门店货流设置完成");
+        json.setResult(1);
+        json.setMsg("门店货流设置完成");
         return json;
     }
 
@@ -174,6 +172,7 @@ public class StoreController {
     public String getStoreGoodsTraffic(@PathVariable int id, Model model){
         StoreGoodsTraffic storeGoodsTraffic = storeService.findByStoreId(id);
         model.addAttribute("storeGoodsTraffic", storeGoodsTraffic);
+        model.addAttribute("id", id);
         return "store/storeGoodsTraffic";
     }
 }

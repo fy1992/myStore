@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface IStoreService {
     void add(Store t);
-    boolean add(Store t, User u, User currentUser, int roleId);
+    int add(Store t, User u, User currentUser, int roleId);
     void del(int id);
     void update(Store t, User user);
     Store get(int id);
@@ -28,9 +28,10 @@ public interface IStoreService {
     /**
      * 查询全部店面
      * @param storeId
+     * @param removeId
      * @return
      */
-    List<Store> findAll(int storeId);
+    List<Store> findAll(int storeId, int removeId);
 
     void add(StoreGoodsTraffic storeGoodsTraffic);
     void update(StoreGoodsTraffic storeGoodsTraffic);

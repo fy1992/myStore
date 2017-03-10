@@ -3,7 +3,6 @@ package cn.dahe.dao.impl;
 import cn.dahe.dao.IStockLogDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.StockLog;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

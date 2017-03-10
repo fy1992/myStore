@@ -1,6 +1,5 @@
 package cn.dahe.dto;
 
-import java.util.Date;
 
 /**
  * Created by fy on 2017/1/13.

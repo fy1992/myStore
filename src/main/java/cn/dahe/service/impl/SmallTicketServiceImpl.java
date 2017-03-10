@@ -3,7 +3,6 @@ package cn.dahe.service.impl;
 import cn.dahe.dao.ISmallTicketDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.SmallTicket;
-import cn.dahe.model.User;
 import cn.dahe.service.ISmallTicketService;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;

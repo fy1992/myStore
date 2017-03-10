@@ -3,7 +3,6 @@ package cn.dahe.dao.impl;
 import cn.dahe.dao.IGoodsTagsDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.GoodsTags;
-import cn.dahe.model.GoodsUnit;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

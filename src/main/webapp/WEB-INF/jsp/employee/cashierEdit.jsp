@@ -70,7 +70,7 @@
                 <label class="form-label col-3">角色：</label>
                 <div class="formControls col-7">
                 <span class="select-box radius">
-                    <select class="select" id = "cashier_role" name="roles">
+                    <select class="select" id = "cashier_role" name="roleId">
                         <option value = "0">- 无 -</option>
                     </select>
                 </span>
@@ -136,14 +136,21 @@
         });
 
         var  validtor = $("#form-cashier-edit").Validform({
-            tiptype:3,
+            tiptype:4,
             showAllError:true,
             ajaxPost: true,
             ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
             tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
             btnSubmit:"#cashierEditBtn",
             callback:function (data) {
-                window.parent.table.fnDraw();
+                if(data.result == 1){
+                    window.parent.table.fnDraw();
+                    layer.msg(data.msg, {time : 2000, icon : 6}, function () {
+                        layer_close();
+                    });
+                }else{
+                    layer.msg(data.msg, {time : 2000, icon : 5});
+                }
             }
         });
 

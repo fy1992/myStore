@@ -10,10 +10,7 @@ public class AjaxObj{
 	private String msg = "";
 	private Object Object;
 	private int totalPage;
-	//validform 固定格式的返回值
-	private String status; // 状态 y 成功  n 失败
-	private String info;  //输出提示信息
-	
+
 	public int getResult() {
 		return result;
 	}
@@ -39,22 +36,6 @@ public class AjaxObj{
 		Object = object;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getInfo() {
-		return info;
-	}
-
-	public void setInfo(String info) {
-		this.info = info;
-	}
-
 	@Override
 	public String toString() {
 		return "AjaxObj{" +
@@ -62,8 +43,6 @@ public class AjaxObj{
 				", msg='" + msg + '\'' +
 				", Object=" + Object +
 				", totalPage=" + totalPage +
-				", status='" + status + '\'' +
-				", info='" + info + '\'' +
 				'}';
 	}
 }

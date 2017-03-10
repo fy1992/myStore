@@ -22,7 +22,7 @@ public interface ISupplierService {
      * @param aDataSet
      * @return
      */
-    Pager<Supplier> findByParams(String aDataSet);
+    Pager<Supplier> findByParams(String aDataSet, int storeId);
 
     /**
      * 通过excel导入供应商

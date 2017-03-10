@@ -1,8 +1,6 @@
 package cn.dahe.controller;
 
-import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.Pager;
-import cn.dahe.model.Stock;
 import cn.dahe.model.StockLog;
 import cn.dahe.model.User;
 import cn.dahe.service.IStockService;

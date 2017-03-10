@@ -2,7 +2,6 @@ package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.GoodsDto;
-import cn.dahe.dto.GoodsDtoSimple;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Categories;
 import cn.dahe.model.Goods;
@@ -33,12 +32,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -412,8 +409,8 @@ public class GoodsController {
         AjaxObj json = new AjaxObj();
         User user =  (User) session.getAttribute("loginUser");
         goodsService.add(goodsDto, user.getStoreId());
-        json.setInfo("商品添加成功");
-        json.setStatus("y");
+        json.setMsg("商品添加成功");
+        json.setResult(1);
         return json;
     }
 
@@ -440,8 +437,8 @@ public class GoodsController {
         AjaxObj json = new AjaxObj();
         User user = (User) session.getAttribute("loginUser");
         goodsService.update(goodsDto, user.getStoreId());
-        json.setInfo("商品编辑成功");
-        json.setStatus("y");
+        json.setMsg("商品编辑成功");
+        json.setResult(1);
         return json;
     }
 

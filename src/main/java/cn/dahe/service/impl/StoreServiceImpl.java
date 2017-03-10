@@ -5,9 +5,8 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.*;
 import cn.dahe.service.IStoreService;
 import cn.dahe.util.DateUtil;
-import cn.dahe.util.NumberUtils;
 import cn.dahe.util.SecurityUtil;
-import com.alibaba.fastjson.JSON;
+import cn.dahe.util.StringUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -16,12 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by fy on 2017/1/24.
@@ -44,9 +39,13 @@ public class StoreServiceImpl implements IStoreService{
     }
 
     @Override
-    public boolean add(Store t, User user, User currentUser, int roleId) {
+    public int add(Store t, User user, User currentUser, int roleId) {
         Store store = storeDao.findByStoreNo(t.getStoreNo());
         if(store == null){
+            User ur = userDao.findByLoginName(user.getUsername());
+            if(ur != null){
+                return 2;
+            }
             if(currentUser.getRank() > 0){
                 Store parent = storeDao.get(currentUser.getStoreId());
                 t.setParent(parent);
@@ -70,20 +69,20 @@ public class StoreServiceImpl implements IStoreService{
             //门店的登录账号
             User u = new User();
             u.setRank(1);
-            u.setStatus(store.getStatus());
+            u.setStatus(t.getStatus());
             u.setStoreId(storeId);
             u.setStoreName(t.getName());
             u.setPassword(SecurityUtil.MD5(user.getPassword()));
             u.setUsername(user.getUsername());
             u.setRole(role);
-            u.setMobile(user.getMobile());
-            u.setEmail(user.getEmail());
+            u.setMobile(StringUtil.formatStr(user.getMobile()));
+            u.setEmail(StringUtil.formatStr(user.getEmail()));
             u.setRegisterDate(new Date());
             u.setLoginName(user.getUsername());
             userDao.addAndGetId4Integer(u);
-            return true;
+            return 0;
         }else{
-            return false;
+            return 1;
         }
     }
 
@@ -99,7 +98,15 @@ public class StoreServiceImpl implements IStoreService{
         u.setMobile(user.getMobile());
         u.setEmail(user.getEmail());
         userDao.update(u);
-        storeDao.update(t);
+        Store store = storeDao.get(t.getId());
+        store.setAddr(t.getAddr());
+        store.setContact(t.getContact());
+        store.setStatus(t.getStatus());
+        store.setDescription(t.getDescription());
+        store.setName(t.getName());
+        store.setWorkTime(t.getWorkTime());
+        store.setIndustry(t.getIndustry());
+        storeDao.update(store);
     }
 
     @Override
@@ -154,8 +161,13 @@ public class StoreServiceImpl implements IStoreService{
     }
 
     @Override
-    public List<Store> findAll(int storeId) {
-        return storeDao.findAll(storeId);
+    public List<Store> findAll(int storeId, int removeId) {
+        Store store = storeDao.get(storeId);
+        Store parent = store.getParent();
+        if(parent != null){
+            storeId = parent.getId();
+        }
+        return storeDao.findAll(storeId, removeId);
     }
 
     @Override
@@ -185,7 +197,8 @@ public class StoreServiceImpl implements IStoreService{
         sgt.setPayOnline(storeGoodsTraffic.getPayOnline());
         sgt.setPreparePriceType(storeGoodsTraffic.getPreparePriceType());
         sgt.setPrepareStoreId(storeGoodsTraffic.getPrepareStoreId());
-        sgt.setPrepareStoreName(storeGoodsTraffic.getPrepareStoreName());
+        Store store = storeDao.get(storeGoodsTraffic.getPrepareStoreId());
+        sgt.setPrepareStoreName(store.getName());
         storeGoodsTrafficDao.update(sgt);
     }
 }

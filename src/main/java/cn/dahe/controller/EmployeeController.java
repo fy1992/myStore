@@ -73,10 +73,8 @@ public class EmployeeController {
         User user = (User)session.getAttribute("loginUser");
         request.getParameter("permissionIds");
         employeeService.addCashier(cashier, user, permissionIds, roleId);
-        /*json.setMsg("收银员添加成功");
-        json.setResult(1);*/
-        json.setInfo("收银员添加成功");
-        json.setStatus("y");
+        json.setMsg("收银员添加成功");
+        json.setResult(1);
         return json;
     }
 
@@ -110,10 +108,8 @@ public class EmployeeController {
     public AjaxObj cashierEdit(Cashier cashier, String permissionIds, int roleId){
         AjaxObj json = new AjaxObj();
         employeeService.updateCashier(cashier, permissionIds, roleId);
-        /*json.setMsg("收银员编辑成功");
-        json.setResult(1);*/
-        json.setInfo("收银员编辑成功");
-        json.setStatus("y");
+        json.setMsg("收银员编辑成功");
+        json.setResult(1);
         return json;
     }
 
@@ -160,8 +156,8 @@ public class EmployeeController {
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
         employeeService.addSales(sales, user);
-        json.setInfo("导购员添加成功");
-        json.setStatus("y");
+        json.setMsg("导购员添加成功");
+        json.setResult(1);
         return json;
     }
 
@@ -185,10 +181,8 @@ public class EmployeeController {
     public AjaxObj salesEdit(Sales sales){
         AjaxObj json = new AjaxObj();
         employeeService.updateSales(sales);
-       /* json.setMsg("导购员编辑成功");
-        json.setResult(1);*/
-        json.setInfo("导购员编辑成功");
-        json.setStatus("y");
+        json.setMsg("导购员编辑成功");
+        json.setResult(1);
         return json;
     }
     //========================================sales end========================================================

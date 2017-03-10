@@ -3,13 +3,11 @@ package cn.dahe.controller;
 import cn.dahe.model.Permission;
 import cn.dahe.model.Role;
 import cn.dahe.model.User;
-import cn.dahe.service.IPermissionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;

@@ -39,8 +39,10 @@
             <div class="col-3"></div>
         </div>
         <div class="row cl">
-            <label class="form-label col-3"><span class="c-red">* </span>账号名：</label>
-            <div class="formControls col-6"><input type = "text" class="input-text radius" id="username" name = "username" value="${user.username}"/></div>
+            <label class="form-label col-3">账号名：</label>
+            <div class="formControls col-6">
+                <span>${user.loginName}</span>
+            </div>
             <div class="col-3"> </div>
         </div>
         <div class="row cl">
@@ -56,9 +58,11 @@
         <div class=""><hr/></div>
         <b>店面信息</b>
         <div class="row cl">
-            <label class="form-label col-3"><span class="c-red">* </span>门店编号：</label>
+            <label class="form-label col-3">门店编号：</label>
             <div class="formControls col-6">
                 <span>${store.storeNo}</span>
+                <input type="hidden" value = "${store.id}" name = "id">
+                <input type="hidden" value = "${store.storeNo}" name = "storeNo">
             </div>
             <div class="col-3">
             </div>
@@ -144,24 +148,25 @@
 <script>
     $(function () {
         var  validtor = $("#form-store-edit").Validform({
-            tiptype:3,
+            tiptype:4,
             showAllError:true,
             ajaxPost: true,
             ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
             tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
             btnSubmit:"#storeEditBtn",
             callback:function(data){
-                window.parent.table.fnDraw();
-                //layer_close();
+                if(data.result == 1){
+                    window.parent.table.fnDraw();
+                    layer.msg(data.msg, {time : 2000, icon : 6}, function () {
+                        layer_close();
+                    });
+                }else{
+                    layer.msg(data.msg, {time : 2000, icon : 5});
+                }
             }
         });
 
         validtor.addRule([
-            {
-                ele : "#store_no",
-                datatype : "n",
-                nullmsg : "门店编号必填"
-            },
             {
                 ele : "#store_name",
                 datatype : "s",
@@ -172,11 +177,6 @@
                 datatype : "m",
                 errormsg : "请填写正确的手机号",
                 ignore : "ignore"
-            },
-            {
-                ele : "#username",
-                datatype : "*",
-                nullmsg : "用户名不能为空"
             },
             {
                 ele : "#phone",
