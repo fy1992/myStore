@@ -16,13 +16,13 @@
 <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 
-<title>GoldenLeopard后台系统</title>
+<title>易捷云收银管理系统</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
 </head>
 <body>
 <header class="Hui-header cl">
-	<a class="Hui-logo" href="<%=request.getContextPath()%>/index">GoldenLeopard后台系统</a>
+	<a class="Hui-logo" href="<%=request.getContextPath()%>/index">易捷云收银管理系统</a>
 	<ul class="Hui-userbar">
 		<li class="dropDown dropDown_hover"><a href="#" class="dropDown_A">${user.storeName} | ${user.username}<i class="Hui-iconfont">&#xe6d5;</i></a>
 			<ul class="dropDown-menu radius box-shadow">

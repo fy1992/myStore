@@ -1,4 +1,3 @@
-/*H-ui.admin.js v2.3.1 date:15:42 2015.08.19 by:guojunhui*/
 /*获取顶部选项卡总长度*/
 function tabNavallwidth(){
 	var taballwidth=0,

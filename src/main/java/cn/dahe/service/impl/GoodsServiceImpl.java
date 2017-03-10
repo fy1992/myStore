@@ -23,6 +23,7 @@ import cn.dahe.service.IGoodsService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.PoiUtils;
 import cn.dahe.util.ResourcesUtils;
+import cn.dahe.util.StringUtil;
 import cn.dahe.util.UploadsUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -320,7 +321,6 @@ public class GoodsServiceImpl implements IGoodsService{
         goodsDto.setMainUnit(goods.getMainUnitId());
         goodsDto.setMainUnitName(goods.getMainUnitName());
         goodsDto.setSupplierName(goods.getSupplierName());
-        goodsDto.setTradePrice(Integer.toString(goods.getTradePrice()));
         goodsDto.setStockDown(Integer.toString(goods.getStockDown()));
         goodsDto.setStockUp(Integer.toString(goods.getStockUp()));
         goodsDto.setDescription(goods.getDescription());
@@ -354,6 +354,20 @@ public class GoodsServiceImpl implements IGoodsService{
         }else{
             goodsDto.setGoodsTagss("0");
         }
+        Date pro_date = goods.getProductionDate();
+        int shelfLife = goods.getShelfLife();
+        if(pro_date != null && shelfLife != 0){
+            Calendar c = Calendar.getInstance();
+            c.setTime(pro_date);
+            c.add(Calendar.DATE, shelfLife);
+            Date overdueTime = c.getTime();
+            goodsDto.setOverdueTime(DateUtil.format(overdueTime, "yyyy-MM-dd"));
+            Date nowDate = new Date();
+            if(nowDate.after(overdueTime)){
+                long time = nowDate.getTime() - overdueTime.getTime();
+                goodsDto.setOverdueDay((int)time/(24*60*60*1000));
+            }
+        }
         return goodsDto;
     }
 
@@ -374,11 +388,11 @@ public class GoodsServiceImpl implements IGoodsService{
         goods.setBid(goodsDto.getBid());
         goods.setDescription(goodsDto.getDescription());
         goods.setGoodsNo(goodsDto.getGoodsNo());
-        goods.setTradePrice(Integer.parseInt(goodsDto.getTradePrice()));
+        goods.setTradePrice(StringUtil.formatStr2Int(goodsDto.getTradePrice()));
         goods.setImgUrl(goodsDto.getGoodsImg());
         goods.setVipSet(goodsDto.getVipSet());
         goods.setStoreId(storeId);
-        int supplierId = Integer.parseInt(goodsDto.getSupplierId());
+        int supplierId = StringUtil.formatStr2Int(goodsDto.getSupplierId());
         Supplier supplier = supplierDao.get(storeId);
         if(supplier != null){
             goods.setSupplierName(supplier.getName());
@@ -386,10 +400,10 @@ public class GoodsServiceImpl implements IGoodsService{
         goods.setSupplierId(supplierId);
         goods.setVipPrice(goodsDto.getVipPrice());
         goods.setName(goodsDto.getName());
-        goods.setStockDown(StringUtils.isNotBlank(goodsDto.getStockDown())?Integer.parseInt(goodsDto.getStockDown()):0);
-        goods.setStockUp(StringUtils.isNotBlank(goodsDto.getStockUp())?Integer.parseInt(goodsDto.getStockUp()):0);
+        goods.setStockDown(StringUtil.formatStr2Int(goodsDto.getStockDown()));
+        goods.setStockUp(StringUtil.formatStr2Int(goodsDto.getStockUp()));
         goods.setPinyin(goodsDto.getPinyin());
-        goods.setShelfLife(StringUtils.isNotBlank(goodsDto.getShelfLife())?Integer.parseInt(goodsDto.getShelfLife()):0);
+        goods.setShelfLife(StringUtil.formatStr2Int(goodsDto.getShelfLife()));
         goods.setStatus(goodsDto.getStatus());
         goods.setMainUnitId(goodsDto.getMainUnit());
         GoodsUnit mainUnit = goodsUnitDao.get(goodsDto.getMainUnit());

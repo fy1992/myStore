@@ -29,7 +29,7 @@
                     <option value="0">全部分类</option>
                 </select>
             </span>
-            <span class="select-box" style="width: 100px;">
+            <span class="select-box" style="width: 120px;">
                 <select class="select radius" id="supplierId">
                     <option value="0">全部供货商</option>
                 </select>
@@ -49,7 +49,8 @@
                         <th width="50">单位</th>
                         <th width="50">库存上限</th>
                         <th width="50">库存下限</th>
-                        <th width="50">保质期</th>
+                        <th width="50">到期日期</th>
+                        <th width="50">保质情况</th>
                     </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -72,27 +73,18 @@ $(function(){
 		table.fnDraw();
 	});
 
-    var start = {
-        elem : "#startTime",
-        format : 'YYYY-MM-DD hh:mm:ss',
-        max : laydate.now(),
-        istime : true,
-        choose : function(data){
-
+    //类别
+    $.post("<%=request.getContextPath()%>/server/categories/categoriesList", function (data) {
+        for(var n in data){
+            $("#categoriesId").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
         }
-    };
-
-    var end = {
-        elem : "#endTime",
-        format : 'YYYY-MM-DD hh:mm:ss',
-        max : laydate.now(),
-        istime : true,
-        choose : function(data){
-
+    });
+    //供货商
+    $.post("<%=request.getContextPath()%>/server/supplier/allSupplier", function (data) {
+        for(var n in data){
+            $("#supplierId").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
         }
-    };
-    laydate(start);
-    laydate(end);
+    });
 });
 
 //table start here
@@ -114,7 +106,12 @@ table = $('#stock_table').dataTable({
         {"mData" : "mainUnitName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "stockUp", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "stockDown", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "shelfLife", "sDefaultContent" : "", "bSortable":false}
+        {"mData" : "overdueTime", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
+	        return  data ? format(data).substring(0, 10) : "-";
+        }},
+        {"mData" : "overdueDay", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
+            return  data ? "过期 " + data + " 天" : "-";
+        }}
     ],
     "language":{
        "oPaginate": {
@@ -173,35 +170,6 @@ table = $('#stock_table').dataTable({
         });
     }
 });
-
-/* 时间格式转换*/
-function format(time){
-	if(time == null || time == "null" || time == undefined){
-		return "";
-	}
-	var date = new Date(time);
-	var seperator1 = '-';
-    var seperator2 = ':';
-	var month = formatDate(date.getMonth() + 1);
-	var day = formatDate(date.getDate());
-	var hours = formatDate(date.getHours());
-	var minutes = formatDate(date.getMinutes()); 
-    var seconds = formatDate(date.getSeconds());
-    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + day
-        + ' ' +hours + seperator2 + minutes
-        + seperator2 + seconds;
-	return currentdate;
-}
-
-function formatDate(val){
-	if(val >=1 && val <= 9){
-		val = '0' + val;
-	}
-	if(val == 0){
-		val = '00';
-	}
-	return val;
-}
 </script>
 </body>
 </html>

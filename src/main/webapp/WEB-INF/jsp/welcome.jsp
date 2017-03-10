@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="pd-40">
-  <p class="f-20 text-success">欢迎使用GoldenLeopard后台管理系统！</p>
+  <p class="f-20 text-success">欢迎使用易捷云收银管理系统</p>
 </div>
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>

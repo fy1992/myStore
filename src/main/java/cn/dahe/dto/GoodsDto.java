@@ -1,7 +1,5 @@
 package cn.dahe.dto;
 
-import cn.dahe.model.Goods;
-
 import java.util.Date;
 
 /**
@@ -23,7 +21,7 @@ public class GoodsDto {
     //会员价
     private int vipPrice = 0;
     //批发价
-    private String tradePrice;
+    private String tradePrice = "0";
     //商品价格（销售价）
     private int price;
     //商品进价
@@ -41,13 +39,13 @@ public class GoodsDto {
     //生产日期
     private String productionDate;
     //保质期
-    private String shelfLife;
+    private String shelfLife = "0";
     //库存
     private String stock;
     //库存上限
-    private String stockUp;
+    private String stockUp = "0";
     //库存下限
-    private String stockDown;
+    private String stockDown = "0";
     //厨房票打ids
     private String smallTickets;
     //商品标签ids
@@ -58,7 +56,10 @@ public class GoodsDto {
     private String description;
     //所属店面
     private int storeId;
-
+    //过期时间
+    private String overdueTime;
+    //过期天数
+    private int overdueDay;
     public String getName() {
         return name;
     }
@@ -215,9 +216,6 @@ public class GoodsDto {
         return shelfLife;
     }
 
-    public void setTradePrice(String tradePrice) {
-        this.tradePrice = tradePrice;
-    }
 
     public void setShelfLife(String shelfLife) {
         this.shelfLife = shelfLife;
@@ -259,6 +257,10 @@ public class GoodsDto {
         return tradePrice;
     }
 
+    public void setTradePrice(String tradePrice) {
+        this.tradePrice = tradePrice;
+    }
+
     public int getStoreId() {
         return storeId;
     }
@@ -273,6 +275,22 @@ public class GoodsDto {
 
     public void setGoodsTagsName(String goodsTagsName) {
         this.goodsTagsName = goodsTagsName;
+    }
+
+    public String getOverdueTime() {
+        return overdueTime;
+    }
+
+    public void setOverdueTime(String overdueTime) {
+        this.overdueTime = overdueTime;
+    }
+
+    public int getOverdueDay() {
+        return overdueDay;
+    }
+
+    public void setOverdueDay(int overdueDay) {
+        this.overdueDay = overdueDay;
     }
 
     @Override
