@@ -23,7 +23,7 @@ public class GoodsTrafficDaoImpl extends BaseDaoImpl<GoodsTraffic> implements IG
         int status = params.getStatus();
         int storeId = params.getIntParam2();
         List<Object> list = new ArrayList<>();
-        if(status != -1){
+        if(status != -2){
             hql.append(" and goodsTraffic.status = ?");
             list.add(status);
         }

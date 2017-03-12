@@ -96,6 +96,11 @@ table = $('#goodsTraffic_table').dataTable({
        "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数 
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
+        /*{
+            "mData" : null, "sDefaultContent" : "", "mRender" : function(data, type, full){
+                return "-";
+        }
+        },*/
         {
            "mData": "", "sDefaultContent": "", "mRender": function (data, type, full) {
                return "<input type='checkbox' name = 'ids' value='" + full.id + "'/>";
@@ -103,11 +108,17 @@ table = $('#goodsTraffic_table').dataTable({
         },
 	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='detail(" + full.id + ")'>详情</a>";
+            return "<a style='text-decoration:none' onclick='detail(\"" + full.orderStoreName + "\", \"" + format(full.orderTime) + "\", \"" + full.id + "\")'>详情</a>";
         }},
-        {"mData" : "orderTime", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "wishTime", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "status", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "orderTime", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return format(data).substring(0, 10);
+        }},
+        {"mData" : "wishTime", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return format(data).substring(0, 10);
+        }},
+        {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function(data, type, full){
+            return data == -1 ? "已作废" : data == 0 ? "待审核" : data == 1 ? "待配货" : "完成" ;
+        }},
         {"mData" : "description", "sDefaultContent" : "", "bSortable":false}
     ],
     "language":{
@@ -173,16 +184,16 @@ table = $('#goodsTraffic_table').dataTable({
     }
 });
 
-//新增
-function detail() {
+//审核
+function detail(title, time, id) {
     layer.open({
         type: 2,
-        title: '<i class="Hui-iconfont c-primary mr-5">&#xe619;</i>一号掌柜 2017-02-04 16:15:49',
+        title: '<i class="Hui-iconfont c-primary mr-5">&#xe619;</i>' + title + " " + time,
         shadeClose: true,
         shade: false,
         maxmin: true, //开启最大化最小化按钮
         area: ['950px', '350px'],
-        content: '<%=request.getContextPath()%>/server/goodsTraffic/audit/1'
+        content: '<%=request.getContextPath()%>/server/goodsTraffic/audit/1/' + id
     });
 }
 </script>

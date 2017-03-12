@@ -95,8 +95,8 @@
   </filter>
   <filter-mapping>
     <filter-name>shiroFilter</filter-name>
-    <url-pattern>/server/</url-pattern>
-    <url-pattern>/client/</url-pattern>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
 
   <filter>

@@ -54,8 +54,6 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
 
     @Override
     public void add(GoodsTrafficDto t, int storeId) {
-        String str = t.getGoodsMapStr();
-        //Map<Integer, Integer> map =  t.getGoodsMap();
         JSONArray json = JSONArray.parseArray(t.getGoodsMapStr());
         GoodsTraffic goodsTraffic = new GoodsTraffic();
         goodsTraffic.setWishTime(DateUtil.format(t.getWishTime(), "yyyy-MM-dd"));
@@ -68,18 +66,15 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
         int goodsTrafficId = goodsTrafficDao.addAndGetId4Integer(goodsTraffic);
         json.forEach(s -> {
             JSONObject map = JSONObject.parseObject(s.toString());
-            map.forEach((k, v) -> {
-                System.out.println(k);
-                System.out.println(v);
-                Goods goods = goodsDao.get((Integer)v);
-                OrderGoodsInfo goodsInfo = new OrderGoodsInfo(goods);
-                //请求量
-                goodsInfo.setOrderNum((Integer)v);
-                //小计
-                goodsInfo.setPriceSum(goodsInfo.getOrderNum()*goodsInfo.getPrice());
-                goodsInfo.setGoodsTrafficId(goodsTrafficId);
-                orderGoodsInfoDao.add(goodsInfo);
-            });
+            Goods goods = goodsDao.get((Integer)map.get("goodsid"));
+            OrderGoodsInfo goodsInfo = new OrderGoodsInfo(goods);
+            //请求量
+            goodsInfo.setOrderNum((Integer)map.get("goodsnum"));
+            //小计
+            goodsInfo.setPriceSum(goodsInfo.getOrderNum()*goodsInfo.getPrice());
+            goodsInfo.setGoodsTrafficId(goodsTrafficId);
+            goodsInfo.setDistributeNum(goodsInfo.getOrderNum());
+            orderGoodsInfoDao.add(goodsInfo);
         });
     }
 
@@ -140,7 +135,7 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
             params.setIntParam1(timeType);
             params.setOrderColumn("goodsTraffic.id");
             params.setOrderDir("desc");
-            params.setIntParam4(storeId);
+            params.setIntParam2(storeId);
             return goodsTrafficDao.findByParam(start, pageSize, params);
         }catch (Exception e){
             e.printStackTrace();
@@ -149,10 +144,10 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
     }
 
     @Override
-    public void auditGoodsTraffic(int id, int type) {
+    public void updateAuditGoodsTraffic(int id, int type) {
         GoodsTraffic goodsTraffic = get(id);
         goodsTraffic.setStatus(type);
-        update(goodsTraffic);
+        goodsTrafficDao.update(goodsTraffic);
     }
 
     @Override

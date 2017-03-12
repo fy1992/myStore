@@ -25,9 +25,9 @@ public interface IGoodsTrafficService {
     /**
      * 审核
      * @param id
-     * @param type 0 作废 1 审核通过
+     * @param type -1 已作废 0 待审核 1 配货中 2 已完成
      */
-    void auditGoodsTraffic(int id, int type);
+    void updateAuditGoodsTraffic(int id, int type);
 
     /**
      * 门店配货

@@ -2,6 +2,7 @@ package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.Goods;
 import cn.dahe.model.GoodsTraffic;
 import cn.dahe.model.OrderGoodsInfo;
 import cn.dahe.model.User;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -60,10 +62,22 @@ public class GoodsTrafficController {
      */
     @RequestMapping(value = "audit/{step}/{id}", method = RequestMethod.GET)
     public String audit(@PathVariable int step, @PathVariable int id, Model model){
-        //List<OrderGoodsInfo> orderGoodsInfoList = orderGoodsInfoService.findOrderGoodsInfosByGoodsTrafficId(id);
-        //model.addAttribute("orderList", orderGoodsInfoList);
         model.addAttribute("goodsTrafficId", id);
         if(step == 1){
+            GoodsTraffic goodsTraffic = goodsTrafficService.get(id);
+            model.addAttribute("status", goodsTraffic.getStatus());
+            List<OrderGoodsInfo> list = orderGoodsInfoService.findOrderGoodsInfosByGoodsTrafficId(id);
+            Set<Integer> c_set = new HashSet<>();
+            long sum = 0, goodsSum = 0;
+            for(OrderGoodsInfo orderGoodsInfo : list){
+                c_set.add(orderGoodsInfo.getCategoriesId());
+                sum += orderGoodsInfo.getPrice() * orderGoodsInfo.getOrderNum();
+                goodsSum += orderGoodsInfo.getOrderNum();
+            }
+            model.addAttribute("num", goodsSum);
+            model.addAttribute("categoriesNum", c_set.size());
+            model.addAttribute("totalprice", sum);
+            model.addAttribute("list", list);
             return "goodsTraffic/audit";
         }else if(step == 2){
             return "goodsTraffic/goodsPrepare";
@@ -83,15 +97,15 @@ public class GoodsTrafficController {
     @ResponseBody
     public AjaxObj audit(int id, int type){
         AjaxObj json = new AjaxObj();
-        goodsTrafficService.auditGoodsTraffic(id, type);
-        if(type == 0){
-            json.setResult(0);
+        goodsTrafficService.updateAuditGoodsTraffic(id, type);
+        if(type == -1){
+            json.setResult(-1);
             json.setMsg("该订单已作废");
-        }else if(type == 2){
+        }else if(type == 1){
             json.setResult(1);
             json.setMsg("<%=request.getContextPath()%>/server/goodsTraffic/audit/2");
         }else{
-            json.setResult(2);
+            json.setResult(0);
             json.setMsg("该订单已恢复");
         }
         return json;

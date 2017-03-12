@@ -49,6 +49,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
                 <!-- anon表示此地址不需要任何权限即可访问 -->
                 /resources/** = anon
                 /login = anon
+                /cashierLogin = anon
                 <!--/server/permission/list = roles[admin]
                 /server/permission/add = roles[admin]
                 /server/permission/edit/** = roles[admin]
