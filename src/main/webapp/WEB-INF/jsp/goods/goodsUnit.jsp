@@ -70,7 +70,7 @@ function del(id){
         btn: ['确定', '取消'],
         yes: function(index){
             $.post("<%=request.getContextPath()%>/server/goods/delGoodsUnit", {"id" : id}, function(data){
-                layer.msg(data.msg);
+                layer.msg(data.msg, {time : 1500, icon:6});
                 table.fnDraw();
             });
         }
@@ -163,7 +163,7 @@ table = $('#goods_unit_table').dataTable({
             style    : 'display: inline',
             callback : function (value, settings) {
                 table.fnDraw();
-                layer.msg(eval("(" + value + ")").msg);
+                layer.msg(eval("(" + value + ")").msg, {time : 1500, icon: 6});
             }
         })
     }

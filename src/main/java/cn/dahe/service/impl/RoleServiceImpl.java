@@ -53,8 +53,10 @@ public class RoleServiceImpl implements IRoleService{
                 });
                 t.setPermissions(set);
             }
-            Store store = storeDao.get(t.getStoreId());
-            t.setStoreName(store.getName());
+            if(t.getStoreId() != 0){
+                Store store = storeDao.get(t.getStoreId());
+                t.setStoreName(store.getName());
+            }
             roleDao.add(t);
             return true;
         }

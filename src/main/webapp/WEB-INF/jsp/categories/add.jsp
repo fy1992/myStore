@@ -48,7 +48,7 @@
                 },
                 type : "post",
                 success : function(data){
-                    layer.msg(data.msg, {time : 1500}, function(){
+                    layer.msg(data.msg, {time : 1500, icon:6}, function(){
                         if(data.result == 1){
                             window.parent.table.fnDraw();
                             window.parent.tree.reAsyncChildNodes(null, "refresh");
@@ -63,7 +63,7 @@
     function check(){
         var name = $("#name").val();
         if(!name){
-            layer.msg("名称不能为空");
+            layer.msg("名称不能为空", {time : 1500, icon : 5});
             return false
         }
         return true;

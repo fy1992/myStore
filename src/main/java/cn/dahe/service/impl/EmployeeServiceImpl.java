@@ -79,9 +79,11 @@ public class EmployeeServiceImpl implements IEmployeeService{
         cashierUser.setUsername("收银员");
         cashierUser.setStoreName(user.getStoreName());
         Set<Permission> permissionSet = t.getPermissions();
-        Set<Permission> newSet = new HashSet<>(permissionSet.size());
-        permissionSet.forEach(permission -> newSet.add(permission));
-        cashierUser.setPermissions(newSet);
+        if(permissionSet != null){
+            Set<Permission> newSet = new HashSet<>(permissionSet.size());
+            permissionSet.forEach(permission -> newSet.add(permission));
+            cashierUser.setPermissions(newSet);
+        }
         cashierUser.setRank(3);
         userDao.add(cashierUser);
         return true;

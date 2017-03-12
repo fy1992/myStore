@@ -1,15 +1,6 @@
 package cn.dahe.model;
 
-import org.springframework.stereotype.Component;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 订货信息
@@ -52,10 +43,10 @@ public class OrderGoodsInfo {
     @Column(name = "categories_id")
     private int categoriesId;
     //所属的订货单
-    @JoinColumn(name = "goods_traffic_id")
+    @Column(name = "goods_traffic_id")
     private int goodsTrafficId;
     //所属订单管理
-    @JoinColumn(name = "traffic_manage_id")
+    @Column(name = "traffic_manage_id")
     private int trafficManageId;
     //供货商id
     @Column(name = "supplier_id")

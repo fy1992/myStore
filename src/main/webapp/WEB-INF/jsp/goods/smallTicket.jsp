@@ -72,7 +72,7 @@ $(function(){
 			$("#xpjgl tbody input[type='text']").each(function(index){
 				var thisVal = $.trim($(this).val());
 				if(!thisVal){
-					layer.msg("当前列表中有小票机名称未填写，请确认！",{time:2000});
+					layer.msg("当前列表中有小票机名称未填写，请确认！", {time : 1500, icon : 5});
 					$(this).attr("autofocus");
 					return false;
 				}else if(index==(n-1)) {
@@ -93,7 +93,7 @@ $(function(){
 			$("#xpjgl tbody input[type='text']").each(function(index){
 				var thisVal = $.trim($(this).val());
 				if(!thisVal){
-					layer.msg("当前列表中有小票机名称未填写，请确认！",{time:2000});
+					layer.msg("当前列表中有小票机名称未填写，请确认！", {time : 1500, icon : 5});
 					$(this).attr("autofocus");
 					return false;
 				}
@@ -112,7 +112,7 @@ $(function(){
                 ));
             }
             $.post("<%=request.getContextPath()%>/server/goods/addSmallTicket", {"smallTicketList" : JSON.stringify(smallTicketArr)}, function (data) {
-                layer.msg(data.msg);
+                layer.msg(data.msg, {time : 1500, icon : 6});
                 layer_close();
             });
 		}else{

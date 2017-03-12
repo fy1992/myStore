@@ -13,7 +13,7 @@ public class GoodsTrafficDto {
     //备注
     private String description;
     //订的商品信息 商品id , 订的数量
-    private Map<Integer, Integer> goodsMap = new HashMap<>();
+    private String goodsMapStr;
     public String getWishTime() {
         return wishTime;
     }
@@ -30,12 +30,12 @@ public class GoodsTrafficDto {
         this.description = description;
     }
 
-    public Map<Integer, Integer> getGoodsMap() {
-        return goodsMap;
+    public String getGoodsMapStr() {
+        return goodsMapStr;
     }
 
-    public void setGoodsMap(Map<Integer, Integer> goodsMap) {
-        this.goodsMap = goodsMap;
+    public void setGoodsMapStr(String goodsMapStr) {
+        this.goodsMapStr = goodsMapStr;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class GoodsTrafficDto {
         return "GoodsTrafficDto{" +
                 "wishTime='" + wishTime + '\'' +
                 ", description='" + description + '\'' +
-                ", goodsMap=" + goodsMap +
+                ", goodsMapStr='" + goodsMapStr + '\'' +
                 '}';
     }
 }

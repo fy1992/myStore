@@ -36,7 +36,7 @@ public class SupplierServiceImpl implements ISupplierService{
         Supplier supplier = supplierDao.findByNo(t.getSupplierNo(), storeId);
         if(supplier == null){
             logger.info("供应商编码还没有被使用");
-            supplier.setStoreId(storeId);
+            t.setStoreId(storeId);
             supplierDao.add(t);
             return true;
         }

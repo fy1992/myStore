@@ -80,12 +80,14 @@ table = $('#user_table').dataTable({
             return "<a style='text-decoration:none' onclick='edit(" + full.id + ")'>编辑</a>";
         }},
         {"mData" : "username", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false, "mRender":function (data, type, full) {
+            return !data ? "-" : data;
+        }},
         {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
             return data == 1 ? "启用" : "禁用";
         }},
         {"mData" : "role", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-            return data;
+            return data.roleName;
         }}
     ],
     "language":{

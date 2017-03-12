@@ -1,15 +1,7 @@
 package cn.dahe.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -38,9 +30,6 @@ public class GoodsTraffic {
     //订货门店名称
     @Column(name = "order_store_name")
     private String orderStoreName;
-    //所包含的订货信息
-    @OneToMany(mappedBy = "goodsTrafficId", cascade = CascadeType.ALL)
-    private Set<OrderGoodsInfo> goodsInfoSet = new HashSet<>();
     //如果订货的门店是连锁店则需要以下属性：
     //配货门店Id
     @Column(name = "prepare_store_id")
@@ -124,14 +113,6 @@ public class GoodsTraffic {
         this.prepareStoreName = prepareStoreName;
     }
 
-    public Set<OrderGoodsInfo> getGoodsInfoSet() {
-        return goodsInfoSet;
-    }
-
-    public void setGoodsInfoSet(Set<OrderGoodsInfo> goodsInfoSet) {
-        this.goodsInfoSet = goodsInfoSet;
-    }
-
     public int getPrepareType() {
         return prepareType;
     }
@@ -150,7 +131,6 @@ public class GoodsTraffic {
                 ", description='" + description + '\'' +
                 ", orderStoreId=" + orderStoreId +
                 ", orderStoreName='" + orderStoreName + '\'' +
-                ", goodsInfoSet=" + goodsInfoSet +
                 ", prepareStoreId=" + prepareStoreId +
                 ", prepareStoreName='" + prepareStoreName + '\'' +
                 ", prepareType=" + prepareType +

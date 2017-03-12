@@ -34,7 +34,7 @@ public class CategoriesController {
      * 商品分类跳转
      * @return
      */
-    @RequestMapping(value = "treeAndList", method = RequestMethod.GET)
+    @RequestMapping(value = "list", method = RequestMethod.GET)
     public String categoriesTree(){
         return "categories/list";
     }

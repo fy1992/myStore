@@ -37,6 +37,11 @@ public class ClientController {
     @Resource
     private ICategoriesService categoriesService;
 
+    @RequestMapping(value = "test", method = RequestMethod.GET)
+    public String test(){
+        return "test/add";
+    }
+
     /**
      * 客户端订货
      * @param  goodsTrafficDto
@@ -45,6 +50,7 @@ public class ClientController {
     @ResponseBody
     public AjaxObj orderGoods(GoodsTrafficDto goodsTrafficDto, HttpSession session){
         AjaxObj json = new AjaxObj();
+        System.out.println(goodsTrafficDto.toString());
         Cashier cashier = (Cashier) session.getAttribute("clientUser");
         goodsTrafficService.add(goodsTrafficDto,  cashier.getStoreId());
         return json;

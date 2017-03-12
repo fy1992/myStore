@@ -21,6 +21,9 @@ public class ClientInterceptor extends HandlerInterceptorAdapter {
 		String url = requestUri.substring(contextPath.length());
 		HttpSession session = request.getSession();
 		Cashier cashier = (Cashier) session.getAttribute("clientUser");
+		if(cashier == null){
+			logger.info("客戶端用戶沒有登錄");
+		}
 		return cashier != null;
 		/*if(user == null){
 			redictLogin(request, response);

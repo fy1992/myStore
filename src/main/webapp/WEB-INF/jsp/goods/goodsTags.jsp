@@ -52,7 +52,7 @@ $(function(){
 		if(labelName){
             $.post("<%=request.getContextPath()%>/server/goods/addGoodsTags", {"name" : labelName}, function (data) {
                 if(data.result == 1){
-                    layer.msg("标签添加成功");
+                    layer.msg("标签添加成功", {time : 1500, icon : 6});
                     //添加成功之后执行以下代码
                     var tr = "<tr class=\"text-c\">"+
                         "<td><input type=\"text\" class=\"input-text\" id = \"goodsTags_" + data.object + "\" value=\""+ labelName +"\"></td>"+
@@ -63,11 +63,11 @@ $(function(){
                     $("table tbody").append(tr);
                     $("#labelName").val("");
                 }else{
-                    layer.msg("该标签已存在")
+                    layer.msg("该标签已存在", {time : 1500, icon : 5})
                 }
             });
 		}else{
-			layer.msg("请填写标签名称！");
+			layer.msg("请填写标签名称！", {time : 1500, icon : 5});
 		}
 	});
 });
@@ -76,11 +76,11 @@ $(function(){
 function update(id){
     var name = $("#goodsTags_" + id).val();
     if(!name){
-        layer.msg("标签名称不能为空");
+        layer.msg("标签名称不能为空", {time : 1500, icon : 5});
         return false;
     }
     $.post("<%=request.getContextPath()%>/server/goods/editGoodsTags", {"id" : id, "name" : name}, function(data){
-        layer.msg(data.msg);
+        layer.msg(data.msg, {time : 1500, icon : 6});
         $("#goodsTags_" + id).val(name);
     });
 }
@@ -97,7 +97,7 @@ function del(id){
         btn: ['确定', '取消'],
         yes: function(index){
             $.post("<%=request.getContextPath()%>/server/goods/delGoodsTags", {"id" : id}, function(data){
-                layer.msg(data.msg);
+                layer.msg(data.msg, {time : 1500, icon : 6});
                 layer_close();
             });
         }

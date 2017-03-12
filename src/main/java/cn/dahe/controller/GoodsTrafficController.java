@@ -60,9 +60,8 @@ public class GoodsTrafficController {
      */
     @RequestMapping(value = "audit/{step}/{id}", method = RequestMethod.GET)
     public String audit(@PathVariable int step, @PathVariable int id, Model model){
-        GoodsTraffic goodsTraffic = goodsTrafficService.get(id);
-        Set<OrderGoodsInfo> orderGoodsInfoSet = goodsTraffic.getGoodsInfoSet();
-        model.addAttribute("orderSet", orderGoodsInfoSet);
+        //List<OrderGoodsInfo> orderGoodsInfoList = orderGoodsInfoService.findOrderGoodsInfosByGoodsTrafficId(id);
+        //model.addAttribute("orderList", orderGoodsInfoList);
         model.addAttribute("goodsTrafficId", id);
         if(step == 1){
             return "goodsTraffic/audit";

@@ -23,7 +23,8 @@ public class ServerInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("loginUser");
 		if(user == null){
-			redictLogin(request, response);
+			logger.info("服務器用戶沒有登錄");
+			return redictLogin(request, response);
 		}
 		return true;
 	}
