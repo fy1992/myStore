@@ -13,7 +13,7 @@ public class GoodsTrafficDto {
     //备注
     private String description;
     //订的商品信息 商品id , 订的数量
-    private String goodsMapStr;
+    private String orderInfo;
     public String getWishTime() {
         return wishTime;
     }
@@ -30,12 +30,12 @@ public class GoodsTrafficDto {
         this.description = description;
     }
 
-    public String getGoodsMapStr() {
-        return goodsMapStr;
+    public String getOrderInfo() {
+        return orderInfo;
     }
 
-    public void setGoodsMapStr(String goodsMapStr) {
-        this.goodsMapStr = goodsMapStr;
+    public void setOrderInfo(String orderInfo) {
+        this.orderInfo = orderInfo;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class GoodsTrafficDto {
         return "GoodsTrafficDto{" +
                 "wishTime='" + wishTime + '\'' +
                 ", description='" + description + '\'' +
-                ", goodsMapStr='" + goodsMapStr + '\'' +
+                ", orderInfo='" + orderInfo + '\'' +
                 '}';
     }
 }

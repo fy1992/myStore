@@ -18,9 +18,10 @@ public class CacheUtils {
 	//商品缓存
 	private static final String GOODS_CACHE = "goodsCache";
 
+	//客户端用户登录缓存
+	private static final String CASHIER_USER = "cashierUser";
+
 	/**
-	 * 加入省政府细缆页参数的缓存
-	 * 20160309
 	 * @param key
 	 * @param value
 	 * */
@@ -44,14 +45,37 @@ public class CacheUtils {
 		remove(GOODS_CACHE, key);
 	}
 
+    /**
+     * @param key
+     * @param value
+     * */
+    public static void putCashierUser(String key, Object value){
+        put(CASHIER_USER, key, value);
+    }
+
+    /**
+     * 得到缓存
+     * @param key
+     * */
+    public static Object getCashierUser(String key){
+        return get(CASHIER_USER, key);
+    }
+
+    /**
+     * 移除缓存
+     * @param key
+     * */
+    public static void removeCashierUser(String key){
+        remove(CASHIER_USER, key);
+    }
+
 	/**
 	 * 获取一个cache，没有则创建
 	 * @param cacheName
-	 * @return
 	 */
 	private static Cache getCache(String cacheName){
 		Cache cache = cacheManager.getCache(cacheName);
-		if(cache==null){
+		if(cache == null){
 			cacheManager.addCache(cacheName);
 			cache = cacheManager.getCache(cacheName);
 			cache.getCacheConfiguration().setEternal(true);

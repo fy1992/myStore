@@ -62,27 +62,27 @@ public class GoodsTrafficController {
      */
     @RequestMapping(value = "audit/{step}/{id}", method = RequestMethod.GET)
     public String audit(@PathVariable int step, @PathVariable int id, Model model){
+        GoodsTraffic goodsTraffic = goodsTrafficService.get(id);
+        List<OrderGoodsInfo> list = orderGoodsInfoService.findOrderGoodsInfosByGoodsTrafficId(id);
+        Set<Integer> c_set = new HashSet<>();
+        long sum = 0, goodsSum = 0;
+        for(OrderGoodsInfo orderGoodsInfo : list){
+            c_set.add(orderGoodsInfo.getCategoriesId());
+            sum += orderGoodsInfo.getPrice() * orderGoodsInfo.getOrderNum();
+            goodsSum += orderGoodsInfo.getOrderNum();
+        }
         model.addAttribute("goodsTrafficId", id);
+        model.addAttribute("status", goodsTraffic.getStatus());
+        model.addAttribute("num", goodsSum);
+        model.addAttribute("categoriesNum", c_set.size());
+        model.addAttribute("totalprice", sum);
+        model.addAttribute("list", list);
         if(step == 1){
-            GoodsTraffic goodsTraffic = goodsTrafficService.get(id);
-            model.addAttribute("status", goodsTraffic.getStatus());
-            List<OrderGoodsInfo> list = orderGoodsInfoService.findOrderGoodsInfosByGoodsTrafficId(id);
-            Set<Integer> c_set = new HashSet<>();
-            long sum = 0, goodsSum = 0;
-            for(OrderGoodsInfo orderGoodsInfo : list){
-                c_set.add(orderGoodsInfo.getCategoriesId());
-                sum += orderGoodsInfo.getPrice() * orderGoodsInfo.getOrderNum();
-                goodsSum += orderGoodsInfo.getOrderNum();
-            }
-            model.addAttribute("num", goodsSum);
-            model.addAttribute("categoriesNum", c_set.size());
-            model.addAttribute("totalprice", sum);
-            model.addAttribute("list", list);
             return "goodsTraffic/audit";
         }else if(step == 2){
             return "goodsTraffic/goodsPrepare";
         }else if(step == 3){
-            return "goodsTraffic/auditFinished";
+            return "goodsTraffic/finished";
         }
         return null;
     }
@@ -103,7 +103,7 @@ public class GoodsTrafficController {
             json.setMsg("该订单已作废");
         }else if(type == 1){
             json.setResult(1);
-            json.setMsg("<%=request.getContextPath()%>/server/goodsTraffic/audit/2");
+            json.setMsg("<%=request.getContextPath()%>/server/goodsTraffic/audit/2/"+id);
         }else{
             json.setResult(0);
             json.setMsg("该订单已恢复");

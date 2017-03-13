@@ -34,22 +34,22 @@ public class OrderGoodsInfo {
     @Column(name = "main_unit_id")
     private int mainUnitId;
     //价格小计
-    @Column(name = "price_sum")
+    @Column(name = "price_sum", columnDefinition = "INT DEFAULT 0")
     private int priceSum;
     //配货量（实收量）
-    @Column(name = "distribute_num")
+    @Column(name = "distribute_num", columnDefinition = "INT DEFAULT 0")
     private int distributeNum;
     //商品种类
-    @Column(name = "categories_id")
+    @Column(name = "categories_id", columnDefinition = "INT DEFAULT 0")
     private int categoriesId;
     //所属的订货单
-    @Column(name = "goods_traffic_id")
+    @Column(name = "goods_traffic_id", columnDefinition = "INT DEFAULT 0")
     private int goodsTrafficId;
     //所属订单管理
-    @Column(name = "traffic_manage_id")
+    @Column(name = "traffic_manage_id", columnDefinition = "INT DEFAULT 0")
     private int trafficManageId;
     //供货商id
-    @Column(name = "supplier_id")
+    @Column(name = "supplier_id", columnDefinition = "INT DEFAULT 0")
     private int supplierId;
     //供货商名称
     @Column(name = "supplier_name")

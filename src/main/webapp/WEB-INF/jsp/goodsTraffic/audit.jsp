@@ -49,13 +49,13 @@
 
 <div class="cfpdBtnbox">
 	<div class="f-l ml-20">共 <b class="c-primary">${categoriesNum}</b> 种商品， <b class="c-primary">${num}</b> 件， 总计 <b class="c-primary">${totalprice}</b> 元。</div>
-    <a class="btn btn-primary size-M f-r" id="pass" <c:if test="${status eq -1}">disabled = "disabled"</c:if>>审核通过</a>
     <c:choose>
-        <c:when test="${status eq -1}">
-            <a class="btn btn-primary size-M f-r" id="recover">恢复</a>
-        </c:when>
-        <c:otherwise>
-            <a class="btn btn-default size-M f-r" id="nopass">作废</a>
+		<c:when test="${status eq -1}">
+			<a class="btn btn-primary size-M f-r" id="recover">恢复</a>
+		</c:when>
+		<c:otherwise>
+			<a class="btn btn-primary size-M f-r" id="pass" >审核通过</a>
+			<a class="btn btn-default size-M f-r" id="nopass">作废</a>
         </c:otherwise>
     </c:choose>
 	<%--<a class="btn btn-default size-M f-r disabled" id="obsolete" style="display: none;">已作废</a>--%>
@@ -84,7 +84,7 @@ $(function(){
                 $.post("<%=request.getContextPath()%>/server/goodsTraffic/audit", {id : "${goodsTrafficId}", type : 0}, function (data) {
                     $("#pass,#nopass").css("display","block");
                     $("#recover,#obsolete").css("display","none");
-                    layer.msg(data.msg,{time:1000}, function () {
+                    layer.msg(data.msg, {time:1000, icon:6}, function () {
                         window.parent.table.fnDraw();
                         layer_close();
                     });
@@ -95,7 +95,8 @@ $(function(){
 	//通过
 	$("#pass").click(function(){
 	    $.post("<%=request.getContextPath()%>/server/goodsTraffic/audit", {"id": "${goodsTrafficId}", "type" : 1}, function (data) {
-            $("body").html(data.msg);
+            layer_close();
+            layer_
         });
 	});
 });

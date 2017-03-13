@@ -21,17 +21,17 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         <!-- ref对应我们写的realm  myRealm -->
         <property name="realm" ref="myRealm"/>
         <!-- 使用下面配置的缓存管理器 -->
-        <property name="cacheManager" ref="shiroEncacheManager"/>
+        <!--<property name="cacheManager" ref="shiroEncacheManager"/>-->
     </bean>
     <!-- 缓存管理器 使用Ehcache实现 -->
-    <bean id="shiroEncacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+    <!--<bean id="shiroEncacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <property name="cacheManager" ref="ehCacheManager"/>
     </bean>
 
     <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
         <property name="configLocation" value="classpath:${ehcache.configFile}"></property>
         <property name="shared" value="true"/>
-    </bean>
+    </bean>-->
 
     <!-- 配置shiro的过滤器工厂类，id- shiroFilter要和我们在web.xml中配置的过滤器一致 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -49,7 +49,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
                 <!-- anon表示此地址不需要任何权限即可访问 -->
                 /resources/** = anon
                 /login = anon
-                /cashierLogin = anon
+                /client/** = anon
                 <!--/server/permission/list = roles[admin]
                 /server/permission/add = roles[admin]
                 /server/permission/edit/** = roles[admin]

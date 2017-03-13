@@ -9,15 +9,21 @@ import cn.dahe.service.ICategoriesService;
 import cn.dahe.service.IEmployeeService;
 import cn.dahe.service.IGoodsService;
 import cn.dahe.service.IGoodsTrafficService;
+import cn.dahe.util.CacheUtils;
+import cn.dahe.util.ResourcesUtils;
+import cn.dahe.util.TokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.misc.Cache;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,6 +49,47 @@ public class ClientController {
     }
 
     /**
+     * 收银员登录
+     * @param cashierNo
+     * @param password
+     * @return
+     */
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxObj cashierLogin(String cashierNo, String password, HttpServletRequest request, HttpSession session){
+        // 默认从header里获取token值
+       /* String token = request.getHeader("app_token_id");
+        if (StringUtils.isEmpty(token)) {
+            // 从请求信息中获取token值
+            token = request.getParameter("app_token_id");
+        }*/
+
+        AjaxObj json = employeeService.cashierLogin(cashierNo, password);
+        if(json.getResult() == 1){
+            session.setAttribute("clientUser", json.getObject());
+            String token = TokenUtil.getToken(cashierNo, password);
+            CacheUtils.putCashierUser(token, json.getObject());
+            json.setObject(token);
+        }
+        json.setResult(1);
+        json.setMsg("登录成功");
+        return json;
+    }
+
+    /**
+     * 收银员退出
+     * */
+    @RequestMapping(value="/cashierLogout", method=RequestMethod.GET)
+    @ResponseBody
+    public AjaxObj cashierLogout(HttpSession session){
+        AjaxObj json = new AjaxObj();
+        session.removeAttribute("clientUser");
+        json.setResult(1);
+        json.setMsg("成功退出");
+        return json;
+    }
+
+    /**
      * 客户端订货
      * @param  goodsTrafficDto
      */
@@ -50,7 +97,7 @@ public class ClientController {
     @ResponseBody
     public AjaxObj orderGoods(GoodsTrafficDto goodsTrafficDto, HttpSession session){
         AjaxObj json = new AjaxObj();
-        System.out.println(goodsTrafficDto.toString());
+        logger.info("--- " + goodsTrafficDto.toString());
         Cashier cashier = (Cashier) session.getAttribute("clientUser");
         goodsTrafficService.add(goodsTrafficDto,  cashier.getStoreId());
         return json;

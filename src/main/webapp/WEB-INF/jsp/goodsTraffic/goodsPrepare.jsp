@@ -5,10 +5,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>配货</title>
-	<link href="${resources}/css/H-ui.css" rel="stylesheet" type="text/css" />
-    <link href="${resources}/css/admin.css" rel="stylesheet" type="text/css" />
-    <link href="${resources}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
-    <link href="${resources}/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="${ctxResource}/css/H-ui.css" rel="stylesheet" type="text/css" />
+    <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
+    <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
+    <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <nav class="clearfix navbar">
@@ -36,11 +36,11 @@
 </table>
 
 <div class="cfpdBtnbox">
-	<div class="f-l ml-20">共 <b class="c-primary" id="categoriesNum"></b> 种商品， <b class="c-primary" id="goodsNum"></b> 件， 总计 <b class="c-primary" id="priceTotal"></b> 元。</div>
+	<div class="f-l ml-20">共 <b class="c-primary" id="categoriesNum">${categoriesNum}</b> 种商品， <b class="c-primary" id="goodsNum">${num}</b> 件， 总计 <b class="c-primary" id="priceTotal">${totalprice}</b> 元。</div>
 	<a class="btn btn-primary size-M f-r" id="pgoods">配货</a>
 </div>
-<script type="text/javascript" src="${resources}/js/jquery.min.js"></script>
-<script type="text/javascript" src="${resources}/js/layer/layer.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
 $(function(){

@@ -2,7 +2,6 @@ package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.model.User;
-import cn.dahe.service.IEmployeeService;
 import cn.dahe.util.SecurityUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
@@ -23,9 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
-
 
 /**
  * 登录
@@ -34,8 +30,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LoginController {
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
-    @Resource
-    private IEmployeeService employeeService;
 
     /**
      * 登录页跳转
@@ -107,34 +101,4 @@ public class LoginController {
         redirectAttributes.addFlashAttribute("msg", "您已安全退出");
         return "redirect:/login";
     }
-
-    /**
-     * 收银员登录
-     * @param cashierNo
-     * @param password
-     * @return
-     */
-    @RequestMapping(value = "cashierLogin", method = RequestMethod.GET)
-    @ResponseBody
-    public AjaxObj cashierLogin(String cashierNo, String password, HttpSession session){
-        AjaxObj json = employeeService.cashierLogin(cashierNo, password);
-        if(json.getResult() == 1){
-            session.setAttribute("clientUser", json.getObject());
-        }
-        return json;
-    }
-
-    /**
-     * 收银员退出
-     * */
-    @RequestMapping(value="/cashierLogout", method=RequestMethod.GET)
-    @ResponseBody
-    public AjaxObj cashierLogout(HttpSession session){
-        AjaxObj json = new AjaxObj();
-        session.removeAttribute("clientUser");
-        json.setResult(1);
-        json.setMsg("成功退出");
-        return json;
-    }
-
 }

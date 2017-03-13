@@ -87,7 +87,7 @@ table = $('#user_table').dataTable({
             return data == 1 ? "启用" : "禁用";
         }},
         {"mData" : "role", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-            return data.roleName;
+            return !data ? "-" : data.roleName;
         }}
     ],
     "language":{

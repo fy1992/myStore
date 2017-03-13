@@ -5,10 +5,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>门店订货详情</title>
-    <link href="${resources}/css/H-ui.css" rel="stylesheet" type="text/css" />
-    <link href="${resources}/css/admin.css" rel="stylesheet" type="text/css" />
-    <link href="${resources}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
-    <link href="${resources}/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="${ctxResource}/css/H-ui.css" rel="stylesheet" type="text/css" />
+    <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
+    <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
+    <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <nav class="clearfix navbar">
@@ -32,11 +32,23 @@
 		</tr>
 	</thead>
 	<tbody>
+		<c:forEach items="${list}" var="orderGood">
+			<tr class="text-c">
+				<td>${orderGood.goodsName}</td>
+				<td>${orderGood.goodsNo}</td>
+				<td>${orderGood.orderNum}</td>
+				<td>${orderGood.mainUnitName}</td>
+				<td>${orderGood.distributeNum}</td>
+				<td>${orderGood.price}</td>
+				<td>${orderGood.priceSum}</td>
+				<td>${orderGood.description}</td>
+			</tr>
+		</c:forEach>
 	</tbody>
 </table>
 
 <div class="cfpdBtnbox">
-	<div class="f-l ml-20">共 <b class="c-primary">1</b> 种商品， <b class="c-primary">5</b> 件， 总计 <b class="c-primary">1000.00</b> 元。</div>
+	<div class="f-l ml-20">共 <b class="c-primary">${categoriesNum}</b> 种商品， <b class="c-primary">${num}</b> 件， 总计 <b class="c-primary">${totalprice}</b> 元。</div>
 	<a class="btn btn-default size-M f-r disabled">已完成</a>
 </div>
 </body>

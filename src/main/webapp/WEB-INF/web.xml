@@ -70,7 +70,6 @@
   <filter-mapping>
     <filter-name>XssSqlFilter</filter-name>
     <url-pattern>/categories/*</url-pattern>
-    <url-pattern>/client/*</url-pattern>
     <url-pattern>/employee/*</url-pattern>
     <url-pattern>/goods/*</url-pattern>
     <url-pattern>/goodsTraffic/*</url-pattern>

@@ -96,19 +96,14 @@ table = $('#goodsTraffic_table').dataTable({
        "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数 
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
-        /*{
-            "mData" : null, "sDefaultContent" : "", "mRender" : function(data, type, full){
-                return "-";
-        }
-        },*/
         {
            "mData": "", "sDefaultContent": "", "mRender": function (data, type, full) {
                return "<input type='checkbox' name = 'ids' value='" + full.id + "'/>";
-            }, "bSortable": false
+            }
         },
 	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='detail(\"" + full.orderStoreName + "\", \"" + format(full.orderTime) + "\", \"" + full.id + "\")'>详情</a>";
+            return "<a style='text-decoration:none' onclick='detail(\"" + full.orderStoreName + "\", \"" + format(full.orderTime) + "\", \"" + full.id + "\", \""+full.status+"\")'>详情</a>";
         }},
         {"mData" : "orderTime", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
             return format(data).substring(0, 10);
@@ -117,7 +112,7 @@ table = $('#goodsTraffic_table').dataTable({
             return format(data).substring(0, 10);
         }},
         {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function(data, type, full){
-            return data == -1 ? "已作废" : data == 0 ? "待审核" : data == 1 ? "待配货" : "完成" ;
+            return data == -1 ? "<span class='c-999'>已作废</span>" : data == 0 ? "<span class='c-success'>待审核</span>" : data == 1 ? "<span class='c-blue'>配货中</span>" : "<span class='c-999'>完成</span>" ;
         }},
         {"mData" : "description", "sDefaultContent" : "", "bSortable":false}
     ],
@@ -185,7 +180,14 @@ table = $('#goodsTraffic_table').dataTable({
 });
 
 //审核
-function detail(title, time, id) {
+function detail(title, time, id, status) {
+    var url = '<%=request.getContextPath()%>/server/goodsTraffic/audit/1/' + id;
+    if(status == 1){
+        url = '<%=request.getContextPath()%>/server/goodsTraffic/audit/2/' + id;
+    }
+    if(status == 2){
+        url = '<%=request.getContextPath()%>/server/goodsTraffic/audit/3/' + id;
+    }
     layer.open({
         type: 2,
         title: '<i class="Hui-iconfont c-primary mr-5">&#xe619;</i>' + title + " " + time,
@@ -193,7 +195,7 @@ function detail(title, time, id) {
         shade: false,
         maxmin: true, //开启最大化最小化按钮
         area: ['950px', '350px'],
-        content: '<%=request.getContextPath()%>/server/goodsTraffic/audit/1/' + id
+        content: url
     });
 }
 </script>
