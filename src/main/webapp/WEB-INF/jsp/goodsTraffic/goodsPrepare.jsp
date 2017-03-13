@@ -65,16 +65,31 @@ $(function(){
                     "</tr>"
                 );
             }
-            var priceTotal = 0, goodsNum = 0;
-            $(".total").each(function () {
-                priceTotal += Number($(this).text());
+
+            $(".num").blur(function(){
+                var goodsNum = 0, priceTotal = 0;
+                $(".num").each(function(){
+                    goodsNum += Number($(this).val());
+                    priceTotal += $(this).val() * $(this).parent().next().children().val();
+                });
+                $(this).parent().next().next().text($(this).val() * $(this).parent().next().children().val());
+                $("#goodsNum").html(goodsNum);
+                $("#priceTotal").html(priceTotal);
             });
-            $(".num").each(function(){
-                goodsNum += Number($(this).text());
+
+            $(".price").blur(function(){
+                var goodsNum = 0, priceTotal = 0;
+                var total = $(this).val();
+                $(this).next(".price").val(total);
+                $(this).next(".total").html(total);
+                $(".num").each(function(){
+                    goodsNum += Number($(this).val());
+                });
+                $(".price").each(function(){
+                    priceTotal += Number($(this).val());
+                });
+                $("#priceTotal").html(goodsNum * priceTotal);
             });
-            $("#categoriesNum").text(categoriesArr.length); //类别总计
-            $("#goodsNum").text(goodsNum); //商品数量总计
-            $("#priceTotal").text(priceTotal); //价格总计
         }
     );
 	//配货
@@ -98,13 +113,6 @@ $(function(){
         $.post("<%=request.getContextPath()%>/server/goodsTraffic/prepare", {"id": ${goodsTrafficId}, "orderGoodsInfos" : JSON.stringify(orderGoodsInfoArr)}, function (data) {
             $("body").html(data.msg);
         });
-	});
-
-	$("#num,#price").blur(function(){
-		var total = $("#num").val()*$("#price").val();
-		$("#total").html(total);
-		$("#num2").html($("#num").val());
-		$("#total2").html(total);
 	});
 });
 
