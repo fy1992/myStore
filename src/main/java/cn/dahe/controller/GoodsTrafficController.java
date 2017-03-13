@@ -82,6 +82,14 @@ public class GoodsTrafficController {
         }else if(step == 2){
             return "goodsTraffic/goodsPrepare";
         }else if(step == 3){
+            sum = 0; goodsSum = 0;
+            for(OrderGoodsInfo orderGoodsInfo : list){
+                c_set.add(orderGoodsInfo.getCategoriesId());
+                sum += orderGoodsInfo.getPrice() * orderGoodsInfo.getDistributeNum();
+                goodsSum += orderGoodsInfo.getDistributeNum();
+            }
+            model.addAttribute("num", goodsSum);
+            model.addAttribute("totalprice", sum);
             return "goodsTraffic/finished";
         }
         return null;
@@ -103,7 +111,7 @@ public class GoodsTrafficController {
             json.setMsg("该订单已作废");
         }else if(type == 1){
             json.setResult(1);
-            json.setMsg("<%=request.getContextPath()%>/server/goodsTraffic/audit/2/"+id);
+            json.setMsg("/server/goodsTraffic/audit/2/"+id);
         }else{
             json.setResult(0);
             json.setMsg("该订单已恢复");
@@ -119,8 +127,8 @@ public class GoodsTrafficController {
     @ResponseBody
     public AjaxObj goodsPrepare(int id, String orderGoodsInfos){
         AjaxObj json = new AjaxObj();
-        goodsTrafficService.prepareGoods(id, orderGoodsInfos);
-        json.setMsg("<%=request.getContextPath()%>/server/goodsTraffic/audit/3");
+        goodsTrafficService.updatePrepareGoods(id, orderGoodsInfos);
+        json.setMsg("/server/goodsTraffic/audit/3/"+id);
         json.setResult(1);
         return json;
     }

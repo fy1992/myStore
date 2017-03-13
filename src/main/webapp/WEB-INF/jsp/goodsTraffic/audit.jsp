@@ -95,8 +95,8 @@ $(function(){
 	//通过
 	$("#pass").click(function(){
 	    $.post("<%=request.getContextPath()%>/server/goodsTraffic/audit", {"id": "${goodsTrafficId}", "type" : 1}, function (data) {
-            layer_close();
-            layer_
+			window.parent.table.fnDraw();
+            window.location.href = data.msg;
         });
 	});
 });

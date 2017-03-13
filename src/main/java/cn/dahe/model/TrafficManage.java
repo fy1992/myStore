@@ -22,9 +22,12 @@ public class TrafficManage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    //下单时间
+    //下单时间（订货时间）
     @Column(name = "order_date")
     private Date orderDate;
+    //期望发货时间
+    @Column(name = "wish_date")
+    private Date wishDate;
     //货流单号
     @Column(name = "traffic_no")
     private String trafficNo;
@@ -156,5 +159,13 @@ public class TrafficManage {
 
     public void setGoodsNum(int goodsNum) {
         this.goodsNum = goodsNum;
+    }
+
+    public Date getWishDate() {
+        return wishDate;
+    }
+
+    public void setWishDate(Date wishDate) {
+        this.wishDate = wishDate;
     }
 }

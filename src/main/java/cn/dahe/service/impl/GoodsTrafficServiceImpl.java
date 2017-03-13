@@ -61,6 +61,15 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
         goodsTraffic.setStatus(0);
         goodsTraffic.setOrderTime(new Date());
         Store store = storeDao.get(storeId);
+        //不是连锁店
+        if(store.getMultiple() == 0){
+            goodsTraffic.setPrepareStoreId(storeId);
+            goodsTraffic.setPrepareStoreName(store.getName());
+        }else{
+            StoreGoodsTraffic storeGoodsTraffic = storeGoodsTrafficDao.findByStoreId(storeId);
+            goodsTraffic.setPrepareStoreId(storeGoodsTraffic.getPrepareStoreId());
+            goodsTraffic.setPrepareStoreName(storeGoodsTraffic.getPrepareStoreName());
+        }
         goodsTraffic.setOrderStoreId(storeId);
         goodsTraffic.setOrderStoreName(store.getName());
         int goodsTrafficId = goodsTrafficDao.addAndGetId4Integer(goodsTraffic);
@@ -70,6 +79,7 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
             OrderGoodsInfo goodsInfo = new OrderGoodsInfo(goods);
             //请求量
             goodsInfo.setOrderNum((Integer)map.get("goodsNum"));
+            goodsInfo.setDistributeNum(goodsInfo.getOrderNum());
             //小计
             goodsInfo.setPriceSum(goodsInfo.getOrderNum()*goodsInfo.getPrice());
             goodsInfo.setGoodsTrafficId(goodsTrafficId);
@@ -151,13 +161,19 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
     }
 
     @Override
-    public void prepareGoods(int id, String orderGoodsInfos) {
+    public void updatePrepareGoods(int id, String orderGoodsInfos) {
         GoodsTraffic goodsTraffic = get(id);
+        goodsTraffic.setStatus(2);
+        goodsTrafficDao.update(goodsTraffic);
         //新建货流管理实例
         TrafficManage trafficManage = new TrafficManage();
         trafficManage.setStoreId(goodsTraffic.getOrderStoreId());//进货门店
+        trafficManage.setStoreName(goodsTraffic.getOrderStoreName());
+        trafficManage.setOutStoreId(goodsTraffic.getPrepareStoreId());
+        trafficManage.setOutStoreName(goodsTraffic.getPrepareStoreName());
         trafficManage.setDescription(goodsTraffic.getDescription());
         trafficManage.setOrderDate(new Date());
+        trafficManage.setWishDate(goodsTraffic.getWishTime());
         trafficManage.setStatus(0); //待确认进货
         trafficManage.setTrafficType(1); // 进货单
         List<OrderGoodsInfo> ogis =  orderGoodsInfoDao.findByGoodsTrafficId(id);

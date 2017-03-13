@@ -47,8 +47,8 @@
             <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="goodsTraffic_table">
                 <thead>
                     <tr class="text-c">
-                        <th width="30"><input type="checkbox" name="selectAll" id="selectAll"></th>
                         <th width="50">序号</th>
+                        <th width="30"><input type="checkbox" name="selectAll" id="selectAll"></th>
                         <th width="50">操作</th>
                         <th width="100">订货时间</th>
                         <th width="100">期望发货时间</th>
@@ -96,12 +96,12 @@ table = $('#goodsTraffic_table').dataTable({
        "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数 
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
+        {"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
         {
            "mData": "", "sDefaultContent": "", "mRender": function (data, type, full) {
                return "<input type='checkbox' name = 'ids' value='" + full.id + "'/>";
             }
         },
-	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
             return "<a style='text-decoration:none' onclick='detail(\"" + full.orderStoreName + "\", \"" + format(full.orderTime) + "\", \"" + full.id + "\", \""+full.status+"\")'>详情</a>";
         }},

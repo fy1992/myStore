@@ -34,5 +34,5 @@ public interface IGoodsTrafficService {
      * @param id
      * @param orderGoodsInfos
      */
-    void prepareGoods(int id, String orderGoodsInfos);
+    void updatePrepareGoods(int id, String orderGoodsInfos);
 }

@@ -40,8 +40,8 @@
             <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="trafficManage_table">
                 <thead>
                     <tr class="text-c">
-                        <th width="30"><input type="checkbox" name="selectAll" id="selectAll"></th>
                         <th width="50">序号</th>
+                        <th width="30"><input type="checkbox" name="selectAll" id="selectAll"></th>
                         <th width="50">操作</th>
                         <th width="100">订货时间</th>
                         <th width="100">期望发货时间</th>
@@ -89,18 +89,24 @@ table = $('#trafficManage_table').dataTable({
        "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数 
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
+        {"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
         {
            "mData": "", "sDefaultContent": "", "mRender": function (data, type, full) {
                return "<input type='checkbox' name = 'ids' value='" + full.id + "'/>";
             }, "bSortable": false
         },
-	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
             return "<a style='text-decoration:none' onclick='detail(" + full.id + ")'>详情</a>";
         }},
-        {"mData" : "orderTime", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "wishTime", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "status", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "orderDate", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return format(data).substring(0, 10);
+        }},
+        {"mData" : "wishDate", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return !format(data) ? "-" : format(data).substring(0, 10);
+        }},
+        {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return data == 0 ? "待确认进货" : "已完成进货";
+        }},
         {"mData" : "description", "sDefaultContent" : "", "bSortable":false}
     ],
     "language":{
