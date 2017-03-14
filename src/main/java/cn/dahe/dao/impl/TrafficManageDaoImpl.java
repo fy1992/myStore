@@ -22,8 +22,8 @@ public class TrafficManageDaoImpl extends BaseDaoImpl<TrafficManage> implements 
         Date startTime = params.getStartTime();
         Date endTime = params.getEndTime();
         int status = params.getStatus();
-        int storeId = params.getIntParam1();
         String trafficNo = params.getStringParam1();
+        String storeIdStr = params.getStringParam2();
         if(status != -1){
             hql.append(" and tm.status = ?");
             list.add(status);
@@ -38,9 +38,15 @@ public class TrafficManageDaoImpl extends BaseDaoImpl<TrafficManage> implements 
             hql.append(" and tm.orderDate <= ?");
             list.add(endTime);
         }
-        if(storeId != -1){
-            hql.append(" and tm.storeId = ?");
-            list.add(storeId);
+        if(StringUtils.isNotBlank(storeIdStr)){
+            String[] storeIdArr = storeIdStr.split(",");
+            hql.append(" and tm.storeId in (");
+            for(int i = 0, len = storeIdArr.length; i < len; i++){
+                hql.append("?,");
+                list.add(Integer.parseInt(storeIdArr[i]));
+            }
+            hql.deleteCharAt(hql.length() - 1);
+            hql.append(")");
         }
         if(StringUtils.isNotBlank(trafficNo)){
             hql.append(" and tm.trafficNo like");

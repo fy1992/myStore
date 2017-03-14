@@ -4,8 +4,10 @@ package cn.dahe.controller;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
+import cn.dahe.model.Store;
 import cn.dahe.model.User;
 import cn.dahe.service.IPermissionService;
+import cn.dahe.service.IStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -28,15 +30,17 @@ public class PermissionController {
     private static Logger logger = LoggerFactory.getLogger(PermissionController.class);
     @Resource
     private IPermissionService permissionService;
+    @Resource
+    private IStoreService storeService;
 
     /**
      * 查询全部权限
      */
-    @RequestMapping(value = "findAllPermission", method = RequestMethod.POST)
+   /* @RequestMapping(value = "findAllPermission", method = RequestMethod.POST)
     @ResponseBody
-    public List<Permission> findAllPermission(int type){
-        return permissionService.findAll(type);
-    }
+    public List<Permission> findAllPermission(String levels){
+        return permissionService.findAll(levels);
+    }*/
     /**
      * 列表页查询
      */
@@ -123,7 +127,12 @@ public class PermissionController {
     @ResponseBody
     public List<Permission> queryAllMenu(int resourceType, HttpSession session){
         User user = (User) session.getAttribute("loginUser");
-        return permissionService.findByResourceType(resourceType, user.getStoreId());
+        Store store = storeService.get(user.getStoreId());
+        int multiple = 1;
+        if(store != null){
+            multiple  = store.getMultiple();
+        }
+        return permissionService.findByResourceType(resourceType, user.getStoreId(), multiple);
     }
 
 

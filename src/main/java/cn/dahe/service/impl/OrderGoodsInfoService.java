@@ -79,4 +79,9 @@ public class OrderGoodsInfoService implements IOrderGoodsInfoService{
     public List<OrderGoodsInfo> findOrderGoodsInfosByGoodsTrafficId(int goodsTrafficId) {
         return orderGoodsInfoDao.findByGoodsTrafficId(goodsTrafficId);
     }
+
+    @Override
+    public List<OrderGoodsInfo> findOrderGoodsInfosByTrafficManageId(int trafficManageId) {
+        return orderGoodsInfoDao.findByTrafficManageId(trafficManageId);
+    }
 }

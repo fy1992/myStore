@@ -107,8 +107,18 @@ $(function(){
         }
 
         $.post("<%=request.getContextPath()%>/server/goodsTraffic/prepare", {"id": ${goodsTrafficId}, "orderGoodsInfos" : JSON.stringify(orderGoodsInfoArr)}, function (data) {
-            window.parent.table.fnDraw();
-            window.location.href = data.msg;
+            window.parent.parent.table.fnDraw();
+            layer.closeAll('iframe');
+            layer.open({
+                type: 2,
+                title: false,
+                shadeClose: false,
+                shade: false,
+                closeBtn: 0,
+                maxmin: false, //开启最大化最小化按钮
+                area: ['950px', '307px'],
+                content: "/store/" + data.msg
+            });
         });
 	});
 });

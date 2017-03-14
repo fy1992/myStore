@@ -20,10 +20,9 @@ public interface IPermissionDao extends IBaseDao<Permission>{
 
     /**
      * 查询全部
-     * @param type
      * @return
      */
-    List<Permission> findAll(int type);
+    List<Permission> findAll(int type, Integer[] types);
 
     /**
      * 根据父id查询
@@ -34,5 +33,5 @@ public interface IPermissionDao extends IBaseDao<Permission>{
 
     Permission findByPerKey(String perKey);
 
-    List<Permission> findByResourceType(int resourceType, int storeId);
+    List<Permission> findByResourceType(int resourceType, int storeId, int multiple);
 }

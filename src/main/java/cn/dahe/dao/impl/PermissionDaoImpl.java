@@ -3,6 +3,7 @@ package cn.dahe.dao.impl;
 import cn.dahe.dao.IPermissionDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Permission;
+import org.apache.commons.collections.ArrayStack;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -27,9 +28,17 @@ public class PermissionDaoImpl extends BaseDaoImpl<Permission> implements IPermi
     }
 
     @Override
-    public List<Permission> findAll(int type) {
-        String hql = "from Permission where type = ?";
-        return this.list(hql, type);
+    public List<Permission> findAll(int type, Integer[] levels) {
+        StringBuffer hql = new StringBuffer("from Permission where type = ? and level in (");
+        Integer[] param = new Integer[levels.length + 1];
+        param[0] = type;
+        for(int i = 0, len = levels.length; i < len; i++){
+            hql.append("?,");
+            param[i + 1] = levels[i];
+        }
+        hql.deleteCharAt(hql.length() - 1);
+        hql.append(")");
+        return this.list(hql.toString(), param);
     }
 
     @Override
@@ -45,10 +54,14 @@ public class PermissionDaoImpl extends BaseDaoImpl<Permission> implements IPermi
     }
 
     @Override
-    public List<Permission> findByResourceType(int resourceType, int storeId){
+    public List<Permission> findByResourceType(int resourceType, int storeId, int multiple){
         String hql = "from Permission where resourceType = ?";
         if(storeId != 0){
-            hql += " and level = 2";
+            if(multiple == 1){
+                hql += " and level in (2,3)";
+            }else{
+                hql += " and level = 3";
+            }
         }
         return this.list(hql, resourceType);
     }

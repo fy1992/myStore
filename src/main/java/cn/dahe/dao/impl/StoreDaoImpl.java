@@ -47,4 +47,10 @@ public class StoreDaoImpl extends BaseDaoImpl<Store> implements IStoreDao {
         String hql = "from Store where storeNo = ?";
         return (Store)this.queryByHql(hql, storeNo);
     }
+
+    @Override
+    public List<Store> findByPid(int storeId) {
+        String hql = "from Store store where store.parent.id = ?";
+        return this.list(hql, storeId);
+    }
 }

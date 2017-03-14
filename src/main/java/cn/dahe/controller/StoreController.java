@@ -78,10 +78,10 @@ public class StoreController {
      */
     @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addStore(Store store, User u, int roleId, HttpSession session){
+    public AjaxObj addStore(Store store, User u, HttpSession session){
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
-        int mark = storeService.add(store, u, user, roleId);
+        int mark = storeService.add(store, u, user);
         if(mark == 0){
             json.setMsg("添加成功");
             json.setResult(1);
@@ -101,11 +101,13 @@ public class StoreController {
      * @return
      */
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    public String editStore(@PathVariable int id, Model model){
+    public String editStore(@PathVariable int id, Model model, HttpSession session){
         Store store = storeService.get(id);
         model.addAttribute("store", store);
         User user = userService.findByStoreId(store.getId());
+        User currentUser = (User)session.getAttribute("loginUser");
         model.addAttribute("user", user);
+        model.addAttribute("currentUser", currentUser);
         return "store/edit";
     }
 

@@ -115,6 +115,7 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
         int status = -1;
         String startTime = "", endTime = "";
         int timeType = 0; // 0 订货时间  1 发货时间
+        int s_id = 0;
         try{
             JSONArray json = JSONArray.parseArray(aDataSet);
             int len = json.size();
@@ -132,6 +133,8 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
                     endTime = jsonObject.get("value").toString();
                 }else if (jsonObject.get("name").equals("timeType")) {
                     timeType = Integer.parseInt(jsonObject.get("value").toString());
+                }else if (jsonObject.get("name").equals("storeId")){
+                    s_id = Integer.parseInt(jsonObject.get("value").toString());
                 }
             }
             Pager<Object> params = new Pager<>();
@@ -145,7 +148,18 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
             params.setIntParam1(timeType);
             params.setOrderColumn("goodsTraffic.id");
             params.setOrderDir("desc");
-            params.setIntParam2(storeId);
+            if(s_id != 0){
+                storeId = s_id;
+            }
+            List<Store> stores = storeDao.findByPid(storeId);
+            if(stores != null && stores.size() > 0) {
+                StringBuffer sb = new StringBuffer();
+                for (Store store : stores) {
+                    sb.append(store.getId());
+                }
+                sb.deleteCharAt(sb.length() - 1);
+                params.setStringParam1(sb.toString());
+            }
             return goodsTrafficDao.findByParam(start, pageSize, params);
         }catch (Exception e){
             e.printStackTrace();

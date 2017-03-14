@@ -3,6 +3,7 @@ package cn.dahe.dao.impl;
 import cn.dahe.dao.IGoodsTrafficDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.GoodsTraffic;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class GoodsTrafficDaoImpl extends BaseDaoImpl<GoodsTraffic> implements IG
         Date startTime = params.getStartTime();
         Date endTime = params.getEndTime();
         int status = params.getStatus();
-        int storeId = params.getIntParam2();
+        String storeIdStr = params.getStringParam1();
         List<Object> list = new ArrayList<>();
         if(status != -2){
             hql.append(" and goodsTraffic.status = ?");
@@ -37,9 +38,15 @@ public class GoodsTrafficDaoImpl extends BaseDaoImpl<GoodsTraffic> implements IG
             hql.append(timeType == 0 ? " and goodsTraffic.orderTime <= ?" : " and goodsTraffic.wishTime <= ?");
             list.add(endTime);
         }
-        if(storeId != -1){
-            hql.append(" and goodsTraffic.orderStoreId = ?");
-            list.add(storeId);
+        if(StringUtils.isNotBlank(storeIdStr)){
+            String[] storeIdArr = storeIdStr.split(",");
+            hql.append(" and goodsTraffic.orderStoreId in (");
+            for(int i = 0, len = storeIdArr.length; i < len; i++){
+                hql.append("?,");
+                list.add(Integer.parseInt(storeIdArr[i]));
+            }
+            hql.deleteCharAt(hql.length() - 1);
+            hql.append(")");
         }
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);

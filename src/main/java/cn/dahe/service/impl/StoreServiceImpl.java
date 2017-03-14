@@ -3,6 +3,7 @@ package cn.dahe.service.impl;
 import cn.dahe.dao.*;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.*;
+import cn.dahe.service.IPermissionService;
 import cn.dahe.service.IStoreService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.SecurityUtil;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by fy on 2017/1/24.
@@ -32,6 +35,8 @@ public class StoreServiceImpl implements IStoreService{
     private IUserDao userDao;
     @Resource
     private IRoleDao roleDao;
+    @Resource
+    private IPermissionService permissionService;
 
     @Override
     public void add(Store t) {
@@ -39,7 +44,7 @@ public class StoreServiceImpl implements IStoreService{
     }
 
     @Override
-    public int add(Store t, User user, User currentUser, int roleId) {
+    public int add(Store t, User user, User currentUser) {
         Store store = storeDao.findByStoreNo(t.getStoreNo());
         if(store == null){
             User ur = userDao.findByLoginName(user.getUsername());
@@ -64,17 +69,29 @@ public class StoreServiceImpl implements IStoreService{
             storeGoodsTraffic.setPayOnline(0);
             storeGoodsTrafficDao.add(storeGoodsTraffic);
 
-            Role role = roleDao.get(roleId);
+            /*Role role = roleDao.get(roleId);*/
+            String pStr;
+            //根据是否是连锁店分配相应等级的权限t
+            if(t.getMultiple() == 0){
+                pStr = "3";
+            }else{
+                pStr = "2,3";
+            }
+            Set<Permission> permissionSet = new HashSet<>(permissionService.findAll(0, pStr));
 
             //门店的登录账号
             User u = new User();
-            u.setRank(1);
+            if(currentUser.getStoreId() == 0){
+                u.setRank(1);
+            }else{
+                u.setRank(2);
+            }
             u.setStatus(t.getStatus());
             u.setStoreId(storeId);
             u.setStoreName(t.getName());
             u.setPassword(SecurityUtil.MD5(user.getPassword()));
             u.setUsername(user.getUsername());
-            u.setRole(role);
+            u.setPermissions(permissionSet);
             u.setMobile(StringUtil.formatStr(user.getMobile()));
             u.setEmail(StringUtil.formatStr(user.getEmail()));
             u.setRegisterDate(new Date());
@@ -94,9 +111,18 @@ public class StoreServiceImpl implements IStoreService{
     @Override
     public void update(Store t, User user) {
         User u = userDao.findByStoreId(t.getId());
+        //根据是否是连锁店分配相应等级的权限
+        String pStr;
+        if(t.getMultiple() == 0){
+            pStr = "3";
+        }else{
+            pStr = "2,3";
+        }
+        Set<Permission> permissionSet = new HashSet<>(permissionService.findAll(0, pStr));
         u.setStatus(t.getStatus());
         u.setMobile(user.getMobile());
         u.setEmail(user.getEmail());
+        u.setPermissions(permissionSet);
         userDao.update(u);
         Store store = storeDao.get(t.getId());
         store.setAddr(t.getAddr());
@@ -106,6 +132,7 @@ public class StoreServiceImpl implements IStoreService{
         store.setName(t.getName());
         store.setWorkTime(t.getWorkTime());
         store.setIndustry(t.getIndustry());
+        store.setMultiple(t.getMultiple());
         storeDao.update(store);
     }
 
@@ -163,9 +190,11 @@ public class StoreServiceImpl implements IStoreService{
     @Override
     public List<Store> findAll(int storeId, int removeId) {
         Store store = storeDao.get(storeId);
-        Store parent = store.getParent();
-        if(parent != null){
-            storeId = parent.getId();
+        if(store != null){
+            Store parent = store.getParent();
+            if(parent != null){
+                storeId = parent.getId();
+            }
         }
         return storeDao.findAll(storeId, removeId);
     }

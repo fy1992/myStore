@@ -24,4 +24,10 @@ public class OrderGoodsInfoDaoImpl extends BaseDaoImpl<OrderGoodsInfo> implement
         String hql = "from OrderGoodsInfo where goodsTrafficId = ?";
         return this.list(hql, id);
     }
+
+    @Override
+    public List<OrderGoodsInfo> findByTrafficManageId(int id) {
+        String hql = "from OrderGoodsInfo where trafficManageId = ?";
+        return this.list(hql, id);
+    }
 }

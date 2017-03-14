@@ -1,7 +1,9 @@
 package cn.dahe.service.impl;
 
+import cn.dahe.dao.IStoreDao;
 import cn.dahe.dao.ITrafficManageDao;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.Store;
 import cn.dahe.model.TrafficManage;
 import cn.dahe.service.ITrafficManageService;
 import cn.dahe.util.DateUtil;
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by fy on 2017/2/1.
@@ -22,6 +25,8 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
     private static Logger logger = LoggerFactory.getLogger(TrafficManageServiceImpl.class);
     @Resource
     private ITrafficManageDao trafficManageDao;
+    @Resource
+    private IStoreDao storeDao;
 
     @Override
     public void add(TrafficManage t) {
@@ -54,6 +59,7 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
         int pageSize = 20;// size
         int status = -1;
         String startTime = "", endTime = "", trafficNo = "";
+        int s_id = 0;
         try{
             JSONArray json = JSONArray.parseArray(aDataSet);
             int len = json.size();
@@ -71,6 +77,8 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
                     endTime = jsonObject.get("value").toString();
                 }else if (jsonObject.get("name").equals("trafficNo")) {
                     trafficNo = jsonObject.get("value").toString();
+                }else if (jsonObject.get("name").equals("storeId")){
+                    s_id = Integer.parseInt(jsonObject.get("value").toString());
                 }
             }
             Pager<Object> params = new Pager<>();
@@ -83,8 +91,19 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
             params.setStatus(status);
             params.setOrderColumn("tm.id");
             params.setOrderDir("desc");
-            params.setIntParam1(storeId);
             params.setStringParam1(trafficNo);
+            if(s_id != 0){
+                storeId = s_id;
+            }
+            List<Store> stores = storeDao.findByPid(storeId);
+            if(stores != null && stores.size() > 0) {
+                StringBuffer sb = new StringBuffer();
+                for (Store store : stores) {
+                    sb.append(store.getId());
+                }
+                sb.deleteCharAt(sb.length() - 1);
+                params.setStringParam2(sb.toString());
+            }
             return trafficManageDao.findByParam(start, pageSize, params);
         }catch (Exception e){
             e.printStackTrace();

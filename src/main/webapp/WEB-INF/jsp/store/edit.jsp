@@ -100,7 +100,7 @@
             </div>
             <div class="col-3"> </div>
         </div>
-        <c:if test="${user.rank eq 0}">
+        <c:if test="${currentUser.rank eq 0}">
             <div class="row cl">
                 <label class="form-label col-3">是否开启分店：</label>
                 <div class="formControls col-6">

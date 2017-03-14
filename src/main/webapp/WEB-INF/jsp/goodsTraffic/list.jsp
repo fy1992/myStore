@@ -24,6 +24,13 @@
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 货流 <span class="c-gray en">&gt;</span> 门店订货 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
+            <c:if test="${store.multiple eq 1}">
+                <span class="select-box" style="width: 100px;">
+                    <select class="select" id="traffic_store">
+                        <option value="0">全部门店</option>
+                    </select>
+                </span>
+            </c:if>
             <span class="select-box" style="width: 100px;">
                 <select class="select" id="traffic_static">
                     <option value="-2">所有状态</option>
@@ -51,7 +58,13 @@
                         <th width="30"><input type="checkbox" name="selectAll" id="selectAll"></th>
                         <th width="50">操作</th>
                         <th width="100">订货时间</th>
-                        <th width="100">期望发货时间</th>
+                        <c:if test="${store.multiple eq 0}">
+                            <th width="100">期望发货时间</th>
+                        </c:if>
+                        <c:if test="${store.multiple eq 1}">
+                            <th width="100">订货门店</th>
+                            <th width="100">配货门店</th>
+                        </c:if>
                         <th width="50">状态</th>
                         <th width="50">备注</th>
                     </tr>
@@ -70,114 +83,223 @@
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
+var data = [];
 //搜索
 $(function(){
 	$("#goodsTraffic_search").click(function(){
 		table.fnDraw();
 	});
-
     $("#selectAll").click(function () {
         if(this.checked){
             $("input[name=ids]").prop("checked",true);
         } else{
             $("input[name=ids]").prop("checked",false);
         }
-    })
-});
+    });
 
-//table start here
-table = $('#goodsTraffic_table').dataTable({
-	   "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示  
-       "bPaginate": true,//是否显示（应用）分页器  
-       "bLengthChange": false,
-       "bAutoWidth" : true,
-       "bScrollCollapse" : true,//是否开启DataTables的高度自适应，当数据条数不够分页数据条数的时候，插件高度是否随数据条数而改变  
-       "bDestroy" : true,
-       "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数 
-       "bFilter" : false,//是否启动过滤、搜索功能
-       "aoColumns" : [
-        {"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
-        {
-           "mData": "", "sDefaultContent": "", "mRender": function (data, type, full) {
-               return "<input type='checkbox' name = 'ids' value='" + full.id + "'/>";
-            }
-        },
-	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='detail(\"" + full.orderStoreName + "\", \"" + format(full.orderTime) + "\", \"" + full.id + "\", \""+full.status+"\")'>详情</a>";
-        }},
-        {"mData" : "orderTime", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return format(data).substring(0, 10);
-        }},
-        {"mData" : "wishTime", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return format(data).substring(0, 10);
-        }},
-        {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function(data, type, full){
-            return data == -1 ? "<span class='c-999'>已作废</span>" : data == 0 ? "<span class='c-success'>待审核</span>" : data == 1 ? "<span class='c-blue'>配货中</span>" : "<span class='c-999'>完成</span>" ;
-        }},
-        {"mData" : "description", "sDefaultContent" : "", "bSortable":false}
-    ],
-    "language":{
-       "oPaginate": {
-           "sFirst": "首页",
-           "sPrevious": "上一页",
-           "sNext": "下一页",
-           "sLast": "末页"
-       },
-       "sLoadingRecords": "载入中...",
-        "sEmptyTable": "表中数据为空",
-        "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-        "sProcessing": "处理中..."
-   	},
-   	//"deferRender": true, //当处理大数据时，延迟渲染数据，有效提高Datatables处理能力
-       "order" : [[1, "desc"]],
-       "iDisplayLength" : 20, //每页显示条数
-       //"iDisplayStart": 0,
-       "bServerSide": true,
-       "fnFormatNumber": function(iIn){
-       	    return iIn;//格式化数字显示方式
-       },
-       "sAjaxSource" : "<%=request.getContextPath()%>/server/goodsTraffic/list",
-       //服务器端，数据回调处理  
-       "fnServerData" : function(sSource, aDataSet, fnCallback) {
-           $.ajax({
-               "dataType" : 'json',
-               "type" : "post",
-               "url" : sSource,
-               "data": {
-               	aDataSet : JSON.stringify(aDataSet)
-               },
-               "success" : fnCallback
-           });  
-       },
-    "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	var status = $("#traffic_static").val();
-      	var timeType = $("#traffic_time").val();
-      	var startTime = $("#startTafficDate").val();
-      	var endTime = $("#endTafficDate").val();
-        aoData.push({"name":"status","value":status});
-        aoData.push({"name":"timeType","value":timeType});
-        aoData.push({"name":"startTime","value":startTime});
-        aoData.push({"name":"endTime","value":endTime});
-    },
-    "fnDrawCallback" : function () {
-        $('#redirect').keyup(function(e){
-            var redirect = 0;
-            if(e.keyCode==13){
-                if($(this).val() && $(this).val()>0){
-                    redirect = $(this).val()-1;
-                }
-                table.fnPageChange(redirect);
+    if(${store.multiple eq 1}){
+        $.post("<%=request.getContextPath()%>/server/store/allStore/0", function (data) {
+            for(var n in data){
+                $("#traffic_store").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");
             }
         });
-        //序号
-        var api = this.api();
-        var startIndex= api.context[0]._iDisplayStart;//获取到本页开始的条数
-        api.column(0).nodes().each(function(cell, i) {
-            cell.innerHTML = startIndex + i + 1;
+
+        //table start here
+        table = $('#goodsTraffic_table').dataTable({
+            "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示
+            "bPaginate": true,//是否显示（应用）分页器
+            "bLengthChange": false,
+            "bAutoWidth" : true,
+            "bScrollCollapse" : true,//是否开启DataTables的高度自适应，当数据条数不够分页数据条数的时候，插件高度是否随数据条数而改变
+            "bDestroy" : true,
+            "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数
+            "bFilter" : false,//是否启动过滤、搜索功能
+            "aoColumns" : [
+                {"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
+                {
+                    "mData": "", "sDefaultContent": "", "mRender": function (data, type, full) {
+                    return "<input type='checkbox' name = 'ids' value='" + full.id + "'/>";
+                }
+                },
+                {"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
+                    return "<a style='text-decoration:none' onclick='detail(\"" + full.orderStoreName + "\", \"" + format(full.orderTime) + "\", \"" + full.id + "\", \""+full.status+"\")'>详情</a>";
+                }},
+                {"mData" : "orderTime", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+                    return format(data).substring(0, 10);
+                }},
+                {"mData" : "orderStoreName", "sDefaultContent" : "", "bSortable":false},
+                {"mData" : "prepareStoreName", "sDefaultContent" : "", "bSortable":false},
+                {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function(data, type, full){
+                    return data == -1 ? "<span class='c-999'>已作废</span>" : data == 0 ? "<span class='c-success'>待审核</span>" : data == 1 ? "<span class='c-blue'>配货中</span>" : "<span class='c-999'>完成</span>" ;
+                }},
+                {"mData" : "description", "sDefaultContent" : "", "bSortable":false}
+            ],
+            "language":{
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上一页",
+                    "sNext": "下一页",
+                    "sLast": "末页"
+                },
+                "sLoadingRecords": "载入中...",
+                "sEmptyTable": "表中数据为空",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sProcessing": "处理中..."
+            },
+            //"deferRender": true, //当处理大数据时，延迟渲染数据，有效提高Datatables处理能力
+            "order" : [[1, "desc"]],
+            "iDisplayLength" : 20, //每页显示条数
+            //"iDisplayStart": 0,
+            "bServerSide": true,
+            "fnFormatNumber": function(iIn){
+                return iIn;//格式化数字显示方式
+            },
+            "sAjaxSource" : "<%=request.getContextPath()%>/server/goodsTraffic/list",
+            //服务器端，数据回调处理
+            "fnServerData" : function(sSource, aDataSet, fnCallback) {
+                $.ajax({
+                    "dataType" : 'json',
+                    "type" : "post",
+                    "url" : sSource,
+                    "data": {
+                        aDataSet : JSON.stringify(aDataSet)
+                    },
+                    "success" : fnCallback
+                });
+            },
+            "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
+                var status = $("#traffic_static").val();
+                var timeType = $("#traffic_time").val();
+                var startTime = $("#startTafficDate").val();
+                var endTime = $("#endTafficDate").val();
+                aoData.push({"name":"status","value":status});
+                aoData.push({"name":"timeType","value":timeType});
+                aoData.push({"name":"startTime","value":startTime});
+                aoData.push({"name":"endTime","value":endTime});
+            },
+            "fnDrawCallback" : function () {
+                $('#redirect').keyup(function(e){
+                    var redirect = 0;
+                    if(e.keyCode==13){
+                        if($(this).val() && $(this).val()>0){
+                            redirect = $(this).val()-1;
+                        }
+                        table.fnPageChange(redirect);
+                    }
+                });
+                //序号
+                var api = this.api();
+                var startIndex= api.context[0]._iDisplayStart;//获取到本页开始的条数
+                api.column(0).nodes().each(function(cell, i) {
+                    cell.innerHTML = startIndex + i + 1;
+                });
+            }
+        });
+    }else{
+        //table start here
+        table = $('#goodsTraffic_table').dataTable({
+            "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示
+            "bPaginate": true,//是否显示（应用）分页器
+            "bLengthChange": false,
+            "bAutoWidth" : true,
+            "bScrollCollapse" : true,//是否开启DataTables的高度自适应，当数据条数不够分页数据条数的时候，插件高度是否随数据条数而改变
+            "bDestroy" : true,
+            "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数
+            "bFilter" : false,//是否启动过滤、搜索功能
+            "aoColumns" : [
+                {"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
+                {
+                    "mData": "", "sDefaultContent": "", "mRender": function (data, type, full) {
+                    return "<input type='checkbox' name = 'ids' value='" + full.id + "'/>";
+                }
+                },
+                {"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
+                    return "<a style='text-decoration:none' onclick='detail(\"" + full.orderStoreName + "\", \"" + format(full.orderTime) + "\", \"" + full.id + "\", \""+full.status+"\")'>详情</a>";
+                }},
+                {"mData" : "orderTime", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+                    return format(data).substring(0, 10);
+                }},
+                {"mData" : "wishTime", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+                    return format(data).substring(0, 10);
+                }},
+                {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function(data, type, full){
+                    return data == -1 ? "<span class='c-999'>已作废</span>" : data == 0 ? "<span class='c-success'>待审核</span>" : data == 1 ? "<span class='c-blue'>配货中</span>" : "<span class='c-999'>完成</span>" ;
+                }},
+                {"mData" : "description", "sDefaultContent" : "", "bSortable":false}
+            ],
+            "language":{
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上一页",
+                    "sNext": "下一页",
+                    "sLast": "末页"
+                },
+                "sLoadingRecords": "载入中...",
+                "sEmptyTable": "表中数据为空",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sProcessing": "处理中..."
+            },
+            //"deferRender": true, //当处理大数据时，延迟渲染数据，有效提高Datatables处理能力
+            "order" : [[1, "desc"]],
+            "iDisplayLength" : 20, //每页显示条数
+            //"iDisplayStart": 0,
+            "bServerSide": true,
+            "fnFormatNumber": function(iIn){
+                return iIn;//格式化数字显示方式
+            },
+            "sAjaxSource" : "<%=request.getContextPath()%>/server/goodsTraffic/list",
+            //服务器端，数据回调处理
+            "fnServerData" : function(sSource, aDataSet, fnCallback) {
+                $.ajax({
+                    "dataType" : 'json',
+                    "type" : "post",
+                    "url" : sSource,
+                    "data": {
+                        aDataSet : JSON.stringify(aDataSet)
+                    },
+                    "success" : fnCallback
+                });
+            },
+            "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
+                var status = $("#traffic_static").val();
+                var timeType = $("#traffic_time").val();
+                var startTime = $("#startTafficDate").val();
+                var endTime = $("#endTafficDate").val();
+                var storeId = $("#traffic_store").val();
+                if(!storeId){
+                    storeId = 0;
+                }
+                aoData.push({"name":"status","value":status});
+                aoData.push({"name":"timeType","value":timeType});
+                aoData.push({"name":"startTime","value":startTime});
+                aoData.push({"name":"endTime","value":endTime});
+                aoData.push({"name":"storeId","value":storeId});
+            },
+            "fnDrawCallback" : function () {
+                $('#redirect').keyup(function(e){
+                    var redirect = 0;
+                    if(e.keyCode==13){
+                        if($(this).val() && $(this).val()>0){
+                            redirect = $(this).val()-1;
+                        }
+                        table.fnPageChange(redirect);
+                    }
+                });
+                //序号
+                var api = this.api();
+                var startIndex= api.context[0]._iDisplayStart;//获取到本页开始的条数
+                api.column(0).nodes().each(function(cell, i) {
+                    cell.innerHTML = startIndex + i + 1;
+                });
+            }
         });
     }
 });
+
+
+
 
 //审核
 function detail(title, time, id, status) {
@@ -193,7 +315,7 @@ function detail(title, time, id, status) {
         title: '<i class="Hui-iconfont c-primary mr-5">&#xe619;</i>' + title + " " + time,
         shadeClose: true,
         shade: false,
-        maxmin: true, //开启最大化最小化按钮
+        maxmin: false, //开启最大化最小化按钮
         area: ['950px', '350px'],
         content: url
     });

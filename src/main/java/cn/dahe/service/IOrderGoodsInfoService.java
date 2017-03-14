@@ -2,7 +2,6 @@ package cn.dahe.service;
 
 import cn.dahe.dto.Pager;
 import cn.dahe.model.OrderGoodsInfo;
-
 import java.util.List;
 
 /**
@@ -35,4 +34,6 @@ public interface IOrderGoodsInfoService {
      * @return
      */
     List<OrderGoodsInfo> findOrderGoodsInfosByGoodsTrafficId(int goodsTrafficId);
+
+    List<OrderGoodsInfo> findOrderGoodsInfosByTrafficManageId(int trafficManageId);
 }

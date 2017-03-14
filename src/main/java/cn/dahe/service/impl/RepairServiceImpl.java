@@ -50,7 +50,7 @@ public class RepairServiceImpl implements IRepairService {
             role.setStatus(1);
             role.setRoleName("系统管理员");
             role.setRoleKey("sys:admin");
-            List<Permission> permissionList = permissionDao.findAll(0);
+            List<Permission> permissionList = permissionDao.findAll(0, new Integer[]{1,2,3});
             Set<Permission> permissions = new HashSet<>(permissionList);
             role.setPermissions(permissions);
             roleDao.add(role);

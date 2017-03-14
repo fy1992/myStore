@@ -4,31 +4,24 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>门店订货审核</title>
+	<title>货流管理</title>
 	<link href="${ctxResource}/css/H-ui.css" rel="stylesheet" type="text/css" />
 	<link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
 	<link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 	<link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<nav class="clearfix navbar">
-	<div class="c-success f-l mr-10"><i class="Hui-iconfont mr-5 f-16">&#xe601;</i>审核</div>
-	<div class="f-l">&gt;</div>
-	<div class="f-l ml-10 mr-10"><i class="Hui-iconfont mr-5">&#xe619;</i>配货</div>
-	<div class="f-l">&gt;</div>
-	<div class="f-l ml-10"><i class="Hui-iconfont mr-5">&#xe619;</i>完成</div>
-</nav>
 <table class="table table-border table-bordered table-bg" id="xpjgl">
 	<thead>
 		<tr class="text-c">
 			<th>商品名称</th>
 			<th>条码</th>
-			<th>请求量</th>
+			<th>供货商</th>
 			<th>单位</th>
-			<th>配货量</th>
-			<th width="120">配货价(元/单位)</th>
-			<th>小计(元)</th>
-			<th>备注</th>
+			<th>货流量</th>
+			<th width="120">实收量</th>
+			<th width="120">进货价</th>
+			<th>小计</th>
 		</tr>
 	</thead>
 	<tbody>

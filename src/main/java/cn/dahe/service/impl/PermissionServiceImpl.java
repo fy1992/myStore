@@ -8,6 +8,7 @@ import cn.dahe.model.Role;
 import cn.dahe.service.IPermissionService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -98,13 +99,20 @@ public class PermissionServiceImpl implements IPermissionService{
     }
 
     @Override
-    public List<Permission> findAll(int type) {
-        return permissionDao.findAll(type);
+    public List<Permission> findAll(int type, String levels) {
+        String[] typesStrArr = levels.split(",");
+        Integer[] typesIntegerArr = new Integer[typesStrArr.length];
+        for(int i = 0, len = typesStrArr.length; i < len; i++){
+            if(StringUtils.isNotBlank(typesStrArr[i])){
+                typesIntegerArr[i] = Integer.parseInt(typesStrArr[i]);
+            }
+        }
+        return permissionDao.findAll(type, typesIntegerArr);
     }
 
     @Override
-    public List<Permission> findByResourceType(int resourceType, int storeId) {
-        return permissionDao.findByResourceType(resourceType, storeId);
+    public List<Permission> findByResourceType(int resourceType, int storeId, int multiple) {
+        return permissionDao.findByResourceType(resourceType, storeId, multiple);
     }
 
     @Override

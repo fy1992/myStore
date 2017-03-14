@@ -25,4 +25,11 @@ public interface IOrderGoodsInfoDao extends  IBaseDao<OrderGoodsInfo>{
      * @return
      */
      List<OrderGoodsInfo> findByGoodsTrafficId(int id);
+
+    /**
+     * 根据货流管理id查询
+     * @param id
+     * @return
+     */
+     List<OrderGoodsInfo> findByTrafficManageId(int id);
 }

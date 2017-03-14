@@ -24,6 +24,13 @@
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 货流 <span class="c-gray en">&gt;</span> 门店订货 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
+            <c:if test="${store.multiple eq 1}">
+                <span class="select-box" style="width: 100px;">
+                    <select class="select" id="traffic_store">
+                        <option value="0">全部门店</option>
+                    </select>
+                </span>
+            </c:if>
             <span class="select-box" style="width: 120px;">
                 <select class="select" id="traffic_static">
                     <option value="-1">全部货单</option>
@@ -43,9 +50,15 @@
                         <th width="50">序号</th>
                         <th width="30"><input type="checkbox" name="selectAll" id="selectAll"></th>
                         <th width="50">操作</th>
-                        <th width="100">订货时间</th>
-                        <th width="100">期望发货时间</th>
+                        <th width="100">货流单号</th>
+                        <th width="100">下单时间</th>
+                        <th width="50">货单类型</th>
+                        <th width="50">出货门店</th>
+                        <th width="50">进货门店</th>
                         <th width="50">状态</th>
+                        <th width="50">货流量</th>
+                        <th width="50">总价</th>
+                        <th width="50">预付款</th>
                         <th width="50">备注</th>
                     </tr>
                 </thead>
@@ -75,7 +88,15 @@ $(function(){
         } else{
             $("input[name=ids]").prop("checked",false);
         }
-    })
+    });
+
+    if(${store.multiple eq 1}) {
+        $.post("<%=request.getContextPath()%>/server/store/allStore/0", function (data) {
+            for (var n in data) {
+                $("#traffic_store").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
+            }
+        });
+    }
 });
 
 //table start here
@@ -98,15 +119,21 @@ table = $('#trafficManage_table').dataTable({
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
             return "<a style='text-decoration:none' onclick='detail(" + full.id + ")'>详情</a>";
         }},
+        {"mData" : "trafficNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "orderDate", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
             return format(data).substring(0, 10);
         }},
-        {"mData" : "wishDate", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return !format(data) ? "-" : format(data).substring(0, 10);
+        {"mData" : "trafficType", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
+            return data == 0 ? "退货单" : data == 1 ? "进货单" : "调货单";
         }},
+        {"mData" : "outStoreName", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
             return data == 0 ? "待确认进货" : "已完成进货";
         }},
+        {"mData" : "goodsNum", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "totalPrice", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "imprest", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "description", "sDefaultContent" : "", "bSortable":false}
     ],
     "language":{
@@ -148,13 +175,18 @@ table = $('#trafficManage_table').dataTable({
       	var trafficNo = $("#trafficNo").val();
       	var startTime = $("#startTafficDate").val();
       	var endTime = $("#endTafficDate").val();
+        var storeId = $("#traffic_store").val();
       	if(!trafficNo){
       	    trafficNo = "";
+        }
+        if(!storeId){
+            storeId = 0;
         }
         aoData.push({"name":"status","value":status});
         aoData.push({"name":"trafficNo","value":trafficNo});
         aoData.push({"name":"startTime","value":startTime});
         aoData.push({"name":"endTime","value":endTime});
+        aoData.push({"name":"storeId","value":storeId});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){
@@ -175,7 +207,7 @@ table = $('#trafficManage_table').dataTable({
     }
 });
 
-//新增
+//操作
 function detail() {
     layer.open({
         type: 2,

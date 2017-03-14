@@ -5,9 +5,12 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.Goods;
 import cn.dahe.model.GoodsTraffic;
 import cn.dahe.model.OrderGoodsInfo;
+import cn.dahe.model.Store;
 import cn.dahe.model.User;
 import cn.dahe.service.IGoodsTrafficService;
 import cn.dahe.service.IOrderGoodsInfoService;
+import cn.dahe.service.IStoreService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -35,12 +38,21 @@ public class GoodsTrafficController {
     private IGoodsTrafficService goodsTrafficService;
     @Resource
     private IOrderGoodsInfoService orderGoodsInfoService;
+    @Resource
+    private IStoreService storeService;
 
     /**
      * 列表页查询
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String getGoodsTrafficList() {
+    public String getGoodsTrafficList(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("loginUser");
+        Store store = storeService.get(user.getStoreId());
+        if(store == null){
+            store = new Store();
+            store.setMultiple(1);
+        }
+        model.addAttribute("store", store);
         return "goodsTraffic/list";
     }
 
@@ -72,6 +84,7 @@ public class GoodsTrafficController {
             goodsSum += orderGoodsInfo.getOrderNum();
         }
         model.addAttribute("goodsTrafficId", id);
+        model.addAttribute("goodsTraffic", goodsTraffic);
         model.addAttribute("status", goodsTraffic.getStatus());
         model.addAttribute("num", goodsSum);
         model.addAttribute("categoriesNum", c_set.size());
