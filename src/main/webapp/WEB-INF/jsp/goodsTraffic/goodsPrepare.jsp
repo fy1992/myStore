@@ -72,7 +72,7 @@ $(function(){
                     goodsNum += Number($(this).val());
                     priceTotal += $(this).val() * $(this).parent().next().children().val();
                 });
-                $(this).parent().next().next().text($(this).val() * $(this).parent().next().children().val());
+                $(this).parent().next().next().text(($(this).val() * $(this).parent().next().children().val()).toFixed(2));
                 $("#goodsNum").html(goodsNum);
                 $("#priceTotal").html(priceTotal);
             });
@@ -83,7 +83,7 @@ $(function(){
                     goodsNum = $(this).parent().prev().children().val();
                     priceTotal += Number($(this).val() * goodsNum);
                 });
-                $(this).parent().next().text($(this).val() * $(this).parent().prev().children().val());
+                $(this).parent().next().text(($(this).val() * $(this).parent().prev().children().val()).toFixed(2));
                 $("#priceTotal").html(priceTotal);
             });
         }

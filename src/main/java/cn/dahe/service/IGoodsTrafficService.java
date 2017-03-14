@@ -34,5 +34,5 @@ public interface IGoodsTrafficService {
      * @param id
      * @param orderGoodsInfos
      */
-    void updatePrepareGoods(int id, String orderGoodsInfos);
+    boolean updatePrepareGoods(int id, String orderGoodsInfos);
 }

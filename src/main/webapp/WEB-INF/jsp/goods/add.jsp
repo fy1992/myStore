@@ -281,13 +281,13 @@ $(function(){
         },
         {
             ele:"#price",
-            datatype:"n",
+            datatype:"/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/",
             errormsg:"请填写正确的数值",
             nullmsg:"销售价必填"
         },
         {
             ele:"#bid",
-            datatype:"n",
+            datatype:"/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/",
             errormsg:"请填写正确的数值",
             nullmsg:"进货价必填"
         }

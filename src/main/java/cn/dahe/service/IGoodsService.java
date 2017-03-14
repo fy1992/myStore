@@ -1,7 +1,6 @@
 package cn.dahe.service;
 
 import cn.dahe.dto.GoodsDto;
-import cn.dahe.dto.GoodsDtoSimple;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Goods;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,13 +28,6 @@ public interface IGoodsService{
      * @return
      */
     Pager<GoodsDto> goodsList(String aDataSet, int storeId);
-
-    /**
-     * 根据类别查询
-     * @param categories
-     * @return
-     */
-    List<GoodsDtoSimple> goodsListByCategories(int categories);
 
     /**
      * 商品排序

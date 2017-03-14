@@ -1,14 +1,11 @@
 package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
-import cn.dahe.dto.GoodsDtoSimple;
 import cn.dahe.dto.GoodsTrafficDto;
 import cn.dahe.model.Cashier;
 import cn.dahe.model.Categories;
-import cn.dahe.service.ICategoriesService;
-import cn.dahe.service.IEmployeeService;
-import cn.dahe.service.IGoodsService;
-import cn.dahe.service.IGoodsTrafficService;
+import cn.dahe.model.ClientGoods;
+import cn.dahe.service.*;
 import cn.dahe.util.CacheUtils;
 import cn.dahe.util.TokenUtil;
 import org.slf4j.Logger;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -36,7 +32,7 @@ public class ClientController {
     @Resource
     private IGoodsTrafficService goodsTrafficService;
     @Resource
-    private IGoodsService goodsService;
+    private IClientGoodsService clientGoodsService;
     @Resource
     private ICategoriesService categoriesService;
 
@@ -69,7 +65,7 @@ public class ClientController {
     /**
      * 收银员退出
      * */
-    @RequestMapping(value="/cashierLogout", method=RequestMethod.GET)
+    @RequestMapping(value="/logout", method=RequestMethod.GET)
     @ResponseBody
     public AjaxObj cashierLogout(HttpSession session){
         AjaxObj json = new AjaxObj();
@@ -103,7 +99,7 @@ public class ClientController {
     @ResponseBody
     public AjaxObj getGoodsListByCategorise(int categoriesId){
         AjaxObj json = new AjaxObj();
-        List<GoodsDtoSimple> list = goodsService.goodsListByCategories(categoriesId);
+        List<ClientGoods> list = clientGoodsService.goodsListByCategories(categoriesId);
         json.setResult(1);
         json.setObject(list);
         return json;

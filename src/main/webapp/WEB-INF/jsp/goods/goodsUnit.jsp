@@ -54,11 +54,12 @@ function add() {
     var unitName = $.trim($("#goods_unit_add").val());
     $.post("<%=request.getContextPath()%>/server/goods/addGoodsUnit", {"name":unitName}, function (data) {
         if(data.result == 1){
-            layer.msg("单位添加成功");
-            $("#goods_unit_add").val("");
-            table.fnDraw();
+            layer.msg(data.msg, {time : 1500, icon : 6}, function(){
+                $("#goods_unit_add").val("");
+                table.fnDraw();
+            });
         }else{
-            layer.msg("该单位已存在")
+            layer.msg(data.msg, {time : 1500, icon : 5})
         }
     });
 }

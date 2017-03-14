@@ -18,13 +18,13 @@ public class GoodsDto {
     //是否开启会员折扣
     private int vipSet;
     //会员价
-    private int vipPrice = 0;
+    private double vipPrice = 0.00;
     //批发价
     private String tradePrice = "0";
     //商品价格（销售价）
-    private int price;
+    private double price;
     //商品进价
-    private int bid;
+    private double bid;
     //商品图片
     private String goodsImg;
     //主单位
@@ -83,27 +83,27 @@ public class GoodsDto {
         this.goodsNo = goodsNo;
     }
 
-    public int getVipPrice() {
+    public double getVipPrice() {
         return vipPrice;
     }
 
-    public void setVipPrice(int vipPrice) {
+    public void setVipPrice(double vipPrice) {
         this.vipPrice = vipPrice;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public int getBid() {
+    public double getBid() {
         return bid;
     }
 
-    public void setBid(int bid) {
+    public void setBid(double bid) {
         this.bid = bid;
     }
 

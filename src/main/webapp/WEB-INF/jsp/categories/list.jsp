@@ -39,7 +39,7 @@
 			<table class="table table-border table-bordered table-bg table-hover table-sort table-striped box-shadow" id="categories_table">
 				<thead>
 					<tr class="text-c">
-						<th width="50">序号</th>
+						<th width="10">序号</th>
 						<th width="120">分类名称</th>
 					</tr>
 				</thead>
@@ -173,8 +173,8 @@ $(document).ready(function(){
         "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数
         "bFilter" : false,//是否启动过滤、搜索功能
         "aoColumns" : [
-            {"mData" : "id","sDefaultContent" : "", "sWidth":"2%","bSortable":false},//sDefaultContent 此列默认值为""，以防数据中没有此值，DataTables加载数据的时候报错
-            {"mData" : "name","sDefaultContent" : "", "sWidth":"8%","bSortable":false}
+            {"mData" : null, "sDefaultContent" : "", "bSortable":false},//sDefaultContent 此列默认值为""，以防数据中没有此值，DataTables加载数据的时候报错
+            {"mData" : "name","sDefaultContent" : "", "bSortable":false}
         ],
         "language":{
             "oPaginate": {
@@ -225,6 +225,12 @@ $(document).ready(function(){
                     }
                     table.fnPageChange(redirect);
                 }
+            });
+            //序号
+            var api = this.api();
+            var startIndex= api.context[0]._iDisplayStart;//获取到本页开始的条数
+            api.column(0).nodes().each(function(cell, i) {
+                cell.innerHTML = startIndex + i + 1;
             });
         }
     });

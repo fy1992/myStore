@@ -1,24 +1,9 @@
 package cn.dahe.service.impl;
 
-import cn.dahe.dao.ICategoriesDao;
-import cn.dahe.dao.IGoodsDao;
-import cn.dahe.dao.IGoodsTagsDao;
-import cn.dahe.dao.IGoodsUnitDao;
-import cn.dahe.dao.ISmallTicketDao;
-import cn.dahe.dao.IStockDao;
-import cn.dahe.dao.IStoreDao;
-import cn.dahe.dao.ISupplierDao;
+import cn.dahe.dao.*;
 import cn.dahe.dto.GoodsDto;
-import cn.dahe.dto.GoodsDtoSimple;
 import cn.dahe.dto.Pager;
-import cn.dahe.model.BaseException;
-import cn.dahe.model.Categories;
-import cn.dahe.model.Goods;
-import cn.dahe.model.GoodsTags;
-import cn.dahe.model.GoodsUnit;
-import cn.dahe.model.SmallTicket;
-import cn.dahe.model.Stock;
-import cn.dahe.model.Supplier;
+import cn.dahe.model.*;
 import cn.dahe.service.IGoodsService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.PoiUtils;
@@ -55,19 +40,17 @@ public class GoodsServiceImpl implements IGoodsService{
     @Resource
     private IGoodsDao goodsDao;
     @Resource
-    private IStoreDao storeDao;
-    @Resource
     private ICategoriesDao categoriesDao;
     @Resource
     private IGoodsUnitDao goodsUnitDao;
-    @Resource
-    private IStockDao stockDao;
     @Resource
     private ISmallTicketDao smallTicketDao;
     @Resource
     private IGoodsTagsDao goodsTagsDao;
     @Resource
     private ISupplierDao supplierDao;
+    @Resource
+    private IClientGoodsDao clientGoodsDao;
 
     @Override
     public boolean add(Goods t) {
@@ -82,6 +65,8 @@ public class GoodsServiceImpl implements IGoodsService{
     @Override
     public boolean add(GoodsDto goodsDto, int storeId) {
         Goods goods = formatGoodsDtoToGoods(goodsDto, storeId);
+        ClientGoods clientGoods = new ClientGoods(goods);
+        clientGoodsDao.add(clientGoods);
         return add(goods);
     }
 
@@ -98,6 +83,13 @@ public class GoodsServiceImpl implements IGoodsService{
     @Override
     public void update(GoodsDto goodsDto, int storeId) {
         Goods goods = formatGoodsDtoToGoods(goodsDto, storeId);
+        ClientGoods clientGoods = clientGoodsDao.findByGoodsNo(goods.getGoodsNo());
+        clientGoods.setImgUrl(goods.getImgUrl());
+        clientGoods.setPrice(goods.getPrice());
+        clientGoods.setCategoriesId(goods.getCategoriesId());
+        clientGoods.setCategoriesName(goods.getCategoriesName());
+        clientGoods.setGoodsUnit(goods.getMainUnitName());
+        clientGoodsDao.update(clientGoods);
         goodsDao.update(goods);
     }
 
@@ -162,18 +154,6 @@ public class GoodsServiceImpl implements IGoodsService{
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    public List<GoodsDtoSimple> goodsListByCategories(int categories) {
-        Pager<Object> params = new Pager<>();
-        params.setIntParam2(categories);
-        List<Goods> goodsList = goodsDao.findByParam(params);
-        List<GoodsDtoSimple> goodsDtoSimpleList = new ArrayList<>();
-        for(Goods goods : goodsList){
-            goodsDtoSimpleList.add(new GoodsDtoSimple(goods));
-        }
-        return goodsDtoSimpleList;
     }
 
     @Override
@@ -314,7 +294,7 @@ public class GoodsServiceImpl implements IGoodsService{
         }
         goodsDto.setStock(goodsNum);
         goodsDto.setShelfLife (Integer.toString(goods.getShelfLife()));
-        goodsDto.setTradePrice(Integer.toString(goods.getTradePrice()));
+        goodsDto.setTradePrice(Double.toString(goods.getTradePrice()));
         goodsDto.setPrice(goods.getPrice());
         goodsDto.setCategoriesId(goods.getCategoriesId());
         goodsDto.setCategoriesName(goods.getCategoriesName());

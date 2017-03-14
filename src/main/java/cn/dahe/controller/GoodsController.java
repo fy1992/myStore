@@ -14,11 +14,7 @@ import cn.dahe.service.IGoodsService;
 import cn.dahe.service.IGoodsTagsService;
 import cn.dahe.service.IGoodsUnitService;
 import cn.dahe.service.ISmallTicketService;
-import cn.dahe.util.ExcelTemplateUtils;
-import cn.dahe.util.NumberUtils;
-import cn.dahe.util.PoiUtils;
-import cn.dahe.util.ResourcesUtils;
-import cn.dahe.util.UploadsUtils;
+import cn.dahe.util.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,6 +89,11 @@ public class GoodsController {
     public AjaxObj addGoodsUnit(String name, HttpSession session){
         logger.info("-- addGoodsUnit --");
         AjaxObj json = new AjaxObj();
+        if(StringUtil.isBlank(name)){
+            json.setResult(0);
+            json.setMsg("请输入商品单位");
+            return json;
+        }
         User user = (User)session.getAttribute("loginUser");
         if(goodsUnitService.findByName(name, user) == null) {
             goodsUnitService.add(name, user.getStoreId());

@@ -27,15 +27,15 @@ public class OrderGoodsInfo {
     @Column(name = "goods_no")
     private String goodsNo;
     //配货价格
-    private int price;
+    private double price;
     //单位
     @Column(name = "main_unit_name")
     private String mainUnitName;
     @Column(name = "main_unit_id")
     private int mainUnitId;
     //价格小计
-    @Column(name = "price_sum", columnDefinition = "INT DEFAULT 0")
-    private int priceSum;
+    @Column(name = "price_sum", columnDefinition = "DOUBLE DEFAULT 0.00")
+    private double priceSum;
     //配货量（实收量）
     @Column(name = "distribute_num", columnDefinition = "INT DEFAULT 0")
     private int distributeNum;
@@ -102,11 +102,11 @@ public class OrderGoodsInfo {
         this.goodsNo = goodsNo;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -126,11 +126,11 @@ public class OrderGoodsInfo {
         this.mainUnitId = mainUnitId;
     }
 
-    public int getPriceSum() {
+    public double getPriceSum() {
         return priceSum;
     }
 
-    public void setPriceSum(int priceSum) {
+    public void setPriceSum(double priceSum) {
         this.priceSum = priceSum;
     }
 

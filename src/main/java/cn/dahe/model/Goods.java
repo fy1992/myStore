@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 商品
+ * 服务器的商品
  * Created by fy on 2016/12/29.
  */
 @Table(name = "t_goods")
@@ -46,14 +46,14 @@ public class Goods {
     private int vipSet;
     //会员价
     @Column(name = "vip_price")
-    private int vipPrice;
+    private double vipPrice;
     //批发价
     @Column(name = "trade_price")
-    private int tradePrice;
+    private double tradePrice;
     //商品价格（销售价）
-    private int price;
+    private double price;
     //商品进价
-    private int bid;
+    private double bid;
     //主单位
     @Column(name = "main_unit_id")
     private int mainUnitId;
@@ -150,19 +150,27 @@ public class Goods {
         this.categoriesId = categoriesId;
     }
 
-    public int getPrice() {
+    public void setVipPrice(double vipPrice) {
+        this.vipPrice = vipPrice;
+    }
+
+    public void setTradePrice(double tradePrice) {
+        this.tradePrice = tradePrice;
+    }
+
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public int getBid() {
+    public double getBid() {
         return bid;
     }
 
-    public void setBid(int bid) {
+    public void setBid(double bid) {
         this.bid = bid;
     }
 
@@ -214,20 +222,12 @@ public class Goods {
         this.score = score;
     }
 
-    public int getVipPrice() {
+    public double getVipPrice() {
         return vipPrice;
     }
 
-    public void setVipPrice(int vipPrice) {
-        this.vipPrice = vipPrice;
-    }
-
-    public int getTradePrice() {
+    public double getTradePrice() {
         return tradePrice;
-    }
-
-    public void setTradePrice(int tradePrice) {
-        this.tradePrice = tradePrice;
     }
 
     public int getMainUnitId() {
