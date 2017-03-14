@@ -1,5 +1,6 @@
 package cn.dahe.controller;
 
+import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.OrderGoodsInfo;
 import cn.dahe.model.Store;
@@ -70,7 +71,25 @@ public class GoodsTrafficManageController {
     @RequestMapping(value = "prepare/{id}", method = RequestMethod.GET)
     public String prepareManage(@PathVariable int id, Model model){
         List<OrderGoodsInfo> orderGoodsInfoList = orderGoodsInfoService.findOrderGoodsInfosByTrafficManageId(id);
+        TrafficManage trafficManage = trafficManageService.get(id);
         model.addAttribute("list", orderGoodsInfoList);
-        return "trafficManage";
+        model.addAttribute("trafficManage", trafficManage);
+        return "trafficManage/prepare";
+    }
+
+    /**
+     * 配货
+     * @return
+     */
+    @RequestMapping(value = "prepare", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj preparemanage(int id, int type){
+        AjaxObj json = new AjaxObj();
+        TrafficManage trafficManage = trafficManageService.updatePrepare(id, type);
+        String msg = type == -1 ? "已拒绝进货" : "已完成进货";
+        json.setMsg(msg);
+        json.setObject(trafficManage.getOptTime());
+        json.setResult(1);
+        return json;
     }
 }

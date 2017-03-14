@@ -27,4 +27,11 @@ public interface ITrafficManageService {
      * @param storeId
      */
     void importTrafficManageExcel(int storeId);
+
+    /**
+     * 配货
+     * @param id
+     * @param type
+     */
+    TrafficManage updatePrepare(int id, int type);
 }

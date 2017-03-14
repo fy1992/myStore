@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -114,5 +115,18 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
     @Override
     public void importTrafficManageExcel(int storeId) {
 
+    }
+
+    @Override
+    public TrafficManage updatePrepare(int id, int type) {
+        TrafficManage trafficManage = trafficManageDao.get(id);
+        trafficManage.setStatus(type);
+        trafficManage.setOptTime(new Date());
+        trafficManageDao.update(trafficManage);
+        //若配货通过
+        if(type == 1){
+
+        }
+        return trafficManage;
     }
 }

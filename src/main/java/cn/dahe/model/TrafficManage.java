@@ -39,7 +39,7 @@ public class TrafficManage {
     private int storeId;
     @Column(name = "store_name")
     private String storeName;
-    //状态 0 待确认进货 1 已完成进货
+    //状态 0 待确认进货 1 已完成进货 -1 已拒绝进货
     private int status;
     //总价
     @Column(name = "total_price")
@@ -57,6 +57,9 @@ public class TrafficManage {
     //货流量
     @Column(name = "goods_num")
     private int goodsNum;
+    //操作完成时间
+    @Column(name = "opt_time")
+    private Date optTime;
     public int getId() {
         return id;
     }
@@ -167,5 +170,13 @@ public class TrafficManage {
 
     public void setWishDate(Date wishDate) {
         this.wishDate = wishDate;
+    }
+
+    public Date getOptTime() {
+        return optTime;
+    }
+
+    public void setOptTime(Date optTime) {
+        this.optTime = optTime;
     }
 }

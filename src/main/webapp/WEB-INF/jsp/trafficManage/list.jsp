@@ -117,11 +117,11 @@ table = $('#trafficManage_table').dataTable({
             }, "bSortable": false
         },
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-            return "<a style='text-decoration:none' onclick='detail(" + full.id + ")'>详情</a>";
+            return "<a style='text-decoration:none' onclick='detail(\"" + full.storeName + "\", \"" + full.trafficType + "\", \"" + full.id + "\")'>详情</a>";
         }},
         {"mData" : "trafficNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "orderDate", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return format(data).substring(0, 10);
+            return format(data);
         }},
         {"mData" : "trafficType", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
             return data == 0 ? "退货单" : data == 1 ? "进货单" : "调货单";
@@ -129,7 +129,7 @@ table = $('#trafficManage_table').dataTable({
         {"mData" : "outStoreName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return data == 0 ? "待确认进货" : "已完成进货";
+            return data == 0 ? "<span class='c-success'>待确认进货</span>" : data == 1 ? "<span class='c-999'>已完成进货  " + format(full.optTime) + "</span>" : "<span class='c-danger'>已拒绝进货  " + format(full.optTime) + "</span>";
         }},
         {"mData" : "goodsNum", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "totalPrice", "sDefaultContent" : "", "bSortable":false},
@@ -208,15 +208,21 @@ table = $('#trafficManage_table').dataTable({
 });
 
 //操作
-function detail() {
+function detail(title, type, id) {
+    var typeText = "进货单";
+    if(type == 0){
+        typeText = "退货单";
+    }else if(type == 2){
+        typeText = "调货单";
+    }
     layer.open({
         type: 2,
-        title: '<i class="Hui-iconfont c-primary mr-5">&#xe619;</i>一号掌柜 2017-02-04 16:15:49',
+        title: "<i class=\"Hui-iconfont c-primary mr-5\">&#xe619;</i> " + typeText + "：" + title,
         shadeClose: true,
         shade: false,
         maxmin: true, //开启最大化最小化按钮
         area: ['950px', '350px'],
-        content: '<%=request.getContextPath()%>/server/trafficManage/audit/1'
+        content: '<%=request.getContextPath()%>/server/goodsTrafficManage/prepare/'+id
     });
 }
 </script>
