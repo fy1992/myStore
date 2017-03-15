@@ -12,12 +12,6 @@ import java.util.List;
  */
 @Repository("orderGoodsInfoDao")
 public class OrderGoodsInfoDaoImpl extends BaseDaoImpl<OrderGoodsInfo> implements IOrderGoodsInfoDao{
-    @Override
-    public List<OrderGoodsInfo> findByParam(int start, int pageSize, Pager<Object> params) {
-        int id = params.getIntParam1();
-        String hql = "from OrderGoodsInfo orderGoodsInfo where orderGoodsInfo.goodsTraffic.id = ?";
-        return this.list(hql, id);
-    }
 
     @Override
     public List<OrderGoodsInfo> findByGoodsTrafficId(int id) {

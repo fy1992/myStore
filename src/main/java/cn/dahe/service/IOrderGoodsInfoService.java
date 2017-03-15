@@ -15,13 +15,6 @@ public interface IOrderGoodsInfoService {
     OrderGoodsInfo load(int id);
 
     /**
-     * 订货商品信息列表
-     * @param aDataSet
-     * @return
-     */
-    Pager<OrderGoodsInfo> orderGoodsInfoList(String aDataSet);
-
-    /**
      * 配货
      * @param orderGoodsInfoList
      * @param goodsTrafficId

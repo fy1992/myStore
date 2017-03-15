@@ -118,4 +118,15 @@ public class ClientController {
         json.setObject(categoriesList);
         return json;
     }
+
+    /**
+     * 店面信息
+     */
+    @RequestMapping(value = "storeInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxObj getStoreInfo(){
+        AjaxObj json = new AjaxObj();
+
+        return json;
+    }
 }

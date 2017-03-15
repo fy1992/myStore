@@ -60,6 +60,15 @@ public class Store {
             joinColumns = {@JoinColumn(name = "store_id")},
             inverseJoinColumns = {@JoinColumn(name = "supplier_id")})
     private Set<Supplier> supplierSet = new HashSet<>();
+    //配送费
+    @Column(name = "express_fee")
+    private double expressFee;
+    //送达时间
+    @Column(name = "express_time")
+    private String expressTime;
+    //起送价
+    @Column(name = "start_price")
+    private double startPrice;
     public int getId() {
         return id;
     }
@@ -178,5 +187,29 @@ public class Store {
 
     public void setParent(Store parent) {
         this.parent = parent;
+    }
+
+    public double getExpressFee() {
+        return expressFee;
+    }
+
+    public void setExpressFee(double expressFee) {
+        this.expressFee = expressFee;
+    }
+
+    public String getExpressTime() {
+        return expressTime;
+    }
+
+    public void setExpressTime(String expressTime) {
+        this.expressTime = expressTime;
+    }
+
+    public double getStartPrice() {
+        return startPrice;
+    }
+
+    public void setStartPrice(double startPrice) {
+        this.startPrice = startPrice;
     }
 }

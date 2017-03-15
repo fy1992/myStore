@@ -62,6 +62,9 @@ public class Vip {
     //所属分店
     @Column(name = "store_id")
     private int storeId;
+    //注册时间
+    @Column(name = "register_time")
+    private Date registerTime;
 
 
     public int getId() {
@@ -214,5 +217,13 @@ public class Vip {
 
     public void setStoreId(int storeId) {
         this.storeId = storeId;
+    }
+
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
     }
 }

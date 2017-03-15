@@ -51,18 +51,6 @@ public class OrderGoodsInfoService implements IOrderGoodsInfoService{
     }
 
     @Override
-    public Pager<OrderGoodsInfo> orderGoodsInfoList(String aDataSet) {
-        Pager<Object> params = new Pager<>();
-        List<OrderGoodsInfo> orderGoodsInfoList =  orderGoodsInfoDao.findByParam(0, 0, params);
-        Pager<OrderGoodsInfo> result = new Pager<>();
-        int len = orderGoodsInfoList.size();
-        result.setAaData(orderGoodsInfoList);
-        result.setiTotalRecords(len);
-        result.setiTotalDisplayRecords(len);
-        return result;
-    }
-
-    @Override
     public void editOrderGoodsInfo(List<OrderGoodsInfo> orderGoodsInfoList, int GoodsTrafficId) {
         for(OrderGoodsInfo orderGoodsInfo : orderGoodsInfoList){
             OrderGoodsInfo ogi = get(orderGoodsInfo.getId());
