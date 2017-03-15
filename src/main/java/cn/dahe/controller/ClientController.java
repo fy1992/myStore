@@ -42,7 +42,7 @@ public class ClientController {
     public String test(){
         return "test/add";
     }
-
+    //===================================== 管理员 begin============================================
     /**
      * 收银员登录
      * @param cashierNo
@@ -94,6 +94,21 @@ public class ClientController {
     }
 
     /**
+     * 所有导购员
+     * @return
+     */
+    @RequestMapping(value = "sales", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxObj getSalesList(HttpSession session){
+        AjaxObj json = new AjaxObj();
+        Cashier cashier = (Cashier) session.getAttribute("clientUser");
+        List<Sales> list = employeeService.findAllSales(cashier.getStoreId());
+        json.setObject(list);
+        json.setResult(1);
+        return json;
+    }
+    //===================================== 管理员 end============================================
+    /**
      * 通过类别查询商品
      * @param categoriesId
      */
@@ -122,17 +137,51 @@ public class ClientController {
     }
 
     /**
-     * 所有导购员
+     * 查看购物车
      * @return
      */
-    @RequestMapping(value = "sales", method = RequestMethod.GET)
+    @RequestMapping(value = "shoppingCar", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj getSalesList(HttpSession session){
+    public AjaxObj shoppingCar(int id){
         AjaxObj json = new AjaxObj();
-        Cashier cashier = (Cashier) session.getAttribute("clientUser");
-        List<Sales> list = employeeService.findAllSales(cashier.getStoreId());
-        json.setObject(list);
+        return json;
+    }
+
+    /**
+     * 商品细缆
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "detail", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj detail(int id){
+        AjaxObj json = new AjaxObj();
+        ClientGoods clientGoods = clientGoodsService.get(id);
+        json.setObject(clientGoods);
         json.setResult(1);
+        return json;
+    }
+
+    /**
+     * 个人信息
+     * @return
+     */
+    @RequestMapping(value = "personal", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj personal(int id){
+        AjaxObj json = new AjaxObj();
+        return json;
+    }
+
+    /**
+     * 搜索
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "search", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj search(HttpSession session){
+        AjaxObj json = new AjaxObj();
         return json;
     }
 }

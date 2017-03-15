@@ -33,15 +33,12 @@
             <label class="form-label col-3">所属门店：</label>
             <div class="formControls col-6">
                 <span class="select-box radius">
-                    <select class="select" id = "supplier" name = "supplierId">
-                        <option value = "0">- 请选择供货商 -</option>
-                    </select>
+                    <select class="select" id = "storeId" name = "store"></select>
                 </span>
             </div>
             <div class="col-3"> </div>
         </div>
-        <div id="uploader" class="webuploader-container">
-            <!--用来存放文件信息-->
+        <div id="uploader" class="wu-example">
             <div id="thelist" class="uploader-list"></div>
             <div class="btns">
                 <div id="picker">选择文件</div>
@@ -57,6 +54,9 @@
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script type="text/javascript" src="${ctxResource}/css/webuploader/0.1.5/webuploader.js"></script>
 <script>
+    $(function () {
+
+    });
     var uploader = WebUploader.create({
         // swf文件路径
         swf: '${ctxResource}/css/webuploader/0.1.5/Uploader.swf',

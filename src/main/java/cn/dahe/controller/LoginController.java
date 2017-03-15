@@ -48,7 +48,7 @@ public class LoginController {
     }
 
     /**
-     * 用户登录
+     * 用户登录（系统后台）
      * */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
@@ -109,7 +109,7 @@ public class LoginController {
     }
 
     /**
-     * 注册
+     * 注册 （门店）
      * @return
      */
     @RequestMapping(value = "register", method = RequestMethod.POST)

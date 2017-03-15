@@ -35,8 +35,6 @@ public class StoreServiceImpl implements IStoreService{
     @Resource
     private IUserDao userDao;
     @Resource
-    private IRoleDao roleDao;
-    @Resource
     private IPermissionService permissionService;
 
     @Override
@@ -70,7 +68,6 @@ public class StoreServiceImpl implements IStoreService{
             storeGoodsTraffic.setPayOnline(0);
             storeGoodsTrafficDao.add(storeGoodsTraffic);
 
-            /*Role role = roleDao.get(roleId);*/
             String pStr;
             //根据是否是连锁店分配相应等级的权限t
             if(t.getMultiple() == 0){
