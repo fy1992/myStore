@@ -46,55 +46,60 @@ public class StoreServiceImpl implements IStoreService{
     public int add(Store t, User user, User currentUser) {
         Store store = storeDao.findByStoreNo(t.getStoreNo());
         if(store == null){
-            User ur = userDao.findByLoginName(user.getUsername());
-            if(ur != null){
-                return 2;
-            }
-            if(currentUser.getRank() > 0){
-                Store parent = storeDao.get(currentUser.getStoreId());
-                t.setParent(parent);
-            }
-            t.setCreateDate(new Date());
-            int storeId = storeDao.addAndGetId4Integer(t);
+            try {
+                User ur = userDao.findByLoginName(user.getUsername());
+                if (ur != null) {
+                    return 2;
+                }
+                if (currentUser.getRank() > 0) {
+                    Store parent = storeDao.get(currentUser.getStoreId());
+                    t.setParent(parent);
+                }
+                t.setCreateDate(new Date());
+                int storeId = storeDao.addAndGetId4Integer(t);
 
-            //门店的供货设置
-            StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();
-            storeGoodsTraffic.setStoreId(storeId);
-            storeGoodsTraffic.setStoreName(t.getName());
-            storeGoodsTraffic.setPrepareStoreId(storeId);
-            storeGoodsTraffic.setPrepareStoreName(t.getName());
-            storeGoodsTraffic.setPreparePriceType(0);
-            storeGoodsTraffic.setDifferentOpt(0);
-            storeGoodsTraffic.setPayOnline(0);
-            storeGoodsTrafficDao.add(storeGoodsTraffic);
+                //门店的供货设置
+                StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();
+                storeGoodsTraffic.setStoreId(storeId);
+                storeGoodsTraffic.setStoreName(t.getName());
+                storeGoodsTraffic.setPrepareStoreId(storeId);
+                storeGoodsTraffic.setPrepareStoreName(t.getName());
+                storeGoodsTraffic.setPreparePriceType(0);
+                storeGoodsTraffic.setDifferentOpt(0);
+                storeGoodsTraffic.setPayOnline(0);
+                storeGoodsTrafficDao.add(storeGoodsTraffic);
 
-            String pStr;
-            //根据是否是连锁店分配相应等级的权限t
-            if(t.getMultiple() == 0){
-                pStr = "3";
-            }else{
-                pStr = "2,3";
-            }
-            Set<Permission> permissionSet = new HashSet<>(permissionService.findAll(0, pStr));
+                String pStr;
+                //根据是否是连锁店分配相应等级的权限t
+                if (t.getMultiple() == 0) {
+                    pStr = "3";
+                } else {
+                    pStr = "2,3";
+                }
+                Set<Permission> permissionSet = new HashSet<>(permissionService.findAll(0, pStr));
 
-            //门店的登录账号
-            User u = new User();
-            if(currentUser.getStoreId() == 0){
-                u.setRank(1);
-            }else{
-                u.setRank(2);
+                //门店的登录账号
+                User u = new User();
+                if (currentUser.getStoreId() == 0) {
+                    u.setRank(1);
+                } else {
+                    u.setRank(2);
+                }
+                u.setStatus(t.getStatus());
+                u.setStoreId(storeId);
+                u.setStoreName(t.getName());
+                u.setPassword(SecurityUtil.MD5(user.getPassword()));
+                u.setUsername(user.getUsername());
+                u.setPermissions(permissionSet);
+                u.setMobile(StringUtil.formatStr(user.getMobile()));
+                u.setEmail(StringUtil.formatStr(user.getEmail()));
+                u.setRegisterDate(new Date());
+                u.setLoginName(user.getUsername());
+                userDao.addAndGetId4Integer(u);
+                return 0;
+            }catch (Exception e){
+                e.printStackTrace();
             }
-            u.setStatus(t.getStatus());
-            u.setStoreId(storeId);
-            u.setStoreName(t.getName());
-            u.setPassword(SecurityUtil.MD5(user.getPassword()));
-            u.setUsername(user.getUsername());
-            u.setPermissions(permissionSet);
-            u.setMobile(StringUtil.formatStr(user.getMobile()));
-            u.setEmail(StringUtil.formatStr(user.getEmail()));
-            u.setRegisterDate(new Date());
-            u.setLoginName(user.getUsername());
-            userDao.addAndGetId4Integer(u);
             return 0;
         }else{
             return 1;

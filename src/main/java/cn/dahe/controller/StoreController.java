@@ -81,23 +81,18 @@ public class StoreController {
     public AjaxObj addStore(Store store, User u, HttpSession session){
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
-        try {
-            int mark = storeService.add(store, u, user);
-            if (mark == 0) {
-                json.setMsg("添加成功");
-                json.setResult(1);
-            } else if (mark == 1) {
-                json.setMsg("该门店编号已存在");
-                json.setResult(0);
-            } else {
-                json.setMsg("该账号名已存在");
-                json.setResult(0);
-            }
-            return json;
-        }catch (Exception e){
-            e.printStackTrace();
+        int mark = storeService.add(store, u, user);
+        if (mark == 0) {
+            json.setMsg("添加成功");
+            json.setResult(1);
+        } else if (mark == 1) {
+            json.setMsg("该门店编号已存在");
+            json.setResult(0);
+        } else {
+            json.setMsg("该账号名已存在");
+            json.setResult(0);
         }
-        return null;
+        return json;
     }
 
     /**
