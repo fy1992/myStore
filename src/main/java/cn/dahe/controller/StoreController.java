@@ -82,6 +82,7 @@ public class StoreController {
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
         int mark = storeService.add(store, u, user);
+        logger.info("store add : " + mark);
         if(mark == 0){
             json.setMsg("添加成功");
             json.setResult(1);
