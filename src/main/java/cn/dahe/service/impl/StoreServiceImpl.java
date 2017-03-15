@@ -64,7 +64,7 @@ public class StoreServiceImpl implements IStoreService{
             storeGoodsTraffic.setStoreId(storeId);
             storeGoodsTraffic.setStoreName(t.getName());
             storeGoodsTraffic.setPrepareStoreId(storeId);
-            storeGoodsTraffic.setPrepareStoreName(store.getName());
+            storeGoodsTraffic.setPrepareStoreName(t.getName());
             storeGoodsTraffic.setPreparePriceType(0);
             storeGoodsTraffic.setDifferentOpt(0);
             storeGoodsTraffic.setPayOnline(0);

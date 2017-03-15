@@ -478,7 +478,6 @@ public class GoodsController {
     }
 
 
-
     /**
      * 商品排序页面路由
      * @param categoriesId
@@ -523,13 +522,22 @@ public class GoodsController {
     }
 
     /**
+     * 导入excel
+     * @return
+     */
+    @RequestMapping(value = "importIn", method = RequestMethod.GET)
+    public String importExcel(){
+        return "goods/importExcel";
+    }
+
+    /**
      * 导入excel添加
      * @param file
      * @param isCreateNewUnit
      * @param isCreateNewCategories
      * @return
      */
-    @RequestMapping("importExcel")
+    @RequestMapping(value = "importExcel", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj importExcel(MultipartFile file, int isCreateNewCategories, int isCreateNewUnit, HttpSession session){
         AjaxObj json = new AjaxObj();
@@ -564,7 +572,7 @@ public class GoodsController {
     /**
      * 导出excel
      */
-    @RequestMapping("exportExcel")
+    @RequestMapping(value = "exportExcel", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj exportExcel(HttpServletResponse response, HttpSession session){
         AjaxObj json = new AjaxObj();
@@ -588,7 +596,7 @@ public class GoodsController {
     /**
      * 导出excel模板下载
      */
-    @RequestMapping("exportExcelTemplate")
+    @RequestMapping(value = "exportExcelTemplate", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj exportExcelTemplate(HttpServletResponse response){
         AjaxObj json = new AjaxObj();
@@ -611,7 +619,7 @@ public class GoodsController {
      * 生成商品编号
      * @return
      */
-    @RequestMapping("newGoodsNo")
+    @RequestMapping(value = "newGoodsNo", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj newGoodsNo(){
         AjaxObj json = new AjaxObj();

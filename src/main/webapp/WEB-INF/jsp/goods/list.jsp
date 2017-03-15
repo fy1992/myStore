@@ -26,8 +26,8 @@
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="l">
                 <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增</a>
-                <%--<a href="javascript:void(0);" onclick="importIn();" class="btn btn-primary radius">导入</a>
-                <a href="javascript:void(0);" onclick="importOut();" class="btn btn-primary radius">导出</a>--%>
+                <a href="javascript:void(0);" onclick="importIn();" class="btn btn-primary radius">导入</a>
+                <%--<a href="javascript:void(0);" onclick="importOut();" class="btn btn-primary radius">导出</a>--%>
                 <a href="javascript:void(0);" onclick="unitDetail();" class="btn btn-primary radius">单位</a>
                 <a href="javascript:void(0);" onclick="smallTicketDetail();" class="btn btn-primary radius">厨打</a>
                 <a href="javascript:void(0);" onclick="tagsDetail();" class="btn btn-primary radius">标签</a>
@@ -253,13 +253,21 @@ function tagsDetail() {
 }
 
 //导出
-function importOut() {
+/*function importOut() {
     layer_show("批量导入", "<%=request.getContextPath()%>/server/goods/importOut", "480", "340");
-}
+}*/
 
 //导入
 function importIn() {
-    layer_show("批量导出", "<%=request.getContextPath()%>/server/goods/importIn", "480", "340");
+    layer.open({
+        type: 2,
+        title: "<i class=\"Hui-iconfont c-primary mr-5\">&#xe619;</i> 批量导入",
+        shadeClose: true,
+        shade: false,
+        maxmin: false, //开启最大化最小化按钮
+        area: ['480px', '340px'],
+        content: '/store/server/goods/importIn'
+    });
 }
 
 //商品编辑
