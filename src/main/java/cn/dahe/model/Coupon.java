@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 /**
  * 优惠券
- * Created by 冯源 on 2017/3/15.
+ * Created by fy on 2017/3/15.
  */
 @Table(name = "t_coupon")
 @Entity

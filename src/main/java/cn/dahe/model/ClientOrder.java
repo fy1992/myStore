@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by 冯源 on 2017/3/15.
+ * Created by fy on 2017/3/15.
  */
 @Table(name = "t_client_order")
 @Entity

@@ -4,6 +4,7 @@ import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.User;
 import cn.dahe.model.Vip;
+import cn.dahe.service.IVipLevelService;
 import cn.dahe.service.IVipService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by 冯源 on 2017/3/15.
+ * Created by fy on 2017/3/15.
  */
 @Controller
 @RequestMapping("server/vip")
@@ -27,6 +28,8 @@ public class VipController {
 
     @Resource
     private IVipService vipService;
+    @Resource
+    private IVipLevelService vipLevelService;
 
     /**
      * 列表页查询

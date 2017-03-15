@@ -5,7 +5,7 @@ import cn.dahe.model.ClientOrder;
 import java.util.Date;
 
 /**
- * Created by 冯源 on 2017/3/16.
+ * Created by fy on 2017/3/16.
  */
 public class ClientOrderDto {
     //订单细缆  商品编码  数量

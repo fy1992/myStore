@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 /**
  * 客户端的商品
- * Created by 冯源 on 2017/3/14.
+ * Created by fy on 2017/3/14.
  */
 @Entity
 @Table(name = "t_client_goods")

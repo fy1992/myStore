@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Created by 冯源 on 2017/3/14.
+ * Created by fy on 2017/3/14.
  */
 @Repository("clientGoodsDao")
 public class ClientGoodsDaoImpl extends BaseDaoImpl<ClientGoods> implements IClientGoodsDao{

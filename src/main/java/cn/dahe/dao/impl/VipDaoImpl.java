@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by 冯源 on 2017/3/15.
+ * Created by fy on 2017/3/15.
  */
 @Repository("vipDao")
 public class VipDaoImpl extends BaseDaoImpl<Vip> implements IVipDao{

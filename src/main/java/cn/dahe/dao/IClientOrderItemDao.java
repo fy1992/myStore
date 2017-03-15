@@ -5,7 +5,7 @@ import cn.dahe.model.ClientOrderItem;
 import java.util.List;
 
 /**
- * Created by 冯源 on 2017/3/16.
+ * Created by fy on 2017/3/16.
  */
 public interface IClientOrderItemDao extends IBaseDao<ClientOrderItem>{
 

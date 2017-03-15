@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by 冯源 on 2017/3/16.
+ * Created by fy on 2017/3/16.
  */
 @Service("clientOrderService")
 public class ClientOrderServiceImpl implements IClientOrderService{
@@ -41,6 +41,7 @@ public class ClientOrderServiceImpl implements IClientOrderService{
         clientOrder.setPhone(t.getPhone());
         clientOrder.setType(0);
         int id = add(clientOrder);
+        //TODO
         JSONArray json = JSONArray.parseArray(orderItemInfo);
         for(int i = 0, len = json.size(); i < len; i++){
             JSONObject map = JSONObject.parseObject(json.get(i).toString());

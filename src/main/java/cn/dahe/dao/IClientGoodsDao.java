@@ -5,7 +5,7 @@ import cn.dahe.model.ClientGoods;
 import java.util.List;
 
 /**
- * Created by 冯源 on 2017/3/14.
+ * Created by fy on 2017/3/14.
  */
 public interface IClientGoodsDao extends IBaseDao<ClientGoods>{
     /**

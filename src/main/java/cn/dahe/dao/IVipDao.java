@@ -5,7 +5,7 @@ import cn.dahe.model.Vip;
 
 
 /**
- * Created by 冯源 on 2017/3/15.
+ * Created by fy on 2017/3/15.
  */
 public interface IVipDao extends IBaseDao<Vip>{
     /**
