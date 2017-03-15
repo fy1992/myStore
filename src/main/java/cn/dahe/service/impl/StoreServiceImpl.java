@@ -50,14 +50,12 @@ public class StoreServiceImpl implements IStoreService{
             if (ur != null) {
                 return 2;
             }
-            System.out.println("==============================" + 53);
             if (currentUser.getRank() > 0) {
                 Store parent = storeDao.get(currentUser.getStoreId());
                 t.setParent(parent);
             }
             t.setCreateDate(new Date());
             int storeId = storeDao.addAndGetId4Integer(t);
-            System.out.println("==============================" + 60);
             //门店的供货设置
             StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();
             storeGoodsTraffic.setStoreId(storeId);
@@ -68,7 +66,6 @@ public class StoreServiceImpl implements IStoreService{
             storeGoodsTraffic.setDifferentOpt(0);
             storeGoodsTraffic.setPayOnline(0);
             storeGoodsTrafficDao.add(storeGoodsTraffic);
-            System.out.println("==============================" + 71);
             String pStr;
             //根据是否是连锁店分配相应等级的权限t
             if (t.getMultiple() == 0) {
@@ -77,7 +74,6 @@ public class StoreServiceImpl implements IStoreService{
                 pStr = "2,3";
             }
             Set<Permission> permissionSet = new HashSet<>(permissionService.findAll(0, pStr));
-            System.out.println("==============================" + 80);
             //门店的登录账号
             User u = new User();
             if (currentUser.getStoreId() == 0) {
@@ -95,9 +91,7 @@ public class StoreServiceImpl implements IStoreService{
             u.setEmail(StringUtil.formatStr(user.getEmail()));
             u.setRegisterDate(new Date());
             u.setLoginName(user.getUsername());
-            System.out.println("==============================" + 98);
             userDao.addAndGetId4Integer(u);
-            System.out.println("==============================" + 100);
             return 0;
         }else{
             return 1;
