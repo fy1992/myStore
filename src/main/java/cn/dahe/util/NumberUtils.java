@@ -40,6 +40,6 @@ public class NumberUtils {
 
 
     public static void main(String[] args) {
-        System.out.println(getNo(4));
+        System.out.println(getNoByTime());
     }
 }

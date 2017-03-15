@@ -6,6 +6,7 @@ import cn.dahe.model.*;
 import cn.dahe.service.IPermissionService;
 import cn.dahe.service.IStoreService;
 import cn.dahe.util.DateUtil;
+import cn.dahe.util.NumberUtils;
 import cn.dahe.util.SecurityUtil;
 import cn.dahe.util.StringUtil;
 import com.alibaba.fastjson.JSONArray;
@@ -62,8 +63,8 @@ public class StoreServiceImpl implements IStoreService{
             StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();
             storeGoodsTraffic.setStoreId(storeId);
             storeGoodsTraffic.setStoreName(t.getName());
-            storeGoodsTraffic.setPrepareStoreId(0);
-            storeGoodsTraffic.setPrepareStoreName("");
+            storeGoodsTraffic.setPrepareStoreId(storeId);
+            storeGoodsTraffic.setPrepareStoreName(store.getName());
             storeGoodsTraffic.setPreparePriceType(0);
             storeGoodsTraffic.setDifferentOpt(0);
             storeGoodsTraffic.setPayOnline(0);
@@ -101,6 +102,50 @@ public class StoreServiceImpl implements IStoreService{
         }else{
             return 1;
         }
+    }
+
+    @Override
+    public int add(Store store, User user) {
+        String storeNo = Long.toString(NumberUtils.getNo(4));
+        store.setStoreNo(storeNo);
+        User ur = userDao.findByLoginName(user.getUsername());
+        if(ur != null){
+            return 0;
+        }
+        store.setCreateDate(new Date());
+        store.setStatus(1);
+        store.setMultiple(0);
+        store.setType(0);
+        int storeId = storeDao.addAndGetId4Integer(store);
+
+        //门店的供货设置
+        StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();
+        storeGoodsTraffic.setStoreId(storeId);
+        storeGoodsTraffic.setStoreName(store.getName());
+        storeGoodsTraffic.setPrepareStoreId(storeId);
+        storeGoodsTraffic.setPrepareStoreName(store.getName());
+        storeGoodsTraffic.setPreparePriceType(0);
+        storeGoodsTraffic.setDifferentOpt(0);
+        storeGoodsTraffic.setPayOnline(0);
+        storeGoodsTrafficDao.add(storeGoodsTraffic);
+
+        Set<Permission> permissionSet = new HashSet<>(permissionService.findAll(0, "3"));
+
+        //门店的登录账号
+        User u = new User();
+        u.setRank(2);
+        u.setStatus(store.getStatus());
+        u.setStoreId(storeId);
+        u.setStoreName(store.getName());
+        u.setPassword(SecurityUtil.MD5(user.getPassword()));
+        u.setUsername(user.getUsername());
+        u.setPermissions(permissionSet);
+        u.setMobile(StringUtil.formatStr(user.getMobile()));
+        u.setEmail(StringUtil.formatStr(user.getEmail()));
+        u.setRegisterDate(new Date());
+        u.setLoginName(user.getUsername());
+        userDao.addAndGetId4Integer(u);
+        return 1;
     }
 
     @Override
@@ -227,7 +272,11 @@ public class StoreServiceImpl implements IStoreService{
         sgt.setPreparePriceType(storeGoodsTraffic.getPreparePriceType());
         sgt.setPrepareStoreId(storeGoodsTraffic.getPrepareStoreId());
         Store store = storeDao.get(storeGoodsTraffic.getPrepareStoreId());
-        sgt.setPrepareStoreName(store.getName());
+        if(store != null){
+            sgt.setPrepareStoreName(store.getName());
+        }else{
+            sgt.setPrepareStoreName("");
+        }
         storeGoodsTrafficDao.update(sgt);
     }
 }

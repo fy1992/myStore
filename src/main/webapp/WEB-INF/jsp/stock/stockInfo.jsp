@@ -101,7 +101,9 @@ table = $('#stock_table').dataTable({
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "goodsNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "categoriesName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "supplierName", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "supplierName", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
+            return  !data ? "无" : data;
+        }},
         {"mData" : "stock", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "mainUnitName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "stockUp", "sDefaultContent" : "", "bSortable":false},
@@ -151,6 +153,7 @@ table = $('#stock_table').dataTable({
       	var supplierId = $("#supplierId").val();
       	aoData.push({"name":"categories","value":categoriesId});
       	aoData.push({"name":"supplier","value":supplierId});
+      	aoData.push({"name":"stockPage","value":1});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){

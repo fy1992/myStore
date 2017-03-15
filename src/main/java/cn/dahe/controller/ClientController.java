@@ -5,6 +5,7 @@ import cn.dahe.dto.GoodsTrafficDto;
 import cn.dahe.model.Cashier;
 import cn.dahe.model.Categories;
 import cn.dahe.model.ClientGoods;
+import cn.dahe.model.Sales;
 import cn.dahe.service.*;
 import cn.dahe.util.CacheUtils;
 import cn.dahe.util.TokenUtil;
@@ -35,6 +36,7 @@ public class ClientController {
     private IClientGoodsService clientGoodsService;
     @Resource
     private ICategoriesService categoriesService;
+
 
     @RequestMapping(value = "test", method = RequestMethod.GET)
     public String test(){
@@ -116,6 +118,21 @@ public class ClientController {
         List<Categories> categoriesList = categoriesService.findAll(cashier.getStoreId());
         json.setResult(1);
         json.setObject(categoriesList);
+        return json;
+    }
+
+    /**
+     * 所有导购员
+     * @return
+     */
+    @RequestMapping(value = "sales", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxObj getSalesList(HttpSession session){
+        AjaxObj json = new AjaxObj();
+        Cashier cashier = (Cashier) session.getAttribute("clientUser");
+        List<Sales> list = employeeService.findAllSales(cashier.getStoreId());
+        json.setObject(list);
+        json.setResult(1);
         return json;
     }
 }

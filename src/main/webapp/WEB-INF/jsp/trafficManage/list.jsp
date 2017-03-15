@@ -24,6 +24,9 @@
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 货流 <span class="c-gray en">&gt;</span> 门店订货 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
+            <span class="l">
+                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">进货</a>
+            </span>
             <c:if test="${store.multiple eq 1}">
                 <span class="select-box" style="width: 100px;">
                     <select class="select" id="traffic_store">
@@ -165,7 +168,7 @@ table = $('#trafficManage_table').dataTable({
                "type" : "post",
                "url" : sSource,
                "data": {
-               	aDataSet : JSON.stringify(aDataSet)
+               	    aDataSet : JSON.stringify(aDataSet)
                },
                "success" : fnCallback
            });  
@@ -218,6 +221,19 @@ function detail(title, type, id) {
     layer.open({
         type: 2,
         title: "<i class=\"Hui-iconfont c-primary mr-5\">&#xe619;</i> " + typeText + "：" + title,
+        shadeClose: true,
+        shade: false,
+        maxmin: true, //开启最大化最小化按钮
+        area: ['950px', '350px'],
+        content: '<%=request.getContextPath()%>/server/goodsTrafficManage/prepare/'+id
+    });
+}
+
+//进货
+function add(){
+    layer.open({
+        type: 2,
+        title: "<i class=\"Hui-iconfont c-primary mr-5\">&#xe619;</i> 进货门店：${store.name}",
         shadeClose: true,
         shade: false,
         maxmin: true, //开启最大化最小化按钮

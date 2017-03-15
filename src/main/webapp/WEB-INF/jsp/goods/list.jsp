@@ -26,8 +26,8 @@
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="l">
                 <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增</a>
-                <a href="javascript:void(0);" onclick="importIn();" class="btn btn-primary radius">导入</a>
-                <a href="javascript:void(0);" onclick="importOut();" class="btn btn-primary radius">导出</a>
+                <%--<a href="javascript:void(0);" onclick="importIn();" class="btn btn-primary radius">导入</a>
+                <a href="javascript:void(0);" onclick="importOut();" class="btn btn-primary radius">导出</a>--%>
                 <a href="javascript:void(0);" onclick="unitDetail();" class="btn btn-primary radius">单位</a>
                 <a href="javascript:void(0);" onclick="smallTicketDetail();" class="btn btn-primary radius">厨打</a>
                 <a href="javascript:void(0);" onclick="tagsDetail();" class="btn btn-primary radius">标签</a>
@@ -202,6 +202,7 @@ table = $('#goods_table').dataTable({
         aoData.push({"name":"supplierId","value":supplierId});
         aoData.push({"name":"goodsTags","value":goodsTags});
         aoData.push({"name":"goodsInfo","value":goodsInfo});
+        aoData.push({"name":"stockPage","value":0});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){

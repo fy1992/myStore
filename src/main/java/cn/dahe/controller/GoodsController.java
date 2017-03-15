@@ -615,7 +615,7 @@ public class GoodsController {
     @ResponseBody
     public AjaxObj newGoodsNo(){
         AjaxObj json = new AjaxObj();
-        json.setMsg(Long.toString(NumberUtils.getNo(13)));
+        json.setMsg(NumberUtils.getNoByTime());
         json.setResult(1);
         return json;
     }

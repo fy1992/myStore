@@ -6,6 +6,8 @@ import cn.dahe.model.Cashier;
 import cn.dahe.model.Sales;
 import cn.dahe.model.User;
 
+import java.util.List;
+
 
 /**
  * 员工 （收银员、导购员）
@@ -52,4 +54,6 @@ public interface IEmployeeService {
      * @return
      */
     Pager employeeList(String aDataSet, int storeId, int type);
+
+    List<Sales> findAllSales(int storeId);
 }

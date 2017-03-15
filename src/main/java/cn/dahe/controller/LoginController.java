@@ -1,7 +1,9 @@
 package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
+import cn.dahe.model.Store;
 import cn.dahe.model.User;
+import cn.dahe.service.IStoreService;
 import cn.dahe.util.SecurityUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
+
 
 /**
  * 登录
@@ -30,6 +34,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginController {
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
+    @Resource
+    private IStoreService storeService;
 
     /**
      * 登录页跳转
@@ -100,5 +106,22 @@ public class LoginController {
         SecurityUtils.getSubject().logout();
         redirectAttributes.addFlashAttribute("msg", "您已安全退出");
         return "redirect:/login";
+    }
+
+    /**
+     * 注册
+     * @return
+     */
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj register(User user, Store store){
+        AjaxObj json = new AjaxObj();
+        int i = storeService.add(store, user);
+        switch (i){
+            case 0 : json.setResult(0);json.setMsg("该用户名已存在");break;
+            case 1 : json.setResult(1);json.setMsg("注册成功");break;
+            default: json.setResult(0);json.setMsg("服务器错误，请联系管理员");break;
+        }
+        return json;
     }
 }

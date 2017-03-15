@@ -23,6 +23,7 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
         int tagsId = params.getIntParam3();
         int storeId = params.getIntParam4();
         String goodsInfo = params.getStringParam1();
+        int stockPage = params.getState();
         List<Object> objectList = new ArrayList<>();
         StringBuffer hql = new StringBuffer("from Goods goods where 1=1 and goods.status = ?");
         objectList.add(status);
@@ -53,6 +54,9 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
         if(storeId != 0){
             hql.append(" and goods.storeId = ?");
             objectList.add(storeId);
+        }
+        if(stockPage == 1){
+            hql.append(" and goods.stock.goodNum <= 0");
         }
         hql.append(" order by "+ params.getOrderColumn() + " " +params.getOrderDir());
         return this.find(hql.toString(), objectList, start, pageSize);

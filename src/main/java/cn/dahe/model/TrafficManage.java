@@ -43,7 +43,7 @@ public class TrafficManage {
     private int status;
     //总价
     @Column(name = "total_price")
-    private int totalPrice;
+    private double totalPrice;
     //出货门店id
     @Column(name = "out_store_id")
     private int outStoreId;
@@ -53,7 +53,7 @@ public class TrafficManage {
     //备注
     private String description;
     //预付款
-    private int imprest;
+    private double imprest;
     //货流量
     @Column(name = "goods_num")
     private int goodsNum;
@@ -108,12 +108,8 @@ public class TrafficManage {
         this.status = status;
     }
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
-    }
-
-    public void setTotalPrice(int totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public int getOutStoreId() {
@@ -148,11 +144,15 @@ public class TrafficManage {
         this.description = description;
     }
 
-    public int getImprest() {
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public double getImprest() {
         return imprest;
     }
 
-    public void setImprest(int imprest) {
+    public void setImprest(double imprest) {
         this.imprest = imprest;
     }
 

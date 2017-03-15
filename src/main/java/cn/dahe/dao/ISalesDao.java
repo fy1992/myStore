@@ -3,6 +3,8 @@ package cn.dahe.dao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Sales;
 
+import java.util.List;
+
 /**
  * 导购员
  * Created by fy on 2017/1/25.
@@ -23,4 +25,6 @@ public interface ISalesDao extends IBaseDao<Sales>{
      * @return
      */
     Sales findBySalesNo(String salesNo, int storeId);
+
+    List<Sales> findAll(int storeId);
 }

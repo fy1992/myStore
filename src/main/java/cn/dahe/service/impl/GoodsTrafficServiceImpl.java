@@ -66,6 +66,7 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
             goodsTraffic.setPrepareStoreId(storeId);
             goodsTraffic.setPrepareStoreName(store.getName());
         }else{
+            //是连锁店，则按照设置好的分店货流设置赋值
             StoreGoodsTraffic storeGoodsTraffic = storeGoodsTrafficDao.findByStoreId(storeId);
             goodsTraffic.setPrepareStoreId(storeGoodsTraffic.getPrepareStoreId());
             goodsTraffic.setPrepareStoreName(storeGoodsTraffic.getPrepareStoreName());
@@ -181,12 +182,23 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
         goodsTrafficDao.update(goodsTraffic);
 
         int priceSum = 0, goodsNum = 0;
-        List<OrderGoodsInfo> ogis =  orderGoodsInfoDao.findByGoodsTrafficId(id);
+
+        List<OrderGoodsInfo> orderGoodsInfoList = orderGoodsInfoDao.findByGoodsTrafficId(id);
+        List<OrderGoodsInfo> orderGoodsInfoList1 = JSON.parseArray(orderGoodsInfos, OrderGoodsInfo.class);
+        for(int i = 0, len = orderGoodsInfoList.size(); i < len; i++){
+            OrderGoodsInfo orderGoodsInfo = orderGoodsInfoList.get(i);
+            orderGoodsInfo.setDistributeNum(orderGoodsInfoList1.get(i).getDistributeNum());
+            orderGoodsInfo.setPrice(orderGoodsInfoList1.get(i).getPrice());
+            orderGoodsInfo.setPriceSum(orderGoodsInfoList1.get(i).getPriceSum());
+            orderGoodsInfoDao.update(orderGoodsInfo);
+        }
+
         //boolean mark = true;
-        for(OrderGoodsInfo orderGoodsInfo : ogis){
+        for(OrderGoodsInfo orderGoodsInfo : orderGoodsInfoList){
             priceSum += orderGoodsInfo.getPriceSum();
             goodsNum += orderGoodsInfo.getDistributeNum();
         }
+
         //新建货流管理实例
         TrafficManage trafficManage = new TrafficManage();
         trafficManage.setStoreId(goodsTraffic.getOrderStoreId());//进货门店
@@ -204,20 +216,11 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
         StoreGoodsTraffic storeGoodsTraffic = storeGoodsTrafficDao.findByStoreId(trafficManage.getStoreId());
         trafficManage.setOutStoreId(storeGoodsTraffic.getPrepareStoreId());//出货门店
         trafficManage.setOutStoreName(storeGoodsTraffic.getPrepareStoreName());
-
         int trafficManageId = trafficManageDao.addAndGetId4Integer(trafficManage);
-
-        List<OrderGoodsInfo> orderGoodsInfoList = orderGoodsInfoDao.findByGoodsTrafficId(goodsTraffic.getId());
-
-        List<OrderGoodsInfo> orderGoodsInfoList1 = JSON.parseArray(orderGoodsInfos, OrderGoodsInfo.class);
-        for(int i = 0, len = orderGoodsInfoList.size(); i < len; i++){
-            OrderGoodsInfo orderGoodsInfo = orderGoodsInfoList.get(i);
-            orderGoodsInfo.setDistributeNum(orderGoodsInfoList1.get(i).getDistributeNum());
-            orderGoodsInfo.setPrice(orderGoodsInfoList1.get(i).getPrice());
-            orderGoodsInfo.setPriceSum(orderGoodsInfoList1.get(i).getPriceSum());
+        orderGoodsInfoList.forEach(orderGoodsInfo -> {
             orderGoodsInfo.setTrafficManageId(trafficManageId);
             orderGoodsInfoDao.update(orderGoodsInfo);
-        }
+        });
         return true;
     }
 }

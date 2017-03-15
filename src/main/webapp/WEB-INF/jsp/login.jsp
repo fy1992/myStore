@@ -18,24 +18,17 @@
     <link href="${ctxResource}/css/login.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
-    <style>
-        .header{background:rgba(255,255,255,0.1) no-repeat center;}
-        .loginBox{ background: rgba(255,255,255,0.3); }
-        .loginBox .bg-grey{ background:rgba(255,255,255,0.8); }
-        .hd_msg a{ color:#fff}
-        .hd_msg a:hover{ color:#fff; text-decoration:underline}
-        .formControls label{ color: #fff;}
-        .login_logo{color:#fff;font-size:32px;padding-left:20px}
-        .login_logo:hover{color:#fff;text-decoration:none;}
-    </style>
-    <title>GoldenLeopard后台系统后台登录</title>
+    <title>易捷云收银管理系统</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 </head>
 <body>
-<div class="header"><a target="_blank" class="login_logo">GoldenLeopard后台系统</a></div>
+<div class="header"><a target="_blank" class="login_logo">易捷云收银管理系统</a></div>
 <div class="loginWraper">
   <div id="loginform" class="loginBox">
+        <div class="loginTitle">
+           <span>账户登录</span>
+        </div>
      	<div class="bg-grey">
        		<i class="Hui-iconfont">&#xe60d;</i>
          	<input id="username" type="text" name="username" placeholder="请输入用户名" class="input-text size-L">
@@ -48,6 +41,11 @@
         <div class="formControls col-10 col-offset-3">
           <button id="btn" class="btn btn-primary radius size-L" value="" type="submit">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
         </div>
+      </div>
+      <div class="row">
+          <div class="formControls col-10 col-offset-8 mt-20">
+              <a href="register" class="ml-30" style="color:#3bb4f2;text-decoration:none">还没账号？</a>
+          </div>
       </div>
   </div>
 </div>

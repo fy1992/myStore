@@ -74,7 +74,7 @@ $(function(){
                 });
                 $(this).parent().next().next().text(($(this).val() * $(this).parent().next().children().val()).toFixed(2));
                 $("#goodsNum").html(goodsNum);
-                $("#priceTotal").html(priceTotal);
+                $("#priceTotal").html(priceTotal.toFixed(2));
             });
 
             $(".price").blur(function(){
@@ -84,7 +84,7 @@ $(function(){
                     priceTotal += Number($(this).val() * goodsNum);
                 });
                 $(this).parent().next().text(($(this).val() * $(this).parent().prev().children().val()).toFixed(2));
-                $("#priceTotal").html(priceTotal);
+                $("#priceTotal").html(priceTotal.toFixed(2));
             });
         }
     );
@@ -103,6 +103,10 @@ $(function(){
             var distributeNum = $(".num").eq(i).val();
             var price = $(".price").eq(i).val();
             var total = $(".total").eq(i).text();
+            if(!price || !distributeNum){
+                layer.msg("请输入具体值", {time : 1500, icon :5});
+                return false;
+            }
             orderGoodsInfoArr.push(new orderGoodsInfo(id, distributeNum, price, total));
         }
 
