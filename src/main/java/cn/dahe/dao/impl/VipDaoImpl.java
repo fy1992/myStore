@@ -54,4 +54,14 @@ public class VipDaoImpl extends BaseDaoImpl<Vip> implements IVipDao{
         String hql = "from Vip where vipNo = ?";
         return (Vip)this.queryByHql(hql, vipNo);
     }
+
+    @Override
+    public List<Vip> findByStorId(int storeId) {
+        String hql = "from Vip where 1=1";
+        if(storeId != 0){
+            hql += " and storeId = ?";
+            return this.list(hql, storeId);
+        }
+        return this.list(hql);
+    }
 }

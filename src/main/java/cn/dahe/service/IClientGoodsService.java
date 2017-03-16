@@ -20,4 +20,6 @@ public interface IClientGoodsService {
      * @return
      */
     List<ClientGoods> goodsListByCategories(int categories);
+
+    ClientGoods findByGoodsNo(String goodsNo);
 }

@@ -118,6 +118,11 @@ public class Goods {
     //是否是积分商品 0 不是 1 是
     @Column(name = "is_score")
     private int score;
+    //是否有配方
+    @Column(name = "has_recipe", columnDefinition = "INT DEFAULT 0")
+    private int hasRecipe;
+
+
     public int getId() {
         return id;
     }
@@ -380,6 +385,14 @@ public class Goods {
 
     public void setCategoriesName(String categoriesName) {
         this.categoriesName = categoriesName;
+    }
+
+    public int getHasRecipe() {
+        return hasRecipe;
+    }
+
+    public void setHasRecipe(int hasRecipe) {
+        this.hasRecipe = hasRecipe;
     }
 
     @Override

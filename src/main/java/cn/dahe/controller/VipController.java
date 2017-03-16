@@ -4,6 +4,7 @@ import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.User;
 import cn.dahe.model.Vip;
+import cn.dahe.model.VipLevel;
 import cn.dahe.service.IVipLevelService;
 import cn.dahe.service.IVipService;
 import org.slf4j.Logger;
@@ -87,7 +88,7 @@ public class VipController {
     }
 
     /**
-     *用户修改
+     *会员修改
      */
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     @ResponseBody
@@ -95,6 +96,75 @@ public class VipController {
         AjaxObj json = new AjaxObj();
         vipService.update(vip);
         json.setMsg("会员修改成功");
+        json.setResult(1);
+        return json;
+    }
+    //========================= vipLevel begin ==========================================
+    /**
+     * 列表页查询
+     * */
+    @RequestMapping(value = "/vipLevelList", method = RequestMethod.GET)
+    public String getVipLevelList(){
+        return "vipLevel/list";
+    }
+
+    /**
+     * 列表页查询
+     * */
+    @RequestMapping(value = "/vipLevelList", method = RequestMethod.POST)
+    @ResponseBody
+    public Pager<VipLevel> getVipLevelList(String aDataSet, HttpSession session){
+        logger.info("--- vipLevel list begin ---");
+        User user = (User) session.getAttribute("loginUser");
+        return vipLevelService.findByParams(aDataSet, user.getStoreId());
+    }
+
+    /**
+     * 会员添加
+     */
+    @RequestMapping(value = "vipLevelAdd", method = RequestMethod.GET)
+    public String addVipLevel(HttpSession session, Model model){
+        User user = (User)session.getAttribute("loginUser");
+        model.addAttribute("store", user.getStoreId());
+        return "vipLevel/add";
+    }
+
+
+    /**
+     *会员添加
+     */
+    @RequestMapping(value = "vipLevelAdd", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj addVipLevel(VipLevel vipLevel){
+        AjaxObj json = new AjaxObj();
+        vipLevelService.add(vipLevel);
+        json.setMsg("会员等级添加成功");
+        json.setResult(1);
+        return json;
+    }
+
+    /**
+     * 会员修改跳转
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "vipLevelEdit/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public String vipLevelEdit(@PathVariable int id, Model model){
+        VipLevel vipLevel = vipLevelService.get(id);
+        model.addAttribute("vipLevel", vipLevel);
+        return "vipLevel/edit";
+    }
+
+    /**
+     *会员修改
+     */
+    @RequestMapping(value = "vipLevelEdit", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj vipLevelEdit(VipLevel vipLevel){
+        AjaxObj json = new AjaxObj();
+        vipLevelService.update(vipLevel);
+        json.setMsg("会员等级修改成功");
         json.setResult(1);
         return json;
     }

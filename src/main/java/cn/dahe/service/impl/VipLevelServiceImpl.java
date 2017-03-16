@@ -44,10 +44,9 @@ public class VipLevelServiceImpl implements IVipLevelService{
     }
 
     @Override
-    public Pager<VipLevel> findByParams(String aDataSet) {
+    public Pager<VipLevel> findByParams(String aDataSet, int storeId) {
         int start = 0;// 起始
         int pageSize = 20;// size
-        int status = 1;
         try{
             JSONArray json = JSONArray.parseArray(aDataSet);
             int len = json.size();
@@ -57,14 +56,12 @@ public class VipLevelServiceImpl implements IVipLevelService{
                     start = (Integer) jsonObject.get("value");
                 } else if (jsonObject.get("name").equals("iDisplayLength")) {
                     pageSize = (Integer) jsonObject.get("value");
-                } else if (jsonObject.get("name").equals("status")) {
-                    status = Integer.parseInt(jsonObject.get("value").toString());
                 }
             }
             Pager<Object> params = new Pager<>();
             params.setOrderColumn("vipLevel.id");
             params.setOrderDir("desc");
-            params.setStatus(status);
+            params.setIntParam1(storeId);
             return vipLevelDao.findByParam(start, pageSize, params);
         }catch (Exception e){
             e.printStackTrace();

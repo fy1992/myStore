@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by fy on 2017/3/16.
  */
-@Service("clientOrderService")
+@Service("clientOrderItemService")
 public class ClientOrderItemServiceImpl implements IClientOrderItemService{
     private Logger logger = LoggerFactory.getLogger(ClientOrderItemServiceImpl.class);
     @Resource

@@ -51,4 +51,9 @@ public class ClientGoodsServiceImpl implements IClientGoodsService{
     public List<ClientGoods> goodsListByCategories(int categories) {
         return clientGoodsDao.findByCategoriesId(categories);
     }
+
+    @Override
+    public ClientGoods findByGoodsNo(String goodsNo) {
+        return clientGoodsDao.findByGoodsNo(goodsNo);
+    }
 }

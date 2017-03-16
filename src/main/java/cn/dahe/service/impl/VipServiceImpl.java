@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * Created by fy on 2017/3/15.
  */
-@Service
+@Service("vipService")
 public class VipServiceImpl implements IVipService{
     private Logger logger = LoggerFactory.getLogger(VipServiceImpl.class);
     @Resource

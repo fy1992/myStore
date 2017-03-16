@@ -18,5 +18,5 @@ public interface IVipLevelService {
      * @param aDataSet
      * @return
      */
-    Pager<VipLevel> findByParams(String aDataSet);
+    Pager<VipLevel> findByParams(String aDataSet, int storeId);
 }

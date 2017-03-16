@@ -3,6 +3,7 @@ package cn.dahe.model;
 import javax.persistence.*;
 
 /**
+ * 客户端订单明细
  * Created by fy on 2017/3/16.
  */
 @Table(name = "t_client_order_time")

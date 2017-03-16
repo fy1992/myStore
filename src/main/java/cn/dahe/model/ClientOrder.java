@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
+ * 客户端订单
  * Created by fy on 2017/3/15.
  */
 @Table(name = "t_client_order")
@@ -20,7 +21,10 @@ public class ClientOrder {
     private int storeId;
     //订单类型 0 网单 1 店单
     private int type;
-    //订单状态 0 等待处理  1 配送途中  2 完成
+    //订单来源类型 0 自营  1 美团  2 饿了么  3 百度外卖
+    @Column(name = "from_type")
+    private int fromType;
+    //订单状态 -1 已作废 0 等待处理  1 配送途中  2 完成
     private int status;
     //电话
     private String phone;
@@ -32,6 +36,9 @@ public class ClientOrder {
     //支付方式 0 会员支付 1 货到付款
     @Column(name = "pay_type")
     private int payType;
+    //支付状态 0 未支付 1 已支付
+    @Column(name = "pay_status")
+    private int payStatus;
     //地址
     @Column(name = "order_addr")
     private String orderAddr;
@@ -168,5 +175,21 @@ public class ClientOrder {
 
     public void setClientOrderNo(String clientOrderNo) {
         this.clientOrderNo = clientOrderNo;
+    }
+
+    public int getFromType() {
+        return fromType;
+    }
+
+    public void setFromType(int fromType) {
+        this.fromType = fromType;
+    }
+
+    public int getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(int payStatus) {
+        this.payStatus = payStatus;
     }
 }

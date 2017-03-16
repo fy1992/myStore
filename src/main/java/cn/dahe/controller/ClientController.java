@@ -6,6 +6,7 @@ import cn.dahe.model.Cashier;
 import cn.dahe.model.Categories;
 import cn.dahe.model.ClientGoods;
 import cn.dahe.model.Sales;
+import cn.dahe.model.Vip;
 import cn.dahe.service.ICategoriesService;
 import cn.dahe.service.IClientGoodsService;
 import cn.dahe.service.IEmployeeService;
@@ -139,26 +140,15 @@ public class ClientController {
     }
 
     /**
-     * 查看购物车
-     * @return
-     */
-    @RequestMapping(value = "shoppingCar", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxObj shoppingCar(int id){
-        AjaxObj json = new AjaxObj();
-        return json;
-    }
-
-    /**
      * 商品细缆
-     * @param id
+     * @param goodsNo
      * @return
      */
     @RequestMapping(value = "detail", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj detail(int id){
+    public AjaxObj detail(String goodsNo){
         AjaxObj json = new AjaxObj();
-        ClientGoods clientGoods = clientGoodsService.get(id);
+        ClientGoods clientGoods = clientGoodsService.findByGoodsNo(goodsNo);
         json.setObject(clientGoods);
         json.setResult(1);
         return json;
@@ -170,8 +160,10 @@ public class ClientController {
      */
     @RequestMapping(value = "personal", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj personal(int id){
+    public AjaxObj personal(HttpSession session){
         AjaxObj json = new AjaxObj();
+        json.setObject("");
+        json.setResult(1);
         return json;
     }
 
@@ -184,6 +176,8 @@ public class ClientController {
     @ResponseBody
     public AjaxObj search(HttpSession session){
         AjaxObj json = new AjaxObj();
+        json.setObject("");
+        json.setResult(1);
         return json;
     }
 
@@ -192,9 +186,10 @@ public class ClientController {
      */
     @RequestMapping(value = "storeInfo", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxObj getStoreInfo(){
+    public AjaxObj getStoreInfo(HttpSession session){
         AjaxObj json = new AjaxObj();
-
+        json.setObject("");
+        json.setResult(1);
         return json;
     }
 }
