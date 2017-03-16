@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by fy on 2017/3/15.
@@ -167,5 +168,13 @@ public class VipController {
         json.setMsg("会员等级修改成功");
         json.setResult(1);
         return json;
+    }
+
+
+    @RequestMapping(value = "allVipLevel", method = RequestMethod.POST)
+    @ResponseBody
+    private List<VipLevel> findAllVipLevel(HttpSession session){
+        User user = (User)session.getAttribute("loginUser");
+        return vipLevelService.findByStoreId(user.getStoreId());
     }
 }

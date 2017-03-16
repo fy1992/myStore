@@ -80,7 +80,6 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    @ResponseBody
     public String editUser(@PathVariable int id,  Model model){
         User user = userService.get(id);
         model.addAttribute("user", user);

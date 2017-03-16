@@ -17,45 +17,27 @@
 <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 
-<title>会员列表</title>
+<title>会员等级列表</title>
 </head>
 <body class="pos-r">
 <div>
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 会员 <span class="c-gray en">&gt;</span> 会员资料 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 会员 <span class="c-gray en">&gt;</span> 会员等级 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="l">
                 <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增</a>
             </span>
-            <span class="select-box" style="width: 100px;">
-                <select class="select radius" id="vip_status">
-                    <option value="1">启用</option>
-                    <option value="0">禁用</option>
-                </select>
-            </span>
-            <span class="select-box radius" style="width: 100px;">
-                <select class="select" id="vip_level">
-                    <option value="0">全部等级</option>
-                </select>
-            </span>
-            <input type="text" id="vip_info" placeholder="卡号/姓名/电话" style="width:260px" class="input-text radius">
-            <button id="news_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
-            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="vip_table">
+            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="vipLevel_table">
                 <thead>
                     <tr class="text-c">
                         <th width="50">序号</th>
                         <th width="50">操作</th>
-                        <th width="100">会员号</th>
-                        <th width="50">姓名</th>
-                        <th width="50">电话</th>
-                        <th width="50">会员等级</th>
-                        <th width="50">余额</th>
-                        <th width="80">积分</th>
-                        <th width="50">优惠券</th>
-                        <th width="50">开卡门店</th>
-                        <th width="50">开卡日期</th>
+                        <th width="100">等级名称</th>
+                        <th width="50">优惠折扣</th>
+                        <th width="50">是否积分</th>
+                        <%--<th width="50">自动升级规则</th>--%>
                     </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -71,21 +53,8 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script type="text/javascript">
-//搜索
-$(function(){
-	$("#vip_search").click(function(){
-		table.fnDraw();
-	});
-    //类别
-	$.post("<%=request.getContextPath()%>/server/vip/allVipLevel", function (data) {
-	    for(var n in data){
-            $("#vip_level").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
-        }
-    });
-});
-
 //table start here
-table = $('#vip_table').dataTable({
+table = $('#vipLevel_table').dataTable({
 	   "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示  
        "bPaginate": true,//是否显示（应用）分页器  
        "bLengthChange": false,
@@ -99,17 +68,11 @@ table = $('#vip_table').dataTable({
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
 	       return "<a style='text-decoration:none' onclick='edit(\""+full.id+"\")'>编辑</a>";
         }},
-        {"mData" : "vipNo", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "vipName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "phone", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "vipLevelName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "balance", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "point", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "tradePrice", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "storeName", "sDefaultContent" : "","bSortable":false,"sClass":"center"},
-        {"mData" : "registerTime", "sDefaultContent" : "", "mRender":function(data, type, full){
-               return format(data);
-           },"bSortable":false,"sClass":"center"
+        {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "rebate", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "auto", "sDefaultContent" : "", "mRender":function(data, type, full){
+        	return data == 1?"是":"否";
+        	},"bSortable":false,"sClass":"center"
         }
     ],
     "language":{
@@ -133,7 +96,7 @@ table = $('#vip_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/server/vip/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/vip/vipLevelList",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -141,18 +104,12 @@ table = $('#vip_table').dataTable({
                "type" : "post",
                "url" : sSource,
                "data": {
-               	aDataSet : JSON.stringify(aDataSet)
+               	    aDataSet : JSON.stringify(aDataSet)
                },
                "success" : fnCallback
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	var status = $("#vip_status").val();
-      	var level = $("#vip_level").val();
-      	var vipInfo = $("#vip_info").val();
-        aoData.push({"name":"status","value":status});
-        aoData.push({"name":"level","value":level});
-        aoData.push({"name":"vipInfo","value":vipInfo});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){
@@ -180,21 +137,21 @@ function add() {
     var index = layer.open({
         type : 2,
         title:'新增商品',
-        content : "<%=request.getContextPath()%>/server/vip/add",
+        content : "<%=request.getContextPath()%>/server/vip/vipLevelAdd",
         area : [ w+'px', h+'px' ],
         maxmin : true
     });
     layer.full(index);
 }
 
-//会员编辑
+//会员等级编辑
 function edit(id){
     var w = 800;
     var	h = ($(window).height() - 50);
     var index = layer.open({
         type : 2,
         title:'编辑',
-        content : "<%=request.getContextPath()%>/server/vip/edit/"+id,
+        content : "<%=request.getContextPath()%>/server/vip/vipLevelEdit/"+id,
         area : [w+'px', h+'px'],
         maxmin : true
     });

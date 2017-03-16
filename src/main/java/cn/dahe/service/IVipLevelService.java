@@ -3,6 +3,8 @@ package cn.dahe.service;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.VipLevel;
 
+import java.util.List;
+
 /**
  * Created by 冯源 on 2017/3/16.
  */
@@ -19,4 +21,6 @@ public interface IVipLevelService {
      * @return
      */
     Pager<VipLevel> findByParams(String aDataSet, int storeId);
+
+    List<VipLevel> findByStoreId(int storeId);
 }

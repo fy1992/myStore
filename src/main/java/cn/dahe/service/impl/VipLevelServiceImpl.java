@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by 冯源 on 2017/3/16.
@@ -67,5 +68,10 @@ public class VipLevelServiceImpl implements IVipLevelService{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<VipLevel> findByStoreId(int storeId) {
+        return vipLevelDao.findByStoreId(storeId);
     }
 }

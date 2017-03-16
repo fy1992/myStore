@@ -62,6 +62,8 @@ public class Vip {
     //所属分店
     @Column(name = "store_id")
     private int storeId;
+    @Column(name = "store_name")
+    private String storeName;
     //注册时间
     @Column(name = "register_time")
     private Date registerTime;

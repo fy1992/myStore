@@ -3,6 +3,8 @@ package cn.dahe.dao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.VipLevel;
 
+import java.util.List;
+
 /**
  * Created by fy on 2017/3/16.
  */
@@ -15,4 +17,6 @@ public interface IVipLevelDao extends IBaseDao<VipLevel>{
      * @return
      */
     Pager<VipLevel> findByParam(int start, int pageSize, Pager<Object> params);
+
+    List<VipLevel> findByStoreId(int storeId);
 }

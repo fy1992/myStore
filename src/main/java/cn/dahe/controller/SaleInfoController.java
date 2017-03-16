@@ -1,6 +1,8 @@
 package cn.dahe.controller;
 
+import cn.dahe.model.Store;
 import cn.dahe.model.User;
+import cn.dahe.service.IStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,8 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("server/saleInfo")
 public class SaleInfoController {
     private static Logger logger = LoggerFactory.getLogger(SaleInfoController.class);
-
+    @Resource
+    private IStoreService storeService;
     /**
      * 营业概况
      * @return
@@ -27,6 +30,8 @@ public class SaleInfoController {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String saleInfoList(HttpSession session, Model model){
         User user = (User) session.getAttribute("loginUser");
+        Store store = storeService.get(user.getStoreId());
+
         return "saleInfo/salesInfo";
     }
 }

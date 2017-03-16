@@ -3,6 +3,7 @@ package cn.dahe.dao.impl;
 import cn.dahe.dao.IVipLevelDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.VipLevel;
+import cn.dahe.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -26,5 +27,11 @@ public class VipLevelDaoImpl extends BaseDaoImpl<VipLevel> implements IVipLevelD
         }
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);
+    }
+
+    @Override
+    public List<VipLevel> findByStoreId(int storeId) {
+        String hql = "from VipLevel where storeId = ?";
+        return this.list(hql, storeId);
     }
 }

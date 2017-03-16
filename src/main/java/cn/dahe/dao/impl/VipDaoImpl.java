@@ -4,6 +4,7 @@ package cn.dahe.dao.impl;
 import cn.dahe.dao.IVipDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Vip;
+import cn.dahe.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -20,28 +21,24 @@ public class VipDaoImpl extends BaseDaoImpl<Vip> implements IVipDao{
     public Pager<Vip> findByParam(int start, int pageSize, Pager<Object> params) {
         StringBuffer hql = new StringBuffer("from Vip vip where 1=1");
         int status = params.getStatus();
-        Date startTime = params.getEndTime();
-        Date endTime = params.getEndTime();
         int storeId = params.getIntParam1();
-        String userInfo = params.getStringParam1();
+        String vipInfo = params.getStringParam1();
         List<Object> list = new ArrayList<>();
-        if(startTime != null){
-            startTime = new java.sql.Date(startTime.getTime());
-            hql.append(" and vip.registerDate >= ? ");
-            list.add(startTime);
-        }
-        if(endTime != null){
-            endTime = new java.sql.Date(endTime.getTime());
-            hql.append(" and vip.registerDate <= ? ");
-            list.add(endTime);
-        }
         if(storeId != -1 && storeId != 0){
             hql.append(" and vip.storeId = ?");
             list.add(storeId);
         }
-        if(StringUtils.isNotBlank(userInfo)){
-            hql.append(" and vip.username like ?");
-            list.add("%" + userInfo + "%");
+        if (StringUtils.isNotBlank(vipInfo)){
+            if(StringUtil.isNumber(vipInfo) && !StringUtil.isMobile(vipInfo)){
+                hql.append(" and vipLevel.vipNo = ?");
+                list.add(vipInfo);
+            }else if(StringUtil.isMobile(vipInfo)){
+                hql.append(" and vipLevel.phone = ?");
+                list.add(vipInfo);
+            }else{
+                hql.append(" and vipLevel.name like ?");
+                list.add("%" + vipInfo + "%");
+            }
         }
         hql.append(" and vip.status = ?");
         list.add(status);
