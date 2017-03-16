@@ -29,14 +29,34 @@
             <tr class="text-c">
                 <td>${orderGood.goodsName}</td>
                 <td>${orderGood.goodsNo}</td>
-                <td>${orderGood.supplierName}</td>
-                <td>${orderGood.mainUnitName}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${empty orderGood.supplierName}">-</c:when>
+                        <c:otherwise>${orderGood.supplierName}</c:otherwise>
+                    </c:choose>
+                </td>
+                <td>
+                    <c:choose>
+                        <c:when test="${empty orderGood.mainUnitName}">-</c:when>
+                        <c:otherwise>${orderGood.mainUnitName}</c:otherwise>
+                    </c:choose>
+                </td>
                 <td>${orderGood.orderNum}</td>
                 <td>${orderGood.distributeNum}</td>
                 <td>${orderGood.price}</td>
                 <td>${orderGood.priceSum}</td>
             </tr>
         </c:forEach>
+        <tr class="text-c" style="border: 1px solid #ddd;background: #f5f5f5;">
+            <td>合计</td>
+            <td>${num} 种商品</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>${trafficManage.goodsNum}</td>
+            <td>-</td>
+            <td>${trafficManage.totalPrice}</td>
+        </tr>
 	</tbody>
 </table>
 
@@ -44,7 +64,7 @@
 	<div class="f-l ml-20"><b class="c-primary" id = "status"></b> <span id="time"></span></div>
     <c:if test="${trafficManage.status eq 0}">
         <a class="btn btn-primary size-M f-r" id="pass">确认进货</a>
-        <a class="btn btn-default size-M f-r" id="nopass" >拒绝进货</a>
+        <a class="btn btn-default size-M f-r" id="nopass">拒绝进货</a>
     </c:if>
 </div>
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>

@@ -41,7 +41,12 @@
                 <td>${orderGood.distributeNum}</td>
                 <td>${orderGood.price}</td>
                 <td>${orderGood.priceSum}</td>
-                <td>${orderGood.description}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${empty orderGood.description}">-</c:when>
+                        <c:otherwise>${orderGood.description}</c:otherwise>
+                    </c:choose>
+                </td>
             </tr>
         </c:forEach>
 	</tbody>

@@ -50,7 +50,7 @@ public class Vip {
     //是否启用 0 禁用 1 启用
     private int status;
     //会员余额
-    private int balance;
+    private double balance;
     //会员积分
     private int point;
     //会员等级Id
@@ -179,11 +179,11 @@ public class Vip {
         this.status = status;
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 

@@ -28,4 +28,11 @@ public interface IClientGoodsDao extends IBaseDao<ClientGoods>{
      * @return
      */
     ClientGoods findByGoodsNo(String goodsNo);
+
+    /**
+     * 根据门店查询
+     * @param storeId
+     * @return
+     */
+    List<ClientGoods> findByStoreId(int storeId);
 }

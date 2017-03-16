@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -238,5 +239,10 @@ public class EmployeeServiceImpl implements IEmployeeService{
     @Override
     public Sales findBySalesNo(String salesNo, int storeId) {
         return salesDao.findBySalesNo(salesNo, storeId);
+    }
+
+    @Override
+    public List<Sales> findAllSales(int storeId) {
+        return salesDao.findAll(storeId);
     }
 }

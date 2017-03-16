@@ -13,6 +13,7 @@ import java.util.List;
 public interface IStoreService {
     void add(Store t);
     int add(Store t, User u, User currentUser);
+    int add(Store store, User user);
     void del(int id);
     void update(Store t, User user);
     Store get(int id);

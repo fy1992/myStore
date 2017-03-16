@@ -82,13 +82,13 @@ public class StoreController {
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
         int mark = storeService.add(store, u, user);
-        if(mark == 0){
+        if (mark == 0) {
             json.setMsg("添加成功");
             json.setResult(1);
-        }else if(mark == 1){
+        } else if (mark == 1) {
             json.setMsg("该门店编号已存在");
             json.setResult(0);
-        }else{
+        } else {
             json.setMsg("该账号名已存在");
             json.setResult(0);
         }

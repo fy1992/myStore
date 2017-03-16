@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -74,6 +76,7 @@ public class GoodsTrafficManageController {
         TrafficManage trafficManage = trafficManageService.get(id);
         model.addAttribute("list", orderGoodsInfoList);
         model.addAttribute("trafficManage", trafficManage);
+        model.addAttribute("num", orderGoodsInfoList.size());
         return "trafficManage/prepare";
     }
 

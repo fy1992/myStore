@@ -163,11 +163,6 @@
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
     $(function () {
-        /*$.post("<%=request.getContextPath()%>/server/role/findAll", function(data){
-            for(var n in data){
-                $("#user_role").append("<option value = '"+data[n].id+"'>"+data[n].roleName+"</option>");
-            }
-        });*/
 
         var  validtor = $("#form-store-add").Validform({
             tiptype:4,

@@ -28,4 +28,10 @@ public class ClientGoodsDaoImpl extends BaseDaoImpl<ClientGoods> implements ICli
         String hql = "from ClientGoods where goodsNo = ?";
         return (ClientGoods)this.queryByHql(hql, goodsNo);
     }
+
+    @Override
+    public List<ClientGoods> findByStoreId(int storeId) {
+        String hql = "from ClientGoods where storeId = ?";
+        return this.list(hql, storeId);
+    }
 }

@@ -107,7 +107,7 @@ public class GoodsServiceImpl implements IGoodsService{
     public Pager<GoodsDto> goodsList(String aDataSet, int storeId) {
         int start = 0;// 起始
         int pageSize = 20;// size
-        int status = 1, categories = -1, supplier = -1, tags = -1;
+        int status = 1, categories = -1, supplier = -1, tags = -1, stockPage = 0;
         String goodsInfo = "";
         try{
             JSONArray json = JSONArray.parseArray(aDataSet);
@@ -128,6 +128,8 @@ public class GoodsServiceImpl implements IGoodsService{
                     tags = Integer.parseInt(jsonObject.get("value").toString());
                 } else if (jsonObject.get("name").equals("status")) {
                     status = Integer.parseInt(jsonObject.get("value").toString());
+                } else if (jsonObject.get("name").equals("stockPage")) {
+                    stockPage = Integer.parseInt(jsonObject.get("value").toString());
                 }
             }
             Pager<Object> params = new Pager<>();
@@ -138,6 +140,7 @@ public class GoodsServiceImpl implements IGoodsService{
             params.setIntParam2(supplier);
             params.setIntParam3(tags);
             params.setIntParam4(storeId);
+            params.setState(stockPage);
             params.setStringParam1(goodsInfo);
             Pager<Goods> goods_pager = goodsDao.findByParam(start, pageSize, params);
             Pager<GoodsDto> goods_dto_pager = new Pager<>();

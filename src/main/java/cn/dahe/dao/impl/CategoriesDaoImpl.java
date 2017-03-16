@@ -39,10 +39,10 @@ public class CategoriesDaoImpl extends BaseDaoImpl<Categories> implements ICateg
         }else{
             hql += " and categories.parent is null";
         }
-        if(storeId != 0){
+        //if(storeId != 0){
             hql += " and categories.storeId = ?";
             list.add(storeId);
-        }
+        //}
         return this.find(hql, list, start, pageSize);
     }
 

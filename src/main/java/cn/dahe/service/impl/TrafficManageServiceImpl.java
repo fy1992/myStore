@@ -1,8 +1,15 @@
 package cn.dahe.service.impl;
 
+import cn.dahe.dao.IClientGoodsDao;
+import cn.dahe.dao.IGoodsDao;
+import cn.dahe.dao.IOrderGoodsInfoDao;
 import cn.dahe.dao.IStoreDao;
 import cn.dahe.dao.ITrafficManageDao;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.ClientGoods;
+import cn.dahe.model.Goods;
+import cn.dahe.model.OrderGoodsInfo;
+import cn.dahe.model.Stock;
 import cn.dahe.model.Store;
 import cn.dahe.model.TrafficManage;
 import cn.dahe.service.ITrafficManageService;
@@ -28,6 +35,12 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
     private ITrafficManageDao trafficManageDao;
     @Resource
     private IStoreDao storeDao;
+    @Resource
+    private IClientGoodsDao clientGoodsDao;
+    @Resource
+    private IOrderGoodsInfoDao orderGoodsInfoDao;
+    @Resource
+    private IGoodsDao goodsDao;
 
     @Override
     public void add(TrafficManage t) {
@@ -125,7 +138,24 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
         trafficManageDao.update(trafficManage);
         //若配货通过
         if(type == 1){
+            List<ClientGoods> clientGoodss = clientGoodsDao.findByStoreId(trafficManage.getStoreId());
+            List<OrderGoodsInfo> orderGoodsInfoList = orderGoodsInfoDao.findByTrafficManageId(id);
+            clientGoodss.forEach(clientGoods -> {
+                String goodsNo = clientGoods.getGoodsNo();
+                orderGoodsInfoList.forEach(orderGoodsInfo -> {
+                    if(goodsNo.equals(orderGoodsInfo.getGoodsNo())){
+                        int changeNum = orderGoodsInfo.getDistributeNum();
+                        clientGoods.setGoodsNum(changeNum);
+                        clientGoodsDao.update(clientGoods);
 
+                        Goods goods = goodsDao.findByGoodsNo(goodsNo);
+                        Stock stock = goods.getStock();
+                        stock.setGoodNum(stock.getGoodNum() - changeNum);
+                        goods.setStock(stock);
+                        goodsDao.update(goods);
+                    }
+                });
+            });
         }
         return trafficManage;
     }
