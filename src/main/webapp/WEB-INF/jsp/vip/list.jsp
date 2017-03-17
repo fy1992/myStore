@@ -175,30 +175,12 @@ table = $('#vip_table').dataTable({
 
 //新增
 function add() {
-    var w = 800;
-    var	h = ($(window).height() - 50);
-    var index = layer.open({
-        type : 2,
-        title:'新增商品',
-        content : "<%=request.getContextPath()%>/server/vip/add",
-        area : [ w+'px', h+'px' ],
-        maxmin : true
-    });
-    layer.full(index);
+    layer_show("新增会员", "<%=request.getContextPath()%>/server/vip/add", "700", "600");
 }
 
 //会员编辑
 function edit(id){
-    var w = 800;
-    var	h = ($(window).height() - 50);
-    var index = layer.open({
-        type : 2,
-        title:'编辑',
-        content : "<%=request.getContextPath()%>/server/vip/edit/"+id,
-        area : [w+'px', h+'px'],
-        maxmin : true
-    });
-    layer.full(index);
+    layer_show("会员编辑", "<%=request.getContextPath()%>/server/vip/edit/"+id, "700", "600");
 }
 </script>
 </body>

@@ -1,13 +1,16 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.IClientOrderDao;
+import cn.dahe.dao.IClientOrderItemDao;
 import cn.dahe.dao.IStoreDao;
 import cn.dahe.dto.ClientOrderDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.ClientOrder;
 import cn.dahe.model.ClientOrderItem;
 import cn.dahe.model.Store;
+import cn.dahe.model.Vip;
 import cn.dahe.service.IClientOrderService;
+import cn.dahe.service.IVipService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.NumberUtils;
 import com.alibaba.fastjson.JSONArray;
@@ -28,6 +31,10 @@ public class ClientOrderServiceImpl implements IClientOrderService{
     private IClientOrderDao clientOrderDao;
     @Resource
     private IStoreDao storeDao;
+    @Resource
+    private IVipService vipService;
+    @Resource
+    private IClientOrderItemDao clientOrderItemDao;
 
     @Override
     public void add(ClientOrderDto t) {
@@ -149,5 +156,50 @@ public class ClientOrderServiceImpl implements IClientOrderService{
     @Override
     public ClientOrder findByClientOrderNo(String clientOrderNo) {
         return clientOrderDao.findByClientOrderNo(clientOrderNo);
+    }
+
+    @Override
+    public List<ClientOrder> findByOpenId(String openId) {
+        return clientOrderDao.findByOpenId(openId);
+    }
+
+    @Override
+    public void orderByWechat(String openId, ClientOrderDto clientOrderDto) {
+        ClientOrder clientOrder = new ClientOrder();
+        clientOrder.setOpenId(openId);
+        Vip vip = vipService.findByOpenId(openId);
+        if(vip != null){
+            clientOrder.setVipNo(vip.getVipNo());
+            clientOrder.setVipName(vip.getVipName());
+            clientOrder.setStoreId(vip.getStoreId());
+        }else{
+            clientOrder.setVipNo(vip.getVipNo());
+            clientOrder.setVipName(vip.getVipName());
+            clientOrder.setStoreId(0);
+        }
+        clientOrder.setPhone(clientOrderDto.getPhone());
+        clientOrder.setOrderName(clientOrderDto.getOrderName());
+        clientOrder.setTotalPrice(clientOrderDto.getTotalPrice());
+        clientOrder.setOrderNums(clientOrderDto.getOrderNums());
+        clientOrder.setFromType(clientOrderDto.getFromType());
+        //TODO 都默认是网店
+        clientOrder.setType(0);
+        clientOrder.setStatus(0);
+        clientOrder.setPayStatus(0);
+        clientOrder.setOrderTime(new Date());
+        clientOrder.setDescription(clientOrderDto.getDescription());
+        clientOrder.setClientOrderNo(NumberUtils.getNoByTime());
+        clientOrder.setOrderAddr(clientOrderDto.getOrderAddr());
+        clientOrder.setPayType(clientOrderDto.getPayType());
+        int id = clientOrderDao.addAndGetId4Integer(clientOrder);
+        JSONArray json = JSONArray.parseArray(clientOrderDto.getOrderItemInfo());
+        for(int i = 0, len = json.size(); i < len; i++){
+            ClientOrderItem clientOrderItem = new ClientOrderItem();
+            clientOrderItem.setClientOrderId(id);
+            JSONObject map = JSONObject.parseObject(json.get(i).toString());
+            clientOrderItem.setGoodsNo(map.get("goodsNo").toString());
+            clientOrderItem.setOrderNum(Integer.parseInt(map.get("goodsNum").toString()));
+            clientOrderItemDao.add(clientOrderItem);
+        }
     }
 }

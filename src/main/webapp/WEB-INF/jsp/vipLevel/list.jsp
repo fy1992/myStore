@@ -25,7 +25,7 @@
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="l">
-                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增</a>
+                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增促销</a>
             </span>
         </div>
         <div class="pd-20 clearfix">
@@ -132,30 +132,12 @@ table = $('#vipLevel_table').dataTable({
 
 //新增
 function add() {
-    var w = 800;
-    var	h = ($(window).height() - 50);
-    var index = layer.open({
-        type : 2,
-        title:'新增商品',
-        content : "<%=request.getContextPath()%>/server/vip/vipLevelAdd",
-        area : [ w+'px', h+'px' ],
-        maxmin : true
-    });
-    layer.full(index);
+    layer_show("新增会员等级", "<%=request.getContextPath()%>/server/vip/vipLevelAdd", "700", "350");
 }
 
-//会员等级编辑
+//会员编辑
 function edit(id){
-    var w = 800;
-    var	h = ($(window).height() - 50);
-    var index = layer.open({
-        type : 2,
-        title:'编辑',
-        content : "<%=request.getContextPath()%>/server/vip/vipLevelEdit/"+id,
-        area : [w+'px', h+'px'],
-        maxmin : true
-    });
-    layer.full(index);
+    layer_show("会员等级编辑", "<%=request.getContextPath()%>/server/vip/vipLevelEdit/"+id, "700", "350");
 }
 </script>
 </body>

@@ -35,4 +35,13 @@ public interface IClientOrderService {
     ClientOrder findByClientOrderNo(String clientOrderNo);
 
     List<ClientOrder> findByStoreId(int storeId);
+
+    List<ClientOrder> findByOpenId(String openId);
+
+    /**
+     * 微信点餐
+     * @param openId
+     * @param clientOrderDto
+     */
+    void orderByWechat(String openId, ClientOrderDto clientOrderDto);
 }

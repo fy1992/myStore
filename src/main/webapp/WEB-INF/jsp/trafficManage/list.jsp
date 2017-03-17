@@ -51,7 +51,7 @@
                 <thead>
                     <tr class="text-c">
                         <th width="50">序号</th>
-                        <th width="30"><input type="checkbox" name="selectAll" id="selectAll"></th>
+                        <%--<th width="30"><input type="checkbox" name="selectAll" id="selectAll"></th>--%>
                         <th width="50">操作</th>
                         <th width="100">货流单号</th>
                         <th width="100">下单时间</th>
@@ -114,11 +114,11 @@ table = $('#trafficManage_table').dataTable({
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
         {"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
-        {
+        /*{
            "mData": "", "sDefaultContent": "", "mRender": function (data, type, full) {
                return "<input type='checkbox' name = 'ids' value='" + full.id + "'/>";
             }, "bSortable": false
-        },
+        },*/
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
             return "<a style='text-decoration:none' onclick='detail(\"" + full.storeName + "\", \"" + full.trafficType + "\", \"" + full.id + "\")'>详情</a>";
         }},

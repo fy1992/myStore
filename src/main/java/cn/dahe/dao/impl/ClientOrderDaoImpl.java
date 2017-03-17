@@ -73,4 +73,10 @@ public class ClientOrderDaoImpl extends BaseDaoImpl<ClientOrder> implements ICli
         String hql = "from ClientOrder where storeId = ?";
         return this.list(hql, storeId);
     }
+
+    @Override
+    public List<ClientOrder> findByOpenId(String openId) {
+        String hql = "from ClientOrder where openId = ?";
+        return this.list(hql, openId);
+    }
 }

@@ -90,4 +90,9 @@ public class VipServiceImpl implements IVipService{
         }
         return null;
     }
+
+    @Override
+    public Vip findByOpenId(String openId) {
+        return vipDao.findByOpenId(openId);
+    }
 }

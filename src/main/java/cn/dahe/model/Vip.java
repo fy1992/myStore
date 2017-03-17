@@ -67,7 +67,8 @@ public class Vip {
     //注册时间
     @Column(name = "register_time")
     private Date registerTime;
-
+    //电话
+    private String phone;
 
     public int getId() {
         return id;
@@ -227,5 +228,21 @@ public class Vip {
 
     public void setRegisterTime(Date registerTime) {
         this.registerTime = registerTime;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

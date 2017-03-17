@@ -58,11 +58,11 @@
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>分类：</label>
                     <div class="formControls col-6">
-                    	<span class="select-box radius">
-                        <select id="categories" name = "categoriesId" class="select">
-                            <option value = "-1">- 请选择商品分类 -</option>
-                        </select>
-                        </span>
+                    	<div class="radius">
+                            <select id="categories" name = "categoriesId" class="select" style="height: 35px;">
+                                <option value selected>- 请选择商品分类 -</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-3"> </div>
                 </div>
@@ -281,13 +281,13 @@ $(function(){
         },
         {
             ele:"#price",
-            datatype:"/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/",
+            datatype : /^\d+(?:\.\d{1,2})?$/,
             errormsg:"请填写正确的数值",
             nullmsg:"销售价必填"
         },
         {
             ele:"#bid",
-            datatype:"/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/",
+            datatype:/^\d+(?:\.\d{1,2})?$/,
             errormsg:"请填写正确的数值",
             nullmsg:"进货价必填"
         }

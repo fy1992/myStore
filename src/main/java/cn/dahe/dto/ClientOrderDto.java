@@ -8,13 +8,12 @@ import java.util.Date;
  * Created by fy on 2017/3/16.
  */
 public class ClientOrderDto {
-    //订单细缆  商品编码  数量
+    //订单细缆  (商品编码  数量)
     private String orderItemInfo;
+
     private int id;
     //下单时间
     private Date orderTime;
-    //所属门店
-    private int storeId;
     //订单类型 0 网单 1 店单
     private int type;
     //订单状态 0 等待处理  1 配送途中  2 完成
@@ -33,6 +32,8 @@ public class ClientOrderDto {
     private double totalPrice = 0;
     //总数量
     private int orderNums = 0;
+    //订单来源类型 0 自营  1 美团  2 饿了么  3 百度外卖
+    private int fromType;
 
     public String getOrderItemInfo() {
         return orderItemInfo;
@@ -58,12 +59,12 @@ public class ClientOrderDto {
         this.orderTime = orderTime;
     }
 
-    public int getStoreId() {
-        return storeId;
+    public int getFromType() {
+        return fromType;
     }
 
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
+    public void setFromType(int fromType) {
+        this.fromType = fromType;
     }
 
     public int getType() {

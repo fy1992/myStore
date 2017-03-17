@@ -11,6 +11,7 @@ import cn.dahe.service.ICategoriesService;
 import cn.dahe.service.IClientGoodsService;
 import cn.dahe.service.IEmployeeService;
 import cn.dahe.service.IGoodsTrafficService;
+import cn.dahe.service.IVipService;
 import cn.dahe.util.CacheUtils;
 import cn.dahe.util.TokenUtil;
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * 客户端请求
+ * 客户端接口 （pc软件，android，ios）
  * Created by fy on 2017/2/6.
  */
 @Controller
@@ -40,6 +41,8 @@ public class ClientController {
     private IClientGoodsService clientGoodsService;
     @Resource
     private ICategoriesService categoriesService;
+    @Resource
+    private IVipService vipService;
 
     @RequestMapping(value = "test", method = RequestMethod.GET)
     public String test(){
@@ -68,13 +71,14 @@ public class ClientController {
     }
 
     /**
-     * 收银员退出
+     * 收银员退出(交接班)
      * */
     @RequestMapping(value="/logout", method=RequestMethod.GET)
     @ResponseBody
     public AjaxObj cashierLogout(HttpSession session){
         AjaxObj json = new AjaxObj();
         session.removeAttribute("clientUser");
+
         json.setResult(1);
         json.setMsg("成功退出");
         return json;
@@ -189,6 +193,21 @@ public class ClientController {
     public AjaxObj getStoreInfo(HttpSession session){
         AjaxObj json = new AjaxObj();
         json.setObject("");
+        json.setResult(1);
+        return json;
+    }
+
+    /**
+     * 会员添加
+     */
+    @RequestMapping(value = "addVip", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxObj addVip(Vip vip, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        Cashier cashier = (Cashier)session.getAttribute("clientUser");
+        vip.setStoreId(cashier.getStoreId());
+        vipService.add(vip);
+        json.setObject("会员添加成功");
         json.setResult(1);
         return json;
     }

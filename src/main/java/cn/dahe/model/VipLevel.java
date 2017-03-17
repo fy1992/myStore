@@ -21,6 +21,8 @@ public class VipLevel {
     private String name;
     //优惠折扣
     private int rebate;
+    //是否积分 0  不积分 1 积分
+    private int integral;
     //是否自动升级 0 不自动 1 自动
     @Column(name = "is_auto")
     private int auto;
@@ -88,5 +90,13 @@ public class VipLevel {
 
     public void setStoreId(int storeId) {
         this.storeId = storeId;
+    }
+
+    public int getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(int integral) {
+        this.integral = integral;
     }
 }

@@ -20,4 +20,6 @@ public interface IVipService {
      * @return
      */
     Pager<Vip> findByParams(String aDataSet);
+
+    Vip findByOpenId(String openId);
 }

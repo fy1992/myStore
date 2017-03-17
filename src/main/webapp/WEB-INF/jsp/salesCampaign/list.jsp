@@ -171,32 +171,15 @@ table = $('#salesCam_table').dataTable({
     }
 });
 
+
 //新增
 function add() {
-    var w = 800;
-    var	h = ($(window).height() - 50);
-    var index = layer.open({
-        type : 2,
-        title:'新增商品',
-        content : "<%=request.getContextPath()%>/server/vip/salesCamAdd",
-        area : [ w+'px', h+'px' ],
-        maxmin : true
-    });
-    layer.full(index);
+    layer_show("新增", "<%=request.getContextPath()%>/server/salesCampaign/add", "700", "400");
 }
 
-//会员等级编辑
+//会员编辑
 function edit(id){
-    var w = 800;
-    var	h = ($(window).height() - 50);
-    var index = layer.open({
-        type : 2,
-        title:'编辑',
-        content : "<%=request.getContextPath()%>/server/vip/salesCamEdit/"+id,
-        area : [w+'px', h+'px'],
-        maxmin : true
-    });
-    layer.full(index);
+    layer_show("编辑", "<%=request.getContextPath()%>/server/salesCampaign/edit/"+id, "700", "400");
 }
 </script>
 </body>

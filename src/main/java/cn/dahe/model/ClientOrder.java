@@ -44,18 +44,21 @@ public class ClientOrder {
     private String orderAddr;
     //总价
     @Column(name = "total_price")
-    private int totalPrice;
+    private double totalPrice;
     //总数量
     @Column(name = "order_nums")
     private int orderNums;
     //订单所属会员
     @Column(name = "vip_no")
-    private int vipNo;
+    private String vipNo;
     @Column(name = "vip_name")
     private String vipName;
     //订单号
     @Column(name = "client_order_no")
     private String clientOrderNo;
+    //微信openId
+    @Column(name = "open_id")
+    private String openId;
 
     public int getId() {
         return id;
@@ -137,11 +140,11 @@ public class ClientOrder {
         this.orderAddr = orderAddr;
     }
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -153,11 +156,11 @@ public class ClientOrder {
         this.orderNums = orderNums;
     }
 
-    public int getVipNo() {
+    public String getVipNo() {
         return vipNo;
     }
 
-    public void setVipNo(int vipNo) {
+    public void setVipNo(String vipNo) {
         this.vipNo = vipNo;
     }
 
@@ -192,4 +195,14 @@ public class ClientOrder {
     public void setPayStatus(int payStatus) {
         this.payStatus = payStatus;
     }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+
 }
