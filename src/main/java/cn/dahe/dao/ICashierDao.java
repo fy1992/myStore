@@ -19,8 +19,9 @@ public interface ICashierDao extends IBaseDao<Cashier>{
 
     /**
      * 根据收银员编号查询
+     * @param storeId
      * @param cashierNo
      * @return
      */
-    Cashier findByCashierNo(String cashierNo);
+    Cashier findByCashierNo(int storeId, String cashierNo);
 }

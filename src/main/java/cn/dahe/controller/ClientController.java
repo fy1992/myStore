@@ -48,17 +48,18 @@ public class ClientController {
     public String test(){
         return "test/add";
     }
-    //===================================== 管理员 begin============================================
+    //===================================== 管理员 begin ============================================
     /**
      * 收银员登录
+     * @param storeId
      * @param cashierNo
      * @param password
      * @return
      */
     @RequestMapping(value = "login", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxObj cashierLogin(String cashierNo, String password, HttpSession session){
-        AjaxObj json = employeeService.cashierLogin(cashierNo, password);
+    public AjaxObj cashierLogin(int storeId, String cashierNo, String password, HttpSession session){
+        AjaxObj json = employeeService.cashierLogin(storeId, cashierNo, password);
         if(json.getResult() == 1){
             session.setAttribute("clientUser", json.getObject());
             String token = TokenUtil.getToken(cashierNo, password);
@@ -85,7 +86,7 @@ public class ClientController {
     }
 
     /**
-     * 客户端订货
+     * 客户端订货 (原材料)
      * @param  goodsTrafficDto
      */
     @RequestMapping(value = "orderGoods", method = RequestMethod.POST)
@@ -116,7 +117,7 @@ public class ClientController {
     }
     //===================================== 管理员 end============================================
     /**
-     * 通过类别查询商品
+     * 通过类别查询商品（菜品）
      * @param categoriesId
      */
     @RequestMapping(value = "goodsList", method = RequestMethod.GET)
@@ -130,7 +131,7 @@ public class ClientController {
     }
 
     /**
-     * 查询该门店下的所有商品类别
+     * 查询该门店下的所有商品（菜品）类别
      */
     @RequestMapping(value = "categoriesList", method = RequestMethod.GET)
     @ResponseBody
@@ -154,45 +155,6 @@ public class ClientController {
         AjaxObj json = new AjaxObj();
         ClientGoods clientGoods = clientGoodsService.findByGoodsNo(goodsNo);
         json.setObject(clientGoods);
-        json.setResult(1);
-        return json;
-    }
-
-    /**
-     * 个人信息
-     * @return
-     */
-    @RequestMapping(value = "personal", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxObj personal(HttpSession session){
-        AjaxObj json = new AjaxObj();
-        json.setObject("");
-        json.setResult(1);
-        return json;
-    }
-
-    /**
-     * 搜索
-     * @param session
-     * @return
-     */
-    @RequestMapping(value = "search", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxObj search(HttpSession session){
-        AjaxObj json = new AjaxObj();
-        json.setObject("");
-        json.setResult(1);
-        return json;
-    }
-
-    /**
-     * 店面信息
-     */
-    @RequestMapping(value = "storeInfo", method = RequestMethod.GET)
-    @ResponseBody
-    public AjaxObj getStoreInfo(HttpSession session){
-        AjaxObj json = new AjaxObj();
-        json.setObject("");
         json.setResult(1);
         return json;
     }

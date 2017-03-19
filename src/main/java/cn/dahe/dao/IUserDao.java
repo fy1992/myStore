@@ -39,4 +39,6 @@ public interface IUserDao extends IBaseDao<User>{
      * @return
      */
     User findByStoreId(int storeId);
+
+    User findByOpenId(String openId);
 }

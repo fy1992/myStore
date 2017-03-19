@@ -68,4 +68,10 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao{
         String hql = "from User user where user.storeId = ? and user.rank <> 3";
         return (User)this.queryByHql(hql, storeId);
     }
+
+    @Override
+    public User findByOpenId(String openId) {
+        String hql = "from User where openId = ?";
+        return (User)this.queryByHql(hql, openId);
+    }
 }

@@ -47,7 +47,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
 
     @Override
     public boolean addCashier(Cashier t, User user, String permissionIds, int roleId) {
-        Cashier c = cashierDao.findByCashierNo(t.getCashierNo());
+        Cashier c = cashierDao.findByCashierNo(user.getStoreId(), t.getCashierNo());
         if(c != null){
             return false;
         }
@@ -202,17 +202,17 @@ public class EmployeeServiceImpl implements IEmployeeService{
     }
 
     @Override
-    public Cashier findByCashierNo(String cashierNo) {
-        return cashierDao.findByCashierNo(cashierNo);
+    public Cashier findByCashierNo(int storeId, String cashierNo) {
+        return cashierDao.findByCashierNo(storeId, cashierNo);
     }
 
     @Override
-    public AjaxObj cashierLogin(String cashierNo, String password) {
-        Cashier cashier = findByCashierNo(cashierNo);
+    public AjaxObj cashierLogin(int storeId, String cashierNo, String password) {
+        Cashier cashier = findByCashierNo(storeId, cashierNo);
         AjaxObj json = new AjaxObj();
         if(StringUtils.isBlank(cashierNo) || StringUtils.isBlank(password)){
             json.setResult(0);
-            json.setMsg("用户名或密码不能为空");
+            json.setMsg("工号或密码不能为空");
             return json;
         }
         if(cashier == null){
