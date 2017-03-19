@@ -70,8 +70,8 @@ table = $('#vipLevel_table').dataTable({
         }},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "rebate", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "auto", "sDefaultContent" : "", "mRender":function(data, type, full){
-        	return data == 1?"是":"否";
+        {"mData" : "integral", "sDefaultContent" : "", "mRender":function(data, type, full){
+        	return data == 1 ? "是" : "否";
         	},"bSortable":false,"sClass":"center"
         }
     ],

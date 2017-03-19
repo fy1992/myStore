@@ -1,8 +1,10 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.ISalesCampaignDao;
+import cn.dahe.dao.IStoreDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.SalesCampaign;
+import cn.dahe.model.Store;
 import cn.dahe.service.ISalesCampaignService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -21,9 +23,16 @@ public class SalesCampaignServiceImpl implements ISalesCampaignService{
 
     @Resource
     private ISalesCampaignDao salesCampaignDao;
+    @Resource
+    private IStoreDao storeDao;
 
     @Override
     public boolean add(SalesCampaign t) {
+        Store store = storeDao.get(t.getStoreId());
+        if(store != null){
+            t.setStoreName(store.getName());
+        }
+        t.setOverdue(1);
         int id = salesCampaignDao.addAndGetId4Integer(t);
         return id != 0;
     }

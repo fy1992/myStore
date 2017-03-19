@@ -25,6 +25,8 @@
         <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>等级名称：</label>
             <div class="formControls col-7">
+                <input type = "hidden" value = "${vipLevel.id}" name = "id"/>
+                <input type = "hidden" value = "${vipLevel.storeId}" name = "storeId"/>
                 <input value = "${vipLevel.name}" name = "name" id="name" class="input-text radius" type="text"/>
             </div>
             <div class="col-2"></div>
@@ -93,12 +95,12 @@
             {
                 ele:"#name",
                 datatype:"*",
-                nullmsg :"会员姓名必填项"
+                nullmsg :"等級名稱必填项"
             },
             {
                 ele:"#rebate",
                 datatype:"n",
-                nullmsg :"会员编号必填"
+                nullmsg :"優惠折扣必填"
             }
         ]);
     });

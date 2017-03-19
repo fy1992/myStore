@@ -11,6 +11,7 @@ public interface IUserService{
     void add(User t);
     void del(int id);
     void update(User t);
+    boolean update(User t, String permissions);
     User get(int id);
     User load(int id);
     /**

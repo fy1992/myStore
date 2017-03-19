@@ -1,8 +1,10 @@
 package cn.dahe.service.impl;
 
+import cn.dahe.dao.IStoreDao;
 import cn.dahe.dao.IVipDao;
 import cn.dahe.dao.IVipLevelDao;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.Store;
 import cn.dahe.model.Vip;
 import cn.dahe.model.VipLevel;
 import cn.dahe.service.IVipService;
@@ -25,12 +27,18 @@ public class VipServiceImpl implements IVipService{
     private IVipDao vipDao;
     @Resource
     private IVipLevelDao vipLevelDao;
+    @Resource
+    private IStoreDao storeDao;
 
     @Override
     public void add(Vip t) {
         t.setRegisterTime(new Date());
         VipLevel vipLevel = vipLevelDao.get(t.getVipLevelID());
         t.setVipLevelName(vipLevel.getName());
+        Store store = storeDao.get(t.getStoreId());
+        if(store != null){
+            t.setStoreName(store.getName());
+        }
         vipDao.addAndGetId4Integer(t);
     }
 
@@ -41,7 +49,24 @@ public class VipServiceImpl implements IVipService{
 
     @Override
     public void update(Vip t) {
-        Vip vip = vipDao.findByVipNo(t.getVipNo());
+        Vip vip = vipDao.get(t.getId());
+        vip.setAddr(t.getAddr());
+        vip.setEmail(t.getEmail());
+        vip.setBalance(t.getBalance());
+        vip.setCreateCardDate(t.getCreateCardDate());
+        vip.setBirthday(t.getBirthday());
+        vip.setDescription(t.getDescription());
+        vip.setVipLevelID(t.getVipLevelID());
+        VipLevel vipLevel = vipLevelDao.get(t.getVipLevelID());
+        vip.setVipLevelName(vipLevel.getName());
+        vip.setCredit(t.getCredit());
+        vip.setDueDate(t.getDueDate());
+        vip.setVipName(t.getVipName());
+        vip.setQq(t.getQq());
+        vip.setRebate(t.getRebate());
+        vip.setPoint(t.getPoint());
+        vip.setPhone(t.getPhone());
+        vip.setPassword(t.getPassword());
         vipDao.update(vip);
     }
 

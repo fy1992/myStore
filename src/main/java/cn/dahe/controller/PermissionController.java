@@ -135,6 +135,30 @@ public class PermissionController {
         return permissionService.findByResourceType(resourceType, user.getStoreId(), multiple);
     }
 
+    /**
+     * 获取所有指定权限
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "allPermission", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Permission> queryAllPermission(HttpSession session){
+        User user = (User)session.getAttribute("loginUser");
+        int storeId = user.getStoreId();
+        String str;
+        if(storeId == 0){
+           str = "1,2,3";
+        }else{
+            Store store = storeService.get(storeId);
+            if(store.getMultiple() == 0){
+                str = "3";
+            }else{
+                str = "2,3";
+            }
+        }
+        return permissionService.findAll(-1, str);
+    }
+
 
     /**
      * 通过roleId获取权限

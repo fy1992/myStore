@@ -93,12 +93,12 @@
             {
                 ele:"#name",
                 datatype:"*",
-                nullmsg :"会员姓名必填项"
+                nullmsg :"等級名稱必填项"
             },
             {
                 ele:"#rebate",
                 datatype:"n",
-                nullmsg :"会员编号必填"
+                nullmsg :"優惠折扣必填"
             }
         ]);
     });

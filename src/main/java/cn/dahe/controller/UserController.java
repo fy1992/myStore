@@ -2,6 +2,8 @@ package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.Permission;
+import cn.dahe.model.Role;
 import cn.dahe.model.User;
 import cn.dahe.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 后台用户相关
@@ -83,6 +87,19 @@ public class UserController {
     public String editUser(@PathVariable int id,  Model model){
         User user = userService.get(id);
         model.addAttribute("user", user);
+        Role role = user.getRole();
+        Set<Permission> permissionSet = new HashSet<>();
+        if(role != null){
+            permissionSet = role.getPermissions();
+        }
+        Set<Permission> u_permission = user.getPermissions();
+        permissionSet.addAll(u_permission);
+        StringBuffer permissionSb = new StringBuffer();
+        permissionSet.forEach(permission -> permissionSb.append(permission.getId() + ","));
+        if(permissionSb.length() > 0){
+            permissionSb.deleteCharAt(permissionSb.length() - 1);
+        }
+        model.addAttribute("permissions", permissionSb.toString());
         return "user/edit";
     }
 
@@ -93,10 +110,6 @@ public class UserController {
     @ResponseBody
     public AjaxObj editUser(User user){
         AjaxObj json = new AjaxObj();
-        if(user.getStoreId() == 0){
-            json.setResult(0);
-            json.setMsg("请先添加门店信息");
-        }
         userService.update(user);
         json.setMsg("用户修改成功");
         json.setResult(1);

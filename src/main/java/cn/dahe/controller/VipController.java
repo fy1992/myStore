@@ -9,15 +9,16 @@ import cn.dahe.service.IVipLevelService;
 import cn.dahe.service.IVipService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +33,14 @@ public class VipController {
     private IVipService vipService;
     @Resource
     private IVipLevelService vipLevelService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(
+                dateFormat, true));
+    }
 
     /**
      * 列表页查询
@@ -67,8 +76,10 @@ public class VipController {
      */
     @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addUser(Vip vip){
+    public AjaxObj addUser(Vip vip, HttpSession session){
         AjaxObj json = new AjaxObj();
+        User user = (User) session.getAttribute("loginUser");
+        vip.setStoreId(user.getStoreId());
         vipService.add(vip);
         json.setMsg("用户添加成功");
         json.setResult(1);
@@ -81,7 +92,6 @@ public class VipController {
      * @return
      */
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    @ResponseBody
     public String editVip(@PathVariable int id, Model model){
         Vip vip = vipService.get(id);
         model.addAttribute("vip", vip);
@@ -121,7 +131,7 @@ public class VipController {
     }
 
     /**
-     * 会员添加
+     * 会员等級添加
      */
     @RequestMapping(value = "vipLevelAdd", method = RequestMethod.GET)
     public String addVipLevel(HttpSession session, Model model){
@@ -132,12 +142,14 @@ public class VipController {
 
 
     /**
-     *会员添加
+     *会员等級添加
      */
     @RequestMapping(value = "vipLevelAdd", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addVipLevel(VipLevel vipLevel){
+    public AjaxObj addVipLevel(VipLevel vipLevel, HttpSession session){
         AjaxObj json = new AjaxObj();
+        User user = (User) session.getAttribute("loginUser");
+        vipLevel.setStoreId(user.getStoreId());
         vipLevelService.add(vipLevel);
         json.setMsg("会员等级添加成功");
         json.setResult(1);
@@ -145,12 +157,11 @@ public class VipController {
     }
 
     /**
-     * 会员修改跳转
+     * 会员等級修改跳转
      * @param model
      * @return
      */
     @RequestMapping(value = "vipLevelEdit/{id}", method = RequestMethod.GET)
-    @ResponseBody
     public String vipLevelEdit(@PathVariable int id, Model model){
         VipLevel vipLevel = vipLevelService.get(id);
         model.addAttribute("vipLevel", vipLevel);
@@ -158,7 +169,7 @@ public class VipController {
     }
 
     /**
-     *会员修改
+     *会员等級修改
      */
     @RequestMapping(value = "vipLevelEdit", method = RequestMethod.POST)
     @ResponseBody
@@ -170,7 +181,11 @@ public class VipController {
         return json;
     }
 
-
+    /**
+     * 所有會員等級
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "allVipLevel", method = RequestMethod.POST)
     @ResponseBody
     private List<VipLevel> findAllVipLevel(HttpSession session){

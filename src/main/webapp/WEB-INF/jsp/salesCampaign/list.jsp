@@ -30,11 +30,18 @@
             <span class="select-box radius" style="width: 100px;">
                 <select class="select" id="salesCam_type">
                     <option value="-1">全部类型</option>
+                    <option value="0">打折促销</option>
+                    <option value="1">套餐促销</option>
+                    <option value="2">满额返现</option>
+                    <option value="3">换购促销</option>
+                    <option value="4">第二件打折</option>
                 </select>
             </span>
             <span class="select-box radius" style="width: 100px;">
                 <select class="select" id="salesCam_status">
                     <option value="-1">全部状态</option>
+                    <option value="0">未过期</option>
+                    <option value="1">已结束</option>
                 </select>
             </span>
             <input type="text" id="sales_name" style="width:260px" class="input-text radius">
@@ -69,6 +76,11 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script type="text/javascript">
+$(function(){
+    $("#sales_search").on("click", function () {
+        table.fnDraw();
+    })
+})
 //table start here
 table = $('#salesCam_table').dataTable({
 	   "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示  
@@ -100,11 +112,11 @@ table = $('#salesCam_table').dataTable({
             return "-";
         }},
         {"mData" : "startDate", "sDefaultContent" : "", "mRender":function(data, type, full){
-               return format(data);
+               return format(data).substring(0, 10);
            },"bSortable":false,"sClass":"center"
         },
         {"mData" : "endDate", "sDefaultContent" : "", "mRender":function(data, type, full){
-               return format(data);
+               return format(data).substring(0, 10);
            },"bSortable":false,"sClass":"center"
         },
         {"mData" : "overdue", "sDefaultContent" : "", "mRender":function(data, type, full){
@@ -151,6 +163,12 @@ table = $('#salesCam_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
+        var status = $("#salesCam_type").val();
+        var type = $("#salesCam_status").val();
+        var info = $("#sales_name").val();
+        aoData.push({"name":"overdue","value":status});
+        aoData.push({"name":"type","value":type});
+        aoData.push({"name":"name","value":info});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){
@@ -174,12 +192,12 @@ table = $('#salesCam_table').dataTable({
 
 //新增
 function add() {
-    layer_show("新增", "<%=request.getContextPath()%>/server/salesCampaign/add", "700", "400");
+    layer_show("新增", "<%=request.getContextPath()%>/server/salesCampaign/add", "700", "450");
 }
 
 //会员编辑
 function edit(id){
-    layer_show("编辑", "<%=request.getContextPath()%>/server/salesCampaign/edit/"+id, "700", "400");
+    layer_show("编辑", "<%=request.getContextPath()%>/server/salesCampaign/edit/"+id, "700", "450");
 }
 </script>
 </body>

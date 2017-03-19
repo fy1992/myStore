@@ -51,7 +51,7 @@
         <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>会员名称：</label>
             <div class="formControls col-7">
-                <input type="text" class="input-text radius" value="${vip.name}"  id="vip_name" name = "vipName">
+                <input type="text" class="input-text radius" value="${vip.vipName}"  id="vip_name" name = "vipName">
             </div>
             <div class="col-2"> </div>
         </div>
@@ -105,35 +105,35 @@
         <div class="row cl">
             <label class="form-label col-3">会员生日：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5" id="vip_birthday" name="birthday" style="width: 90%;" value = "${vip.birthday}"/><label>&nbsp;%</label>
+                <input type = "text"  class="input-text radius mr-5" id="vip_birthday" name="birthday" style="width: 90%;" value = "${vip.birthday}"/>
             </div>
             <div class="col-2"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">开卡日期：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_createCardDate" name="createCardDate" style="width: 90%;" value = "${vip.createCardDate}"/><label>&nbsp;%</label>
+                <input type = "text"  class="input-text radius mr-5"  id="vip_createCardDate" name="createCardDate" style="width: 90%;" value = "${vip.createCardDate}"/>
             </div>
             <div class="col-2"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">到期日期：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_dueDate" name="dueDate" style="width: 90%;" value = "${vip.dueDate}"/><label>&nbsp;%</label>
+                <input type = "text"  class="input-text radius mr-5"  id="vip_dueDate" name="dueDate" style="width: 90%;" value = "${vip.dueDate}"/>
             </div>
             <div class="col-2"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">QQ号码：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_qq" name="qq" style="width: 90%;" value = "${vip.qq}"/><label>&nbsp;%</label>
+                <input type = "text"  class="input-text radius mr-5"  id="vip_qq" name="qq" style="width: 90%;" value = "${vip.qq}"/>
             </div>
             <div class="col-2"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">邮箱地址：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_email" name="email" style="width: 90%;" value = "${vip.email}"/><label>&nbsp;%</label>
+                <input type = "text"  class="input-text radius mr-5"  id="vip_email" name="email" style="width: 90%;" value = "${vip.email}"/>
             </div>
             <div class="col-2"> </div>
         </div>
@@ -162,8 +162,16 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/My97DatePicker/WdatePicker.js"></script>
 <script>
     $(function () {
+        $.post("<%=request.getContextPath()%>/server/vip/allVipLevel",function (data) {
+            for(var n in data){
+                $("#vipLevelID").append("<option value='"+data[n].id+"'>"+data[n].name+"</option>");
+            }
+            $("#vipLevelID").val(${vip.vipLevelID});
+        });
+
        var  validtor = $("#form-vip-edit").Validform({
             tiptype:4,
             showAllError:true,
@@ -201,7 +209,7 @@
             },
             {
                 ele:"#vipLevelID",
-                datatype:"select",
+                datatype:"*",
                 nullmsg:"请选择会员等级"
             },
             {
@@ -212,7 +220,7 @@
             },
             {
                 ele:"#vip_balance",
-                datatype:"n",
+                datatype : /^\d+(?:\.\d{1,2})?$/,
                 nullmsg:"会员余额必填",
                 errormsg:"请填写具体数字"
             },

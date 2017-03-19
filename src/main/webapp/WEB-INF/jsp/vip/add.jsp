@@ -62,7 +62,6 @@
                     <span class="select-box">
                         <select id="vipLevelID" name = "vipLevelID" class="select">
                             <option value selected>- 会员等级 -</option>
-                            <option value="1">111</option>
                         </select>
                     </span>
                 </div>
@@ -106,21 +105,21 @@
         <div class="row cl">
             <label class="form-label col-3">会员生日：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5" id="vip_birthday" name="birthday" value = ""/>
+                <input type = "text"  class="input-text radius mr-5" id="vip_birthday" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'vip_birthday\')||\'%y-%M-%d\'}'})" name="birthday" value = ""/>
             </div>
             <div class="col-2"></div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">开卡日期：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_createCardDate" name="createCardDate" value = ""/>
+                <input type = "text"  class="input-text radius mr-5"  id="vip_createCardDate" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'vip_createCardDate\')||\'%y-%M-%d\'}'})" name="createCardDate" value = ""/>
             </div>
             <div class="col-2"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">到期日期：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_dueDate" name="dueDate" value = ""/>
+                <input type = "text"  class="input-text radius mr-5"  id="vip_dueDate" name="dueDate" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'vip_dueDate\')||\'%y-%M-%d\'}'})" value = ""/>
             </div>
             <div class="col-2"> </div>
         </div>
@@ -165,9 +164,15 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
     $(function () {
+       $.post("<%=request.getContextPath()%>/server/vip/allVipLevel",function (data) {
+           for(var n in data){
+               $("#vipLevelID").append("<option value='"+data[n].id+"'>"+data[n].name+"</option>");
+           }
+       });
        var  validtor = $("#form-vip-add").Validform({
             tiptype:4,
             showAllError:true,

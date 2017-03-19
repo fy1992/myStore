@@ -39,7 +39,7 @@
                 </select>
             </span>
             <input type="text" id="vip_info" placeholder="卡号/姓名/电话" style="width:260px" class="input-text radius">
-            <button id="news_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+            <button id="vip_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
             <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="vip_table">

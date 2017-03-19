@@ -7,15 +7,16 @@ import cn.dahe.model.User;
 import cn.dahe.service.ISalesCampaignService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 营销
@@ -27,6 +28,14 @@ public class SalesCampaignController {
     private static Logger logger = LoggerFactory.getLogger(SalesCampaignController.class);
     @Resource
     private ISalesCampaignService salesCampaignService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(
+                dateFormat, true));
+    }
 
     /**
      * 列表页查询
@@ -62,8 +71,10 @@ public class SalesCampaignController {
      */
     @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addSC(SalesCampaign salesCampaign){
+    public AjaxObj addSC(SalesCampaign salesCampaign, HttpSession session){
         AjaxObj json = new AjaxObj();
+        User user = (User) session.getAttribute("loginUser");
+        salesCampaign.setStoreId(user.getStoreId());
         salesCampaignService.add(salesCampaign);
         json.setMsg("添加成功");
         json.setResult(1);
