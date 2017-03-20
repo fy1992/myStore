@@ -32,4 +32,6 @@ public interface IUserService{
     void updatePassword(int id, String newPassword);
 
     User findByStoreId(int storeId);
+
+    User findByOpenId(String openId);
 }

@@ -24,7 +24,7 @@ public interface IEmployeeService {
      * @param cashierNo
      * @return
      */
-    Cashier findByCashierNo(String cashierNo);
+    Cashier findByCashierNo(int storeId, String cashierNo);
 
     /**
      *
@@ -32,7 +32,7 @@ public interface IEmployeeService {
      * @param password
      * @return
      */
-    AjaxObj cashierLogin(String cashierNo, String password);
+    AjaxObj cashierLogin(int storeId, String cashierNo, String password);
 
     boolean addSales(Sales t, User user);
     void delSales(int id);

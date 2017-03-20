@@ -65,6 +65,9 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "permission_id")})
     @JsonIgnore
     private Set<Permission> permissions = new HashSet<>();
+    //微信openId
+    @Column(name = "open_id")
+    private String openId;
 
     public int getId() {
         return id;
@@ -176,5 +179,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 }

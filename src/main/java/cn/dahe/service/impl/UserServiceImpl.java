@@ -134,4 +134,9 @@ public class UserServiceImpl implements IUserService {
         userDao.update(user);
         return true;
     }
+
+    @Override
+    public User findByOpenId(String openId) {
+        return userDao.findByOpenId(openId);
+    }
 }
