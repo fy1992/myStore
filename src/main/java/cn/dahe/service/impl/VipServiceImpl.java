@@ -8,6 +8,7 @@ import cn.dahe.model.Store;
 import cn.dahe.model.Vip;
 import cn.dahe.model.VipLevel;
 import cn.dahe.service.IVipService;
+import cn.dahe.util.NumberUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by fy on 2017/3/15.
@@ -119,5 +121,19 @@ public class VipServiceImpl implements IVipService{
     @Override
     public Vip findByOpenId(String openId) {
         return vipDao.findByOpenId(openId);
+    }
+
+    @Override
+    public List<Vip> findByVipInfo(String params, int storeId) {
+        Store store = storeDao.get(storeId);
+        StringBuffer sids = new StringBuffer(storeId + ",");
+        if(store != null){
+            List<Store> storeList = storeDao.findByPid(store.getId());
+            for(Store s : storeList){
+                sids.append(s.getId() + ",");
+            }
+        }
+        sids = sids.deleteCharAt(sids.length() - 1);
+        return vipDao.findByVipInfo(params, sids.toString());
     }
 }

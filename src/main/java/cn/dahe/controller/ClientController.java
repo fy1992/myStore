@@ -4,13 +4,17 @@ import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.GoodsTrafficDto;
 import cn.dahe.model.Cashier;
 import cn.dahe.model.Categories;
+import cn.dahe.model.ChangeShifts;
 import cn.dahe.model.ClientGoods;
 import cn.dahe.model.Sales;
 import cn.dahe.model.Vip;
+import cn.dahe.model.VipLevel;
 import cn.dahe.service.ICategoriesService;
+import cn.dahe.service.IChangeShiftsService;
 import cn.dahe.service.IClientGoodsService;
 import cn.dahe.service.IEmployeeService;
 import cn.dahe.service.IGoodsTrafficService;
+import cn.dahe.service.IVipLevelService;
 import cn.dahe.service.IVipService;
 import cn.dahe.util.CacheUtils;
 import cn.dahe.util.TokenUtil;
@@ -43,6 +47,10 @@ public class ClientController {
     private ICategoriesService categoriesService;
     @Resource
     private IVipService vipService;
+    @Resource
+    private IVipLevelService vipLevelService;
+    @Resource
+    private IChangeShiftsService changeShiftsService;
 
     @RequestMapping(value = "test", method = RequestMethod.GET)
     public String test(){
@@ -60,9 +68,16 @@ public class ClientController {
     public AjaxObj cashierLogin(String cashierNo, String password, HttpSession session){
         AjaxObj json = employeeService.cashierLogin(cashierNo, password);
         if(json.getResult() == 1){
-            session.setAttribute("clientUser", json.getObject());
+            Cashier cashier = (Cashier) json.getObject();
+            session.setAttribute("clientUser", cashier);
             String token = TokenUtil.getToken(cashierNo, password);
-            CacheUtils.putCashierUser(token, json.getObject());
+            CacheUtils.putCashierUser(token, cashier);
+            Object obj  = CacheUtils.getChangeShifts("changeShifts_" + cashier.getId());
+            if(obj == null){
+                //交接班
+                int id = changeShiftsService.add(new ChangeShifts(null, cashier.getCashierNo(), cashier.getName(), 0, 0, cashier.getStoreId()));
+                CacheUtils.putChangeShifts("changeShifts_" + cashier.getId(), id);
+            }
             json.setObject(token);
             json.setResult(1);
             json.setMsg("登录成功");
@@ -77,8 +92,9 @@ public class ClientController {
     @ResponseBody
     public AjaxObj cashierLogout(HttpSession session){
         AjaxObj json = new AjaxObj();
+        Cashier cashier = (Cashier) session.getAttribute("clientUser");
+        changeShiftsService.logout(cashier);
         session.removeAttribute("clientUser");
-
         json.setResult(1);
         json.setMsg("成功退出");
         return json;
@@ -209,6 +225,38 @@ public class ClientController {
         vipService.add(vip);
         json.setObject("会员添加成功");
         json.setResult(1);
+        return json;
+    }
+
+    /**
+     * 会员等级
+     * @return
+     */
+    @RequestMapping(value = "vipLevel", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj vipLevel(HttpSession session){
+        AjaxObj json = new AjaxObj();
+        Cashier cashier = (Cashier)session.getAttribute("clientUser");
+        List<VipLevel> vipLevelList = vipLevelService.findByStoreId(cashier.getStoreId());
+        json.setResult(1);
+        json.setObject(vipLevelList);
+        return json;
+    }
+
+    /**
+     * 指定参数查询会员
+     * @param param
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "vipInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj vipInfo(String param, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        Cashier cashier = (Cashier)session.getAttribute("clientUser");
+        List<Vip> vips = vipService.findByVipInfo(param, cashier.getStoreId());
+        json.setResult(1);
+        json.setObject(vips);
         return json;
     }
 }

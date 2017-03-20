@@ -55,6 +55,7 @@
             <div class="formControls col-6">
                 <div class="mb-40 pd-20 clearfixs" id="ckBox">
                     <input type="hidden" name = "permissionIds" id="permissions" value/>
+                    <input type = "checkbox" id="allPosAuth"> 全选
                     <br clear="all" />
                 </div>
             </div>
@@ -99,6 +100,12 @@
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
     $(function () {
+        $("#allPosAuth").on("click", function (data) {
+            $("input[type='checkbox']:checked").each(function (i) {
+                $(this).prop("checked", true);
+            });
+        });
+        
         var  validtor = $("#form-role-add").Validform({
             tiptype:4,
             showAllError:true,

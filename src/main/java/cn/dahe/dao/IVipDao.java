@@ -24,4 +24,6 @@ public interface IVipDao extends IBaseDao<Vip>{
     List<Vip> findByStorId(int storeId);
 
     Vip findByOpenId(String openId);
+
+    List<Vip> findByVipInfo(String params, String storeIds);
 }

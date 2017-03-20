@@ -88,7 +88,7 @@ public class ClientOrderServiceImpl implements IClientOrderService{
     public Pager<ClientOrder> findByParams(String aDataSet, int storeId) {
         int start = 0;// 起始
         int pageSize = 20;// size
-        int status = -1;
+        int status = -2, payStatus = -1;
         String startTime = "", endTime = "", orderNo = "";
         int s_id = 0;
         try{
@@ -110,6 +110,8 @@ public class ClientOrderServiceImpl implements IClientOrderService{
                     s_id = Integer.parseInt(jsonObject.get("value").toString());
                 }else if (jsonObject.get("name").equals("orderNo")){
                     orderNo = jsonObject.get("value").toString();
+                }else if (jsonObject.get("name").equals("payStatus")){
+                    payStatus = Integer.parseInt(jsonObject.get("value").toString());
                 }
             }
             Pager<Object> params = new Pager<>();
@@ -120,6 +122,7 @@ public class ClientOrderServiceImpl implements IClientOrderService{
                 params.setEndTime(DateUtil.format(endTime, "yyyy-MM-dd"));
             }
             params.setStatus(status);
+            params.setIntParam1(payStatus);
             params.setOrderColumn("clientOrder.id");
             params.setOrderDir("desc");
             if(s_id != 0){
@@ -134,7 +137,6 @@ public class ClientOrderServiceImpl implements IClientOrderService{
                 sb.deleteCharAt(sb.length() - 1);
                 params.setStringParam1(sb.toString());
             }
-
             params.setStringParam2(orderNo);
             return clientOrderDao.findByParam(start, pageSize, params);
         }catch (Exception e){

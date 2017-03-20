@@ -29,16 +29,6 @@ public class NumberUtils {
         return time + num;
     }
 
-    /**
-     * 判断是否是手机号
-     * @param mobile 手机号
-     * @return
-     */
-    public static boolean isMobile(String mobile){
-        return mobile.length() > 6 && mobile.length() <= 11 && mobile.matches("^1[34578][0-9]{9}$");
-    }
-
-
     public static void main(String[] args) {
         System.out.println(getNoByTime());
     }

@@ -135,27 +135,10 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T> {
 		return get(hql, null);
 	}
 
-	/**
-	 * 传入hql查询语句和object数组类型的参数，返回查询list集合
-	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> getList(String hql, Object[] obj) {
-		List<T> list = null;
-		try {
-			list = (List<T>) this.getHibernateTemplate().find(hql, obj);
-		} catch (DataAccessException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	/**
-	 * 通过hql语句查询List集合
-	 */
-	@Override
-	public List<T> getList(String hql) {
-		return getList(hql, null);
+	public List<T> list(String hql, List<Object> list) {
+		Query query = setParameterQuery(hql, list);
+		return query.list();
 	}
 
 	public List<T> list(String hql, Object[] objs){
@@ -166,12 +149,12 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T> {
 		return query.list();
 	}
 
-	public List<T> list(String hql,Object obj){
+	public List<T> list(String hql, Object obj){
 		return this.list(hql, new Object[]{obj});
 	}
 
 	public List<T> list(String hql){
-		return this.list(hql, null);
+       return super.currentSession().createQuery(hql).list();
 	}
 
 	public Object queryByHql(String hql,Object[] objs){

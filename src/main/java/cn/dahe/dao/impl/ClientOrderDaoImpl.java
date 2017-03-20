@@ -23,10 +23,15 @@ public class ClientOrderDaoImpl extends BaseDaoImpl<ClientOrder> implements ICli
         int status = params.getStatus();
         String storeIdStr = params.getStringParam1();
         String orderNo = params.getStringParam2();
+        int payStatus = params.getIntParam1();
         List<Object> list = new ArrayList<>();
-        if(status != 0){
+        if(status != -2){
             hql.append(" and clientOrder.status = ?");
             list.add(status);
+        }
+        if(payStatus != -1){
+            hql.append(" and clientOrder.payStatus = ?");
+            list.add(payStatus);
         }
         if(startTime != null){
             startTime = new java.sql.Date(startTime.getTime());

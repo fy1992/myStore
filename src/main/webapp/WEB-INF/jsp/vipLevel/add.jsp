@@ -69,12 +69,7 @@
        var  validtor = $("#form-vipLevel-add").Validform({
             tiptype:4,
             showAllError:true,
-            ajaxPost:{
-                url : "<%=request.getContextPath()%>/server/vip/vipLevelAdd",
-                success : function (data, obj) {
-                    layer.msg(data);
-                }
-            },
+            ajaxPost:true,
             ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
             tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
             btnSubmit:"#vipLevelAddBtn",
@@ -93,12 +88,12 @@
             {
                 ele:"#name",
                 datatype:"*",
-                nullmsg :"等級名稱必填项"
+                nullmsg :"等級名称必填项"
             },
             {
                 ele:"#rebate",
                 datatype:"n",
-                nullmsg :"優惠折扣必填"
+                nullmsg :"优惠折扣必填"
             }
         ]);
     });

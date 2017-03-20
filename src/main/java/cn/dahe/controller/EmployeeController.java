@@ -3,9 +3,11 @@ package cn.dahe.controller;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Cashier;
+import cn.dahe.model.ChangeShifts;
 import cn.dahe.model.Permission;
 import cn.dahe.model.Sales;
 import cn.dahe.model.User;
+import cn.dahe.service.IChangeShiftsService;
 import cn.dahe.service.IEmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,8 @@ public class EmployeeController {
     private static Logger logger = LoggerFactory.getLogger(EmployeeController.class);
     @Resource
     private IEmployeeService employeeService;
+    @Resource
+    private IChangeShiftsService changeShiftsService;
     //========================================cashier begin========================================================
     /**
      * 收银员列表页查询
@@ -186,4 +190,25 @@ public class EmployeeController {
         return json;
     }
     //========================================sales end========================================================
+    //========================================交接班 begin========================================================
+    /**
+     * 导购员列表页查询
+     * */
+    @RequestMapping(value = "/changeShiftsList", method = RequestMethod.GET)
+    public String changeShiftsList(){
+        return "employee/changeShiftsList";
+    }
+
+    /**
+     * 导购员列表页查询
+     * */
+    @RequestMapping(value = "/changeShiftsList", method = RequestMethod.POST)
+    @ResponseBody
+    public Pager<ChangeShifts> changeShiftsList(HttpSession session, String aDataSet){
+        logger.info("--- changeShifts list begin ---");
+        User user = (User)session.getAttribute("loginUser");
+        return changeShiftsService.findByParams(aDataSet, user.getStoreId());
+    }
+
+    //========================================交接班 end========================================================
 }

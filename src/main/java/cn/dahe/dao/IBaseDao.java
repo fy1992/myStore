@@ -22,9 +22,11 @@ public interface IBaseDao<T> {
 
 	T get(String hql);
 
-	List<T> getList(String hql, Object[] obj);
+	List<T> list(String hql, Object[] obj);
 
-	List<T> getList(String hql);
+	List<T> list(String hql);
+
+	List<T> list(String hql, List<Object> list);
 
 	long getCount(String sql);
 

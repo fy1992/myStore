@@ -4,6 +4,7 @@ package cn.dahe.dao.impl;
 import cn.dahe.dao.IVipDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Vip;
+import cn.dahe.util.NumberUtils;
 import cn.dahe.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
@@ -66,5 +67,30 @@ public class VipDaoImpl extends BaseDaoImpl<Vip> implements IVipDao{
     public Vip findByOpenId(String openId) {
         String hql = "from Vip where openId = ?";
         return (Vip)this.queryByHql(hql, openId);
+    }
+
+    @Override
+    public List<Vip> findByVipInfo(String params, String storeIds) {
+        StringBuffer hql = new StringBuffer("from Vip vip where 1=1");
+        List<Object> list = new ArrayList<>();
+        if(StringUtil.isMobile(params)){
+            hql.append(" and vip.phone = ?");
+            list.add(params);
+        }else if(!StringUtil.isMobile(params) && StringUtil.isNumber(params)){
+            hql.append(" and vip.vipNo = ?");
+            list.add(params);
+        }else{
+            hql.append(" and vip.vipName like ?");
+            list.add("%" + params + "%");
+        }
+        String[] storeIdsArr = storeIds.split(",");
+        hql.append(" and vip.storeId in (");
+        for(int i = 0, len = storeIdsArr.length; i < len; i++){
+            hql.append("?,");
+            list.add(Integer.parseInt(storeIdsArr[i]));
+        }
+        hql.deleteCharAt(hql.length() - 1);
+        hql.append(")");
+        return this.list(hql.toString(), list);
     }
 }

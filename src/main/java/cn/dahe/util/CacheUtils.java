@@ -21,6 +21,9 @@ public class CacheUtils {
 	//客户端用户登录缓存
 	private static final String CASHIER_USER = "cashierUser";
 
+	//交接班
+    private static final String CHANGE_SHIFTS = "changeShifts";
+
 	/**
 	 * @param key
 	 * @param value
@@ -44,6 +47,30 @@ public class CacheUtils {
 	public static void removeGoods(String key){
 		remove(GOODS_CACHE, key);
 	}
+
+    /**
+     * @param key
+     * @param value
+     * */
+    public static void putChangeShifts(String key, Object value){
+        put(CHANGE_SHIFTS, key, value);
+    }
+
+    /**
+     * 得到缓存
+     * @param key
+     * */
+    public static Object getChangeShifts(String key){
+        return get(CHANGE_SHIFTS, key);
+    }
+
+    /**
+     * 移除缓存
+     * @param key
+     * */
+    public static void removeChangeShifts(String key){
+        remove(CHANGE_SHIFTS, key);
+    }
 
     /**
      * @param key

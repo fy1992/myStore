@@ -34,9 +34,6 @@ public class VipSys {
     //赠送积分
     @Column(name = "zjs_point")
     private int zjsPpoint;
-    //会员等级
-    @Column(name = "vip_level_id")
-    private int vipLevelId;
     //所属分店
     @Column(name = "store_id")
     private int storeId;
@@ -87,14 +84,6 @@ public class VipSys {
 
     public void setZjsPpoint(int zjsPpoint) {
         this.zjsPpoint = zjsPpoint;
-    }
-
-    public int getVipLevelId() {
-        return vipLevelId;
-    }
-
-    public void setVipLevelId(int vipLevelId) {
-        this.vipLevelId = vipLevelId;
     }
 
     public int getStoreId() {
