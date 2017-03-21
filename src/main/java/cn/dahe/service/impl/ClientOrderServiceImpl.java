@@ -5,10 +5,7 @@ import cn.dahe.dao.IClientOrderItemDao;
 import cn.dahe.dao.IStoreDao;
 import cn.dahe.dto.ClientOrderDto;
 import cn.dahe.dto.Pager;
-import cn.dahe.model.ClientOrder;
-import cn.dahe.model.ClientOrderItem;
-import cn.dahe.model.Store;
-import cn.dahe.model.Vip;
+import cn.dahe.model.*;
 import cn.dahe.service.IClientOrderService;
 import cn.dahe.service.IVipService;
 import cn.dahe.util.DateUtil;
@@ -202,6 +199,16 @@ public class ClientOrderServiceImpl implements IClientOrderService{
             clientOrderItem.setGoodsNo(map.get("goodsNo").toString());
             clientOrderItem.setOrderNum(Integer.parseInt(map.get("goodsNum").toString()));
             clientOrderItemDao.add(clientOrderItem);
+        }
+    }
+
+    @Override
+    public void auditOrder(int id, int status, int storeId) {
+        ClientOrder clientOrder = clientOrderDao.get(id);
+        clientOrder.setStatus(status);
+        clientOrderDao.update(clientOrder);
+        if(status == 2){
+
         }
     }
 }

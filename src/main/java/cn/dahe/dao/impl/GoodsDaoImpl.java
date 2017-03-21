@@ -78,7 +78,7 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
             hql += " and goods.mainUnitId = ?";
             return this.list(hql, unitId);
         }
-        return null;
+        return this.list(hql);
     }
 
     @Override

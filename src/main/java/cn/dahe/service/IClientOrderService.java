@@ -44,4 +44,9 @@ public interface IClientOrderService {
      * @param clientOrderDto
      */
     void orderByWechat(String openId, ClientOrderDto clientOrderDto);
+
+    /**
+     *订单处理
+     */
+    void auditOrder(int id, int status, int storeId);
 }

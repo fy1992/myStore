@@ -29,11 +29,11 @@
 		            <label class="form-label col-3">是否启用：</label>
 		            <div class="formControls col-6">
 		            	<div class="radio-box">
-                            <input type="radio" id="using-1" name="status" value = "1" <c:if test="${goodsDto.status eq 1}">checked</c:if>>
+                            <input type="radio" id="using-1" name="status" value = "1" <c:if test="${raw.status eq 1}">checked</c:if>>
 				          	<label for="using-1">是</label>
 				        </div>
 				        <div class="radio-box">
-				          	<input type="radio" id="using-2" name="status" value = "0" <c:if test="${goodsDto.status eq 0}">checked</c:if>>
+				          	<input type="radio" id="using-2" name="status" value = "0" <c:if test="${raw.status eq 0}">checked</c:if>>
 				          	<label for="using-2">否</label>
 				        </div>
 		            </div>
@@ -42,16 +42,18 @@
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>条码：</label>
                     <div class="formControls col-6">
-                        <span>${goodsDto.goodsNo}</span>
-                        <input name = "id" value = "${goodsDto.id}" type = "hidden"/>
-                        <input name = "goodsNo" value = "${goodsDto.goodsNo}" type = "hidden"/>
+                        <span>${raw.rawNo}</span>
+                        <input name = "id" value = "${raw.id}" type = "hidden"/>
+                        <input name = "goodsNo" value = "${raw.rawNo}" type = "hidden"/>
+                        <input name = "storeId" value = "${raw.storeId}" type = "hidden"/>
+                        <input name = "storeName" value = "${raw.storeName}" type = "hidden"/>
                     </div>
                     <div class="col-3"></div>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>品名：</label>
                     <div class="formControls col-6">
-                        <input type="text" class="input-text radius" value="${goodsDto.name}"  id="goodsName" name = "name">
+                        <input type="text" class="input-text radius" value="${raw.name}"  id="goodsRawName" name = "name">
                     </div>
                     <div class="col-3"> </div>
                 </div>
@@ -59,8 +61,9 @@
                     <label class="form-label col-3"><span class="c-red">* </span>分类：</label>
                     <div class="formControls col-6">
                     	<div class="radius">
+                            <input type="hidden" value="${raw.categoriesName}" name = "categoriesName">
                         <select id="categories" name = "categoriesId" class="select">
-                            <option value selected>- 请选择商品分类 -</option>
+                            <option value selected>- 请选择原材料分类 -</option>
                         </select>
                         </div>
                     </div>
@@ -68,17 +71,17 @@
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3"><span class="c-red">* </span>售价：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" name = "price" value = "${goodsDto.price}" id="price" style="width: 90%;"/>&nbsp;<label>元</label></div>
+                	<div class="formControls col-6"><input type = "text" class="input-text radius" name = "price" value = "${raw.price}" id="price" style="width: 90%;"/>&nbsp;<label>元</label></div>
                 	<div class="col-3"> </div>
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3"><span class="c-red">* </span>进价：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id = "bid" name = "bid" value = "${goodsDto.bid}" style="width: 90%;"/>&nbsp;<label>元</label></div>
+                	<div class="formControls col-6"><input type = "text" class="input-text radius" id = "bid" name = "bid" value = "${raw.bid}" style="width: 90%;"/>&nbsp;<label>元</label></div>
                 	<div class="col-3"> </div>
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3">库存：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius text-r" id = "stock" name = "stock" value = "${goodsDto.stock}" placeholder="请输入库存量（单位：个）"/></div>
+                	<div class="formControls col-6"><input type = "text" class="input-text radius text-r" id = "stock" name = "stock" value = "${raw.stock}" placeholder="请输入库存量（单位：个）"/></div>
                 	<div class="col-3"> </div>
                 </div>
             </div>
@@ -88,8 +91,8 @@
                 <div class="clearfix">
                 	<div id="btnShowEditImages" class="defaultImage">
                     	<h1>编辑图片</h1>
-	                	<img src="${goodsDto.goodsImg}" id="imgPath"/>
-                        <input type = "hidden" value="${goodsDto.goodsImg}" name = "goodsImg" id = "goodsImg">
+	                	<img src="${raw.goodsImg}" id="imgPath"/>
+                        <input type = "hidden" value="${raw.goodsImg}" name = "goodsImg" id = "goodsImg">
                 	</div>
                 </div>
             </div>
@@ -100,11 +103,11 @@
                 <label class="form-label f-l col-3">会员折扣：</label>
                 <div class="formControls f-l col-6">
                     <div class="radio-box">
-                        <input type="radio" id="vip-1" name="vipSet" value = "1" <c:if test="${goodsDto.vipSet eq 1}">checked</c:if>>
+                        <input type="radio" id="vip-1" name="vipSet" value = "1" <c:if test="${raw.vipSet eq 1}">checked</c:if>>
                         <label for="vip-1">是</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" id="vip-2" name="vipSet" value = "0" <c:if test="${goodsDto.vipSet eq 0}">checked</c:if>>
+                        <input type="radio" id="vip-2" name="vipSet" value = "0" <c:if test="${raw.vipSet eq 0}">checked</c:if>>
                         <label for="vip-2">否</label>
                     </div>
                 </div>
@@ -112,7 +115,7 @@
             <div class="col-6 cl">
                 <label class="form-label col-3">会员价：</label>
                 <div class="formControls col-6">
-                    <input type = "text" class="input-text radius mr-5"  id = "vipPrice" name = "vipPrice" value = "${goodsDto.vipPrice}" style="width: 90%;" disabled/><label>元</label>
+                    <input type = "text" class="input-text radius mr-5"  id = "vipPrice" name = "vipPrice" value = "${raw.vipPrice}" style="width: 90%;" disabled/><label>元</label>
                 </div>
             </div>
         </div>
@@ -120,7 +123,7 @@
             <div class="col-6 cl">
                 <label class="form-label col-3">批发价：</label>
                 <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5" id="tradePrice" name = "tradePrice" value = "${goodsDto.tradePrice}" style="width: 90%;"/><label>&nbsp;元</label>
+                    <input type = "text"  class="input-text radius mr-5" id="tradePrice" name = "tradePrice" value = "${raw.tradePrice}" style="width: 90%;"/><label>&nbsp;元</label>
                 </div>
             </div>
             <div class="col-6 cl">
@@ -138,7 +141,7 @@
         	<div class="col-6 cl">
         		<label class="form-label col-3">拼音码：</label>
 	            <div class="formControls col-6">
-	                <input type="text" name="pinyin" class="input-text radius" placeholder="请输入拼音码" value = "${goodsDto.pinyin}"/>
+	                <input type="text" name="pinyin" class="input-text radius" placeholder="请输入拼音码" value = "${raw.pinyin}"/>
 	            </div>
 	            <div class="col-3"></div>
         	</div>
@@ -158,14 +161,14 @@
             <div class="col-6">
                 <label class="form-label col-3">生产日期：</label>
                 <div class="formControls col-6">
-                    <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'productionDate\')||\'%y-%M-%d\'}'})" id="productionDate" name="productionDate" value = "${goodsDto.productionDate}" class="input-text Wdate radius" placeholder="请选择生产日期"/>
+                    <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'productionDate\')||\'%y-%M-%d\'}'})" id="productionDate" name="productionDate" value = "${raw.productionDate}" class="input-text Wdate radius" placeholder="请选择生产日期"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
             <div class="col-6">
                 <label class="form-label col-3">保质期：</label>
                 <div class="formControls col-6">
-                    <input type="text" class="input-text radius mr-6" id="ExpirationDate" name = "shelfLife" value = "${goodsDto.shelfLife}" /><label>&nbsp;天</label>
+                    <input type="text" class="input-text radius mr-6" id="ExpirationDate" name = "shelfLife" value = "${raw.shelfLife}" /><label>&nbsp;天</label>
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -174,14 +177,14 @@
             <div class="col-6">
                 <label class="form-label col-3">库存上限：</label>
                 <div class="formControls col-6">
-                    <input type="text"  class="input-text radius" id="stockUp" name = "stockUp" value = "${goodsDto.stockUp}"/>
+                    <input type="text"  class="input-text radius" id="stockUp" name = "stockUp" value = "${raw.stockUp}"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
             <div class="col-6">
                 <label class="form-label col-3">库存下限：</label>
                 <div class="formControls col-6">
-                    <input type="text"  class="input-text radius" id="stockDown" name = "stockDown"  value = "${goodsDto.stockDown}"/>
+                    <input type="text"  class="input-text radius" id="stockDown" name = "stockDown"  value = "${raw.stockDown}"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -208,13 +211,13 @@
         	<div class="col-8">
 	            <label class="form-label col-3">备注：</label>
 	            <div class="formControls col-9">
-	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="goodsDescription" name = "description"  value = "${goodsDto.description}">${goodsDto.description}</textarea>
+	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="goodsDescription" name = "description"  value = "${raw.description}">${raw.description}</textarea>
 	            </div>
 	        </div>
         </div>
         <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
-                <input class="btn btn-primary radius" type="submit" id="goodsEditBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="submit" id="goodsRawEdiBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
         </div>
     </form>
@@ -233,40 +236,22 @@ $(function(){
     $("#randomNo").on("click", function () {
         $.post("<%=request.getContextPath()%>/server/goods/newGoodsNo", function(data){
             if(data.result == 1){
-                $("#goodsNo").val(data.msg);
-                $("#goodsNo").removeClass("Validform_error");
-                $("#goodsNo").parent().find("span").removeClass("Validform_error").addClass("Validform_right").text("通过消息验证！").css("color", "black");
+                $("#rawNo").val(data.msg);
+                $("#rawNo").removeClass("Validform_error");
+                $("#rawNo").parent().find("span").removeClass("Validform_error").addClass("Validform_right").text("通过消息验证！").css("color", "black");
                 $("#randomNo").css("display", "none");
                 $("#help_tooltip").show();
             }
         });
     });
-    if(${goodsDto.smallTickets ne "0"}){
-        var sts = "${goodsDto.smallTickets}";
-        $("#smallTicketNum").text("${goodsDto.smallTickets}".split(",").length);
-        $("#smallTicketNum").append("<input type = 'hidden' value = '"+sts+"' id = 'stsIds' name = 'smallTickets'>");
-    }
 
-    if(${goodsDto.goodsTagss ne "0"}){
-        var arr = "${goodsDto.goodsTagsName}".split(",");
-        var gts = "${goodsDto.goodsTagss}";
-        arr.forEach(function (result) {
-            $("#showGoodsTags").append(
-                "<a class=\"btn btn-primary size-MINI mr-5\">"+result+"</a>"
-            );
-        });
-        $("#showGoodsTags").append(
-            "<input type = 'hidden' value = '"+gts+"' id = 'tagsIds' name ='goodsTagss'/>"
-        );
-    }
-
-    var  validtor = $("#form-goods-edit").Validform({
+    var  validtor = $("#form-goodsRaw-edit").Validform({
         tiptype:4,
         showAllError:true,
         ajaxPost: true,
         ignoreHidden:true, //可选项 true | false 默认为false，当为true时对:hidden的表单元素将不做验证;
         tipSweep:true,//可选项 true | false 默认为false，只在表单提交时触发检测，blur事件将不会触发检测
-        btnSubmit:"#goodsEdiBtn",
+        btnSubmit:"#goodsRawEdiBtn",
         callback:function (data) {
             if(data.result == 1){
                 window.parent.table.fnDraw();
@@ -281,20 +266,20 @@ $(function(){
 
     validtor.addRule([
         {
-            ele:"#goodsNo",
+            ele:"#rawNo",
             datatype:"n",
             errormsg:"只能填写数字",
-            nullmsg:"商品条码必填"
+            nullmsg:"原材料条码必填"
         },
         {
-            ele:"#goodsName",
+            ele:"#goodsRawName",
             datatype:"s",
-            nullmsg:"商品名称必填"
+            nullmsg:"原材料名称必填"
         },
         {
             ele:"#categories",
             datatype:"*",
-            nullmsg:"请选择商品分类"
+            nullmsg:"请选择原材料分类"
         },
         {
             ele:"#price",

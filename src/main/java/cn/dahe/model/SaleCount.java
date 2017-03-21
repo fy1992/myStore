@@ -28,7 +28,7 @@ public class SaleCount {
     private int storeId;
     //现金支付
     @Column(name = "paid_by_money")
-    private int paidByMoney;
+    private double paidByMoney;
 
     public int getId() {
         return id;
@@ -62,11 +62,11 @@ public class SaleCount {
         this.storeId = storeId;
     }
 
-    public int getPaidByMoney() {
+    public double getPaidByMoney() {
         return paidByMoney;
     }
 
-    public void setPaidByMoney(int paidByMoney) {
+    public void setPaidByMoney(double paidByMoney) {
         this.paidByMoney = paidByMoney;
     }
 }

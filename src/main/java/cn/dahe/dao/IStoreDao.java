@@ -33,4 +33,6 @@ public interface IStoreDao extends IBaseDao<Store>{
     Store findByStoreNo(String storeNo);
 
     List<Store> findByPid(int storeId);
+
+    List<Store> findAll();
 }

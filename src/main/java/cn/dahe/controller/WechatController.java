@@ -82,12 +82,11 @@ public class WechatController {
 
     /**
      * 微信 管理员退出
-     * @param openId
      * @return
      */
     @RequestMapping(value = "adminLogin", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj adminLogin(String openId, HttpSession session){
+    public AjaxObj adminLogin(HttpSession session){
         AjaxObj json = new AjaxObj();
         session.removeAttribute("wechatUser");
         json.setResult(1);
