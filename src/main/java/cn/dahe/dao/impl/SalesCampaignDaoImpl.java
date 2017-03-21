@@ -40,4 +40,10 @@ public class SalesCampaignDaoImpl extends BaseDaoImpl<SalesCampaign> implements 
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);
     }
+
+    @Override
+    public List<SalesCampaign> findAll() {
+        String hql = "from SalesCampaign where overdue = 1";
+        return this.list(hql);
+    }
 }

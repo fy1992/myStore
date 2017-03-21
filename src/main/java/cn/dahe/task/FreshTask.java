@@ -1,8 +1,10 @@
 package cn.dahe.task;
 
 import cn.dahe.dao.ISaleCountDao;
+import cn.dahe.dao.ISalesCampaignDao;
 import cn.dahe.dao.IStoreDao;
 import cn.dahe.model.SaleCount;
+import cn.dahe.model.SalesCampaign;
 import cn.dahe.model.Store;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -21,12 +23,15 @@ public class FreshTask {
     private ISaleCountDao saleCountDao;
     @Resource
     private IStoreDao storeDao;
-    //每天凌晨1点初始化 销售统计
+    @Resource
+    private ISalesCampaignDao salesCampaignDao;
+    //每天凌晨1点初始化
     @Scheduled(cron = "0 0 1 * * ?")
     public void execute(){
         List<Store> storeList = storeDao.findAll();
         if(storeList != null){
             storeList.forEach(store -> {
+                //销售统计  新建
                 SaleCount saleCount = new SaleCount();
                 saleCount.setCountDate(new Date());
                 saleCount.setInfo("");
@@ -35,5 +40,17 @@ public class FreshTask {
                 saleCountDao.add(saleCount);
             });
         }
+
+        //营销活动 过期判断
+        List<SalesCampaign> salesCampaigns = salesCampaignDao.findAll();
+        salesCampaigns.forEach(salesCampaign -> {
+            Date time = salesCampaign.getEndDate();
+            if(new Date().after(time)){
+                salesCampaign.setOverdue(0);
+                salesCampaignDao.update(salesCampaign);
+            }
+        });
+
+
     }
 }
