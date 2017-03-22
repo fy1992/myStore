@@ -6,6 +6,7 @@ import cn.dahe.model.Supplier;
 import java.util.List;
 
 /**
+ * 供货商
  * Created by fy on 2017/1/23.
  */
 public interface ISupplierDao extends IBaseDao<Supplier>{

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by 冯源 on 2017/3/21.
@@ -23,14 +24,10 @@ public class GoodsRawServiceImpl implements IGoodsRawService{
     private static Logger logger = LoggerFactory.getLogger(GoodsRawServiceImpl.class);
     @Resource
     private IGoodsRawDao goodsRawDao;
-    @Resource
-    private ICategoriesDao categoriesDao;
-    @Resource
-    private IStoreDao storeDao;
 
     @Override
     public boolean add(GoodsRaw t) {
-        GoodsRaw goods = goodsRawDao.findByRawNo(t.getRawNo());
+        GoodsRaw goods = goodsRawDao.findByRawNo(t.getRawNo(), t.getStoreId());
         if(goods == null) {
             goodsRawDao.add(t);
             return true;
@@ -100,5 +97,10 @@ public class GoodsRawServiceImpl implements IGoodsRawService{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<GoodsRaw> findByCategoriesId(int categoriesId, int storeId) {
+        return goodsRawDao.findByCategoriesId(categoriesId, storeId);
     }
 }

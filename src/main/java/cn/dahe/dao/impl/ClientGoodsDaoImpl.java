@@ -18,15 +18,15 @@ public class ClientGoodsDaoImpl extends BaseDaoImpl<ClientGoods> implements ICli
     }
 
     @Override
-    public List<ClientGoods> findByCategoriesId(int categoriesId) {
-        String hql = "from ClientGoods where categoriesId = ?";
-        return this.list(hql, categoriesId);
+    public List<ClientGoods> findByCategoriesId(int categoriesId, int storeId) {
+        String hql = "from ClientGoods where categoriesId = ? and storeId = ?";
+        return this.list(hql, new Object[]{categoriesId, storeId});
     }
 
     @Override
-    public ClientGoods findByGoodsNo(String goodsNo) {
-        String hql = "from ClientGoods where goodsNo = ?";
-        return (ClientGoods)this.queryByHql(hql, goodsNo);
+    public ClientGoods findByGoodsNo(String goodsNo, int storeId) {
+        String hql = "from ClientGoods where goodsNo = ? and storeId = ?";
+        return (ClientGoods)this.queryByHql(hql, new Object[]{goodsNo, storeId});
     }
 
     @Override

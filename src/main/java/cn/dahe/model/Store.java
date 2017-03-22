@@ -69,6 +69,15 @@ public class Store {
     //起送价
     @Column(name = "start_price")
     private double startPrice;
+    //网店状态  0 关闭 1 开启
+    @Column(name = "net_store_status'")
+    private int netStoreStatus;
+    //网店url
+    @Column(name = "net_store_url")
+    private String newStoreUrl;
+    //消费方式 0 外卖 1 自助 2 预约 ,分割
+    @Column(name = "con_model")
+    private String conModel;
     public int getId() {
         return id;
     }
@@ -211,5 +220,29 @@ public class Store {
 
     public void setStartPrice(double startPrice) {
         this.startPrice = startPrice;
+    }
+
+    public int getNetStoreStatus() {
+        return netStoreStatus;
+    }
+
+    public void setNetStoreStatus(int netStoreStatus) {
+        this.netStoreStatus = netStoreStatus;
+    }
+
+    public String getNewStoreUrl() {
+        return newStoreUrl;
+    }
+
+    public void setNewStoreUrl(String newStoreUrl) {
+        this.newStoreUrl = newStoreUrl;
+    }
+
+    public String getConModel() {
+        return conModel;
+    }
+
+    public void setConModel(String conModel) {
+        this.conModel = conModel;
     }
 }

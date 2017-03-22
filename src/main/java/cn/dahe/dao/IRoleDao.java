@@ -6,6 +6,7 @@ import cn.dahe.model.Role;
 import java.util.List;
 
 /**
+ * 角色
  * Created by fy on 2017/2/3.
  */
 public interface IRoleDao extends IBaseDao<Role>{

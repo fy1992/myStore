@@ -19,7 +19,7 @@ public interface IClientGoodsService {
      * @param categories
      * @return
      */
-    List<ClientGoods> goodsListByCategories(int categories);
+    List<ClientGoods> goodsListByCategories(int categories, int storeId);
 
-    ClientGoods findByGoodsNo(String goodsNo);
+    ClientGoods findByGoodsNo(String goodsNo, int storeId);
 }

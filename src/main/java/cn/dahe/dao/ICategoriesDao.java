@@ -6,6 +6,7 @@ import cn.dahe.model.Categories;
 import java.util.List;
 
 /**
+ * 商品/原材料分类
  * Created by fy on 2017/1/17.
  */
 public interface ICategoriesDao extends IBaseDao<Categories>{

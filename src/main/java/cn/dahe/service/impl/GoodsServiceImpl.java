@@ -83,7 +83,7 @@ public class GoodsServiceImpl implements IGoodsService{
     @Override
     public void update(GoodsDto goodsDto, int storeId) {
         Goods goods = formatGoodsDtoToGoods(goodsDto, storeId);
-        ClientGoods clientGoods = clientGoodsDao.findByGoodsNo(goods.getGoodsNo());
+        ClientGoods clientGoods = clientGoodsDao.findByGoodsNo(goods.getGoodsNo(), storeId);
         clientGoods.setImgUrl(goods.getImgUrl());
         clientGoods.setPrice(goods.getPrice());
         clientGoods.setCategoriesId(goods.getCategoriesId());

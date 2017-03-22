@@ -55,6 +55,9 @@ public class StoreServiceImpl implements IStoreService{
                 t.setParent(parent);
             }
             t.setCreateDate(new Date());
+            t.setNewStoreUrl("");
+            t.setConModel("2,3");
+            t.setNetStoreStatus(0);
             int storeId = storeDao.addAndGetId4Integer(t);
             //门店的供货设置
             StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();

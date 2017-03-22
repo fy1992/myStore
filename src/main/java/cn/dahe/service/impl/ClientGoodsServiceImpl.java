@@ -48,12 +48,12 @@ public class ClientGoodsServiceImpl implements IClientGoodsService{
     }
 
     @Override
-    public List<ClientGoods> goodsListByCategories(int categories) {
-        return clientGoodsDao.findByCategoriesId(categories);
+    public List<ClientGoods> goodsListByCategories(int categories, int storeId) {
+        return clientGoodsDao.findByCategoriesId(categories, storeId);
     }
 
     @Override
-    public ClientGoods findByGoodsNo(String goodsNo) {
-        return clientGoodsDao.findByGoodsNo(goodsNo);
+    public ClientGoods findByGoodsNo(String goodsNo, int storeId) {
+        return clientGoodsDao.findByGoodsNo(goodsNo, storeId);
     }
 }

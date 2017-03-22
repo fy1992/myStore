@@ -5,6 +5,7 @@ import cn.dahe.model.ClientGoods;
 import java.util.List;
 
 /**
+ * 客户端展示商品
  * Created by fy on 2017/3/14.
  */
 public interface IClientGoodsDao extends IBaseDao<ClientGoods>{
@@ -20,14 +21,14 @@ public interface IClientGoodsDao extends IBaseDao<ClientGoods>{
      * @param categoriesId
      * @return
      */
-    List<ClientGoods> findByCategoriesId(int categoriesId);
+    List<ClientGoods> findByCategoriesId(int categoriesId, int storeId);
 
     /**
      * 根据商品编码查询
      * @param goodsNo
      * @return
      */
-    ClientGoods findByGoodsNo(String goodsNo);
+    ClientGoods findByGoodsNo(String goodsNo, int storeId);
 
     /**
      * 根据门店查询

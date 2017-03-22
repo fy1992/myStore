@@ -4,6 +4,7 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.ChangeShifts;
 
 /**
+ * 交换班记录
  * Created by fy on 2017/3/20.
  */
 public interface IChangeShiftsDao extends IBaseDao<ChangeShifts>{

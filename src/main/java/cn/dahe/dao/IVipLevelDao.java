@@ -6,6 +6,7 @@ import cn.dahe.model.VipLevel;
 import java.util.List;
 
 /**
+ * 会员等级
  * Created by fy on 2017/3/16.
  */
 public interface IVipLevelDao extends IBaseDao<VipLevel>{

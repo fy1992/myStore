@@ -35,7 +35,7 @@ public class ClientGoodsRaw {
     private double price;
     //商品庫存
     @Column(name = "raw_num")
-    private int goodsNum;
+    private int rawNum;
     //商品单位
     @Column(name = "raw_unit")
     private String rawUnit;
@@ -104,12 +104,12 @@ public class ClientGoodsRaw {
         this.price = price;
     }
 
-    public int getGoodsNum() {
-        return goodsNum;
+    public int getRawNum() {
+        return rawNum;
     }
 
-    public void setGoodsNum(int goodsNum) {
-        this.goodsNum = goodsNum;
+    public void setRawNum(int rawNum) {
+        this.rawNum = rawNum;
     }
 
     public String getRawUnit() {

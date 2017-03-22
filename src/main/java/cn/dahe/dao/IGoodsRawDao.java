@@ -30,7 +30,9 @@ public interface IGoodsRawDao extends IBaseDao<GoodsRaw>{
      * @param rawNo
      * @return
      */
-    GoodsRaw findByRawNo(String rawNo);
+    GoodsRaw findByRawNo(String rawNo, int storeId);
+
+    List<GoodsRaw> findByCategoriesId(int categoriesId, int storeId);
 
     /**
      * 查询全部商品

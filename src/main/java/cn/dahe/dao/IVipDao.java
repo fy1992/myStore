@@ -7,6 +7,7 @@ import java.util.List;
 
 
 /**
+ * 会员
  * Created by fy on 2017/3/15.
  */
 public interface IVipDao extends IBaseDao<Vip>{

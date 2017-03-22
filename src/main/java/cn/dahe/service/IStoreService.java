@@ -12,7 +12,22 @@ import java.util.List;
  */
 public interface IStoreService {
     void add(Store t);
+
+    /**
+     * 管理员添加用
+     * @param t
+     * @param u
+     * @param currentUser
+     * @return
+     */
     int add(Store t, User u, User currentUser);
+
+    /**
+     * 注册用
+     * @param store
+     * @param user
+     * @return
+     */
     int add(Store store, User user);
     void del(int id);
     void update(Store t, User user);

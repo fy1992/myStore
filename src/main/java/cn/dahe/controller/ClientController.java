@@ -2,20 +2,8 @@ package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.GoodsTrafficDto;
-import cn.dahe.model.Cashier;
-import cn.dahe.model.Categories;
-import cn.dahe.model.ChangeShifts;
-import cn.dahe.model.ClientGoods;
-import cn.dahe.model.Sales;
-import cn.dahe.model.Vip;
-import cn.dahe.model.VipLevel;
-import cn.dahe.service.ICategoriesService;
-import cn.dahe.service.IChangeShiftsService;
-import cn.dahe.service.IClientGoodsService;
-import cn.dahe.service.IEmployeeService;
-import cn.dahe.service.IGoodsTrafficService;
-import cn.dahe.service.IVipLevelService;
-import cn.dahe.service.IVipService;
+import cn.dahe.model.*;
+import cn.dahe.service.*;
 import cn.dahe.util.CacheUtils;
 import cn.dahe.util.TokenUtil;
 import org.slf4j.Logger;
@@ -51,6 +39,8 @@ public class ClientController {
     private IVipLevelService vipLevelService;
     @Resource
     private IChangeShiftsService changeShiftsService;
+    @Resource
+    private IGoodsRawService goodsRawService;
 
     @RequestMapping(value = "test", method = RequestMethod.GET)
     public String test(){
@@ -138,11 +128,28 @@ public class ClientController {
      */
     @RequestMapping(value = "goodsList", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxObj getGoodsListByCategorise(int categoriesId){
+    public AjaxObj getGoodsListByCategorise(int categoriesId, HttpSession session){
         AjaxObj json = new AjaxObj();
-        List<ClientGoods> list = clientGoodsService.goodsListByCategories(categoriesId);
+        Cashier cashier = (Cashier) session.getAttribute("clientUser");
+        List<ClientGoods> list = clientGoodsService.goodsListByCategories(categoriesId, cashier.getStoreId());
         json.setResult(1);
         json.setObject(list);
+        return json;
+    }
+
+    /**
+     * 原材料
+     * @param categoriesId
+     * @return
+     */
+    @RequestMapping(value = "rawList", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxObj getGoodsRawListByCategories(int categoriesId, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        Cashier cashier = (Cashier) session.getAttribute("clientUser");
+        json.setResult(1);
+        List<GoodsRaw> goodsRaws = goodsRawService.findByCategoriesId(categoriesId, cashier.getStoreId());
+        json.setObject(goodsRaws);
         return json;
     }
 
@@ -167,9 +174,10 @@ public class ClientController {
      */
     @RequestMapping(value = "detail", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj detail(String goodsNo){
+    public AjaxObj detail(String goodsNo, HttpSession session){
         AjaxObj json = new AjaxObj();
-        ClientGoods clientGoods = clientGoodsService.findByGoodsNo(goodsNo);
+        Cashier cashier = (Cashier) session.getAttribute("clientUser");
+        ClientGoods clientGoods = clientGoodsService.findByGoodsNo(goodsNo, cashier.getStoreId());
         json.setObject(clientGoods);
         json.setResult(1);
         return json;

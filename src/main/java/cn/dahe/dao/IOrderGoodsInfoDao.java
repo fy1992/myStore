@@ -1,6 +1,5 @@
 package cn.dahe.dao;
 
-import cn.dahe.dto.Pager;
 import cn.dahe.model.OrderGoodsInfo;
 
 import java.util.List;

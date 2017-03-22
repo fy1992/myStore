@@ -6,6 +6,7 @@ import cn.dahe.model.SalesCampaign;
 import java.util.List;
 
 /**
+ * 促销活动
  * Created by fy on 2017/3/16.
  */
 public interface ISalesCampaignDao extends IBaseDao<SalesCampaign>{

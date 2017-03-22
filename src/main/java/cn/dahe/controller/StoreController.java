@@ -177,4 +177,12 @@ public class StoreController {
         model.addAttribute("id", id);
         return "store/storeGoodsTraffic";
     }
+
+    @RequestMapping(value = "netDetail", method = RequestMethod.GET)
+    public String netDetail(HttpSession session, Model model){
+        User user = (User)session.getAttribute("loginUser");
+        Store store = storeService.get(user.getStoreId());
+        model.addAttribute("store", store);
+        return "store/netDetail";
+    }
 }

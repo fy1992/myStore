@@ -77,9 +77,9 @@ public class GoodsRawDaoImpl extends BaseDaoImpl<GoodsRaw> implements IGoodsRawD
     }
 
     @Override
-    public GoodsRaw findByRawNo(String rawNo) {
-        String hql = "from GoodsRaw goodsRaw where goodsRaw.rawNo = ?";
-        return (GoodsRaw)this.queryByHql(hql, rawNo);
+    public GoodsRaw findByRawNo(String rawNo, int storeId) {
+        String hql = "from GoodsRaw goodsRaw where goodsRaw.rawNo = ? and goodsRaw.storeId = ?";
+        return (GoodsRaw)this.queryByHql(hql, new Object[]{rawNo,storeId});
     }
 
     @Override
@@ -90,5 +90,11 @@ public class GoodsRawDaoImpl extends BaseDaoImpl<GoodsRaw> implements IGoodsRawD
             return this.list(hql, storeId);
         }
         return this.list(hql);
+    }
+
+    @Override
+    public List<GoodsRaw> findByCategoriesId(int categoriesId, int storeId) {
+        String hql = "from GoodsRaw where categoriesId = ? and storeId = ?";
+        return this.list(hql, new Object[]{categoriesId, storeId});
     }
 }

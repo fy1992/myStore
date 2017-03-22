@@ -6,6 +6,7 @@ import cn.dahe.model.Permission;
 import java.util.List;
 
 /**
+ * 权限资源
  * Created by fy on 2017/2/9.
  */
 public interface IPermissionDao extends IBaseDao<Permission>{

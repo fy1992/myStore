@@ -5,6 +5,7 @@ import cn.dahe.model.StoreGoodsTraffic;
 import java.util.List;
 
 /**
+ * 门店货流管理设置
  * Created by fy on 2017/2/2.
  */
 public interface IStoreGoodsTrafficDao extends IBaseDao<StoreGoodsTraffic>{
