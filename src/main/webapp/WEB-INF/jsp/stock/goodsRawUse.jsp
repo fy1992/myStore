@@ -17,27 +17,25 @@
 <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 
-<title>庫存列表</title>
+<title>原材料消耗列表</title>
 </head>
 <body class="pos-r">
 <div>
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 库存 <span class="c-gray en">&gt;</span> 库存預警 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 库存 <span class="c-gray en">&gt;</span> 原材料消耗 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
-            <span class="select-box" style="width: 100px;">
-                <select class="select radius" id="categoriesId">
-                    <option value="0">全部分类</option>
-                </select>
-            </span>
             <span class="select-box" style="width: 120px;">
                 <select class="select radius" id="supplierId">
                     <option value="0">全部供货商</option>
                 </select>
             </span>
-            <button id="stock_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'startTime\')||\'%y-%M-%d\'}'})" id="startTime" class="input-text Wdate radius" style="width:120px;"/> 至
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}'})" id="endTime" class="input-text Wdate radius" style="width:120px;"/>
+            <input type="text" id="goodsRaw_info" placeholder="原材料名稱/條碼" style="width:260px" class="input-text radius">
+            <button id="goodsRawUse_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
-            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="stock_table">
+            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="goodsRawUse_table">
                 <thead>
                     <tr class="text-c">
                         <th width="50">序号</th>
@@ -69,7 +67,7 @@
 <script type="text/javascript">
 //搜索
 $(function(){
-	$("#stock_search").click(function(){
+	$("#goodsRawUse_search").click(function(){
 		table.fnDraw();
 	});
 
@@ -79,16 +77,10 @@ $(function(){
             $("#categoriesId").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
         }
     });
-    //供货商
-    $.post("<%=request.getContextPath()%>/server/supplier/allSupplier", function (data) {
-        for(var n in data){
-            $("#supplierId").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
-        }
-    });
 });
 
 //table start here
-table = $('#stock_table').dataTable({
+table = $('#goodsRawUse_table').dataTable({
 	   "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示  
        "bPaginate": true,//是否显示（应用）分页器  
        "bLengthChange": false,
@@ -149,11 +141,18 @@ table = $('#stock_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	var categoriesId = $("#categoriesId").val();
-      	var supplierId = $("#supplierId").val();
-      	aoData.push({"name":"categories","value":categoriesId});
-      	aoData.push({"name":"supplier","value":supplierId});
-      	aoData.push({"name":"stockPage","value":1});
+        var startTime = $("#startTime").val();
+        var endTime = $("#endTime").val();
+        var rawInfo = $("#goodsRaw_info").val();
+        if(!startTime){
+            startTime = "";
+        }
+        if(!endTime){
+            endTime = "";
+        }
+        aoData.push({"name":"startTime","value":startTime});
+        aoData.push({"name":"endTime","value":endTime});
+        aoData.push({"name":"rawInfo","value":rawInfo});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){

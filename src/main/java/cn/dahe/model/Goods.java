@@ -118,9 +118,9 @@ public class Goods {
     //是否是积分商品 0 不是 1 是
     @Column(name = "is_score")
     private int score;
-    //是否有配方(原材料ids)
-    @Column(name = "recipe")
-    private String recipe;
+    //是否有配方 0 沒有 1 有
+    @Column(name = "has_raws")
+    private int hasRaws;
 
 
     public int getId() {
@@ -387,12 +387,12 @@ public class Goods {
         this.categoriesName = categoriesName;
     }
 
-    public String getRecipe() {
-        return recipe;
+    public int getHasRaws() {
+        return hasRaws;
     }
 
-    public void setRecipe(String recipe) {
-        this.recipe = recipe;
+    public void setHasRaws(int hasRaws) {
+        this.hasRaws = hasRaws;
     }
 
     @Override

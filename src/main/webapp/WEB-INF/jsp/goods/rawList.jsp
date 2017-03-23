@@ -26,8 +26,6 @@
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="l">
                 <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增</a>
-                <a href="javascript:void(0);" onclick="unitDetail();" class="btn btn-primary radius">单位</a>
-                <a href="javascript:void(0);" onclick="smallTicketDetail();" class="btn btn-primary radius">厨打</a>
             </span>
             <span class="select-box" style="width: 100px;">
                 <select class="select radius" id="raw_status">

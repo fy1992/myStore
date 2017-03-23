@@ -24,12 +24,8 @@
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户 <span class="c-gray en">&gt;</span> 用户列表 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
-            <span class="select-box" style="width: 100px;">
-                <select class="select" id="changeShifts_static">
-                    <option value = "1">启用</option>
-                    <option value = "0">禁用</option>
-                </select>
-            </span>
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'startTime\')||\'%y-%M-%d\'}'})" id="startTime" class="input-text Wdate radius" style="width:120px;"/> 至
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}'})" id="endTime" class="input-text Wdate radius" style="width:120px;"/>
             <button id="changeShifts_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
@@ -128,6 +124,12 @@
         "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
             var startTime = $("#startTime").val();
             var endTime = $("#endTime").val();
+            if(!startTime){
+                startTime = "";
+            }
+            if(!endTime){
+                endTime = "";
+            }
             aoData.push({"name":"startTime","value":startTime});
             aoData.push({"name":"endTime","value":endTime});
         },

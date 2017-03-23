@@ -29,22 +29,24 @@ public class PermissionDaoImpl extends BaseDaoImpl<Permission> implements IPermi
 
     @Override
     public List<Permission> findAll(int type, Integer[] levels) {
-        StringBuffer hql = new StringBuffer("from Permission where level in (");
+        StringBuffer hql = new StringBuffer("from Permission where 1=1");
         Integer[] param;
         if(type != -1){
             param = new Integer[levels.length + 1];
-            hql.append(" and type = ?");
             param[levels.length] = type;
         }else{
             param = new Integer[levels.length];
         }
-
+        hql.append(" and level in (");
         for(int i = 0, len = levels.length; i < len; i++){
             hql.append("?,");
             param[i] = levels[i];
         }
         hql.deleteCharAt(hql.length() - 1);
         hql.append(")");
+        if(type != -1){
+            hql.append(" and type = ?");
+        }
         return this.list(hql.toString(), param);
     }
 

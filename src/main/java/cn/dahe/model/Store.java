@@ -70,7 +70,7 @@ public class Store {
     @Column(name = "start_price")
     private double startPrice;
     //网店状态  0 关闭 1 开启
-    @Column(name = "net_store_status'")
+    @Column(name = "net_store_status")
     private int netStoreStatus;
     //网店url
     @Column(name = "net_store_url")

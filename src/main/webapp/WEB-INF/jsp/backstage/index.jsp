@@ -15,7 +15,6 @@
 <link href="${ctxResource}/css/H-ui.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
-
 <title>易捷云收银管理系统</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
@@ -33,7 +32,7 @@
 	<a aria-hidden="false" class="Hui-nav-toggle" href="#"></a>
 </header>
 
-<aside class="Hui-aside">
+<aside class="Hui-aside" style="overflow: hidden;">
 	<div class="menu_dropdown bk_2 f-16">
         <c:forEach items="${channel}" var="c">
             <dl>
@@ -49,111 +48,6 @@
                 </dd>
             </dl>
         </c:forEach>
-		<%--<dl id="menu-sale">
-			<dt><i class="Hui-iconfont">&#xe616;</i> 销售<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd id = "">
-				<ul>
-					<li><a _href="#" href="javascript:void(0)">营业概况</a></li>
-					<li><a _href="#" href="javascript:void(0)">销售单据</a></li>
-					<li><a _href="#" href="javascript:void(0)">商品销售分析</a></li>
-				</ul>
-			</dd>
-		</dl>
-		<dl id="menu-goods">
-			<dt><i class="Hui-iconfont">&#xe6c0;</i> 商品<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-                    <li><a _href="<%=request.getContextPath()%>/server/goods/list" href="javascript:;">商品资料</a></li>
-                    <li><a _href="<%=request.getContextPath()%>/server/categories/treeAndList" href="javascript:;">商品分类</a></li>
-					&lt;%&ndash;<li><a _href="<%=request.getContextPath()%>/server/channel/channelList/view" href="javascript:;">批量操作</a></li>
-					<li><a _href="<%=request.getContextPath()%>/server/goods/channelList/view" href="javascript:;">排序管理</a></li>
-					<li><a _href="<%=request.getContextPath()%>/server/taste/channelList/view" href="javascript:;">口味管理</a></li>&ndash;%&gt;
-				</ul>
-			</dd>
-		</dl>
-		<dl id="menu-stock">
-			<dt><i class="Hui-iconfont">&#xe623;</i>库存<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a _href="<%=request.getContextPath()%>/server/stock/list" href="javascript:void(0)">日志记录</a></li>
-				</ul>
-			</dd>
-		</dl>
-		&lt;%&ndash;<dl id="menu-vip">
-			<dt><i class="Hui-iconfont">&#xe623;</i>会员<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a _href="#" href="javascript:void(0)">会员资料</a></li>
-					<li><a _href="#" href="javascript:void(0)">会员等级</a></li>
-					<li><a _href="#" href="javascript:void(0)">会员制度</a></li>
-					<li><a _href="#" href="javascript:void(0)">精准营销</a></li>
-					<li><a _href="#" href="javascript:void(0)">次卡管理</a></li>
-					<li><a _href="#" href="javascript:void(0)">购物卡管理</a></li>
-				</ul>
-			</dd>
-		</dl>&ndash;%&gt;
-		&lt;%&ndash;<dl id="menu-salePro">
-			<dt><i class="Hui-iconfont">&#xe623;</i>营销<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a _href="#" href="javascript:void(0)">充值赠送</a></li>
-					<li><a _href="#" href="javascript:void(0)">促销活动</a></li>
-				</ul>
-			</dd>
-		</dl>&ndash;%&gt;
-		<dl id="menu-member">
-			<dt><i class="Hui-iconfont">&#xe623;</i>员工<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a _href="<%=request.getContextPath()%>/server/employee/cashierList" href="javascript:void(0)">收银员</a></li>
-					<li><a _href="<%=request.getContextPath()%>/server/employee/salesList" href="javascript:void(0)">导购员</a></li>
-				</ul>
-			</dd>
-		</dl>
-        <dl id="menu-goodsFlow">
-            <dt><i class="Hui-iconfont">&#xe623;</i>货流<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-            <dd>
-                <ul>
-                    <li><a _href="<%=request.getContextPath()%>/server/supplier/list" href="javascript:void(0)">供货商</a></li>
-                    <li><a _href="<%=request.getContextPath()%>/server/goodsTraffic/list" href="javascript:void(0)">门店订货</a></li>
-                    <li><a _href="<%=request.getContextPath()%>/server/goodsTrafficManage/list" href="javascript:void(0)">货流管理</a></li>
-                    &lt;%&ndash;<li><a _href="#" href="javascript:void(0)">供货商结算</a></li>
-                    <li><a _href="#" href="javascript:void(0)">贷款汇总</a></li>&ndash;%&gt;
-                </ul>
-            </dd>
-        </dl>
-		<dl id="menu-store">
-			<dt><i class="Hui-iconfont">&#xe623;</i>门店<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a _href="<%=request.getContextPath()%>/server/store/list" href="javascript:void(0)">门店信息</a></li>
-				</ul>
-			</dd>
-		</dl>
-        <dl id="menu-permission">
-            <dt><i class="Hui-iconfont">&#xe623;</i>权限<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-            <dd>
-                <ul>
-                    <li><a _href="<%=request.getContextPath()%>/server/permission/list" href="javascript:void(0)">权限信息</a></li>
-                </ul>
-            </dd>
-        </dl>--%>
-		<%--<dl id="menu-supplier">
-			<dt><i class="Hui-iconfont">&#xe623;</i>供货<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a _href="<%=request.getContextPath()%>/server/supplier/list" href="javascript:void(0)">我的供货</a></li>
-				</ul>
-			</dd>
-		</dl>--%>
-		<%--<dl id="menu-user">
-			<dt><i class="Hui-iconfont">&#xe623;</i>账户<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a _href="#" href="javascript:void(0)">账户信息</a></li>
-				</ul>
-			</dd>
-		</dl>--%>
 	</div>
 </aside>
 <div class="dislpayArrow"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
