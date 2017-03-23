@@ -17,7 +17,7 @@
 <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 
-<title>商品列表</title>
+<title>原材料列表</title>
 </head>
 <body class="pos-r">
 <div>
@@ -26,8 +26,6 @@
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="l">
                 <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增</a>
-                <a href="javascript:void(0);" onclick="unitDetail();" class="btn btn-primary radius">单位</a>
-                <a href="javascript:void(0);" onclick="smallTicketDetail();" class="btn btn-primary radius">厨打</a>
             </span>
             <span class="select-box" style="width: 100px;">
                 <select class="select radius" id="raw_status">
@@ -45,11 +43,6 @@
                     <option value="-1">全部供应商</option>
                 </select>
             </span>
-            <%--<span class="select-box radius" style="width: 100px;">
-                <select class="select" id="raw_tags">
-                    <option value="-1">全部标签</option>
-                </select>
-            </span>--%>
             <input type="text" id="raw_info" placeholder="条码/名称/拼音码" style="width:260px" class="input-text radius">
             <button id="raw_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
@@ -64,7 +57,7 @@
                         <th width="50">拼音码</th>
                         <th width="50">分类</th>
                         <th width="50">库存</th>
-                        <th width="80">主单位</th>
+                        <th width="80">单位</th>
                         <th width="50">进货价</th>
                         <th width="50">销售价</th>
                         <th width="30">供货商</th>
@@ -100,12 +93,6 @@ $(function(){
     $.post("<%=request.getContextPath()%>/server/supplier/allSupplier", function (data) {
         for(var n in data){
             $("#raw_supplier").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
-        }
-    });
-    //标签
-    $.post("<%=request.getContextPath()%>/server/goods/findAllGoodsTags", function (data) {
-        for(var n in data){
-            $("#raw_tags").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
         }
     });
 });
