@@ -25,8 +25,8 @@
         <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>促销类型：</label>
             <div class="formControls col-7">
-                <div class="radius">
-                    <select id="salesCampaignType" name = "type" class="select" style="height: 35px;">
+                <div class="select-box radius" id="salesCampaignType">
+                    <select name = "type" class="select" style="height: 35px;">
                         <option value selected>请选择促销类型</option>
                         <option value = "0">打折促銷</option>
                         <option value = "1">套餐促銷</option>

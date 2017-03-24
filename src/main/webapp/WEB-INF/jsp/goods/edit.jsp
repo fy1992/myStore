@@ -58,11 +58,11 @@
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>分类：</label>
                     <div class="formControls col-6">
-                    	<div class="radius">
-                        <select id="categories" name = "categoriesId" class="select">
+                    	<span class="select-box radius" id="categories">
+                        <select name = "categoriesId" class="select">
                             <option value selected>- 请选择商品分类 -</option>
                         </select>
-                        </div>
+                        </span>
                     </div>
                     <div class="col-3"> </div>
                 </div>
