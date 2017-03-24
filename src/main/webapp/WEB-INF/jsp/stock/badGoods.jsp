@@ -21,36 +21,25 @@
 </head>
 <body class="pos-r">
 <div>
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 库存 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 库存 <span class="c-gray en">&gt;</span> 商品報損 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
-            <span class="select-box" style="width: 100px;">
-                <select class="select radius" id="categoriesId">
-                    <option value="0">全部分类</option>
-                </select>
-            </span>
-            <span class="select-box" style="width: 120px;">
-                <select class="select radius" id="supplierId">
-                    <option value="0">全部供货商</option>
-                </select>
-            </span>
-            <button id="stock_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'startTime\')||\'%y-%M-%d\'}'})" id="startTime" class="input-text Wdate radius" style="width:120px;"/> 至
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}'})" id="endTime" class="input-text Wdate radius" style="width:120px;"/>
+            <button id="badGoods_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
-            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="stock_table">
+            <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="badGoods_table">
                 <thead>
                 <tr class="text-c">
                     <th width="50">序号</th>
-                    <th width="200">商品名称</th>
-                    <th width="100">条码</th>
-                    <th width="100">商品分类</th>
-                    <th width="100">供货商</th>
-                    <th width="100">现有库存</th>
-                    <th width="50">单位</th>
-                    <th width="50">库存上限</th>
-                    <th width="50">库存下限</th>
-                    <th width="50">到期日期</th>
-                    <th width="50">保质情况</th>
+                    <th width="200">操作</th>
+                    <th width="100">報損時間</th>
+                    <th width="100">報損門店</th>
+                    <th width="100">報損金額</th>
+                    <th width="100">營業額占比</th>
+                    <th width="50">報損人</th>
+                    <th width="50">備注</th>
                 </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -65,30 +54,17 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
-<script type="text/javascript" src="${ctxResource}/js/laydate/laydate.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
     //搜索
     $(function(){
-        $("#stock_search").click(function(){
+        $("#badGoods_search").click(function(){
             table.fnDraw();
-        });
-
-        //类别
-        $.post("<%=request.getContextPath()%>/server/categories/categoriesList", function (data) {
-            for(var n in data){
-                $("#categoriesId").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
-            }
-        });
-        //供货商
-        $.post("<%=request.getContextPath()%>/server/supplier/allSupplier", function (data) {
-            for(var n in data){
-                $("#supplierId").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
-            }
         });
     });
 
     //table start here
-    table = $('#stock_table').dataTable({
+    table = $('#badGoods_table').dataTable({
         "bProcessing": true,//DataTables载入数据时，是否显示‘进度’提示
         "bPaginate": true,//是否显示（应用）分页器
         "bLengthChange": false,
@@ -135,7 +111,7 @@
         "fnFormatNumber": function(iIn){
             return iIn;//格式化数字显示方式
         },
-        "sAjaxSource" : "<%=request.getContextPath()%>/server/goods/list",
+        "sAjaxSource" : "<%=request.getContextPath()%>/server/goods/badGoodsList",
         //服务器端，数据回调处理
         "fnServerData" : function(sSource, aDataSet, fnCallback) {
             $.ajax({
@@ -149,11 +125,16 @@
             });
         },
         "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-            var categoriesId = $("#categoriesId").val();
-            var supplierId = $("#supplierId").val();
-            aoData.push({"name":"categories","value":categoriesId});
-            aoData.push({"name":"supplier","value":supplierId});
-            aoData.push({"name":"stockPage","value":1});
+            var startTime = $("#startTime").val();
+            var endTime = $("#endTime").val();
+            if(!startTime){
+                startTime = "";
+            }
+            if(!endTime){
+                endTime = "";
+            }
+            aoData.push({"name":"startTime","value":startTime});
+            aoData.push({"name":"endTime","value":endTime});
         },
         "fnDrawCallback" : function () {
             $('#redirect').keyup(function(e){

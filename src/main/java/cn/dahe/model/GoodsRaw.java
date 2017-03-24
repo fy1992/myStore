@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 public class GoodsRaw {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     //条码
     @Column(name = "raw_no")

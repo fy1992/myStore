@@ -3,17 +3,8 @@ package cn.dahe.controller;
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.Pager;
-import cn.dahe.model.Categories;
-import cn.dahe.model.Goods;
-import cn.dahe.model.GoodsTags;
-import cn.dahe.model.GoodsUnit;
-import cn.dahe.model.SmallTicket;
-import cn.dahe.model.User;
-import cn.dahe.service.ICategoriesService;
-import cn.dahe.service.IGoodsService;
-import cn.dahe.service.IGoodsTagsService;
-import cn.dahe.service.IGoodsUnitService;
-import cn.dahe.service.ISmallTicketService;
+import cn.dahe.model.*;
+import cn.dahe.service.*;
 import cn.dahe.util.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
@@ -55,6 +46,8 @@ public class GoodsController {
     private ISmallTicketService smallTicketService;
     @Resource
     private ICategoriesService categoriesService;
+    @Resource
+    private IBadGoodsService badGoodsService;
     // 商品单位
     //=====================================goodsUnit begin=====================================================
     /***
@@ -661,4 +654,25 @@ public class GoodsController {
         return json;
     }
     //=======================================goods end=========================================================
+    //=======================================badGoods begin=========================================================
+    /**
+     * 列表页查询
+     * */
+    @RequestMapping(value = "/badGoodsList", method = RequestMethod.GET)
+    public String getBadGoodsList(){
+        return "stock/badGoods";
+    }
+
+    /**
+     * 列表页查询
+     * */
+    @RequestMapping(value = "/badGoodsList", method = RequestMethod.POST)
+    @ResponseBody
+    public Pager<BadGoods> getBadGoodsList(HttpSession session, String aDataSet){
+        logger.info("--- badGoods list begin ---");
+        User user = (User)session.getAttribute("loginUser");
+        return badGoodsService.findByParams(aDataSet, user.getStoreId());
+    }
+
+    //=======================================badGoods end=========================================================
 }

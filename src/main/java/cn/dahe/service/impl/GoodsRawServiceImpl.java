@@ -42,7 +42,7 @@ public class GoodsRawServiceImpl implements IGoodsRawService{
 
     @Override
     public void update(GoodsRaw t) {
-
+        goodsRawDao.update(t);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class GoodsRawServiceImpl implements IGoodsRawService{
             }
             Pager<Object> params = new Pager<>();
             params.setStatus(status);
-            params.setOrderColumn("goods.id");
+            params.setOrderColumn("goodsRaw.id");
             params.setOrderDir("desc");
             params.setIntParam1(categories);
             params.setIntParam2(supplier);

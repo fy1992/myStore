@@ -203,6 +203,7 @@ table = $('#goods_table').dataTable({
         aoData.push({"name":"goodsTags","value":goodsTags});
         aoData.push({"name":"goodsInfo","value":goodsInfo});
         aoData.push({"name":"stockPage","value":0});
+        aoData.push({"name":"goodsTags","value":-1});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){

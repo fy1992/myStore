@@ -97,7 +97,7 @@ public class ChangeShiftsServiceImpl implements IChangeShiftsService {
             if(StringUtils.isNotBlank(endTime)){
                 params.setEndTime(DateUtil.format(endTime, "yyyy-MM-dd"));
             }
-            params.setOrderColumn("cd.id");
+            params.setOrderColumn("cs.id");
             params.setOrderDir("desc");
             if(s_id != 0){
                 storeId = s_id;

@@ -375,7 +375,7 @@ public class GoodsServiceImpl implements IGoodsService{
         goods.setImgUrl(goodsDto.getGoodsImg());
         goods.setVipSet(goodsDto.getVipSet());
         goods.setStoreId(storeId);
-        goods.setRecipe("");
+        goods.setHasRaws(0);
         int supplierId = StringUtil.formatStr2Int(goodsDto.getSupplierId());
         Supplier supplier = supplierDao.get(storeId);
         if(supplier != null){

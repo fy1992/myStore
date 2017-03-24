@@ -79,20 +79,6 @@ public class WechatController {
         }
         return json;
     }
-
-    /**
-     * 微信 管理员退出
-     * @return
-     */
-    @RequestMapping(value = "adminLogin", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxObj adminLogin(HttpSession session){
-        AjaxObj json = new AjaxObj();
-        session.removeAttribute("wechatUser");
-        json.setResult(1);
-        return json;
-    }
-
     //================ 管理员 end ================================================
 
 
@@ -116,7 +102,7 @@ public class WechatController {
     @ResponseBody
     public AjaxObj goodsList(int storeId, int cid, String openId){
         AjaxObj json = new AjaxObj();
-        List<ClientGoods> categoriesList = clientGoodsService.goodsListByCategories(cid);
+        List<ClientGoods> categoriesList = clientGoodsService.goodsListByCategories(cid, storeId);
         json.setResult(1);
         json.setObject(categoriesList);
         return json;
