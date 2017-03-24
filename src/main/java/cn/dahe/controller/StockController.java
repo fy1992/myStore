@@ -30,6 +30,11 @@ public class StockController {
         return "stock/stockInfo";
     }
 
+    @RequestMapping(value = "rawList", method = RequestMethod.GET)
+    public String rawList(){
+        return "stock/goodsRawInfo";
+    }
+
     /**
      * 列表页查询
      */
