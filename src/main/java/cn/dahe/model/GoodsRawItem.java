@@ -17,18 +17,21 @@ public class GoodsRawItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    //所属商品编码
+    //所属商品id
     @Column(name = "goods_id")
     private int goodsId;
     //数量
     @Column(name = "raw_num")
     private int rawNum;
+    //原材料
     @Column(name = "raw_id")
     private int rawId;
     private String rawName;
     //单位Id
     @Column(name = "goods_unit_id")
     private int goodsUnitId;
+    @Column(name = "goods_unit_name")
+    private String goodsUnitName;
 
     public int getId() {
         return id;
@@ -76,5 +79,13 @@ public class GoodsRawItem {
 
     public void setGoodsUnitId(int goodsUnitId) {
         this.goodsUnitId = goodsUnitId;
+    }
+
+    public String getGoodsUnitName() {
+        return goodsUnitName;
+    }
+
+    public void setGoodsUnitName(String goodsUnitName) {
+        this.goodsUnitName = goodsUnitName;
     }
 }

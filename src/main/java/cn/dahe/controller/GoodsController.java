@@ -383,6 +383,12 @@ public class GoodsController {
     //=======================================smallTicket end=======================================================
     //商品
     //=======================================goods begin=========================================================
+    @RequestMapping(value = "recipe/{id}", method = RequestMethod.GET)
+    public String rawToGoods(@PathVariable int id, Model model){
+        model.addAttribute("id", id);
+        return "goods/rawToGoods";
+    }
+
     /**
      * 商品添加页面跳转
      * @return

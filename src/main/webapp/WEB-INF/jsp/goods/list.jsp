@@ -130,6 +130,7 @@ table = $('#goods_table').dataTable({
 	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
 	       var btn ="<a style='text-decoration:none' onclick='edit(\""+full.id+"\")'>编辑</a>";
+	       btn += "&nbsp;<a style='text-decoration:none' onclick='recipe(\""+full.id+"\")'>配方</a>";
 	       btn += "&nbsp;<a style='text-decoration:none' onclick='del(\""+full.id+"\")'>删除</a>";
 	       return btn;
         }},
@@ -149,7 +150,7 @@ table = $('#goods_table').dataTable({
         },
         {"mData" : "supplierName", "sDefaultContent" : "","bSortable":false,"sClass":"center"},
         {"mData" : "productionDate", "sDefaultContent" : "", "mRender":function(data, type, full){
-               return format(data);
+               return format(data).substring(0,10);
            },"bSortable":false,"sClass":"center"
         },
 	    {"mData" : "shelfLife", "sDefaultContent" : "", "mRender":function(data, type, full){
@@ -259,7 +260,7 @@ function tagsDetail() {
 }*/
 
 //导入
-function importIn() {
+/*function importIn() {
     layer.open({
         type: 2,
         title: "<i class=\"Hui-iconfont c-primary mr-5\">&#xe619;</i> 批量导入",
@@ -269,7 +270,7 @@ function importIn() {
         area: ['480px', '340px'],
         content: '/store/server/goods/importIn'
     });
-}
+}*/
 
 //商品编辑
 function edit(id){
@@ -297,6 +298,11 @@ function del(id){
             })
         }
     )
+}
+
+//配方
+function recipe(id) {
+    layer_show("商品配方管理", "<%=request.getContextPath()%>/server/goods/recipe/"+id, "490", "440");
 }
 </script>
 </body>

@@ -33,7 +33,7 @@ public interface IClientOrderDao extends IBaseDao<ClientOrder>{
      */
     List<ClientOrder> findByVipNo(String vipNo);
 
-    List<ClientOrder> findByStoreId(int storeId);
+    List<ClientOrder> findByStoreId(int storeId, int status);
 
     List<ClientOrder> findByOpenId(String openId);
 }

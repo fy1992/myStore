@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-goods-edit" action = "<%=request.getContextPath()%>/server/goods/editGoods" type = "post">
+    <form class="form form-horizontal" id="form-raw-edit" action = "<%=request.getContextPath()%>/server/raw/edit" type = "post">
         <div class="row cl mb-30">
             <div class="col-8">
             	<div class="row cl">
@@ -44,9 +44,9 @@
                     <div class="formControls col-6">
                         <span>${raw.rawNo}</span>
                         <input name = "id" value = "${raw.id}" type = "hidden"/>
-                        <input name = "goodsNo" value = "${raw.rawNo}" type = "hidden"/>
+                        <input name = "rawNo" value = "${raw.rawNo}" type = "hidden"/>
                         <input name = "storeId" value = "${raw.storeId}" type = "hidden"/>
-                        <input name = "storeName" value = "${raw.storeName}" type = "hidden"/>
+                        <input name = "storeName" <c:if test="${not empty raw.storeName}">value = "${raw.storeName}"</c:if> type = "hidden"/>
                     </div>
                     <div class="col-3"></div>
                 </div>
@@ -60,12 +60,12 @@
                 <div class="row cl">
                     <label class="form-label col-3"><span class="c-red">* </span>分类：</label>
                     <div class="formControls col-6">
-                    	<div class="radius">
+                    	<span class="radius">
                             <input type="hidden" value="${raw.categoriesName}" name = "categoriesName">
-                        <select id="categories" name = "categoriesId" class="select">
-                            <option value selected>- 请选择原材料分类 -</option>
-                        </select>
-                        </div>
+                            <select  id="categories" name = "categoriesId" class="select">
+                              <option value selected>- 请选择原材料分类 -</option>
+                            </select>
+                        </span>
                     </div>
                     <div class="col-3"> </div>
                 </div>
@@ -91,51 +91,23 @@
                 <div class="clearfix">
                 	<div id="btnShowEditImages" class="defaultImage">
                     	<h1>编辑图片</h1>
-	                	<img src="${raw.goodsImg}" id="imgPath"/>
-                        <input type = "hidden" value="${raw.goodsImg}" name = "goodsImg" id = "goodsImg">
+	                	<img <c:if test="${not empty raw.imgUrl}">src="${raw.imgUrl}"</c:if> id="imgPath"/>
+                        <input type = "hidden" <c:if test="${not empty raw.imgUrl}">value="${raw.imgUrl}"</c:if> name = "imgUrl" id = "goodsImg">
                 	</div>
                 </div>
             </div>
         </div>
-
-        <div class="row cl text-l vipbox pt-20">
-            <div class="col-6 cl">
-                <label class="form-label f-l col-3">会员折扣：</label>
-                <div class="formControls f-l col-6">
-                    <div class="radio-box">
-                        <input type="radio" id="vip-1" name="vipSet" value = "1" <c:if test="${raw.vipSet eq 1}">checked</c:if>>
-                        <label for="vip-1">是</label>
-                    </div>
-                    <div class="radio-box">
-                        <input type="radio" id="vip-2" name="vipSet" value = "0" <c:if test="${raw.vipSet eq 0}">checked</c:if>>
-                        <label for="vip-2">否</label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 cl">
-                <label class="form-label col-3">会员价：</label>
-                <div class="formControls col-6">
-                    <input type = "text" class="input-text radius mr-5"  id = "vipPrice" name = "vipPrice" value = "${raw.vipPrice}" style="width: 90%;" disabled/><label>元</label>
-                </div>
-            </div>
-        </div>
         <div class="row cl">
-            <div class="col-6 cl">
-                <label class="form-label col-3">批发价：</label>
-                <div class="formControls col-6">
-                    <input type = "text"  class="input-text radius mr-5" id="tradePrice" name = "tradePrice" value = "${raw.tradePrice}" style="width: 90%;"/><label>&nbsp;元</label>
-                </div>
+            <label class="form-label col-3">单位：</label>
+            <div class="formControls col-6">
+                <span class="select-box radius">
+                    <input type="hidden" value="${raw.mainUnitName}" name = "mainUnitName">
+                    <select id="mainUnit" name = "mainUnitId" class="select">
+                        <option value = "-1">- 请选择 -</option>
+                    </select>
+                </span>
             </div>
-            <div class="col-6 cl">
-                <label class="form-label col-3">主单位：</label>
-                <div class="formControls col-6">
-                    <span class="select-box radius">
-                        <select id="mainUnit" name = "mainUnit" class="select">
-                            <option value = "-1">- 请选择 -</option>
-                        </select>
-                    </span>
-                </div>
-            </div>
+            <div class="col-3"> </div>
         </div>
         <div class="row cl">
         	<div class="col-6 cl">
@@ -149,6 +121,7 @@
         		<label class="form-label col-3">供货商：</label>
 	            <div class="formControls col-6">
 	            	<span class="select-box radius">
+                        <input type="hidden" value="${raw.supplierName}" name = "supplierName">
 		                <select class="select" id = "supplier" name = "supplierId">
 		                    <option value = "0">- 请选择供货商 -</option>
 		                </select>
@@ -161,7 +134,7 @@
             <div class="col-6">
                 <label class="form-label col-3">生产日期：</label>
                 <div class="formControls col-6">
-                    <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'productionDate\')||\'%y-%M-%d\'}'})" id="productionDate" name="productionDate" value = "${raw.productionDate}" class="input-text Wdate radius" placeholder="请选择生产日期"/>
+                    <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'productionDate\')||\'%y-%M-%d\'}'})" id="productionDate" name="productionDate" class="input-text Wdate radius" placeholder="请选择生产日期"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -190,32 +163,6 @@
             </div>
         </div>
         <div class="row cl">
-        	<div class="col-6">
-	            <label class="form-label col-3">厨房票打：</label>
-	            <div class="formControls col-5">
-	            	已选中 <label class="c-red" id = "smallTicketNum">0</label>个<a id="cardType" class="btn btn-default radius size-S ml-15">去选择</a>
-	            </div>
-	            <div class="col-3"> </div>
-	        </div>
-	        <div class="col-6">
-	            <label class="form-label col-3">商品标签：</label>
-	            <div class="formControls col-5">
-	            	<a class="btn btn-default radius size-S" id="labelChange">+ 选择标签</a>
-	            	<div class="labelBox mt-10" id="showGoodsTags">
-	            	</div>
-	            </div>
-	            <div class="col-3"> </div>
-	        </div>
-        </div>
-        <div class="row cl">
-        	<div class="col-8">
-	            <label class="form-label col-3">备注：</label>
-	            <div class="formControls col-9">
-	                <textarea rows="2" maxlength="200" class="edit_txt textarea radius" id="goodsDescription" name = "description"  value = "${raw.description}">${raw.description}</textarea>
-	            </div>
-	        </div>
-        </div>
-        <div class="row cl">
             <div class="col-10 col-offset-5 mt-20">
                 <input class="btn btn-primary radius" type="submit" id="goodsRawEdiBtn" value="&nbsp;&nbsp;&nbsp;&nbsp;确认&nbsp;&nbsp;&nbsp;&nbsp;">
             </div>
@@ -232,20 +179,12 @@
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
 $(function(){
-    //随机生成编号
-    $("#randomNo").on("click", function () {
-        $.post("<%=request.getContextPath()%>/server/goods/newGoodsNo", function(data){
-            if(data.result == 1){
-                $("#rawNo").val(data.msg);
-                $("#rawNo").removeClass("Validform_error");
-                $("#rawNo").parent().find("span").removeClass("Validform_error").addClass("Validform_right").text("通过消息验证！").css("color", "black");
-                $("#randomNo").css("display", "none");
-                $("#help_tooltip").show();
-            }
-        });
-    });
-
-    var  validtor = $("#form-goodsRaw-edit").Validform({
+    var productionDate = "${raw.productionDate}";
+    if(productionDate){
+        productionDate = productionDate.substring(0, 10);
+    }
+    $("#productionDate").val(productionDate);
+    var  validtor = $("#form-raw-edit").Validform({
         tiptype:4,
         showAllError:true,
         ajaxPost: true,
@@ -295,36 +234,10 @@ $(function(){
         }
     ]);
 
-	$("#cardType").click(function(){
-	    var stsIds = $("#stsIds").val();
-	    if(!stsIds){
-            stsIds = "${goodsDto.smallTickets}";
-        }
-	    var url = "<%=request.getContextPath()%>/server/goods/smallTicketSelect";
-	    if(stsIds){
-            url += "?stsIds="+ stsIds;
-        }
-        layer_show("厨房票打设置", url, "550", "400");
-	});
-	
-	$("#labelChange").click(function(){
-	    var url = "<%=request.getContextPath()%>/server/goods/goodsTagsSelect";
-        var tagsIds = $("#tagsIds").val();
-        $(".tagsIds").each(function(){
-            if($(this).val()){
-                tagsIds.push($(this).val());
-            }
-        });
-        if(!tagsIds || tagsIds.length == 0){
-            tagsIds = "${goodsDto.goodsTagss}";
-        }
-        url += "?tagsIds=" + tagsIds.toString();
-        layer_show("选择标签", url, "550", "400");
-	});
 
 	//编辑图片
 	$("#btnShowEditImages").click(function(){
-        layer_show("商品图片", "<%=request.getContextPath()%>/server/goods/uploadImg", "1000", "500");
+        layer_show("原材料图片", "<%=request.getContextPath()%>/server/goods/uploadImg", "1000", "500");
 	});
 
     //分类
@@ -332,14 +245,14 @@ $(function(){
         for(var n in data){
             $("#categories").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
-        $("#categories").val(${goodsDto.categoriesId});
+        $("#categories").val(${raw.categoriesId});
     });
     //供应商
     $.post("<%=request.getContextPath()%>/server/supplier/allSupplier", function(data){
         for(var n in data){
             $("#supplier").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
-        $("#supplier").val(${goodsDto.supplierId});
+        $("#supplier").val(${raw.supplierId});
     });
 
     //单位
@@ -347,16 +260,8 @@ $(function(){
         for(var n in data){
             $("#mainUnit").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
-        $("#mainUnit").val(${goodsDto.mainUnit});
+        $("#mainUnit").val(${raw.mainUnitId});
     });
-
-    if($("input[name='vipSet']:checked").val() == 0){
-        $("#vipPrice").attr("disabled", false);
-    }
-
-    $("input[name='vipSet']").on("click", function(){
-        $("#vipPrice").attr("disabled", $(this).val() != 0);
-    })
 })
 </script>
 </body>

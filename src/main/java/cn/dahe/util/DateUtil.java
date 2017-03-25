@@ -1,10 +1,15 @@
 package cn.dahe.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class DateUtil {
@@ -47,12 +52,17 @@ public class DateUtil {
 		Date d = null;
 		try {
 			d = new SimpleDateFormat(pattern).parse(date);
-		} catch (ParseException e) {
+        } catch (ParseException e) {
 			logger.info("string to date is error!!!");
 		}
 		return d;
 	}
-	
+
+	public static Date formatD2D(Date date, String pattern){
+	    String str = format(date, pattern);
+	    return format(str, pattern);
+    }
+
 	public static Date format(String date){
 		return format(date,null);
 	}
@@ -102,11 +112,6 @@ public class DateUtil {
     }
 	
 	public static void main(String[] args) {
-		String year = format(new Date(), "yyyy");
-		String monthday = format(new Date(), "MMdd");
-		System.out.println(year);
-		System.out.println(monthday);
-	}
-
-
+        System.out.println(formatD2D(new Date(), "yyyy-MM-dd"));
+    }
 }

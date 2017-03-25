@@ -6,7 +6,9 @@ import cn.dahe.dao.IStoreDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.ClientGoodsRaw;
 import cn.dahe.model.GoodsRaw;
+import cn.dahe.model.Store;
 import cn.dahe.service.IGoodsRawService;
+import cn.dahe.util.StringUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,11 +27,21 @@ public class GoodsRawServiceImpl implements IGoodsRawService{
     private static Logger logger = LoggerFactory.getLogger(GoodsRawServiceImpl.class);
     @Resource
     private IGoodsRawDao goodsRawDao;
+    @Resource
+    private IStoreDao storeDao;
 
     @Override
     public boolean add(GoodsRaw t) {
         GoodsRaw goods = goodsRawDao.findByRawNo(t.getRawNo(), t.getStoreId());
         if(goods == null) {
+            Store store = storeDao.get(t.getStoreId());
+            t.setStoreName(store.getName());
+            if(StringUtil.isBlank(t.getImgUrl())){
+                t.setImgUrl("");
+            }
+            if(t.getProductionDate() == null){
+                t.setProductionDate(new Date());
+            }
             goodsRawDao.add(t);
             return true;
         }
