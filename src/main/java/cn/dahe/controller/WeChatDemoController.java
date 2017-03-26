@@ -9,15 +9,21 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.dahe.model.Vip;
+import cn.dahe.service.IVipService;
 import cn.dahe.util.HttpRequestProxy;
 import cn.dahe.util.WechatConstant;
+import weixin.popular.api.SnsAPI;
 import weixin.popular.api.TokenAPI;
+import weixin.popular.api.UserAPI;
 import weixin.popular.bean.message.EventMessage;
+import weixin.popular.bean.sns.SnsToken;
 import weixin.popular.bean.token.Token;
+import weixin.popular.bean.user.User;
 import weixin.popular.util.SignatureUtil;
 import weixin.popular.util.XMLConverUtil;
 
@@ -32,6 +38,9 @@ import weixin.popular.util.XMLConverUtil;
 public class WeChatDemoController {
 
 	private static Logger logger = LoggerFactory.getLogger(WeChatDemoController.class);
+
+	@Autowired
+	private IVipService vipService;
 
 	/**
 	 * 微信服务器验证
@@ -60,7 +69,7 @@ public class WeChatDemoController {
 			// 转换XML
 			EventMessage eventMessage = XMLConverUtil.convertToObject(EventMessage.class, inputStream);
 			// 订阅
-			if(eventMessage.getEvent().equals("subscribe")){
+			if (eventMessage.getEvent().equals("subscribe")) {
 				String openId = eventMessage.getFromUserName();
 				System.out.println("openId:" + openId);
 				System.out.println("event:" + eventMessage.getEvent());
@@ -77,9 +86,19 @@ public class WeChatDemoController {
 	 */
 	@RequestMapping(value = "wxAuth")
 	public String wxAuth(String return_url, String code, HttpSession session) {
-		session.setAttribute("wxUser", new Vip());
 		logger.info("return_url:" + return_url);
 		logger.info("code:" + code);
+		SnsToken snsToken = SnsAPI.oauth2AccessToken(WechatConstant.appid, WechatConstant.secret, code);
+		// 根据openId查找用户,如果有则放入session中,没有则新建vip用户。
+		Vip vip = vipService.findByOpenId(snsToken.getOpenid());
+		if (vip == null) {
+			Vip newVip = new Vip();
+			User user = UserAPI.userInfo(snsToken.getAccess_token(), snsToken.getOpenid(), 5);
+//			newVip.setOpenId(user.getOpenid());
+			// TODO ...
+			vipService.add(newVip);
+		}
+		session.setAttribute("wxUser", vip);
 		return "redirect:" + return_url;
 	}
 
