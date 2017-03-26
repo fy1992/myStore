@@ -16,6 +16,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
@@ -161,8 +162,35 @@ public class HttpRequestProxy {
 		return null;
 	}
 	
-	
-	
-	public static void main(String[] args) {
+	public static String doPost(String url, String entity){
+		logger.info("--- POST BEGIN ---");
+		if (StringUtils.isBlank(url)) {
+			return null;
+		}
+		try {
+			HttpPost httpPost = new HttpPost(url);
+			httpPost.setEntity(new StringEntity(entity, CHARSET));
+			CloseableHttpResponse response = httpClient.execute(httpPost);
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode != 200) {
+				httpPost.abort();
+				throw new RuntimeException("HttpClient,error status code :"
+						+ statusCode);
+			}
+			HttpEntity rspEntity = response.getEntity();
+			String result = null;
+			if (entity != null) {
+				result = EntityUtils.toString(rspEntity, "utf-8");
+			}
+			EntityUtils.consume(rspEntity);
+			response.close();
+			logger.info("--- POST END ---");
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("--- POST END ---");
+		return null;
 	}
+	
 }

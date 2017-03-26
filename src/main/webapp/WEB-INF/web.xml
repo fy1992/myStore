@@ -46,6 +46,10 @@
    <listener>
         <listener-class>cn.dahe.listener.InitListener</listener-class>
    </listener>
+   
+	<listener>
+        <listener-class>cn.dahe.listener.WechatTokenListener</listener-class>
+   </listener>
 
   <!-- Spring MVC -->
   <servlet>
