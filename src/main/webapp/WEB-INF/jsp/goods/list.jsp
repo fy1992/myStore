@@ -129,8 +129,12 @@ table = $('#goods_table').dataTable({
        "aoColumns" : [
 	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
+	       var fontColor = "c-success";
+            if(full.hasRaws == 0){
+                fontColor = "c-333";
+           }
 	       var btn ="<a style='text-decoration:none' onclick='edit(\""+full.id+"\")'>编辑</a>";
-	       btn += "&nbsp;<a style='text-decoration:none' onclick='recipe(\""+full.id+"\")'>配方</a>";
+	       btn += "&nbsp;<a style='text-decoration:none' class='"+ fontColor +"' onclick='recipe(\""+full.id+"\")'>配方</a>";
 	       btn += "&nbsp;<a style='text-decoration:none' onclick='del(\""+full.id+"\")'>删除</a>";
 	       return btn;
         }},

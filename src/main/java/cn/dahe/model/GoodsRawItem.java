@@ -26,7 +26,10 @@ public class GoodsRawItem {
     //原材料
     @Column(name = "raw_id")
     private int rawId;
+    @Column(name = "raw_name")
     private String rawName;
+    @Column(name = "raw_no")
+    private String rawNo;
     //单位Id
     @Column(name = "goods_unit_id")
     private int goodsUnitId;
@@ -87,5 +90,13 @@ public class GoodsRawItem {
 
     public void setGoodsUnitName(String goodsUnitName) {
         this.goodsUnitName = goodsUnitName;
+    }
+
+    public String getRawNo() {
+        return rawNo;
+    }
+
+    public void setRawNo(String rawNo) {
+        this.rawNo = rawNo;
     }
 }

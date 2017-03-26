@@ -4,73 +4,127 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>商品配方设置</title>
+    <title>商品原材料设置</title>
     <link href="${ctxResource}/css/H-ui.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<table class="table table-border table-bordered table-bg table-hover table-sort table-striped box-shadow mb-40">
+<table class="table table-border table-bordered table-bg box-shadow" id="xpjgl">
     <thead>
     <tr class="text-c">
-        <th>序号</th>
-        <th>配方名称</th>
-        <th>数量</th>
-        <th>单位</th>
+        <th width="100">原材料</th>
+        <th width="100">编码</th>
+        <th width="170">数量</th>
+        <th width="60">单位</th>
+        <th width="60">删除</th>
     </tr>
     </thead>
-    <tbody id = "smallTicketBox">
+    <tbody id = "rawList">
     </tbody>
 </table>
+<input type = "hidden" id = "check" value=""/>
+<p><a class="btn border-grey block mt-20 mb-40" id="addRaw">+ 添加原材料</a></p>
 <div class="cfpdBtnbox">
-    <a class="btn btn-primary size-M f-r pl-20 pr-20" id="ensure">确认</a>
+    <a class="btn btn-primary size-M f-r" id="save">保存</a>
+    <a class="btn btn-default size-M f-r" onclick="layer_close()">取消</a>
 </div>
 
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script>
     $(function(){
-        $.post("<%=request.getContextPath()%>/server/raw/goodsRawList", function(data){
+        $.post("<%=request.getContextPath()%>/server/raw/goodsRawItemList", {id : "${id}"}, function(data){
+            var initCheck = [];
             for(var n in data){
-                $("#smallTicketBox").append(
-                    "<tr class=\"text-c\">" +
-                    "<td><input type=\"checkbox\" value=\""+data[n].id+"\" name = \"smallTicketCb\" class=\"smallTicketCb\">" +
-                    "</td>" +
-                    "<td>"+data[n].id+"</td>" +
-                    "<td>"+data[n].name+"</td>" +
-                    "<td>"+ (data[n].type == 1  ? "一单一切" : "一品一切") +"</td>" +
-                    "</tr>"
-                );
+                $("#rawList").append("<tr class=\"text-c\">" +
+                    "<td><span type=\"text\" class=\"rawName\">"+data[n].rawName+"</span></td>" +
+                    "<td><span type=\"text\" class=\"rawNo\">"+data[n].rawNo+"</span><input type = 'hidden' value = '"+data[n].id+"' class=\"rawId\"/></td>" +
+                    "<td><input type='text' class=\"input-text rawNum\" value = \""+data[n].rawNum+"\"/></td>" +
+                    "<td><span type='text' class=\"goodsUnitName\">"+data[n].goodsUnitName+"</span><input type='hidden' class='goodsUnitId' value ='"+data[n].goodsUnitId+"'></td>" +
+                    "<td><a class=\"btn btn-danger size-MINI radius\" onclick=\"del("+data[n].id+", this)\">删除</a></td>" +
+                    "</tr>");
+                $(".rawType").eq(n).val(data[n].type);
+                initCheck.push(data[n].rawNo);
             }
-            var result = "${stsIds}";
-            if(result && result != 0){
-                var resultList = result.split(",");
-                $(".smallTicketCb").each(function () {
-                    if($.inArray($(this).val(), resultList) != -1){
-                        $(this).attr("checked", true);
-                    }
-                })
-            }
+            $("#check").val(initCheck);
         });
 
-        //确认
-        $("#ensure").click(function(){
-            var n = $("input[type = 'checkbox']:checked").length;
-            var stsids = [];
-            for(var i = 0; i < n; i++){
-                stsids.push($("input[type = 'checkbox']:checked").eq(i).val());
+        //添加配方
+        $("#addRaw").click(function(){
+            layer.open({
+                type: 2,
+                area: ['490px', '400px'],
+                fix: true, //不固定
+                title: false,
+                shadeClose: false,
+                shade: false,
+                closeBtn: 0,
+                content: "<%=request.getContextPath()%>/server/raw/rawToGoodsList/${id}"
+            });
+        });
+
+        //保存
+        $("#save").click(function(){
+            var len = $(".text-c").length;
+            var rawItems = [];
+            for(var i = 0; i < len - 1; i++){
+                var rawItem = new RawItem(
+                    "${id}",
+                    $(".rawNum").eq(i).val(),
+                    $(".rawId").eq(i).val(),
+                    $(".rawName").eq(i).text(),
+                    $(".rawNo").eq(i).text(),
+                    $(".goodsUnitId").eq(i).val(),
+                    $(".goodsUnitName").eq(i).text()
+                );
+                rawItems.push(rawItem);
             }
-            parent.$("#smallTicketNum").empty();
-            parent.$("#smallTicketNum").text(n);
-            parent.$("#smallTicketNum").append("<input type = 'hidden' value = '"+stsids.toString()+"' id = 'stsIds' name = 'smallTickets'>");
-            layer_close();
+            $.post("<%=request.getContextPath()%>/server/raw/addRawItem", {goodsId : "${id}", rawItems:JSON.stringify(rawItems)}, function (data) {
+                if(data.result == 1){
+                    window.parent.table.fnDraw();
+                    layer.msg(data.msg, {time : 2000, icon : 6}, function () {
+                        layer_close();
+                    });
+                }else{
+                    layer.msg(data.msg, {time : 2000, icon : 5});
+                }
+            });
         });
     });
 
+    //取消
     function layer_close(){
         var index = parent.layer.getFrameIndex(window.name);
         parent.layer.close(index);
     }
+
+    //删除
+    function del(id, obj){
+        layer.msg('确定要删除该原材料？', {
+            time: 0 ,//不自动关闭
+            btn: ['确定', '取消'],
+            yes: function(){
+                $(obj).parents("tr").remove();
+                var index = layer.alert();
+                layer.close(index);
+            }
+        });
+    }
+
+    function RawItem(goodsId, rawNum, rawId, rawName, rawNo, goodsUnitId, goodsUnitName) {
+        this.goodsId = goodsId;
+        this.rawNum = rawNum;
+        this.rawId = rawId;
+        this.rawName = rawName;
+        this.goodsUnitId = goodsUnitId;
+        this.goodsUnitName = goodsUnitName;
+        this.rawNo = rawNo;
+    }
 </script>
 </body>
 </html>
+
+

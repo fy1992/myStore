@@ -163,13 +163,51 @@ public class RawController {
     }
 
     /**
-     * 根据商品id查询配方
+     * 根据商品id查询配方明细
      * @param id
      * @return
      */
-    @RequestMapping(value = "goodsRawList", method = RequestMethod.POST)
+    @RequestMapping(value = "goodsRawItemList", method = RequestMethod.POST)
     @ResponseBody
     public List<GoodsRawItem> goodsRawList(int id){
         return goodsRawItemService.findByGoodsId(id);
+    }
+
+    /**
+     * 选择原材料
+     * @return
+     */
+    @RequestMapping(value = "rawToGoodsList/{id}", method = RequestMethod.GET)
+    public String rawToGoodsList(@PathVariable int id,  Model model){
+        model.addAttribute("goodsId", id);
+        return "goods/rawToGoodsList";
+    }
+
+    /**
+     * 查询原材料列表
+     * @return
+     */
+    @RequestMapping(value = "rawList", method = RequestMethod.POST)
+    @ResponseBody
+    public List<GoodsRaw> rawList(int cid, String rawName, HttpSession session){
+        User user = (User) session.getAttribute("loginUser");
+        Pager<Object> param = new Pager<>();
+        param.setIntParam1(cid);
+        param.setIntParam2(user.getStoreId());
+        param.setStringParam1(rawName);
+        return goodsRawService.findByParam(param);
+    }
+
+    /**
+     * 保存配方详单
+     */
+    @RequestMapping(value = "addRawItem", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj addRawItem(int goodsId, String rawItems){
+        AjaxObj json = new AjaxObj();
+        goodsRawItemService.addRawItems(goodsId, rawItems);
+        json.setResult(1);
+        json.setMsg("商品原材料设置完成");
+        return json;
     }
 }

@@ -116,4 +116,9 @@ public class GoodsRawServiceImpl implements IGoodsRawService{
     public List<GoodsRaw> findByCategoriesId(int categoriesId, int storeId) {
         return goodsRawDao.findByCategoriesId(categoriesId, storeId);
     }
+
+    @Override
+    public List<GoodsRaw> findByParam(Pager<Object> param) {
+        return goodsRawDao.findByParam(param);
+    }
 }

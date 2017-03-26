@@ -61,8 +61,8 @@
                     <label class="form-label col-3"><span class="c-red">* </span>分类：</label>
                     <div class="formControls col-6">
                     	<span class="radius">
-                            <input type="hidden" value="${raw.categoriesName}" name = "categoriesName">
-                            <select  id="categories" name = "categoriesId" class="select">
+                            <input type="hidden" value="${raw.categoriesName}" name = "categoriesName" id="categoriesName">
+                            <select  id="categories" name = "categoriesId" class="select" style="height: 35px;">
                               <option value selected>- 请选择原材料分类 -</option>
                             </select>
                         </span>
@@ -79,11 +79,6 @@
                 	<div class="formControls col-6"><input type = "text" class="input-text radius" id = "bid" name = "bid" value = "${raw.bid}" style="width: 90%;"/>&nbsp;<label>元</label></div>
                 	<div class="col-3"> </div>
                 </div>
-                <div class="row cl">
-                	<label class="form-label col-3">库存：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius text-r" id = "stock" name = "stock" value = "${raw.stock}" placeholder="请输入库存量（单位：个）"/></div>
-                	<div class="col-3"> </div>
-                </div>
             </div>
             <div class="col-4">
                 <div class="formControls clearfix">
@@ -98,16 +93,23 @@
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-3">单位：</label>
-            <div class="formControls col-6">
-                <span class="select-box radius">
-                    <input type="hidden" value="${raw.mainUnitName}" name = "mainUnitName">
-                    <select id="mainUnit" name = "mainUnitId" class="select">
-                        <option value = "-1">- 请选择 -</option>
-                    </select>
-                </span>
+            <div class="col-6 cl">
+                <label class="form-label col-3">库存：</label>
+                <div class="formControls col-6"><input type = "text" class="input-text radius text-r" id = "stock" name = "stock" value = "${raw.stock}" placeholder="请输入库存量（单位：个）"/></div>
+                <div class="col-3"> </div>
             </div>
-            <div class="col-3"> </div>
+            <div class="col-6 cl">
+                <label class="form-label col-3">单位：</label>
+                <div class="formControls col-6">
+                    <span class="select-box radius">
+                        <input type="hidden" value="${raw.mainUnitName}" id="mainUnitName" name = "mainUnitName">
+                        <select id="mainUnit" name = "mainUnitId" class="select">
+                            <option value = "-1">- 请选择 -</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="col-3"> </div>
+            </div>
         </div>
         <div class="row cl">
         	<div class="col-6 cl">
@@ -121,7 +123,7 @@
         		<label class="form-label col-3">供货商：</label>
 	            <div class="formControls col-6">
 	            	<span class="select-box radius">
-                        <input type="hidden" value="${raw.supplierName}" name = "supplierName">
+                        <input type="hidden" value="${raw.supplierName}" name = "supplierName" id="supplierName">
 		                <select class="select" id = "supplier" name = "supplierId">
 		                    <option value = "0">- 请选择供货商 -</option>
 		                </select>
@@ -246,6 +248,10 @@ $(function(){
             $("#categories").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
         $("#categories").val(${raw.categoriesId});
+        $("#categories").change(function () {
+            var name = $("#categories").find("option:selected").text();
+            $("#categoriesName").val(name);
+        })
     });
     //供应商
     $.post("<%=request.getContextPath()%>/server/supplier/allSupplier", function(data){
@@ -253,6 +259,10 @@ $(function(){
             $("#supplier").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
         $("#supplier").val(${raw.supplierId});
+        $("#supplier").change(function () {
+            var name = $("#supplier").find("option:selected").text();
+            $("#supplierName").val(name);
+        })
     });
 
     //单位
@@ -261,6 +271,10 @@ $(function(){
             $("#mainUnit").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
         $("#mainUnit").val(${raw.mainUnitId});
+        $("#mainUnit").change(function () {
+            var name = $("#mainUnit").find("option:selected").text();
+            $("#mainUnitName").val(name);
+        })
     });
 })
 </script>

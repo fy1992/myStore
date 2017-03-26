@@ -287,6 +287,7 @@ public class GoodsServiceImpl implements IGoodsService{
         goodsDto.setName(goods.getName());
         goodsDto.setBid(goods.getBid());
         goodsDto.setPinyin(goods.getPinyin());
+        goodsDto.setHasRaws(goods.getHasRaws());
         goodsDto.setVipSet(goods.getVipSet());
         goodsDto.setStatus(goods.getStatus());
         goodsDto.setProductionDate(DateUtil.format(new Date(), "yyy-MM-dd"));

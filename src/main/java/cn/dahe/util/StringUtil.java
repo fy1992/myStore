@@ -56,6 +56,9 @@ public class StringUtil extends StringUtils{
 		if(StringUtils.isBlank(str)){
 			return 0;
 		}
+		if(str.equals("0.0")){
+			str = "0";
+		}
 		return Integer.parseInt(str);
 	}
 

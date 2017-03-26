@@ -15,4 +15,6 @@ public interface IGoodsRawItemService {
     GoodsRawItem load(int id);
 
     List<GoodsRawItem> findByGoodsId(int goodsId);
+
+    void addRawItems(int goodsId, String rawItems);
 }

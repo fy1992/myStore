@@ -23,4 +23,6 @@ public interface IGoodsRawService {
     Pager<GoodsRaw> goodsRawList(String aDataSet, int storeId);
 
     List<GoodsRaw> findByCategoriesId(int categoriesId, int storeId);
+
+    List<GoodsRaw> findByParam(Pager<Object> param);
 }

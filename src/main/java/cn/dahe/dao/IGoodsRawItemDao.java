@@ -13,4 +13,6 @@ public interface IGoodsRawItemDao extends IBaseDao<GoodsRawItem>{
      * @return
      */
     List<GoodsRawItem> findByGoodsId(int goodsId);
+
+    void delByGoodsId(int goodsId);
 }

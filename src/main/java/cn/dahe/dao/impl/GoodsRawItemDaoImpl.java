@@ -16,4 +16,10 @@ public class GoodsRawItemDaoImpl extends BaseDaoImpl<GoodsRawItem> implements IG
         String hql = "from GoodsRawItem where goodsId = ?";
         return this.list(hql, goodsId);
     }
+
+    @Override
+    public void delByGoodsId(int goodsId) {
+        String hql = "delete from GoodsRawItem where goodsId = ?";
+        this.delete(hql, goodsId);
+    }
 }
