@@ -55,7 +55,7 @@
 		</div>
 		<div class="choose_two">
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</li>
 					<li><p>￥356478</p>
@@ -66,7 +66,7 @@
 				</ul>
 			</div>
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</li>
 					<li><p>￥356478</p>
@@ -77,7 +77,7 @@
 				</ul>
 			</div>
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利</li>
 					<li><p>￥356478</p>
@@ -88,7 +88,7 @@
 				</ul>
 			</div>
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利</li>
 					<li><p>￥356478</p>
@@ -99,7 +99,7 @@
 				</ul>
 			</div>
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利</li>
 					<li><p>￥356478</p>
@@ -110,7 +110,7 @@
 				</ul>
 			</div>
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利</li>
 					<li><p>￥356478</p>
@@ -121,7 +121,7 @@
 				</ul>
 			</div>
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利</li>
 					<li><p>￥356478</p>
@@ -132,7 +132,7 @@
 				</ul>
 			</div>
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利</li>
 					<li><p>￥356478</p>
@@ -143,7 +143,7 @@
 				</ul>
 			</div>
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利</li>
 					<li><p>￥356478</p>
@@ -154,7 +154,7 @@
 				</ul>
 			</div>
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利</li>
 					<li><p>￥356478</p>
@@ -165,7 +165,7 @@
 				</ul>
 			</div>
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利</li>
 					<li><p>￥356478</p>
@@ -176,7 +176,7 @@
 				</ul>
 			</div>
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利</li>
 					<li><p>￥356478</p>
@@ -187,7 +187,7 @@
 				</ul>
 			</div>
 			<div class="choose_wares">
-				<img src="../images/1.jpg">
+				<img src="${ctxResource}/images/wx-sj.jpg">
 				<ul>
 					<li>海鲜大杂烩意大利</li>
 					<li><p>￥356478</p>

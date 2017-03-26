@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
         http://www.springframework.org/schema/task
         http://www.springframework.org/schema/task/spring-task-3.2.xsd"
-	default-lazy-init="true">
+	>
 	
 	<!-- 加载配置文件 -->
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -19,17 +19,19 @@
 			<list>
 				<value>classpath:jdbc.properties</value>
 				<value>classpath:config.properties</value>
+				<value>classpath:wechat-cfg.properties</value>
 			</list>
 		</property>
 	</bean>
 
-    <!-- 打开Spring的Annotation支持 -->
-    <context:annotation-config/>
     <!-- 定时任务注解 -->
     <task:annotation-driven/>
+    
+    <!-- 打开Spring的Annotation支持 -->
+    <context:annotation-config/>
+    
 	<!-- 使用Annotation自动注册Bean，解决事物失效问题：在主容器中不扫描@Controller注解，在SpringMvc中只扫描@Controller注解。 -->
 	<context:component-scan base-package="cn.dahe"/>
-
 
 	<!-- 配置数据源 -->
 	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
@@ -111,7 +113,6 @@
         <aop:pointcut expression="execution(* cn.dahe.service.*.*(..))" id="transactionPointcut"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointcut"/>
     </aop:config>
-	
 
 	<!-- 配置druid监控spring jdbc -->
 	<bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"/>
@@ -131,4 +132,12 @@
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="classpath:${ehcache.configFile}"/>
 	</bean>
+	
+	<!-- 微信常量配置 -->
+	<bean class="cn.dahe.util.WechatConstant">
+		<property name="token" value="${token}"></property>
+		<property name="appid" value="${appID}"></property>
+		<property name="secret" value="${appsecret}"></property>
+	</bean>
+	
 </beans>
