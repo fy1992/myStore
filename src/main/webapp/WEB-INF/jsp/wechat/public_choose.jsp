@@ -54,171 +54,33 @@
 			</ul>
 		</div>
 		<div class="choose_two">
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>12</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>0</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>0</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>0</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>0</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>0</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>0</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>0</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>0</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>0</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>0</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>0</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
-			<div class="choose_wares">
-				<img src="${ctxResource}/images/wx-sj.jpg">
-				<ul>
-					<li>海鲜大杂烩意大利</li>
-					<li><p>￥356478</p>
-						<div class="calculator">
-							<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>0</i>
-							<span class="glyphicon glyphicon-plus-sign add corange"></span>
-						</div></li>
-				</ul>
-			</div>
+			<c:forEach var="goods" items="${goodsList }">
+				<div class="choose_wares">
+					<img src="${goods.imgUrl }">
+					<ul>
+						<li>${goods.goodsName }</li>
+						<li><p>￥${goods.price }</p>
+							<div class="calculator">
+								<span class="glyphicon glyphicon-minus-sign rem cgrey"></span>
+								<i>0</i>
+								<span class="glyphicon glyphicon-plus-sign add corange"></span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</c:forEach>
 		</div>
 		<div class="choose_three">
 			<ul>
-				<li><a href="public_shopping.html"><span
-						class="glyphicon glyphicon-shopping-cart"></span>购物车:￥23546816</a><i>99</i></li>
+				<li><a href="public_shopping.html"><span class="glyphicon glyphicon-shopping-cart"></span>购物车:￥0</a><i>0</i></li>
 				<li><a><span class="glyphicon glyphicon-search"></span></a></li>
 			</ul>
 		</div>
 		<ul class="glyfl">
 			<li><a>全部显示</a></li>
-			<li><a>促销商品</a></li>
-			<li><a>套餐</a></li>
-			<li><a>热菜</a></li>
-			<li><a>川菜</a></li>
-			<li><a>推品</a></li>
-			<li><a>合作商品</a></li>
-			<li><a>推荐商品合作商</a></li>
-			<li><a>推荐商合作商品</a></li>
-			<li><a>推荐商品</a></li>
-			<li><a>推荐商品</a></li>
-			<li><a>推荐商品</a></li>
-			<li><a>推荐商品</a></li>
+			<c:forEach var="categ" items="${categList }">
+				<li><a>${categ.name }</a></li>
+			</c:forEach>
 		</ul>
 	</div>
 	<script>
