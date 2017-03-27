@@ -1,5 +1,6 @@
 package cn.dahe.model;
 
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -19,8 +20,8 @@ public class GoodsRaw {
     //所属门店
     @Column(name = "storeId")
     private int storeId;
-    @Column(name = "raw_num")
-    private int rawNum;
+    @Column(name = "store_name")
+    private String storeName;
     //原材料名称
     private String name;
     //原材料价格（销售价）
@@ -47,18 +48,20 @@ public class GoodsRaw {
     private Date productionDate;
     //保质期
     @Column(name = "shelf_life")
-    private int shelfLife;
+    private String shelfLife;
     //库存
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "stock_id")
-    private Stock stock;
+    private int stock;
     //库存上限
     @Column(name = "stock_up")
-    private int stockUp;
+    private String stockUp;
     //库存下限
     @Column(name = "stock_down")
-    private int stockDown;
-
+    private String stockDown;
+    //供貨商
+    @Column(name = "supplier_id", columnDefinition = "INT DEFAULT 0")
+    private int supplierId;
+    @Column(name = "suplier_name")
+    private String supplierName;
     //状态  0 停用 1 启用
     private int status;
 
@@ -86,12 +89,12 @@ public class GoodsRaw {
         this.storeId = storeId;
     }
 
-    public int getRawNum() {
-        return rawNum;
+    public String getStoreName() {
+        return storeName;
     }
 
-    public void setRawNum(int rawNum) {
-        this.rawNum = rawNum;
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 
     public String getName() {
@@ -174,36 +177,12 @@ public class GoodsRaw {
         this.productionDate = productionDate;
     }
 
-    public int getShelfLife() {
-        return shelfLife;
-    }
-
-    public void setShelfLife(int shelfLife) {
-        this.shelfLife = shelfLife;
-    }
-
-    public Stock getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(Stock stock) {
+    public void setStock(int stock) {
         this.stock = stock;
-    }
-
-    public int getStockUp() {
-        return stockUp;
-    }
-
-    public void setStockUp(int stockUp) {
-        this.stockUp = stockUp;
-    }
-
-    public int getStockDown() {
-        return stockDown;
-    }
-
-    public void setStockDown(int stockDown) {
-        this.stockDown = stockDown;
     }
 
     public int getStatus() {
@@ -212,5 +191,45 @@ public class GoodsRaw {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public String getShelfLife() {
+        return shelfLife;
+    }
+
+    public void setShelfLife(String shelfLife) {
+        this.shelfLife = shelfLife;
+    }
+
+    public String getStockUp() {
+        return stockUp;
+    }
+
+    public void setStockUp(String stockUp) {
+        this.stockUp = stockUp;
+    }
+
+    public String getStockDown() {
+        return stockDown;
+    }
+
+    public void setStockDown(String stockDown) {
+        this.stockDown = stockDown;
     }
 }

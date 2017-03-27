@@ -63,17 +63,23 @@ public class GoodsRawDaoImpl extends BaseDaoImpl<GoodsRaw> implements IGoodsRawD
             return null;
         }
         int categoriesId = params.getIntParam1(); //分类id
-        int unitId = params.getIntParam2(); //单位id
-        String hql = "from GoodsRaw goodsRaw where 1=1";
+        int storeId = params.getIntParam2();
+        String rawName = params.getStringParam1();//名称
+        StringBuffer hql = new StringBuffer("from GoodsRaw goodsRaw where 1=1");
+        List<Object> list = new ArrayList<>();
         if(categoriesId != 0){
-            hql += " and goodsRaw.categoriesId = ?";
-            return this.list(hql, categoriesId);
+            hql.append(" and goodsRaw.categoriesId = ?");
+            list.add(categoriesId);
         }
-        if(unitId != 0){
-            hql += " and goodsRaw.mainUnitId = ?";
-            return this.list(hql, unitId);
+        if(storeId != 0){
+            hql.append(" and goodsRaw.storeId = ?");
+            list.add(storeId);
         }
-        return this.list(hql);
+        if(StringUtils.isNotBlank(rawName)){
+            hql.append(" and goodsRaw.name like ?");
+            list.add("%" + rawName + "%");
+        }
+        return this.list(hql.toString(), list);
     }
 
     @Override

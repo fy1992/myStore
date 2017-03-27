@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="pd-20 minwidth">
-    <form class="form form-horizontal" id="form-goods-add" action = "<%=request.getContextPath()%>/server/raw/add" type = "post">
+    <form class="form form-horizontal" id="form-raw-add" action = "<%=request.getContextPath()%>/server/raw/add" type = "post">
         <div class="row cl mb-30">
             <div class="col-8">
             	<div class="row cl">
@@ -59,7 +59,7 @@
                     <label class="form-label col-3"><span class="c-red">* </span>分类：</label>
                     <div class="formControls col-6">
                     	<div class="radius">
-                            <input type="hidden" value name = "categoriesName"/>
+                            <input type="hidden" value name = "categoriesName" id="categoriesName"/>
                             <select id="categories" name = "categoriesId" class="select" style="height: 35px;">
                                 <option value selected>- 请选择原材料分类 -</option>
                             </select>
@@ -77,11 +77,6 @@
                 	<div class="formControls col-6"><input type = "text" class="input-text radius" id = "bid" name = "bid" style="width: 90%;"/>&nbsp;<label>元</label></div>
                 	<div class="col-3"> </div>
                 </div>
-                <div class="row cl">
-                	<label class="form-label col-3">库存：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius text-r" value="0" id = "stock" name = "stock" placeholder="请输入库存量（单位：个）"/></div>
-                	<div class="col-3"> </div>
-                </div>
             </div>
             <div class="col-4">
                 <div class="formControls clearfix">
@@ -97,15 +92,23 @@
         </div>
         <div class="row cl">
             <div class="col-6 cl">
-                <label class="form-label col-3">主单位：</label>
+                <label class="form-label col-3">库存：</label>
                 <div class="formControls col-6">
-                    <span class="select-box radius">
-                        <input type="hidden" name = "mainUnitName" value>
-                        <select id="mainUnit" name = "mainUnit" class="select">
-                            <option value = "-1">- 请选择 -</option>
-                        </select>
-                    </span>
+                    <input type = "text" class="input-text radius text-r" value="0" id = "stock" name = "stock" placeholder="请输入库存量（单位：个）"/>
                 </div>
+                <div class="col-3"> </div>
+            </div>
+            <div class="col-6 cl">
+            <label class="form-label col-3">单位：</label>
+            <div class="formControls col-6">
+                <span class="select-box radius">
+                    <input type="hidden" name = "mainUnitName" id="mainUnitName" value>
+                    <select id="mainUnit" name = "mainUnit" class="select">
+                        <option value = "-1">- 请选择 -</option>
+                    </select>
+                </span>
+            </div>
+            <div class="col-3"> </div>
             </div>
         </div>
         <div class="row cl">
@@ -120,7 +123,7 @@
         		<label class="form-label col-3">供货商：</label>
 	            <div class="formControls col-6">
 	            	<span class="select-box radius">
-                        <input type="hidden" value name = "supplierName">
+                        <input type="hidden" value name = "supplierName" id="supplierName">
 		                <select class="select" id = "supplier" name = "supplierId">
 		                    <option value = "0">- 请选择供货商 -</option>
 		                </select>
@@ -140,7 +143,7 @@
             <div class="col-6">
                 <label class="form-label col-3">保质期：</label>
                 <div class="formControls col-6">
-                    <input type="text" class="input-text radius mr-6" id="ExpirationDate" name = "shelfLife"/><label>&nbsp;天</label>
+                    <input type="text" class="input-text radius mr-6 text-r" id="ExpirationDate"  name = "shelfLife"/><label>&nbsp;天</label>
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -149,14 +152,14 @@
             <div class="col-6">
                 <label class="form-label col-3">库存上限：</label>
                 <div class="formControls col-6">
-                    <input type="text"  class="input-text radius" id="stockUp" name = "stockUp"/>
+                    <input type="text"  class="input-text radius text-r" id="stockUp"  name = "stockUp"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
             <div class="col-6">
                 <label class="form-label col-3">库存下限：</label>
                 <div class="formControls col-6">
-                    <input type="text"  class="input-text radius" id="stockDown" name = "stockDown"/>
+                    <input type="text"  class="input-text radius text-r" id="stockDown"  name = "stockDown"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -182,9 +185,9 @@ $(function(){
     $("#randomNo").on("click", function () {
         $.post("<%=request.getContextPath()%>/server/goods/newGoodsNo", function(data){
             if(data.result == 1){
-                $("#goodsRawNo").val(data.msg);
-                $("#goodsRawNo").removeClass("Validform_error");
-                $("#goodsRawNo").parent().find("span").removeClass("Validform_error").addClass("Validform_right").text("通过消息验证！").css("color", "black");
+                $("#rawNo").val(data.msg);
+                $("#rawNo").removeClass("Validform_error");
+                $("#rawNo").parent().find("span").removeClass("Validform_error").addClass("Validform_right").text("通过消息验证！").css("color", "black");
                 $("#randomNo").css("display", "none");
                 $("#help_tooltip").show();
             }
@@ -192,7 +195,7 @@ $(function(){
     });
 
 
-    var  validtor = $("#form-goodsRaw-add").Validform({
+    var  validtor = $("#form-raw-add").Validform({
         tiptype:4,
         showAllError:true,
         ajaxPost: true,
@@ -219,7 +222,7 @@ $(function(){
             nullmsg:"原材料条码必填"
         },
         {
-            ele:"#goodsRawName",
+            ele:"#rawName",
             datatype:"s",
             nullmsg:"原材料名称必填"
         },
@@ -252,18 +255,30 @@ $(function(){
         for(var n in data){
             $("#categories").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
+        $("#categories").change(function () {
+            var name = $("#categories").find("option:selected").text();
+            $("#categoriesName").val(name);
+        })
     });
     //供应商
     $.post("<%=request.getContextPath()%>/server/supplier/allSupplier", function(data){
         for(var n in data){
             $("#supplier").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
+        $("#supplier").change(function () {
+            var name = $("#supplier").find("option:selected").text();
+            $("#supplierName").val(name);
+        })
     });
     //单位
     $.post("<%=request.getContextPath()%>/server/goods/getAllGoodsUnit", function(data){
         for(var n in data){
             $("#mainUnit").append("<option value = "+data[n].id+">"+data[n].name+"</option>");
         }
+        $("#mainUnit").change(function () {
+            var name = $("#mainUnit").find("option:selected").text();
+            $("#mainUnitName").val(name);
+        })
     });
 })
 </script>

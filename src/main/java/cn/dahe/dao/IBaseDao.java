@@ -34,6 +34,10 @@ public interface IBaseDao<T> {
 
 	int delete(String hql, List<Object> list);
 
+	int delete(String hql, Object[] obj);
+
+	int delete(String hql, Object obj);
+
 	<N extends Object>List<N> listBySqlAndList(String sql, List<Object> list, Class<?> clz, boolean hasEntity);
 
 	<N extends Object>List<N> listBySql(String sql, Object obj, Class<?> clz,boolean hasEntity);

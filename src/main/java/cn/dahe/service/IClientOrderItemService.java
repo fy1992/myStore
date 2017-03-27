@@ -15,12 +15,7 @@ public interface IClientOrderItemService {
     ClientOrderItem get(int id);
     ClientOrderItem load(int id);
 
-    /**
-     * 订单商品信息列表
-     * @param aDataSet
-     * @return
-     */
-    Pager<ClientOrderItem> clientOrderItemList(String aDataSet);
-
     List<ClientOrderItem> findByClientOrderId(int clientOrderId);
+
+    List<ClientOrderItem> findByParams(Pager<Object> param);
 }

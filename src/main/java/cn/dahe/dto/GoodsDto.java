@@ -59,6 +59,9 @@ public class GoodsDto {
     private String overdueTime;
     //过期天数
     private int overdueDay;
+    //是否有配方 0 没有 1 有
+    private int hasRaws;
+
     public String getName() {
         return name;
     }
@@ -290,6 +293,14 @@ public class GoodsDto {
 
     public void setOverdueDay(int overdueDay) {
         this.overdueDay = overdueDay;
+    }
+
+    public int getHasRaws() {
+        return hasRaws;
+    }
+
+    public void setHasRaws(int hasRaws) {
+        this.hasRaws = hasRaws;
     }
 
     @Override

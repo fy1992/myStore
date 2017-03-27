@@ -104,6 +104,18 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T> {
 	}
 
 	@Override
+	public int delete(String hql, Object[] obj) {
+		Query query = setParameterQuery(hql, obj);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public int delete(String hql, Object obj) {
+		Query query = setParameterQuery(hql, new Object[]{obj});
+		return query.executeUpdate();
+	}
+
+	@Override
 	public long getCount(String sql) {
 		Query q = super.currentSession().createQuery(sql);
 		return (long) q.uniqueResult();

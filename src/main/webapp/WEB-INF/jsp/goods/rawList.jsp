@@ -52,7 +52,7 @@
                     <tr class="text-c">
                         <th width="50">序号</th>
                         <th width="50">操作</th>
-                        <th width="100">商品名称</th>
+                        <th width="100">原材料名称</th>
                         <th width="50">条码</th>
                         <th width="50">拼音码</th>
                         <th width="50">分类</th>
@@ -124,7 +124,7 @@ table = $('#raw_table').dataTable({
         {"mData" : "price", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "supplierName", "sDefaultContent" : "","bSortable":false,"sClass":"center"},
         {"mData" : "productionDate", "sDefaultContent" : "", "mRender":function(data, type, full){
-               return format(data);
+               return format(data).substring(0, 10);
            },"bSortable":false,"sClass":"center"
         },
 	    {"mData" : "shelfLife", "sDefaultContent" : "", "mRender":function(data, type, full){
