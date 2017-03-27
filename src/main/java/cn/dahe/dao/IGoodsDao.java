@@ -29,9 +29,10 @@ public interface IGoodsDao extends IBaseDao<Goods>{
     /**
      * 通过商品条码查询
      * @param goodsNo
+     * @param storeId
      * @return
      */
-    Goods findByGoodsNo(String goodsNo);
+    Goods findByGoodsNo(String goodsNo, int storeId);
 
     /**
      * 查询全部商品

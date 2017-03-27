@@ -231,7 +231,6 @@ public class EmployeeServiceImpl implements IEmployeeService{
             return json;
         }
         json.setResult(1);
-        cashier.setPassword("");
         json.setObject(cashier);
         return json;
     }

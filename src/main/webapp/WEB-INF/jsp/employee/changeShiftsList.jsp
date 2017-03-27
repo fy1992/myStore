@@ -72,19 +72,17 @@
         "bInfo" : true,//是否显示页脚信息，DataTables插件左下角显示记录数
         "bFilter" : false,//是否启动过滤、搜索功能
         "aoColumns" : [
-            {"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
-            {"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-                return "<a style='text-decoration:none' onclick='edit(" + full.id + ")'>编辑</a>";
+            {"mData" : "startTime", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
+                return format(data);
             }},
-            {"mData" : "changeShiftsname", "sDefaultContent" : "", "bSortable":false},
-            {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false, "mRender":function (data, type, full) {
-                return !data ? "-" : data;
+            {"mData" : "endTime", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
+                return format(data);
             }},
-            {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-                return data == 1 ? "启用" : "禁用";
-            }},
-            {"mData" : "role", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-                return !data ? "-" : data.roleName;
+            {"mData" : "cashierNo", "sDefaultContent" : "", "bSortable":false},
+            {"mData" : "cashierName", "sDefaultContent" : "", "bSortable":false},
+            {"mData" : "num", "sDefaultContent" : "", "bSortable":false},
+            {"mData" : "totalPrice", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
+                return !data ? "-" : data + " 元";
             }}
         ],
         "language":{

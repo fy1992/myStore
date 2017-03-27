@@ -197,4 +197,16 @@ public class OrderGoodsInfo {
         this.mainUnitName = goods.getMainUnitName();
         this.goodsName = goods.getName();
     }
+
+    public OrderGoodsInfo(GoodsRaw goodsRaw){
+        this.goodsId = goodsRaw.getId();
+        this.price = goodsRaw.getPrice();
+        this.goodsNo = goodsRaw.getRawNo();
+        this.categoriesId = goodsRaw.getCategoriesId();
+        this.supplierId = goodsRaw.getSupplierId();
+        this.supplierName = goodsRaw.getSupplierName();
+        this.mainUnitId = goodsRaw.getMainUnitId();
+        this.mainUnitName = goodsRaw.getMainUnitName();
+        this.goodsName = goodsRaw.getName();
+    }
 }

@@ -50,11 +50,11 @@ public class ChangeShiftsServiceImpl implements IChangeShiftsService {
 
     @Override
     public void logout(Cashier cashier) {
-        int id = (int) CacheUtils.getChangeShifts("cashier_"+cashier.getId());
+        int id = (int) CacheUtils.getChangeShifts("changeShifts_"+cashier.getId());
         ChangeShifts changeShifts = changeShiftsDao.get(id);
         changeShifts.setEndTime(new Date());
         changeShiftsDao.update(changeShifts);
-        CacheUtils.removeChangeShifts("cashier_"+cashier.getId());
+        CacheUtils.removeChangeShifts("changeShifts_"+cashier.getId());
     }
 
     @Override
