@@ -10,6 +10,37 @@
     <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div class="row cl mb-5">
+    <div class="col-4">
+        <img src="${goods.imgUrl}" style="width: 145px"/>
+    </div>
+    <div class="col-8">
+        <div class="row cl">
+            <label class="form-label col-3">品名 ：</label>
+            <div class="formControls col-6">
+                <span>${goods.name}</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-3">条码 ： </label>
+            <div class="formControls col-6">
+                <span>${goods.goodsNo}</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-3">售价 ： </label>
+            <div class="formControls col-6">
+                <span>${goods.price} 元 <c:if test="${not empty goods.mainUnitName}">/${goods.mainUnitName}</c:if></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row cl mb-5" style="border-top: 1px;border-top-style: dashed;border-color:#999;">
+    <label class="form-label col-3"><input type="checkbox" id="updatePriceByRaw" style="position: absolute;left: 45px;top: 11px;"/></label>
+    <div class="formControls col-6">
+        <span style="font-size: 12px;color: #999;text-align: left;">使用配方成本价更新成品进货价</span>
+    </div>
+</div>
 <table class="table table-border table-bordered table-bg box-shadow" id="xpjgl">
     <thead>
     <tr class="text-c">
@@ -41,7 +72,7 @@
             for(var n in data){
                 $("#rawList").append("<tr class=\"text-c\">" +
                     "<td><span type=\"text\" class=\"rawName\">"+data[n].rawName+"</span></td>" +
-                    "<td><span type=\"text\" class=\"rawNo\">"+data[n].rawNo+"</span><input type = 'hidden' value = '"+data[n].id+"' class=\"rawId\"/></td>" +
+                    "<td><span type=\"text\" class=\"rawNo\">"+data[n].rawNo+"</span><input type = 'hidden' value = '"+data[n].rawId+"' class=\"rawId\"/></td>" +
                     "<td><input type='text' class=\"input-text rawNum\" value = \""+data[n].rawNum+"\"/></td>" +
                     "<td><span type='text' class=\"goodsUnitName\">"+data[n].goodsUnitName+"</span><input type='hidden' class='goodsUnitId' value ='"+data[n].goodsUnitId+"'></td>" +
                     "<td><a class=\"btn btn-danger size-MINI radius\" onclick=\"del("+data[n].id+", this)\">删除</a></td>" +
@@ -50,6 +81,9 @@
                 initCheck.push(data[n].rawNo);
             }
             $("#check").val(initCheck);
+            if("${goods.useRawPrice}" == 1){
+                $("#updatePriceByRaw").prop("checked", true);
+            }
         });
 
         //添加配方
@@ -82,7 +116,11 @@
                 );
                 rawItems.push(rawItem);
             }
-            $.post("<%=request.getContextPath()%>/server/raw/addRawItem", {goodsId : "${id}", rawItems:JSON.stringify(rawItems)}, function (data) {
+            var useRawPrice = 0;
+            if($("#updatePriceByRaw").prop("checked")){
+                useRawPrice = 1;
+            }
+            $.post("<%=request.getContextPath()%>/server/raw/addRawItem", {goodsId : "${id}", rawItems:JSON.stringify(rawItems), useRawPrice:useRawPrice}, function (data) {
                 if(data.result == 1){
                     window.parent.table.fnDraw();
                     layer.msg(data.msg, {time : 2000, icon : 6}, function () {

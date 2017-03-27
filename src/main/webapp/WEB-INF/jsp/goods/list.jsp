@@ -131,7 +131,7 @@ table = $('#goods_table').dataTable({
 	  	{"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
 	       var fontColor = "c-success";
             if(full.hasRaws == 0){
-                fontColor = "c-333";
+                fontColor = "c-danger";
            }
 	       var btn ="<a style='text-decoration:none' onclick='edit(\""+full.id+"\")'>编辑</a>";
 	       btn += "&nbsp;<a style='text-decoration:none' class='"+ fontColor +"' onclick='recipe(\""+full.id+"\")'>配方</a>";

@@ -28,12 +28,18 @@
 	        <mvc:mapping path="/server/**" />
 			<bean class="cn.dahe.interceptor.ServerInterceptor"/>
 	    </mvc:interceptor>
-
+	    
         <!-- 客户端 -->
         <mvc:interceptor>
             <mvc:mapping path="/client/**" />
             <bean class="cn.dahe.interceptor.ClientInterceptor"/>
         </mvc:interceptor>
+        
+		<!-- 微信端 -->
+	    <mvc:interceptor>
+	        <mvc:mapping path="/wechatdemo/**" />
+			<bean class="cn.dahe.interceptor.WechatInterceptor"/>
+	    </mvc:interceptor>
 	</mvc:interceptors>
 
 	<!-- spring异常处理 -->

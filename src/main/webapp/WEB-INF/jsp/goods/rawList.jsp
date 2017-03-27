@@ -128,7 +128,7 @@ table = $('#raw_table').dataTable({
            },"bSortable":false,"sClass":"center"
         },
 	    {"mData" : "shelfLife", "sDefaultContent" : "", "mRender":function(data, type, full){
-            return data + " 天";
+            return data ? data + " 天" : "-";
 		   },"bSortable":false,"sClass":"center"
 	    }
     ],

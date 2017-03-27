@@ -1,8 +1,10 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.IGoodsDao;
+import cn.dahe.dao.IGoodsRawDao;
 import cn.dahe.dao.IGoodsRawItemDao;
 import cn.dahe.model.Goods;
+import cn.dahe.model.GoodsRaw;
 import cn.dahe.model.GoodsRawItem;
 import cn.dahe.service.IGoodsRawItemService;
 import com.alibaba.fastjson.JSONArray;
@@ -22,6 +24,8 @@ public class GoodsRawItemServiceImpl implements IGoodsRawItemService{
     private IGoodsRawItemDao goodsRawItemDao;
     @Resource
     private IGoodsDao goodsDao;
+    @Resource
+    private IGoodsRawDao goodsRawDao;
     @Override
     public void add(GoodsRawItem t) {
         goodsRawItemDao.add(t);
@@ -53,9 +57,10 @@ public class GoodsRawItemServiceImpl implements IGoodsRawItemService{
     }
 
     @Override
-    public void addRawItems(int goodsId, String rawItems) {
+    public void addRawItems(int goodsId, String rawItems, int useRawPrice) {
         JSONArray json = JSONArray.parseArray(rawItems);
         goodsRawItemDao.delByGoodsId(goodsId);
+        double bid = 0.0;
         for(int i = 0, len = json.size(); i < len; i++){
             JSONObject object = JSONObject.parseObject(json.get(i).toString());
             GoodsRawItem goodsRawItem = new GoodsRawItem();
@@ -75,10 +80,18 @@ public class GoodsRawItemServiceImpl implements IGoodsRawItemService{
                 rawNum = Integer.parseInt(rawNumStr);
             }
             goodsRawItem.setRawNum(rawNum);
+            if(useRawPrice == 1){
+                GoodsRaw goodsRaw = goodsRawDao.get(goodsRawItem.getRawId());
+                bid += goodsRaw.getBid()*rawNum*100;
+            }
             goodsRawItem.setRawNo((String)object.get("rawNo"));
             goodsRawItemDao.add(goodsRawItem);
         }
         Goods goods = goodsDao.get(goodsId);
+        goods.setUseRawPrice(useRawPrice);
+        if(useRawPrice == 1){
+            goods.setBid(bid/100);
+        }
         goods.setHasRaws(1);
         goodsDao.update(goods);
     }
