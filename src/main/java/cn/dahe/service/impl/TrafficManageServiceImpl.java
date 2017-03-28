@@ -148,7 +148,7 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
                         clientGoods.setGoodsNum(changeNum);
                         clientGoodsDao.update(clientGoods);
 
-                        Goods goods = goodsDao.findByGoodsNo(goodsNo);
+                        Goods goods = goodsDao.findByGoodsNo(goodsNo, clientGoods.getStoreId());
                         Stock stock = goods.getStock();
                         stock.setGoodNum(stock.getGoodNum() - changeNum);
                         goods.setStock(stock);

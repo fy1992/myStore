@@ -79,28 +79,32 @@
 
         //确认
         $("#ensure").on("click", function(){
-            var n = $("input[type = 'checkbox']:checked").length;
-            var stsids = [], ids = [];
-            for(var i = 0; i < n; i++){
-                stsids.push($("input[type = 'checkbox']:checked").eq(i).val());
-            }
+            var ids = [];
             var exIds = parent.$("#check").val();
             if(exIds){
                 ids = exIds.split(",");
             }
-            for(var i = 0; i < n; i++){
-                var mark = stsids[i] - 1;
-                if($.inArray($(".rawNo").eq(mark).text(), ids) == -1){
-                    parent.$("#rawList").append("<tr class=\"text-c\">" +
-                        "<td><span type=\"text\" class=\"rawName\">"+$(".rawName").eq(mark).text()+"</span></td>" +
-                        "<td><span type=\"text\" class=\"rawNo\">"+$(".rawNo").eq(mark).text()+"</span><input type = 'hidden' value = '"+$(".rawId").eq(mark).text()+"' class=\"rawId\"/></td>" +
-                        "<td><input type='text' class=\"input-text rawNum\" value = \"1\"/></td>" +
-                        "<td><span type='text' class=\"goodsUnitName\">"+$(".mainUnitName").eq(mark).text()+"</span><input type='hidden' class='goodsUnitId' value ='"+$(".mainUnitId").eq(mark).val()+"'></td>" +
-                        "<td><a class=\"btn btn-danger size-MINI radius\" onclick=\"del("+$(".rawId").eq(mark).text()+", this)\">删除</a></td>" +
-                        "</tr>");
-                    ids.push($(".rawNo").eq(mark).text());
-                }
-            }
+            $("input[type='checkbox']").each(function () {
+                 if($(this).prop("checked")){
+                     var parentTr = $(this).parents("tr");
+                     if($.inArray(parentTr.find(".rawNo").text(), ids) == -1){
+                         parent.$("#rawList").append("<tr class=\"text-c\">" +
+                             "<td><span type=\"text\" class=\"rawName\">"+parentTr.find(".rawName").text()+"</span></td>" +
+                             "<td>" +
+                             "<span type=\"text\" class=\"rawNo\">"+parentTr.find(".rawNo").text()+"</span>" +
+                             "<input type = 'hidden' value = '"+parentTr.find(".rawId").text()+"' class=\"rawId\"/>" +
+                             "</td>" +
+                             "<td><input type='text' class=\"input-text rawNum\" value = \"1\"/></td>" +
+                             "<td>" +
+                             "<span type='text' class=\"goodsUnitName\">"+parentTr.find(".mainUnitName").text()+"</span>" +
+                             "<input type='hidden' class='goodsUnitId' value ='"+parentTr.find(".mainUnitId").val()+"'>" +
+                             "</td>" +
+                             "<td><a class=\"btn btn-danger size-MINI radius\" onclick=\"del("+parentTr.find(".rawId").text()+", this)\">删除</a></td>" +
+                             "</tr>");
+                         ids.push(parentTr.find(".rawNo").text());
+                     }
+                 }
+            });
             parent.$("#check").val(ids);
             layer_close();
         });

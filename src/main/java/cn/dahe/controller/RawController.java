@@ -203,9 +203,9 @@ public class RawController {
      */
     @RequestMapping(value = "addRawItem", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addRawItem(int goodsId, String rawItems){
+    public AjaxObj addRawItem(int goodsId, String rawItems, int useRawPrice){
         AjaxObj json = new AjaxObj();
-        goodsRawItemService.addRawItems(goodsId, rawItems);
+        goodsRawItemService.addRawItems(goodsId, rawItems, useRawPrice);
         json.setResult(1);
         json.setMsg("商品原材料设置完成");
         return json;

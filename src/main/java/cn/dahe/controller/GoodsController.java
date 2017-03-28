@@ -385,6 +385,8 @@ public class GoodsController {
     //=======================================goods begin=========================================================
     @RequestMapping(value = "recipe/{id}", method = RequestMethod.GET)
     public String rawToGoods(@PathVariable int id, Model model){
+        Goods goods = goodsService.get(id);
+        model.addAttribute("goods", goods);
         model.addAttribute("id", id);
         return "goods/rawToGoods";
     }

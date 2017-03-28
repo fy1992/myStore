@@ -211,8 +211,8 @@ $(function(){
                 {"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
                 /*{
                     "mData": "", "sDefaultContent": "", "mRender": function (data, type, full) {
-                        return "<input type='checkbox' name = 'ids' value='" + full.id + "'/>";
-                    }
+                    return "<input type='checkbox' name = 'ids' value='" + full.id + "'/>";
+                }
                 },*/
                 {"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
                     return "<a style='text-decoration:none' onclick='detail(\"" + full.orderStoreName + "\", \"" + format(full.orderTime) + "\", \"" + full.id + "\", \""+full.status+"\")'>详情</a>";

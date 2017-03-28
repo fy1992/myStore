@@ -121,7 +121,9 @@ public class Goods {
     //是否有配方 0 沒有 1 有
     @Column(name = "has_raws")
     private int hasRaws;
-
+    //是否用配方价更新进货价 0 否 1 是
+    @Column(name = "use_raw_price", columnDefinition = "INT DEFAULT 0")
+    private int useRawPrice;
 
     public int getId() {
         return id;
@@ -393,6 +395,14 @@ public class Goods {
 
     public void setHasRaws(int hasRaws) {
         this.hasRaws = hasRaws;
+    }
+
+    public int getUseRawPrice() {
+        return useRawPrice;
+    }
+
+    public void setUseRawPrice(int useRawPrice) {
+        this.useRawPrice = useRawPrice;
     }
 
     @Override

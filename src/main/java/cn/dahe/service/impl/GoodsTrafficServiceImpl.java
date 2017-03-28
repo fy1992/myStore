@@ -1,19 +1,9 @@
 package cn.dahe.service.impl;
 
-import cn.dahe.dao.IGoodsDao;
-import cn.dahe.dao.IGoodsTrafficDao;
-import cn.dahe.dao.IOrderGoodsInfoDao;
-import cn.dahe.dao.IStoreDao;
-import cn.dahe.dao.IStoreGoodsTrafficDao;
-import cn.dahe.dao.ITrafficManageDao;
+import cn.dahe.dao.*;
 import cn.dahe.dto.GoodsTrafficDto;
 import cn.dahe.dto.Pager;
-import cn.dahe.model.Goods;
-import cn.dahe.model.GoodsTraffic;
-import cn.dahe.model.OrderGoodsInfo;
-import cn.dahe.model.Store;
-import cn.dahe.model.StoreGoodsTraffic;
-import cn.dahe.model.TrafficManage;
+import cn.dahe.model.*;
 import cn.dahe.service.IGoodsTrafficService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.NumberUtils;
@@ -51,10 +41,11 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
     private ITrafficManageDao trafficManageDao;
     @Resource
     private IStoreGoodsTrafficDao storeGoodsTrafficDao;
+    @Resource
+    private IGoodsRawDao goodsRawDao;
 
     @Override
     public void add(GoodsTrafficDto t, int storeId) {
-        JSONArray json = JSONArray.parseArray(t.getOrderInfo());
         GoodsTraffic goodsTraffic = new GoodsTraffic();
         goodsTraffic.setWishTime(DateUtil.format(t.getWishTime(), "yyyy-MM-dd"));
         goodsTraffic.setDescription(t.getDescription());
@@ -74,10 +65,17 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
         goodsTraffic.setOrderStoreId(storeId);
         goodsTraffic.setOrderStoreName(store.getName());
         int goodsTrafficId = goodsTrafficDao.addAndGetId4Integer(goodsTraffic);
+        JSONArray json = JSONArray.parseArray(t.getOrderInfo());
         for(int i = 0, len = json.size(); i < len; i++){
             JSONObject map = JSONObject.parseObject(json.get(i).toString());
-            Goods goods = goodsDao.findByGoodsNo(map.get("goodsNo").toString());
-            OrderGoodsInfo goodsInfo = new OrderGoodsInfo(goods);
+            OrderGoodsInfo goodsInfo;
+            if(t.getType() == 0){
+                Goods goods = goodsDao.findByGoodsNo(map.get("goodsNo").toString(), storeId);
+                goodsInfo = new OrderGoodsInfo(goods);
+            }else{
+                GoodsRaw goodsRaw = goodsRawDao.findByRawNo(map.get("goodsNo").toString(), storeId);
+                goodsInfo = new OrderGoodsInfo(goodsRaw);
+            }
             //请求量
             goodsInfo.setOrderNum((Integer)map.get("goodsNum"));
             goodsInfo.setDistributeNum(goodsInfo.getOrderNum());

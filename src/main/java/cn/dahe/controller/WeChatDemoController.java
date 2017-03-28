@@ -1,29 +1,34 @@
 package cn.dahe.controller;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.dahe.model.Vip;
-import cn.dahe.service.IVipService;
+import cn.dahe.model.Categories;
+import cn.dahe.model.ClientGoods;
+import cn.dahe.service.ICategoriesService;
+import cn.dahe.service.IClientGoodsService;
 import cn.dahe.util.HttpRequestProxy;
 import cn.dahe.util.WechatConstant;
 import weixin.popular.api.SnsAPI;
 import weixin.popular.api.TokenAPI;
-import weixin.popular.api.UserAPI;
 import weixin.popular.bean.message.EventMessage;
 import weixin.popular.bean.sns.SnsToken;
 import weixin.popular.bean.token.Token;
-import weixin.popular.bean.user.User;
+import weixin.popular.bean.xmlmessage.XMLMessage;
+import weixin.popular.bean.xmlmessage.XMLTextMessage;
 import weixin.popular.util.SignatureUtil;
 import weixin.popular.util.XMLConverUtil;
 
@@ -39,8 +44,10 @@ public class WeChatDemoController {
 
 	private static Logger logger = LoggerFactory.getLogger(WeChatDemoController.class);
 
-	@Autowired
-	private IVipService vipService;
+	@Resource
+	private IClientGoodsService clientGoodsService;
+    @Resource
+    private ICategoriesService categoriesService;
 
 	/**
 	 * 微信服务器验证
@@ -68,11 +75,13 @@ public class WeChatDemoController {
 		if (inputStream != null) {
 			// 转换XML
 			EventMessage eventMessage = XMLConverUtil.convertToObject(EventMessage.class, inputStream);
-			// 订阅
-			if (eventMessage.getEvent().equals("subscribe")) {
-				String openId = eventMessage.getFromUserName();
-				System.out.println("openId:" + openId);
-				System.out.println("event:" + eventMessage.getEvent());
+			// 如果是订阅，则向用户发送欢迎消息
+			if ("subscribe".equals(eventMessage.getEvent())) {
+				// 创建回复
+				XMLMessage xmlTextMessage = new XMLTextMessage(eventMessage.getFromUserName(),
+						eventMessage.getToUserName(), "您好，欢迎关注！");
+				xmlTextMessage.outputStreamWrite(response.getOutputStream());
+				return;
 			}
 		}
 		response.getWriter().write("");
@@ -86,19 +95,13 @@ public class WeChatDemoController {
 	 */
 	@RequestMapping(value = "wxAuth")
 	public String wxAuth(String return_url, String code, HttpSession session) {
-		logger.info("return_url:" + return_url);
-		logger.info("code:" + code);
+		logger.info("Return_url:" + return_url);
 		SnsToken snsToken = SnsAPI.oauth2AccessToken(WechatConstant.appid, WechatConstant.secret, code);
 		// 根据openId查找用户,如果有则放入session中,没有则新建vip用户。
-		Vip vip = vipService.findByOpenId(snsToken.getOpenid());
-		if (vip == null) {
-			Vip newVip = new Vip();
-			User user = UserAPI.userInfo(snsToken.getAccess_token(), snsToken.getOpenid(), 5);
-//			newVip.setOpenId(user.getOpenid());
-			// TODO ...
-			vipService.add(newVip);
+		if (snsToken != null && StringUtils.isNotBlank(snsToken.getOpenid())) {
+			logger.info("OpenId:" + snsToken.getOpenid());
+			session.setAttribute("wxUser", snsToken.getOpenid());
 		}
-		session.setAttribute("wxUser", vip);
 		return "redirect:" + return_url;
 	}
 
@@ -110,7 +113,11 @@ public class WeChatDemoController {
 	 * @return
 	 */
 	@RequestMapping(value = "goodsList")
-	public String wxAuth() {
+	public String wxChooseGoods(Model model) {
+		List<ClientGoods> goodsList = clientGoodsService.findAll(1);
+		List<Categories> categList = categoriesService.findAll(1);
+		model.addAttribute("goodsList", goodsList);
+		model.addAttribute("categList", categList);
 		return "wechat/public_choose";
 	}
 

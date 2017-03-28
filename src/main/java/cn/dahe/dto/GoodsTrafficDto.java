@@ -14,6 +14,8 @@ public class GoodsTrafficDto {
     private String description;
     //订的商品信息 商品id , 订的数量
     private String orderInfo;
+    //订货类型 0 商品类型 1 原材料
+    private int type;
     public String getWishTime() {
         return wishTime;
     }
@@ -36,6 +38,14 @@ public class GoodsTrafficDto {
 
     public void setOrderInfo(String orderInfo) {
         this.orderInfo = orderInfo;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     @Override

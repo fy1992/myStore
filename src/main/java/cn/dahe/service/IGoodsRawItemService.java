@@ -16,5 +16,11 @@ public interface IGoodsRawItemService {
 
     List<GoodsRawItem> findByGoodsId(int goodsId);
 
-    void addRawItems(int goodsId, String rawItems);
+    /**
+     * 添加商品的配方明细
+     * @param goodsId
+     * @param rawItems
+     * @param useRawPrice
+     */
+    void addRawItems(int goodsId, String rawItems, int useRawPrice);
 }

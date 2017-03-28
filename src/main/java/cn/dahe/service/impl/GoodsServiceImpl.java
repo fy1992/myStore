@@ -54,7 +54,7 @@ public class GoodsServiceImpl implements IGoodsService{
 
     @Override
     public boolean add(Goods t) {
-        Goods goods = goodsDao.findByGoodsNo(t.getGoodsNo());
+        Goods goods = goodsDao.findByGoodsNo(t.getGoodsNo(), t.getStoreId());
         if(goods == null) {
             goodsDao.add(t);
             return true;
@@ -207,7 +207,7 @@ public class GoodsServiceImpl implements IGoodsService{
                     if (hssfRow != null) {
                         goods = new Goods();
                         HSSFCell goodsNo = hssfRow.getCell(2);
-                        Goods g = goodsDao.findByGoodsNo(PoiUtils.getValue(goodsNo));
+                        Goods g = goodsDao.findByGoodsNo(PoiUtils.getValue(goodsNo), storeId);
                         if(g == null){
                             HSSFCell name = hssfRow.getCell(0);
                             HSSFCell categoriesName = hssfRow.getCell(1);
