@@ -38,19 +38,17 @@ public class FreshTask {
                 saleCount.setStoreId(store.getId());
                 saleCount.setPaidByMoney(0);
                 saleCountDao.add(saleCount);
+
+                //营销活动 过期判断
+                List<SalesCampaign> salesCampaigns = salesCampaignDao.findAll(store.getId());
+                salesCampaigns.forEach(salesCampaign -> {
+                    Date time = salesCampaign.getEndDate();
+                    if(new Date().after(time)){
+                        salesCampaign.setOverdue(0);
+                        salesCampaignDao.update(salesCampaign);
+                    }
+                });
             });
         }
-
-        //营销活动 过期判断
-        List<SalesCampaign> salesCampaigns = salesCampaignDao.findAll();
-        salesCampaigns.forEach(salesCampaign -> {
-            Date time = salesCampaign.getEndDate();
-            if(new Date().after(time)){
-                salesCampaign.setOverdue(0);
-                salesCampaignDao.update(salesCampaign);
-            }
-        });
-
-
     }
 }

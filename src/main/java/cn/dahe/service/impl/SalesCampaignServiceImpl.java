@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by fy on 2017/3/16.
@@ -92,5 +93,10 @@ public class SalesCampaignServiceImpl implements ISalesCampaignService{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<SalesCampaign> findByHasCoupon(int storeId) {
+        return salesCampaignDao.findByHasCoupon(storeId);
     }
 }

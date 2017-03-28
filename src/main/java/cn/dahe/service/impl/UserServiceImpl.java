@@ -96,7 +96,7 @@ public class UserServiceImpl implements IUserService {
     public void updatePassword(int id, String newPassword) {
         User user = get(id);
         user.setPassword(SecurityUtil.MD5(newPassword));
-        update(user);
+        userDao.update(user);
     }
 
     @Override

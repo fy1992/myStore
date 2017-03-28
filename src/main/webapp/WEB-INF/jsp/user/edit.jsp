@@ -81,7 +81,7 @@
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
 <script>
     $(function () {
-        var  validtor = $("#form-vipLevel-add").Validform({
+        var  validtor = $("#form-user-edit").Validform({
             tiptype:4,
             showAllError:true,
             ajaxPost:true,

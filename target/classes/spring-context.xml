@@ -102,6 +102,7 @@
             <tx:method name="save*" propagation="REQUIRED"/>
             <tx:method name="repair*" propagation="REQUIRED"/>
             <tx:method name="remove*" propagation="REQUIRED" />
+            <tx:method name="logout*" propagation="REQUIRED" />
         </tx:attributes>
     </tx:advice>
 

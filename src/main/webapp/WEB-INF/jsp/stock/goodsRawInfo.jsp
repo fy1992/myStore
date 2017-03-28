@@ -34,6 +34,7 @@
                     <option value="0">全部供货商</option>
                 </select>
             </span>
+            <input type="text" id="raw_info" placeholder="原材料名称/条码" style="width:260px" class="input-text radius">
             <button id="stock_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">

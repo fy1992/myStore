@@ -25,13 +25,13 @@
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="select-box" style="width: 120px;">
-                <select class="select radius" id="supplierId">
-                    <option value="0">全部供货商</option>
+                <select class="select radius" id="categoriesId">
+                    <option value="0">全部分类</option>
                 </select>
             </span>
             <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'startTime\')||\'%y-%M-%d\'}'})" id="startTime" class="input-text Wdate radius" style="width:120px;"/> 至
             <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}'})" id="endTime" class="input-text Wdate radius" style="width:120px;"/>
-            <input type="text" id="goodsRaw_info" placeholder="原材料名稱/條碼" style="width:260px" class="input-text radius">
+            <input type="text" id="goodsRaw_info" placeholder="原材料名称/条码" style="width:260px" class="input-text radius">
             <button id="goodsRawUse_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
@@ -39,16 +39,12 @@
                 <thead>
                     <tr class="text-c">
                         <th width="50">序号</th>
-                        <th width="200">商品名称</th>
+                        <th width="200">原材料名称</th>
                         <th width="100">条码</th>
-                        <th width="100">商品分类</th>
-                        <th width="100">供货商</th>
-                        <th width="100">现有库存</th>
-                        <th width="50">单位</th>
-                        <th width="50">库存上限</th>
-                        <th width="50">库存下限</th>
-                        <th width="50">到期日期</th>
-                        <th width="50">保质情况</th>
+                        <th width="100">分类</th>
+                        <th width="100">消耗量</th>
+                        <th width="100">成本（元）</th>
+                        <th width="50">营业额占比</th>
                     </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -91,21 +87,11 @@ table = $('#goodsRawUse_table').dataTable({
        "aoColumns" : [
         {"mData" : null, "sDefaultContent" : "", "bSortable":false},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "goodsNo", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "rawNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "categoriesName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "supplierName", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-            return  !data ? "无" : data;
-        }},
-        {"mData" : "stock", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "mainUnitName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "stockUp", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "stockDown", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "overdueTime", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-	        return  data ? format(data).substring(0, 10) : "-";
-        }},
-        {"mData" : "overdueDay", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-            return  data ? "过期 " + data + " 天" : "-";
-        }}
+        {"mData" : "usedNum", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "totalPrice", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "proportion", "sDefaultContent" : "", "bSortable":false}
     ],
     "language":{
        "oPaginate": {

@@ -34,12 +34,12 @@
                 <tr class="text-c">
                     <th width="50">序号</th>
                     <th width="200">操作</th>
-                    <th width="100">報損時間</th>
-                    <th width="100">報損門店</th>
-                    <th width="100">報損金額</th>
-                    <th width="100">營業額占比</th>
-                    <th width="50">報損人</th>
-                    <th width="50">備注</th>
+                    <th width="100">报损时间</th>
+                    <th width="100">报损门店</th>
+                    <th width="100">报损金额</th>
+                    <th width="100">营业额占比</th>
+                    <th width="50">报损人</th>
+                    <th width="50">备注</th>
                 </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -74,22 +74,19 @@
         "bFilter" : false,//是否启动过滤、搜索功能
         "aoColumns" : [
             {"mData" : null, "sDefaultContent" : "", "bSortable":false},
-            {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
-            {"mData" : "goodsNo", "sDefaultContent" : "", "bSortable":false},
-            {"mData" : "categoriesName", "sDefaultContent" : "", "bSortable":false},
-            {"mData" : "supplierName", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-                return  !data ? "无" : data;
+            {"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
+                return "<a style='text-decoration:none' onclick='edit(\""+full.id+"\")'>编辑</a>";
             }},
-            {"mData" : "stock", "sDefaultContent" : "", "bSortable":false},
-            {"mData" : "mainUnitName", "sDefaultContent" : "", "bSortable":false},
-            {"mData" : "stockUp", "sDefaultContent" : "", "bSortable":false},
-            {"mData" : "stockDown", "sDefaultContent" : "", "bSortable":false},
-            {"mData" : "overdueTime", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
+            {"mData" : "badTime", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
                 return  data ? format(data).substring(0, 10) : "-";
             }},
-            {"mData" : "overdueDay", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-                return  data ? "过期 " + data + " 天" : "-";
-            }}
+            {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
+            {"mData" : "price", "sDefaultContent" : "", "bSortable":false},
+            {"mData" : "proportion", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
+                return  !data ? "-" : data + " %";
+            }},
+            {"mData" : "cashierName", "sDefaultContent" : "", "bSortable":false},
+            {"mData" : "description", "sDefaultContent" : "", "bSortable":false}
         ],
         "language":{
             "oPaginate": {

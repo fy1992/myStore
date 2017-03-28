@@ -108,9 +108,9 @@ public class UserController {
      */
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj editUser(User user){
+    public AjaxObj editUser(User user, String permissionIds){
         AjaxObj json = new AjaxObj();
-        userService.update(user);
+        userService.update(user, permissionIds);
         json.setMsg("用户修改成功");
         json.setResult(1);
         return json;
