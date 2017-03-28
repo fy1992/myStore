@@ -69,6 +69,8 @@ public class Vip {
     private Date registerTime;
     //电话
     private String phone;
+    //微信openId
+    private String openId;
 
     public int getId() {
         return id;
