@@ -3,6 +3,8 @@ package cn.dahe.service;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.SalesCampaign;
 
+import java.util.List;
+
 /**
  * Created by fy on 2017/3/16.
  */
@@ -19,4 +21,6 @@ public interface ISalesCampaignService {
      * @param storeId
      */
     Pager<SalesCampaign> findByParams(String aDataSet, int storeId);
+
+    List<SalesCampaign> findByHasCoupon(int storeId);
 }

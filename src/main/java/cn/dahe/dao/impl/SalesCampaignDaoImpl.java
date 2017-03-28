@@ -42,8 +42,14 @@ public class SalesCampaignDaoImpl extends BaseDaoImpl<SalesCampaign> implements 
     }
 
     @Override
-    public List<SalesCampaign> findAll() {
-        String hql = "from SalesCampaign where overdue = 1";
-        return this.list(hql);
+    public List<SalesCampaign> findAll(int storeId) {
+        String hql = "from SalesCampaign where overdue = 1 whre storeId = ?";
+        return this.list(hql, storeId);
+    }
+
+    @Override
+    public List<SalesCampaign> findByHasCoupon(int storeId) {
+        String hql = "from SalesCampaign where storeId = ? and coupon = 1";
+        return this.list(hql, storeId);
     }
 }

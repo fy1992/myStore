@@ -2,15 +2,13 @@ package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
-import cn.dahe.model.ClientOrderItem;
 import cn.dahe.model.GoodsRaw;
 import cn.dahe.model.GoodsRawItem;
+import cn.dahe.model.GoodsRawUsed;
 import cn.dahe.model.User;
-import cn.dahe.service.IClientOrderItemService;
 import cn.dahe.service.IGoodsRawItemService;
 import cn.dahe.service.IGoodsRawService;
-import cn.dahe.util.DateUtil;
-import org.apache.commons.lang3.StringUtils;
+import cn.dahe.service.IGoodsRawUsedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -37,7 +35,7 @@ public class RawController {
     @Resource
     private IGoodsRawService goodsRawService;
     @Resource
-    private IClientOrderItemService clientOrderItemService;
+    private IGoodsRawUsedService goodsRawUsedService;
     @Resource
     private IGoodsRawItemService goodsRawItemService;
 
@@ -122,28 +120,20 @@ public class RawController {
         return json;
     }
 
+    @RequestMapping(value = "usedList", method = RequestMethod.GET)
+    public String usedList(){
+        return "stock/goodsRawUse";
+    }
+
     /**
      * 原材料消耗
      */
     @RequestMapping(value = "usedList", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj usedList(@RequestParam(required = false, defaultValue = "") String startTime,
-                            @RequestParam(required = false, defaultValue = "") String endTime, HttpSession session){
+    public Pager<GoodsRawUsed> usedList(HttpSession session, String aDataSet){
         AjaxObj json = new AjaxObj();
         User user = (User) session.getAttribute("loginUser");
-        Pager<Object> param = new Pager<>();
-        if(StringUtils.isBlank(startTime)){
-            startTime = DateUtil.format(new Date(), "yyyy-MM-dd");
-        }
-        param.setStartTime(DateUtil.format(startTime, "yyyy-MM-dd"));
-        if(StringUtils.isNotBlank(endTime)){
-            param.setEndTime(DateUtil.format(endTime, "yyyy-MM-dd"));
-        }
-        param.setIntParam1(user.getStoreId());
-        List<ClientOrderItem> clientOrderItems = clientOrderItemService.findByParams(param);
-        json.setResult(1);
-        json.setObject("");
-        return json;
+        return goodsRawUsedService.goodsRawUsedList(aDataSet, user.getStoreId());
     }
 
 

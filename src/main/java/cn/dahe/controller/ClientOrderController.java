@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  * Created by fy on 2017/3/20.
  */
 @Controller
-@RequestMapping("order")
+@RequestMapping("server/order")
 public class ClientOrderController {
     private static Logger logger = LoggerFactory.getLogger(ClientOrderController.class);
     @Resource
@@ -28,7 +28,7 @@ public class ClientOrderController {
     /**
      * 列表页查询
      */
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "list", method = RequestMethod.GET)
     public String getOrderList() {
         return "order/list";
     }
@@ -36,7 +36,7 @@ public class ClientOrderController {
     /**
      * 列表页查询
      */
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
     public Pager<ClientOrder> getOrderList(String aDataSet, HttpSession session) {
         logger.info("--- order list begin ---");

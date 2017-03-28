@@ -41,6 +41,11 @@ public class BadGoods {
     //报损数量
     @Column(name = "bad_num")
     private int badNum;
+    //报损人
+    @Column(name = "cashier_id")
+    private int cashierId;
+    @Column(name = "cashier_name")
+    private String cashierName;
 
     public int getId() {
         return id;
@@ -120,5 +125,21 @@ public class BadGoods {
 
     public void setProportion(double proportion) {
         this.proportion = proportion;
+    }
+
+    public int getCashierId() {
+        return cashierId;
+    }
+
+    public void setCashierId(int cashierId) {
+        this.cashierId = cashierId;
+    }
+
+    public String getCashierName() {
+        return cashierName;
+    }
+
+    public void setCashierName(String cashierName) {
+        this.cashierName = cashierName;
     }
 }

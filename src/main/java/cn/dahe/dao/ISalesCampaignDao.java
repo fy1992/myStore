@@ -19,5 +19,12 @@ public interface ISalesCampaignDao extends IBaseDao<SalesCampaign>{
      */
     Pager<SalesCampaign> findByParam(int start, int pageSize, Pager<Object> params);
 
-    List<SalesCampaign> findAll();
+    List<SalesCampaign> findAll(int storeId);
+
+    /**
+     * 查询有优惠券的优惠活动
+     * @param storeId
+     * @return
+     */
+    List<SalesCampaign> findByHasCoupon(int storeId);
 }

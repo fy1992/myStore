@@ -64,6 +64,9 @@ public class ClientOrder {
     //微信openId
     @Column(name = "open_id")
     private String openId;
+    //导购员id
+    @Column(name = "sales_id")
+    private int salesId;
 
     public int getId() {
         return id;
@@ -209,5 +212,11 @@ public class ClientOrder {
         this.openId = openId;
     }
 
+    public int getSalesId() {
+        return salesId;
+    }
 
+    public void setSalesId(int salesId) {
+        this.salesId = salesId;
+    }
 }

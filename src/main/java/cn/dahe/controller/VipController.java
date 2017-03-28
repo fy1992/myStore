@@ -5,8 +5,10 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.User;
 import cn.dahe.model.Vip;
 import cn.dahe.model.VipLevel;
+import cn.dahe.model.VipSys;
 import cn.dahe.service.IVipLevelService;
 import cn.dahe.service.IVipService;
+import cn.dahe.service.IVipSysService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -33,6 +35,8 @@ public class VipController {
     private IVipService vipService;
     @Resource
     private IVipLevelService vipLevelService;
+    @Resource
+    private IVipSysService vipSysService;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -188,8 +192,33 @@ public class VipController {
      */
     @RequestMapping(value = "allVipLevel", method = RequestMethod.POST)
     @ResponseBody
-    private List<VipLevel> findAllVipLevel(HttpSession session){
+    public List<VipLevel> findAllVipLevel(HttpSession session){
         User user = (User)session.getAttribute("loginUser");
         return vipLevelService.findByStoreId(user.getStoreId());
+    }
+    //================================================================================================
+
+    /**
+     * 会员制度设置
+     * @return
+     */
+    @RequestMapping(value = "vipSysSetting", method = RequestMethod.GET)
+    public String vipSysSetting(HttpSession session, Model model){
+        User user = (User) session.getAttribute("loginUser");
+        model.addAttribute("vipSys");
+        return "vip/vipDetail";
+    }
+
+    /**
+     * 会员制度保存
+     * @return
+     */
+    @RequestMapping(value = "vipSysAdd", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj vipSysAdd(VipSys vipSys, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        User user = (User) session.getAttribute("loginUser");
+
+        return json;
     }
 }

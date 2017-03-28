@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 营销
@@ -105,5 +106,17 @@ public class SalesCampaignController {
         json.setMsg("修改成功");
         json.setResult(1);
         return json;
+    }
+
+    /**
+     * 查询所有有优惠券的营销活动
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "findSalesCampaigns", method = RequestMethod.POST)
+    @ResponseBody
+    public List<SalesCampaign> findSalesCampaign(HttpSession session){
+        User user = (User)session.getAttribute("loginUser");
+        return salesCampaignService.findByHasCoupon(user.getStoreId());
     }
 }
