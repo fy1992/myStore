@@ -25,13 +25,14 @@
         <div class="row cl">
             <div class="col-3"></div>
             <input type = "hidden" value="${vipSys.id}" name = "id"/>
+            <input type = "hidden" value="${vipSys.storeId}" name = "storeId"/>
             <label class="form-label col-6"><span class="col-title">微店新会员</span><span class="PS">（通过微信店铺注册的新会员）</span></label>
             <div class="col-3"></div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">赠送积分</label>
             <div class="formControls col-6">
-                <input value = "1000" name = "wdPoint" id="wdPoint" class="input-text radius" type="text"/>
+                <input value = "${vipSys.wdPoint}" name = "wdPoint" id="wdPoint" class="input-text radius" type="text"/>
             </div>
             <div class="col-3">分</div>
         </div>
@@ -53,7 +54,7 @@
                     <select id="defaultVipLevelID" name = "defaultVipLevelID" class="select">
                         <option value="0">无</option>
                     </select>
-                    <input type="hidden" name = "defaultVipLevelName" id="defaultVipLevelName"/>
+                    <input type="hidden" name = "defaultVipLevelName" id="defaultVipLevelName" value = "${vipSys.defaultVipLevelName}"/>
                 </span>
             </div>
             <div class="col-3"></div>
@@ -66,7 +67,7 @@
         <div class="row cl">
             <label class="form-label col-3">赠送积分</label>
             <div class="formControls col-6">
-                <input value = "1000" name = "zjsPoint" id="zjsPoint" class="input-text radius" type="text"/>
+                <input value = "${vipSys.zjsPoint}" name = "zjsPoint" id="zjsPoint" class="input-text radius" type="text"/>
             </div>
             <div class="col-3">分</div>
         </div>
@@ -112,17 +113,16 @@
                 $("#wdSalesCampaignId").append("<option value='"+data[n].id+"'>"+data[n].name+"</option>");
             }
 
-            $("#zjsSalesCampaignId").val("${vipSys.zjsSalesCampaignId}");
-            $("#wdSalesCampaignId").val("${vipSys.wdSalesCampaignId}");
+            $("#zjsSalesCampaignId").val(${vipSys.zjsSalesCampaignId});
+            $("#wdSalesCampaignId").val(${vipSys.wdSalesCampaignId});
         });
 
         $.post("<%=request.getContextPath()%>/server/vip/allVipLevel",function (data) {
             for(var n in data){
                 $("#defaultVipLevelID").append("<option value='"+data[n].id+"'>"+data[n].name+"</option>");
             }
-            $("#defaultVipLevelID").val("${vipSys.defaultVipLevelID}");
-            $("#defaultVipLevelName").val("${vipSys.defaultVipLevelName}");
-            
+            $("#defaultVipLevelID").val(${vipSys.defaultVipLevelID});
+
             $("#defaultVipLevelID").change(function () {
                 $("#defaultVipLevelName").val($("#defaultVipLevelID option:selected").text());
             })
