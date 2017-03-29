@@ -205,7 +205,7 @@ public class VipController {
     @RequestMapping(value = "vipSysSetting", method = RequestMethod.GET)
     public String vipSysSetting(HttpSession session, Model model){
         User user = (User) session.getAttribute("loginUser");
-        model.addAttribute("vipSys");
+        model.addAttribute("vipSys", vipSysService.findByStoreId(user.getStoreId()));
         return "vip/vipDetail";
     }
 
@@ -213,12 +213,13 @@ public class VipController {
      * 会员制度保存
      * @return
      */
-    @RequestMapping(value = "vipSysAdd", method = RequestMethod.POST)
+    @RequestMapping(value = "vipSysSetting", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj vipSysAdd(VipSys vipSys, HttpSession session){
+    public AjaxObj vipSysSetting(VipSys vipSys){
         AjaxObj json = new AjaxObj();
-        User user = (User) session.getAttribute("loginUser");
-
+        vipSysService.update(vipSys);
+        json.setResult(1);
+        json.setMsg("设置完成");
         return json;
     }
 }

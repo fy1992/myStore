@@ -29,8 +29,8 @@
                     <option value="0">全部分类</option>
                 </select>
             </span>
-            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'startTime\')||\'%y-%M-%d\'}'})" id="startTime" class="input-text Wdate radius" style="width:120px;"/> 至
-            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}'})" id="endTime" class="input-text Wdate radius" style="width:120px;"/>
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}',readOnly:true,skin:'twoer'})" id="startTime" class="input-text Wdate radius" style="width:120px;"/> 至
+            <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2099-10-01',readOnly:true,skin:'twoer'})" id="endTime" class="input-text Wdate radius" style="width:120px;"/>
             <input type="text" id="goodsRaw_info" placeholder="原材料名称/条码" style="width:260px" class="input-text radius">
             <button id="goodsRawUse_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>

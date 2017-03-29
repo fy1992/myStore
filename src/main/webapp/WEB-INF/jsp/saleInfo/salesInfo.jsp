@@ -32,8 +32,8 @@
                 <a href="javascript:void(0);" onclick="smallTicketDetail();" class="btn btn-primary radius">厨打</a>
                 <a href="javascript:void(0);" onclick="tagsDetail();" class="btn btn-primary radius">标签</a>
             </span>--%>
-                <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'startTime\')||\'%y-%M-%d\'}'})" id="startTime" class="input-text Wdate radius" style="width:120px;"/> 至
-                <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}'})" id="endTime" class="input-text Wdate radius" style="width:120px;"/>
+                <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}',readOnly:true,skin:'twoer'})" id="startTime" class="input-text Wdate radius" style="width:120px;"/> 至
+                <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2099-10-01',readOnly:true,skin:'twoer'})" id="endTime" class="input-text Wdate radius" style="width:120px;"/>
             <button id="news_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">

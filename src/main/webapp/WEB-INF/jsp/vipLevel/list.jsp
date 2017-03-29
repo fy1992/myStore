@@ -25,7 +25,7 @@
     <div class="clearfix">
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="l">
-                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增促销</a>
+                <a href="javascript:void(0);" onclick="add();" class="btn btn-primary radius">新增</a>
             </span>
         </div>
         <div class="pd-20 clearfix">

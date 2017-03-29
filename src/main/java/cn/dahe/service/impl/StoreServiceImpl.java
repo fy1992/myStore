@@ -36,6 +36,8 @@ public class StoreServiceImpl implements IStoreService{
     private IUserDao userDao;
     @Resource
     private IPermissionService permissionService;
+    @Resource
+    private IVipSysDao vipSysDao;
 
     @Override
     public void add(Store t) {
@@ -44,6 +46,7 @@ public class StoreServiceImpl implements IStoreService{
 
     @Override
     public int add(Store t, User user, User currentUser) {
+        //门店及相关的网店属性
         Store store = storeDao.findByStoreNo(t.getStoreNo());
         if(store == null){
             User ur = userDao.findByLoginName(user.getUsername());
@@ -59,6 +62,8 @@ public class StoreServiceImpl implements IStoreService{
             t.setConModel("2,3");
             t.setNetStoreStatus(0);
             int storeId = storeDao.addAndGetId4Integer(t);
+
+
             //门店的供货设置
             StoreGoodsTraffic storeGoodsTraffic = new StoreGoodsTraffic();
             storeGoodsTraffic.setStoreId(storeId);
@@ -69,6 +74,20 @@ public class StoreServiceImpl implements IStoreService{
             storeGoodsTraffic.setDifferentOpt(0);
             storeGoodsTraffic.setPayOnline(0);
             storeGoodsTrafficDao.add(storeGoodsTraffic);
+
+            //门店对应的会员制度
+            VipSys vipSys = new VipSys();
+            vipSys.setStoreId(storeId);
+            vipSys.setDefaultVipLevelID(0);
+            vipSys.setDefaultVipLevelName("");
+            vipSys.setWdPoint(1000);
+            vipSys.setWdSalesCampaignId(0);
+            vipSys.setZjsPoint(1000);
+            vipSys.setZjsSalesCampaignId(0);
+            vipSysDao.add(vipSys);
+
+            //门店的登录账号
+            User u = new User();
             String pStr;
             //根据是否是连锁店分配相应等级的权限t
             if (t.getMultiple() == 0) {
@@ -77,8 +96,6 @@ public class StoreServiceImpl implements IStoreService{
                 pStr = "2,3";
             }
             Set<Permission> permissionSet = new HashSet<>(permissionService.findAll(0, pStr));
-            //门店的登录账号
-            User u = new User();
             if (currentUser.getStoreId() == 0) {
                 u.setRank(1);
             } else {

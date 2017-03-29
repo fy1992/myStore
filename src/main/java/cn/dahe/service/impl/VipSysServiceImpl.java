@@ -29,6 +29,13 @@ public class VipSysServiceImpl implements IVipSysService{
 
     @Override
     public void update(VipSys t) {
+        VipSys vipSys = vipSysDao.get(t.getId());
+        vipSys.setWdPoint(t.getWdPoint());
+        vipSys.setWdSalesCampaignId(t.getWdSalesCampaignId());
+        vipSys.setZjsPoint(t.getZjsPoint());
+        vipSys.setZjsSalesCampaignId(t.getZjsSalesCampaignId());
+        vipSys.setDefaultVipLevelName(t.getDefaultVipLevelName());
+        vipSys.setDefaultVipLevelID(t.getDefaultVipLevelID());
         vipSysDao.update(t);
     }
 

@@ -40,8 +40,8 @@
                     <option value = "1">已支付</option>
                 </select>
             </span>
-            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'startTime\')||\'%y-%M-%d\'}'})" id="startTime" class="input-text Wdate radius" style="width:120px;"/> 至
-            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}'})" id="endTime" class="input-text Wdate radius" style="width:120px;"/>
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}',readOnly:true,skin:'twoer'})" id="startTime" class="input-text Wdate radius" style="width:120px;"/> 至
+            <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2099-10-01',readOnly:true,skin:'twoer'})" id="endTime" class="input-text Wdate radius" style="width:120px;"/>
             <input type="text" id="orderNo" placeholder="订单号" style="width:160px" class="input-text radius">
             <button id="order_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>

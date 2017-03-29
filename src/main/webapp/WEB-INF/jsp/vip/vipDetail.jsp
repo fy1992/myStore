@@ -21,29 +21,10 @@
 </head>
 <body>
 <div class="pd-20 minwidth" style="width:780px;">
-    <form class="form form-horizontal" id="form-vipSys-add" action = "<%=request.getContextPath()%>/server/vip/add" type = "post">
+    <form class="form form-horizontal" id="form-vipSys-add" action = "<%=request.getContextPath()%>/server/vip/vipSysSetting" type = "post">
         <div class="row cl">
             <div class="col-3"></div>
-            <label class="form-label col-6"><span class="col-title">会员卡背景图片</span><span class="PS">（将用在微信店铺的电子会员卡上）</span></label>
-            <div class="col-3"></div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-4" style="background-color: #eeeeee;">
-                <img src="" id="imgUrlBox"/>
-                <input type="hidden" name = "imgUrl" id="imgUrl"/>
-            </label>
-            <div class="form-label col-8">
-                <div class="row cl">
-                    * 图片格式支持：jpg,jpeg,png<br/>
-                    * 大小不超过200k，最佳尺寸640 * 360
-                </div>
-                <div>
-                    <input type = "text" class="btnShowEditImages" name = "goodsImg" id = "goodsImg">
-                </div>
-            </div>
-        </div>
-        <div class="row cl">
-            <div class="col-3"></div>
+            <input type = "hidden" value="${vipSys.id}" name = "id"/>
             <label class="form-label col-6"><span class="col-title">微店新会员</span><span class="PS">（通过微信店铺注册的新会员）</span></label>
             <div class="col-3"></div>
         </div>
@@ -130,18 +111,27 @@
                 $("#zjsSalesCampaignId").append("<option value='"+data[n].id+"'>"+data[n].name+"</option>");
                 $("#wdSalesCampaignId").append("<option value='"+data[n].id+"'>"+data[n].name+"</option>");
             }
+
+            $("#zjsSalesCampaignId").val("${vipSys.zjsSalesCampaignId}");
+            $("#wdSalesCampaignId").val("${vipSys.wdSalesCampaignId}");
         });
 
         $.post("<%=request.getContextPath()%>/server/vip/allVipLevel",function (data) {
             for(var n in data){
                 $("#defaultVipLevelID").append("<option value='"+data[n].id+"'>"+data[n].name+"</option>");
             }
+            $("#defaultVipLevelID").val("${vipSys.defaultVipLevelID}");
+            $("#defaultVipLevelName").val("${vipSys.defaultVipLevelName}");
+            
+            $("#defaultVipLevelID").change(function () {
+                $("#defaultVipLevelName").val($("#defaultVipLevelID option:selected").text());
+            })
         });
 
         //编辑图片
-        $("#btnShowEditImages").click(function(){
+        /*$("#btnShowEditImages").click(function(){
             layer_show("会员卡背景图片", "<%=request.getContextPath()%>/server/goods/uploadImg", "1000", "500");
-        });
+        });*/
 
         var  validtor = $("#form-vipSys-add").Validform({
             tiptype:4,
@@ -152,63 +142,12 @@
             btnSubmit:"#vipSysBtn",
             callback:function (data) {
                 if(data.result == 1){
-                    window.parent.table.fnDraw();
-                    layer.msg(data.msg, {time : 2000, icon : 6}, function () {
-                        layer_close();
-                    });
+                    layer.msg(data.msg, {time : 2000, icon : 6});
                 }else{
                     layer.msg(data.msg, {time : 2000, icon : 5});
                 }
             }
         });
-        validtor.addRule([
-            {
-                ele:"#vip_name",
-                datatype:"*",
-                nullmsg :"会员姓名必填项"
-            },
-            {
-                ele:"#vip_no",
-                datatype:"*",
-                nullmsg :"会员编号必填"
-            },
-            {
-                ele:"#vip_phone",
-                datatype:"m",
-                errormsg:"请填写正确的手机号码",
-                nullmsg :"联系电话必填"
-            },
-            {
-                ele:"#vipLevelID",
-                datatype:"*",
-                nullmsg:"请选择会员等级"
-            },
-            {
-                ele:"#vip_rebate",
-                datatype:"n",
-                nullmsg:"会员折扣必填",
-                errormsg:"请填写具体数字"
-            },
-            {
-                ele:"#vip_balance",
-                datatype:"n",
-                nullmsg:"会员余额必填",
-                errormsg:"请填写具体数字"
-            },
-            {
-                ele:"#vip_point",
-                datatype:"n",
-                nullmsg:"会员积分必填",
-                errormsg:"请填写具体数字"
-            },
-            {
-                ele:"#vip_email",
-                datatype:"e",
-                errormsg:"请填写正确的邮箱地址",
-                ignore:"ignore"
-            }
-        ]);
-
     });
 </script>
 </body>

@@ -1,15 +1,11 @@
 package cn.dahe.util;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 public class DateUtil {
@@ -57,12 +53,6 @@ public class DateUtil {
 		}
 		return d;
 	}
-
-	public static Date formatD2D(Date date, String pattern){
-	    String str = format(date, pattern);
-	    return format(str, pattern);
-    }
-
 	public static Date format(String date){
 		return format(date,null);
 	}
@@ -73,8 +63,8 @@ public class DateUtil {
 	 * @return
 	 */
 	public static long pastDate(Date date){
-		long t = new Date().getTime()-date.getTime();
-		return t/(24*60*60*1000);
+		long t = new Date().getTime() - date.getTime();
+		return t / (24 * 60 * 60 * 1000);
 	}
 	/**
 	 * 日期的开始时间
@@ -104,7 +94,7 @@ public class DateUtil {
     	}
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	try {
-			date = sdf.parse(format(date, "yyyy-MM-dd")+" 23:59:59");
+			date = sdf.parse(format(date, "yyyy-MM-dd") + " 23:59:59");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -112,6 +102,6 @@ public class DateUtil {
     }
 	
 	public static void main(String[] args) {
-        System.out.println(formatD2D(new Date(), "yyyy-MM-dd"));
+        System.out.println(LocalDate.now());
     }
 }

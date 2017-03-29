@@ -105,21 +105,21 @@
         <div class="row cl">
             <label class="form-label col-3">会员生日：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5" id="vip_birthday" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'vip_birthday\')||\'%y-%M-%d\'}'})" name="birthday" value = ""/>
+                <input type = "text"  class="input-text radius mr-5" id="vip_birthday" onfocus="WdatePicker({maxDate:'%y-%M-%d',readOnly:true,skin:'twoer'})" name="birthday" value = ""/>
             </div>
             <div class="col-2"></div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">开卡日期：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_createCardDate" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'vip_createCardDate\')||\'%y-%M-%d\'}'})" name="createCardDate" value = ""/>
+                <input type = "text"  class="input-text radius mr-5"  id="vip_createCardDate" onfocus="WdatePicker({maxDate:'%y-%M-%d',readOnly:true,skin:'twoer'})" name="createCardDate" value = ""/>
             </div>
             <div class="col-2"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">到期日期：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_dueDate" name="dueDate" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'vip_dueDate\')||\'%y-%M-%d\'}'})" value = ""/>
+                <input type = "text"  class="input-text radius mr-5"  id="vip_dueDate" name="dueDate" onfocus="WdatePicker({maxDate:'2099-10-01',minDate:'#F{$dp.$D(\'vip_createCardDate\'||\'%y-%M-%d\')}',readOnly:true,skin:'twoer'})" value = ""/>
             </div>
             <div class="col-2"> </div>
         </div>

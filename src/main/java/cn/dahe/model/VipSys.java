@@ -34,7 +34,7 @@ public class VipSys {
     private int defaultVipLevelID;
     //默认会员等级名称
     @Column(name = "default_vip_level_name")
-    private int defaultVipLevelName;
+    private String defaultVipLevelName;
     //---------------------------------
     //转介绍奖励
     //赠送积分
@@ -88,11 +88,11 @@ public class VipSys {
         this.defaultVipLevelID = defaultVipLevelID;
     }
 
-    public int getDefaultVipLevelName() {
+    public String getDefaultVipLevelName() {
         return defaultVipLevelName;
     }
 
-    public void setDefaultVipLevelName(int defaultVipLevelName) {
+    public void setDefaultVipLevelName(String defaultVipLevelName) {
         this.defaultVipLevelName = defaultVipLevelName;
     }
 

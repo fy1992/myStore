@@ -109,7 +109,17 @@ table = $('#salesCam_table').dataTable({
             }
         }},
         {"mData" : "appScope", "sDefaultContent" : "", "bSortable":false, "mRender":function (data, type, full) {
-            return "-";
+	       if(!data){
+	           return "-";
+           }else{
+               if(data.indexOf("0") != -1 && data.indexOf("1") == -1){
+                    return "实体店";
+               }else if(data.indexOf("1") != -1 && data.indexOf("1") == -1){
+                   return "网店";
+               }else{
+                   return "实体店，网店";
+               }
+           }
         }},
         {"mData" : "startDate", "sDefaultContent" : "", "mRender":function(data, type, full){
                return format(data).substring(0, 10);
@@ -163,8 +173,8 @@ table = $('#salesCam_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-        var status = $("#salesCam_type").val();
-        var type = $("#salesCam_status").val();
+        var status = $("#salesCam_status").val();
+        var type = $("#salesCam_type").val();
         var info = $("#sales_name").val();
         aoData.push({"name":"overdue","value":status});
         aoData.push({"name":"type","value":type});

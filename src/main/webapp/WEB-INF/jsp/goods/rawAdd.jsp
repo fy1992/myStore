@@ -136,7 +136,7 @@
             <div class="col-6">
                 <label class="form-label col-3">生产日期：</label>
                 <div class="formControls col-6">
-                    <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'productionDate\')||\'%y-%M-%d\'}'})" id="productionDate" name="productionDate" class="input-text Wdate radius" placeholder="请选择生产日期"/>
+                    <input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d',readOnly:true,skin:'twoer'})" id="productionDate" name="productionDate" class="input-text Wdate radius" placeholder="请选择生产日期"/>
                 </div>
                 <div class="col-3"> </div>
             </div>

@@ -41,8 +41,8 @@
                     <option value = "1">门店退货单</option>
                 </select>
             </span>
-            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'startTafficDate\')||\'%y-%M-%d\'}'})" id="startTafficDate" class="input-text Wdate radius" style="width:120px;"/> 至
-            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTafficDate\')||\'%y-%M-%d\'}'})" id="endTafficDate" class="input-text Wdate radius" style="width:120px;"/>
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTafficDate\')||\'%y-%M-%d\'}',readOnly:true,skin:'twoer'})" id="startTafficDate" class="input-text Wdate radius" style="width:120px;"/> 至
+            <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'startTafficDate\')}',maxDate:'2099-10-01',readOnly:true,skin:'twoer'})" id="endTafficDate" class="input-text Wdate radius" style="width:120px;"/>
             <input type="text" id="trafficNo" placeholder="货单编号" style="width:160px" class="input-text radius">
             <button id="trafficManage_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>

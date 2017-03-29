@@ -61,12 +61,12 @@
             <label class="form-label col-3"><span class="c-red">* </span>开始日期：</label>
             <div class="formControls col-7">
                 <div class="formControls col-5">
-                    <input type="text" class="input-text radius" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'vip_startDate\')||\'%y-%M-%d\'}'})"  id="vip_startDate" name = "startDate" style="width: 90%">
+                    <input type="text" class="input-text radius" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'vip_endDate\')||\'%y-%M-%d\'}',readOnly:true,skin:'twoer'})"  id="vip_startDate" name = "startDate" style="width: 90%">
                 </div>
                 <div class="formControls col-7">
                     <label class="form-label col-5">结束日期：</label>
                     <div class="formControls col-7">
-                        <input type="text" class="input-text radius" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'vip_endDate\')||\'%y-%M-%d\'}'})"   id="vip_endDate" style="width: 87%" name = "endDate">
+                        <input type="text" class="input-text radius" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'vip_startDate\')||\'%y-%M-%d\'}',maxDate:'2099-10-01',readOnly:true,skin:'twoer'})"   id="vip_endDate" style="width: 87%" name = "endDate">
                     </div>
                 </div>
             </div>
