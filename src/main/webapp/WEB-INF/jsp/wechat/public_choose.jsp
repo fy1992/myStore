@@ -59,7 +59,8 @@
 					<img src="${goods.imgUrl }">
 					<ul>
 						<li>${goods.goodsName }</li>
-						<li><p>￥${goods.price }</p>
+						<li>
+							<p>￥<span>${goods.price }</span></p>
 							<div class="calculator">
 								<span class="glyphicon glyphicon-minus-sign rem cgrey"></span>
 								<i>0</i>
@@ -72,7 +73,13 @@
 		</div>
 		<div class="choose_three">
 			<ul>
-				<li><a href="public_shopping.html"><span class="glyphicon glyphicon-shopping-cart"></span>购物车:￥0</a><i>0</i></li>
+				<li>
+					<a href="public_shopping.html">
+						<span class="glyphicon glyphicon-shopping-cart"></span>
+						<span>购物车:￥</span>
+						<span id="totalPrice">0</span>
+					</a><i id="totalNum">0</i>
+				</li>
 				<li><a><span class="glyphicon glyphicon-search"></span></a></li>
 			</ul>
 		</div>
@@ -93,17 +100,21 @@
 			}
 			var add_a = adds + 1;
 			$(this).siblings("i").html(add_a);
+			$("#totalNum").text(parseInt($("#totalNum").text()) + 1);
+			$("#totalPrice").text(parseFloat($("#totalPrice").text()) + parseFloat($(this).parent().prev().children().eq(0).text()));
 		});
 		$(".rem").click(function() {
 			var rems = parseInt($(this).parent().children().eq(1).html());
 			var remb = $(this);
-			if (rems < 2) {
-				remb.removeClass("corange");
-				remb.addClass("cgrey");
-				$(this).siblings("i").html(0);
-			} else {
+			if (rems > 0) {
+				if (rems == 1) {
+					remb.removeClass("corange");
+					remb.addClass("cgrey");
+				} 
 				var rem_a = rems - 1;
 				$(this).siblings("i").html(rem_a);
+				$("#totalNum").text(parseInt($("#totalNum").text()) - 1);
+				$("#totalPrice").text(parseFloat($("#totalPrice").text()) - parseFloat($(this).parent().prev().children().eq(0).text()));
 			}
 		});
 		$("#glyfl").click(function() {
