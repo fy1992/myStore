@@ -49,6 +49,20 @@ public class ClientController {
     public String test(){
         return "test/add";
     }
+
+    /**
+     * 门店登录
+     * @param username
+     * @param password
+     * @return
+     */
+    @RequestMapping(value = "storeLogin", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxObj storeLogin(String username, String password){
+        AjaxObj json = new AjaxObj();
+        return json;
+    }
+
     /**
      * 收银员登录
      * @param storeId
