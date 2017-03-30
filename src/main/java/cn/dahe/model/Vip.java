@@ -37,7 +37,7 @@ public class Vip {
     @Column(name = "due_date")
     private Date dueDate;
     //是否允许赊账 0 不允许 1 允许
-    @Column(name = "is_credit")
+    @Column(name = "is_credit", columnDefinition = "INT DEFAULT 0")
     private int credit;
     //qq
     private String qq;
@@ -246,5 +246,13 @@ public class Vip {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 }

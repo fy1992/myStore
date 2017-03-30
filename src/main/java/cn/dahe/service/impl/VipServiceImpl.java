@@ -41,6 +41,7 @@ public class VipServiceImpl implements IVipService{
         if(store != null){
             t.setStoreName(store.getName());
         }
+        t.setRegisterTime(new Date());
         vipDao.addAndGetId4Integer(t);
     }
 

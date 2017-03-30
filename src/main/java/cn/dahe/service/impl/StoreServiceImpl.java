@@ -60,7 +60,7 @@ public class StoreServiceImpl implements IStoreService{
             t.setCreateDate(new Date());
             t.setNewStoreUrl("");
             t.setConModel("2,3");
-            t.setNetStoreStatus(0);
+            t.setNetStoreStatus(0);//网店默认关闭
             int storeId = storeDao.addAndGetId4Integer(t);
 
 
@@ -127,9 +127,12 @@ public class StoreServiceImpl implements IStoreService{
             return 0;
         }
         store.setCreateDate(new Date());
-        store.setStatus(1);
-        store.setMultiple(0);
+        store.setStatus(1);//默认启用
+        store.setMultiple(0);//注册的门店默认都不是连锁的
         store.setType(0);
+        store.setNewStoreUrl("");
+        store.setConModel("2,3");
+        store.setNetStoreStatus(0);//网店默认关闭
         int storeId = storeDao.addAndGetId4Integer(store);
 
         //门店的供货设置
@@ -142,6 +145,17 @@ public class StoreServiceImpl implements IStoreService{
         storeGoodsTraffic.setDifferentOpt(0);
         storeGoodsTraffic.setPayOnline(0);
         storeGoodsTrafficDao.add(storeGoodsTraffic);
+
+        //门店对应的会员制度
+        VipSys vipSys = new VipSys();
+        vipSys.setStoreId(storeId);
+        vipSys.setDefaultVipLevelID(0);
+        vipSys.setDefaultVipLevelName("");
+        vipSys.setWdPoint(1000);
+        vipSys.setWdSalesCampaignId(0);
+        vipSys.setZjsPoint(1000);
+        vipSys.setZjsSalesCampaignId(0);
+        vipSysDao.add(vipSys);
 
         Set<Permission> permissionSet = new HashSet<>(permissionService.findAll(0, "3"));
 

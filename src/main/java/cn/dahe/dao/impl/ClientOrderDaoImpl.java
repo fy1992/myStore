@@ -79,11 +79,11 @@ public class ClientOrderDaoImpl extends BaseDaoImpl<ClientOrder> implements ICli
         List<Object> list = new ArrayList<>();
         list.add(storeId);
         if(StringUtils.isNotBlank(status)){
-            hql.append("(");
+            hql.append(" and status in (");
             String[] statusArr = status.split(",");
             for(int i = 0, len = statusArr.length; i < len; i++){
                 hql.append("?,");
-                list.add(statusArr[i]);
+                list.add(Integer.parseInt(statusArr[i]));
             }
             hql.deleteCharAt(hql.length() - 1);
             hql.append(")");

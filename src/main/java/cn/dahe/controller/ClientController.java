@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -127,7 +128,7 @@ public class ClientController {
      * 客户端点餐下单
      * @return
      */
-    @RequestMapping(value = "order", method = RequestMethod.POST)
+    @RequestMapping(value = "order", method = RequestMethod.GET)
     @ResponseBody
     public AjaxObj clientOrder(HttpSession session, ClientOrderDto clientOrderDto){
         AjaxObj json = new AjaxObj();
@@ -140,7 +141,7 @@ public class ClientController {
      * 保存销售单据
      * @return
      */
-    @RequestMapping(value = "saleInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "saleInfo", method = RequestMethod.GET)
     @ResponseBody
     public AjaxObj saleInfo(){
         AjaxObj json = new AjaxObj();
@@ -211,7 +212,7 @@ public class ClientController {
      * @param goodsNo
      * @return
      */
-    @RequestMapping(value = "detail", method = RequestMethod.POST)
+    @RequestMapping(value = "detail", method = RequestMethod.GET)
     @ResponseBody
     public AjaxObj detail(String goodsNo, HttpSession session){
         AjaxObj json = new AjaxObj();
@@ -231,6 +232,8 @@ public class ClientController {
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier)session.getAttribute("clientUser");
         vip.setStoreId(cashier.getStoreId());
+        vip.setCreateCardDate(new Date());
+        vip.setStatus(1);
         vipService.add(vip);
         json.setObject("会员添加成功");
         json.setResult(1);
@@ -241,7 +244,7 @@ public class ClientController {
      * 会员等级
      * @return
      */
-    @RequestMapping(value = "vipLevel", method = RequestMethod.POST)
+    @RequestMapping(value = "vipLevel", method = RequestMethod.GET)
     @ResponseBody
     public AjaxObj vipLevel(HttpSession session){
         AjaxObj json = new AjaxObj();
@@ -258,7 +261,7 @@ public class ClientController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "vipInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "vipInfo", method = RequestMethod.GET)
     @ResponseBody
     public AjaxObj vipInfo(String param, HttpSession session){
         AjaxObj json = new AjaxObj();
@@ -274,11 +277,14 @@ public class ClientController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "netOrder", method = RequestMethod.POST)
+    @RequestMapping(value = "netOrder", method = RequestMethod.GET)
     @ResponseBody
     public  AjaxObj netOrder(HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier)session.getAttribute("clientUser");
+        List<ClientOrder> clientOrders = clientOrderService.findByStoreId(cashier.getStoreId(),"0");
+        json.setResult(1);
+        json.setObject(clientOrders);
         return json;
     }
 
