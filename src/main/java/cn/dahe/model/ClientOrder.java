@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * 客户端订单
+ * 客户端点餐订单
  * Created by fy on 2017/3/15.
  */
 @Table(name = "t_client_order")

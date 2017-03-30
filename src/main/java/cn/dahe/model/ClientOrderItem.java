@@ -21,6 +21,8 @@ public class ClientOrderItem {
     //商品编码
     @Column(name = "goods_no")
     private String goodsNo;
+    //价格
+    private double price;
 
     public int getId() {
         return id;

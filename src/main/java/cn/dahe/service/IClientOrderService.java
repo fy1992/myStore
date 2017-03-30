@@ -34,7 +34,7 @@ public interface IClientOrderService {
 
     ClientOrder findByClientOrderNo(String clientOrderNo);
 
-    List<ClientOrder> findByStoreId(int storeId);
+    List<ClientOrder> findByStoreId(int storeId, String status);
 
     List<ClientOrder> findByOpenId(String openId);
 

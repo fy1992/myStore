@@ -1,6 +1,7 @@
 package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
+import cn.dahe.dto.ClientOrderDto;
 import cn.dahe.dto.GoodsTrafficDto;
 import cn.dahe.model.*;
 import cn.dahe.service.*;
@@ -41,12 +42,13 @@ public class ClientController {
     private IChangeShiftsService changeShiftsService;
     @Resource
     private IGoodsRawService goodsRawService;
+    @Resource
+    private IClientOrderService clientOrderService;
 
     @RequestMapping(value = "test", method = RequestMethod.GET)
     public String test(){
         return "test/add";
     }
-    //===================================== 管理员 begin ============================================
     /**
      * 收银员登录
      * @param storeId
@@ -108,6 +110,30 @@ public class ClientController {
     }
 
     /**
+     * 客户端点餐下单
+     * @return
+     */
+    @RequestMapping(value = "order", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj clientOrder(HttpSession session, ClientOrderDto clientOrderDto){
+        AjaxObj json = new AjaxObj();
+        Cashier cashier = (Cashier) session.getAttribute("clientUser");
+        clientOrderService.findByStoreId(cashier.getStoreId(), "0");
+        return json;
+    }
+
+    /**
+     * 保存销售单据
+     * @return
+     */
+    @RequestMapping(value = "saleInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj saleInfo(){
+        AjaxObj json = new AjaxObj();
+        return json;
+    }
+
+    /**
      * 所有导购员
      * @return
      */
@@ -121,7 +147,6 @@ public class ClientController {
         json.setResult(1);
         return json;
     }
-    //===================================== 管理员 end============================================
     /**
      * 通过类别查询商品（菜品）
      * @param categoriesId
@@ -229,4 +254,19 @@ public class ClientController {
         json.setObject(vips);
         return json;
     }
+
+    /**
+     * 网店订单
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "netOrder", method = RequestMethod.POST)
+    @ResponseBody
+    public  AjaxObj netOrder(HttpSession session){
+        AjaxObj json = new AjaxObj();
+        Cashier cashier = (Cashier)session.getAttribute("clientUser");
+        return json;
+    }
+
+
 }

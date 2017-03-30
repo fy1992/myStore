@@ -148,8 +148,8 @@ public class ClientOrderServiceImpl implements IClientOrderService{
     }
 
     @Override
-    public List<ClientOrder> findByStoreId(int storeId) {
-        return clientOrderDao.findByStoreId(storeId, 2);
+    public List<ClientOrder> findByStoreId(int storeId, String status) {
+        return clientOrderDao.findByStoreId(storeId, "2");
     }
 
     @Override

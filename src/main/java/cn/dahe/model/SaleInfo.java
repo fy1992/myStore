@@ -29,8 +29,11 @@ public class SaleInfo {
     //记录日期
     @Column(name = "mark_time")
     private Date markTime;
-    //类型
+    //类型 0 有效单据 1 作废单据  2 退货单据  3 会员单据
     private int type;
+    //支付方式 0 现金 1 银联卡  2 会员储值卡 3 次卡 4 购物卡 5 百度钱包 6 微信 7 支付宝 8 美团
+    @Column(name = "pay_type")
+    private int payType;
     //收银员
     @Column(name = "cashier_id")
     private int cashierId;
@@ -41,18 +44,23 @@ public class SaleInfo {
     private int goodsNum;
     //商品原价
     @Column(name = "goods_price")
-    private int goodsPrice;
+    private double goodsPrice;
     //实收金额
     @Column(name = "real_price")
-    private int realPrice;
+    private double realPrice;
     //利润
-    private int gain;
+    private double gain;
     //导购员Id
     @Column(name = "sales_id")
     private int salesId;
     //导购员姓名
     @Column(name = "sales_name")
     private String salesName;
+    //会员
+    @Column(name = "vip_id")
+    private int vipId;
+    @Column(name = "vip_name")
+    private String vipName;
 
     public int getId() {
         return id;
@@ -118,27 +126,27 @@ public class SaleInfo {
         this.goodsNum = goodsNum;
     }
 
-    public int getGoodsPrice() {
+    public double getGoodsPrice() {
         return goodsPrice;
     }
 
-    public void setGoodsPrice(int goodsPrice) {
+    public void setGoodsPrice(double goodsPrice) {
         this.goodsPrice = goodsPrice;
     }
 
-    public int getRealPrice() {
+    public double getRealPrice() {
         return realPrice;
     }
 
-    public void setRealPrice(int realPrice) {
+    public void setRealPrice(double realPrice) {
         this.realPrice = realPrice;
     }
 
-    public int getGain() {
+    public double getGain() {
         return gain;
     }
 
-    public void setGain(int gain) {
+    public void setGain(double gain) {
         this.gain = gain;
     }
 
@@ -164,5 +172,29 @@ public class SaleInfo {
 
     public void setStoreName(String storeName) {
         this.storeName = storeName;
+    }
+
+    public int getVipId() {
+        return vipId;
+    }
+
+    public void setVipId(int vipId) {
+        this.vipId = vipId;
+    }
+
+    public String getVipName() {
+        return vipName;
+    }
+
+    public void setVipName(String vipName) {
+        this.vipName = vipName;
+    }
+
+    public int getPayType() {
+        return payType;
+    }
+
+    public void setPayType(int payType) {
+        this.payType = payType;
     }
 }

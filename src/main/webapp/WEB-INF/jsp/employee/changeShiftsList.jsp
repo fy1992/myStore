@@ -76,7 +76,7 @@
                 return format(data);
             }},
             {"mData" : "endTime", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-                return format(data);
+                return data ? format(data) : "非正常下线";
             }},
             {"mData" : "cashierNo", "sDefaultContent" : "", "bSortable":false},
             {"mData" : "cashierName", "sDefaultContent" : "", "bSortable":false},
