@@ -83,8 +83,7 @@ public class VipController {
     public AjaxObj addUser(Vip vip, HttpSession session){
         AjaxObj json = new AjaxObj();
         User user = (User) session.getAttribute("loginUser");
-        vip.setStoreId(user.getStoreId());
-        vipService.add(vip);
+        vipService.add(vip, user.getStoreId());
         json.setMsg("用户添加成功");
         json.setResult(1);
         return json;

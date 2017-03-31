@@ -17,6 +17,7 @@
     <link href="${ctxResource}/css/admin.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
     <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
+    <link href="${ctxResource}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <title></title>
 </head>
 <body>
@@ -44,8 +45,8 @@
             </div>
             <div class="col-2">
                 <span id="help_tooltip" data-toggle="tooltip" data-placement="bottom" title="会员编号是会员的唯一标识，连锁门店之间也不能重复。">
-                <i class="Hui-iconfont" style="cursor: pointer">&#xe633;</i>
-            </span>
+                    <i class="Hui-iconfont" style="cursor: pointer">&#xe633;</i>
+                </span>
             </div>
         </div>
         <div class="row cl">
@@ -68,26 +69,26 @@
                 <div class="formControls col-7">
                     <label class="form-label col-5">会员折扣：</label>
                     <div class="formControls col-7">
-                        <input type="text" class="input-text radius text-r" value="${vip.rebate}" id="vip_rebate" name = "rebate">
+                        <input type="text" class="input-text radius text-r" value="${vip.rebate}" style="width: 88%" id="vip_rebate" name = "rebate"><span>%</span>
                     </div>
                 </div>
             </div>
-            <div class="col-2"> %</div>
+            <div class="col-2"></div>
         </div>
         <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>会员余额：</label>
             <div class="formControls col-7">
                 <div class="formControls col-5">
-                    <input type="text" class="input-text radius text-r" value="${vip.balance}"  id="vip_balance" name = "balance">元
+                    <input type="text" class="input-text radius text-r" value="${vip.balance}"  id="vip_balance" style="width: 90%" name = "balance"><span>元</span>
                 </div>
                 <div class="formControls col-7">
                     <label class="form-label col-5">会员积分：</label>
                     <div class="formControls col-7">
-                        <input type="text" class="input-text radius text-r" value="${vip.point}"  id="vip_point" name = "point">
+                        <input type="text" class="input-text radius text-r" value="${vip.point}" style="width: 87%" id="vip_point" name = "point"><span>分</span>
                     </div>
                 </div>
             </div>
-            <div class="col-2"> 分</div>
+            <div class="col-2"></div>
         </div>
         <div class="row cl">
             <label class="form-label col-3"><span class="c-red">* </span>联系电话：</label>
@@ -105,35 +106,35 @@
         <div class="row cl">
             <label class="form-label col-3">会员生日：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5" id="vip_birthday" name="birthday" style="width: 90%;" value = "${vip.birthday}"/>
+                <input type = "text"  class="input-text radius mr-5" id="vip_birthday" onfocus="WdatePicker({maxDate:'%y-%M-%d',readOnly:true,skin:'twoer'})" name="birthday"/>
             </div>
             <div class="col-2"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">开卡日期：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_createCardDate" name="createCardDate" style="width: 90%;" value = "${vip.createCardDate}"/>
+                <input type = "text"  class="input-text radius mr-5"  id="vip_createCardDate" onfocus="WdatePicker({maxDate:'%y-%M-%d',readOnly:true,skin:'twoer'})" name="createCardDate"/>
             </div>
             <div class="col-2"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">到期日期：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_dueDate" name="dueDate" style="width: 90%;" value = "${vip.dueDate}"/>
+                <input type = "text"  class="input-text radius mr-5"  id="vip_dueDate" name="dueDate" onfocus="WdatePicker({maxDate:'2099-10-01',minDate:'#F{$dp.$D(\'vip_createCardDate\'||\'%y-%M-%d\')}',readOnly:true,skin:'twoer'})"/>
             </div>
             <div class="col-2"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">QQ号码：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_qq" name="qq" style="width: 90%;" value = "${vip.qq}"/>
+                <input type = "text"  class="input-text radius mr-5"  id="vip_qq" name="qq" value = "${vip.qq}"/>
             </div>
             <div class="col-2"> </div>
         </div>
         <div class="row cl">
             <label class="form-label col-3">邮箱地址：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_email" name="email" style="width: 90%;" value = "${vip.email}"/>
+                <input type = "text"  class="input-text radius mr-5"  id="vip_email" name="email" value = "${vip.email}"/>
             </div>
             <div class="col-2"> </div>
         </div>
@@ -162,9 +163,22 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/Validform_v5.3.2_min.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/My97DatePicker/WdatePicker.js"></script>
 <script>
     $(function () {
+        var birthday = "${vip.birthday}";
+        var createDay = "${vip.createCardDate}";
+        var dueDate = "${vip.dueDate}";
+        if(birthday){
+            $("#vip_birthday").val(birthday.substring(0, 10));
+        }
+        if(createDay){
+            $("#vip_createCardDate").val(createDay.substring(0, 10));
+        }
+        if(dueDate){
+            $("#vip_dueDate").val(dueDate.substring(0, 10));
+        }
         $.post("<%=request.getContextPath()%>/server/vip/allVipLevel",function (data) {
             for(var n in data){
                 $("#vipLevelID").append("<option value='"+data[n].id+"'>"+data[n].name+"</option>");

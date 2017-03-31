@@ -340,21 +340,6 @@ public class GoodsServiceImpl implements IGoodsService{
         }
         goodsDto.setOverdueDay(goods.getOverdueDay());
         goodsDto.setOverdueTime(DateUtil.format(goods.getOverdueTime(), "yyyy-MM-dd"));
-        /*Date pro_date = goods.getProductionDate();
-        int shelfLife = goods.getShelfLife();
-
-        if(pro_date != null && shelfLife != 0){
-            Calendar c = Calendar.getInstance();
-            c.setTime(pro_date);
-            c.add(Calendar.DATE, shelfLife);
-            Date overdueTime = c.getTime();
-            goodsDto.setOverdueTime(DateUtil.format(overdueTime, "yyyy-MM-dd"));
-            Date nowDate = new Date();
-            if(nowDate.after(overdueTime)){
-                long time = nowDate.getTime() - overdueTime.getTime();
-                goodsDto.setOverdueDay((int)time/(24*60*60*1000));
-            }
-        }*/
         return goodsDto;
     }
 

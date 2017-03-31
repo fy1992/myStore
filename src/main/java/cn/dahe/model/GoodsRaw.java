@@ -50,10 +50,10 @@ public class GoodsRaw {
     @Column(name = "shelf_life")
     private int shelfLife;
     //过期时间
-    @Column(name = "over_due_time", columnDefinition = "INT DEFAULT 0")
+    @Column(name = "over_due_time")
     private Date overdueTime;
     //过期天数
-    @Column(name = "over_due_day")
+    @Column(name = "over_due_day", columnDefinition = "INT DEFAULT 0")
     private int overdueDay;
     //库存
     private int stock;

@@ -6,6 +6,8 @@ import cn.dahe.model.*;
 import cn.dahe.service.*;
 import cn.dahe.util.CacheUtils;
 import cn.dahe.util.TokenUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -261,12 +263,17 @@ public class ClientController {
     public AjaxObj addVip(Vip vip, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier)session.getAttribute("clientUser");
-        vip.setStoreId(cashier.getStoreId());
-        vip.setCreateCardDate(new Date());
-        vip.setStatus(1);
-        vipService.add(vip);
-        json.setObject("会员添加成功");
-        json.setResult(1);
+        vip.setPoint(0);
+        vip.setBalance(0);
+        vip.setRebate("100");
+        boolean result = vipService.add(vip, cashier.getStoreId());
+        if(result){
+            json.setMsg("会员添加成功");
+            json.setResult(1);
+        }else{
+            json.setResult(0);
+            json.setMsg("该会员已存在");
+        }
         return json;
     }
 
