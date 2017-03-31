@@ -7,12 +7,12 @@ import java.util.Map;
  * 商品货流管理
  * Created by fy on 2017/1/29.
  */
-public class GoodsTrafficDto {
+public class ClientDataDto {
     //期望发货时间
     private String wishTime;
     //备注
     private String description;
-    //订的商品信息 商品id , 订的数量
+    //订的商品信息 商品No , 订的数量
     private String orderInfo;
     //订货类型 0 商品类型 1 原材料
     private int type;

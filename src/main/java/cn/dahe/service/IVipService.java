@@ -25,6 +25,8 @@ public interface IVipService {
 
     Vip findByOpenId(String openId);
 
+    Vip findByStorIdAndVipNo(String vipNo, int storeId);
+
     /**
      * 卡号、手机、姓名查询
      * @param params

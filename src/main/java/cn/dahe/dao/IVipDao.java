@@ -20,9 +20,13 @@ public interface IVipDao extends IBaseDao<Vip>{
      */
     Pager<Vip> findByParam(int start, int pageSize, Pager<Object> params);
 
-    Vip findByVipNo(String vipNo);
-
-    List<Vip> findByStorId(int storeId);
+    /**
+     * 在所有连锁门店下的按会员号查询
+     * @param vipNo
+     * @param storeIds
+     * @return
+     */
+    Vip findByStorIdAndVipNo(String vipNo, String storeIds);
 
     Vip findByOpenId(String openId);
 

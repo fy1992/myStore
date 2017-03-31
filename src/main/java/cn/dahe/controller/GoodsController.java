@@ -666,7 +666,7 @@ public class GoodsController {
     /**
      * 列表页查询
      * */
-    @RequestMapping(value = "/badGoodsList", method = RequestMethod.GET)
+    @RequestMapping(value = "badGoodsList", method = RequestMethod.GET)
     public String getBadGoodsList(){
         return "stock/badGoods";
     }
@@ -674,7 +674,7 @@ public class GoodsController {
     /**
      * 列表页查询
      * */
-    @RequestMapping(value = "/badGoodsList", method = RequestMethod.POST)
+    @RequestMapping(value = "badGoodsList", method = RequestMethod.POST)
     @ResponseBody
     public Pager<BadGoods> getBadGoodsList(HttpSession session, String aDataSet){
         logger.info("--- badGoods list begin ---");
@@ -682,5 +682,14 @@ public class GoodsController {
         return badGoodsService.findByParams(aDataSet, user.getStoreId());
     }
 
+    /**
+     * 商品报损明细
+     */
+    @RequestMapping(value = "badGoodsItem/{id}", method = RequestMethod.GET)
+    public String saleInfoItem(@PathVariable int id, Model model){
+        List<BadGoodsItem> list = badGoodsService.findByBadGoodsId(id);
+        model.addAttribute("list", list);
+        return "stock/badGoodsItem";
+    }
     //=======================================badGoods end=========================================================
 }

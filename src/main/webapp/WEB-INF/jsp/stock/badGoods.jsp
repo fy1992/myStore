@@ -33,13 +33,13 @@
                 <thead>
                 <tr class="text-c">
                     <th width="50">序号</th>
-                    <th width="200">操作</th>
+                    <th width="100">操作</th>
                     <th width="100">报损时间</th>
                     <th width="100">报损门店</th>
                     <th width="100">报损金额</th>
                     <th width="100">营业额占比</th>
                     <th width="50">报损人</th>
-                    <th width="50">备注</th>
+                    <th width="150">备注</th>
                 </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -75,7 +75,7 @@
         "aoColumns" : [
             {"mData" : null, "sDefaultContent" : "", "bSortable":false},
             {"mData" : "", "sDefaultContent" : "", "sClass":"center", "bSortable":false, "mRender":function(data, type, full){
-                return "<a style='text-decoration:none' onclick='edit(\""+full.id+"\")'>编辑</a>";
+                return "<a style='text-decoration:none' onclick='detail(\""+full.id+"\")'>明细</a>";
             }},
             {"mData" : "badTime", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
                 return  data ? format(data).substring(0, 10) : "-";
@@ -151,6 +151,10 @@
             });
         }
     });
+    
+    function detail(id) {
+        layer_show("商品报损明细", "<%=request.getContextPath()%>/server/goods/badGoodsItem/"+id, "800", "400");
+    }
 </script>
 </body>
 </html>

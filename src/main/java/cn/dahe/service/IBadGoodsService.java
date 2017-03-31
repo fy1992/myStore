@@ -1,13 +1,19 @@
 package cn.dahe.service;
 
+import cn.dahe.dto.ClientDataDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.BadGoods;
+import cn.dahe.model.BadGoodsItem;
+import cn.dahe.model.Cashier;
+
+import java.util.List;
 
 /**
  * Created by fy on 2017/3/20.
  */
 public interface IBadGoodsService {
-    void add(BadGoods t);
+    int add(BadGoods t);
+    void add(ClientDataDto clientDataDto, Cashier cashier);
     boolean del(int id);
     void update(BadGoods t);
     BadGoods get(int id);
@@ -20,4 +26,6 @@ public interface IBadGoodsService {
      * @return
      */
     Pager<BadGoods> findByParams(String aDataSet, int storeId);
+
+    List<BadGoodsItem> findByBadGoodsId(int badGoodsId);
 }

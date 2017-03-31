@@ -61,6 +61,8 @@ public class SaleInfo {
     private int vipId;
     @Column(name = "vip_name")
     private String vipName;
+    @Column(name = "vip_no")
+    private String vipNo;
 
     public int getId() {
         return id;
@@ -196,5 +198,13 @@ public class SaleInfo {
 
     public void setPayType(int payType) {
         this.payType = payType;
+    }
+
+    public String getVipNo() {
+        return vipNo;
+    }
+
+    public void setVipNo(String vipNo) {
+        this.vipNo = vipNo;
     }
 }

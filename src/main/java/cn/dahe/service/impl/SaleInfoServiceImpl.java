@@ -2,9 +2,11 @@ package cn.dahe.service.impl;
 
 import cn.dahe.dao.ISaleInfoDao;
 import cn.dahe.dao.ISaleInfoItemDao;
+import cn.dahe.dao.IStoreDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.SaleInfo;
 import cn.dahe.model.SaleInfoItem;
+import cn.dahe.model.Store;
 import cn.dahe.service.ISaleInfoService;
 import cn.dahe.util.DateUtil;
 import com.alibaba.fastjson.JSONArray;
@@ -26,11 +28,22 @@ public class SaleInfoServiceImpl implements ISaleInfoService {
     private ISaleInfoDao saleInfoDao;
     @Resource
     private ISaleInfoItemDao saleInfoItemDao;
+    @Resource
+    private IStoreDao storeDao;
     @Override
     public boolean add(SaleInfo t) {
         t.setMarkTime(new Date());
-
         return saleInfoDao.addAndGetId4Integer(t) != 0;
+    }
+
+    @Override
+    public boolean add(SaleInfo t, int storeId) {
+        t.setStoreId(storeId);
+        Store store = storeDao.get(storeId);
+        if(store != null){
+            t.setStoreName(store.getName());
+        }
+        return add(t);
     }
 
     @Override
@@ -106,5 +119,19 @@ public class SaleInfoServiceImpl implements ISaleInfoService {
     @Override
     public List<SaleInfoItem> findBySaleId(int saleId) {
         return saleInfoItemDao.findBySaleInfoId(saleId);
+    }
+
+    @Override
+    public List<SaleInfo> saleInfoList(String info, String startTime, String endTime, int storeId) {
+        Pager<Object> params = new Pager<>();
+        params.setStringParam1(info);
+        if(StringUtils.isNotBlank(startTime) && !startTime.equals("0")){
+            params.setStartTime(DateUtil.format(startTime, "yyyy-MM-dd"));
+        }
+        if(StringUtils.isNotBlank(endTime) && !endTime.equals("0")){
+            params.setEndTime(DateUtil.format(endTime, "yyyy-MM-dd"));
+        }
+        params.setIntParam1(storeId);
+        return saleInfoDao.saleInfoList(params);
     }
 }

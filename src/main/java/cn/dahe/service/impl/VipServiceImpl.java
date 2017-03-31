@@ -137,4 +137,18 @@ public class VipServiceImpl implements IVipService{
         sids = sids.deleteCharAt(sids.length() - 1);
         return vipDao.findByVipInfo(params, sids.toString());
     }
+
+    @Override
+    public Vip findByStorIdAndVipNo(String vipNo, int storeId) {
+        Store store = storeDao.get(storeId);
+        StringBuffer sids = new StringBuffer(storeId + ",");
+        if(store != null){
+            List<Store> storeList = storeDao.findByPid(store.getId());
+            for(Store s : storeList){
+                sids.append(s.getId() + ",");
+            }
+        }
+        sids = sids.deleteCharAt(sids.length() - 1);
+        return vipDao.findByStorIdAndVipNo(vipNo, sids.toString());
+    }
 }

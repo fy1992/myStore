@@ -60,4 +60,37 @@ public class SaleInfoDaoImpl extends BaseDaoImpl<SaleInfo> implements ISaleInfoD
         hql.append(" order by " + params.getOrderColumn() + " " + params.getOrderDir());
         return this.find(hql.toString(), list, start, pageSize);
     }
+
+    @Override
+    public List<SaleInfo> saleInfoList(Pager<Object> params) {
+        Date startTime = params.getStartTime();
+        Date endTime = params.getEndTime();
+        int storeId = params.getIntParam1();
+        String searchParam = params.getStringParam1();
+        StringBuffer hql = new StringBuffer("from SaleInfo si where 1=1");
+        List<Object> list = new ArrayList<>();
+        if(startTime != null){
+            startTime = new java.sql.Date(startTime.getTime());
+            hql.append(" and si.markTime >= ?");
+            list.add(startTime);
+        }
+        if(endTime != null){
+            endTime = new java.sql.Date(endTime.getTime());
+            hql.append(" and si.markTime <= ?");
+            list.add(endTime);
+        }
+        if(storeId != 0){
+            hql.append(" and si.storeId = ?");
+            list.add(storeId);
+        }
+        if(StringUtils.isNotBlank(searchParam) && !"0".equals(searchParam)){
+            if(searchParam.length() > 15){
+                hql.append(" and si.serialNum = ?");
+            }else{
+                hql.append(" and si.vipNo = ?");
+            }
+            list.add(searchParam);
+        }
+        return this.list(hql.toString(), list);
+    }
 }

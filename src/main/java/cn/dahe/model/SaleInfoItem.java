@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * 销售单据明细
  * Created by fy on 2017/3/30.
  */
-@Table(name = "sale_info_item")
+@Table(name = "t_sale_info_item")
 @Entity
 public class SaleInfoItem {
     @Id
@@ -35,6 +35,11 @@ public class SaleInfoItem {
     private int goodsNum;
     //利润
     private double gain;
+    //单位Id
+    @Column(name = "goods_unit_id")
+    private int goodsUnitId;
+    @Column(name = "goods_unit_name")
+    private String goodsUnitName;
 
     public int getId() {
         return id;
@@ -98,5 +103,21 @@ public class SaleInfoItem {
 
     public void setGoodsName(int goodsName) {
         this.goodsName = goodsName;
+    }
+
+    public int getGoodsUnitId() {
+        return goodsUnitId;
+    }
+
+    public void setGoodsUnitId(int goodsUnitId) {
+        this.goodsUnitId = goodsUnitId;
+    }
+
+    public String getGoodsUnitName() {
+        return goodsUnitName;
+    }
+
+    public void setGoodsUnitName(String goodsUnitName) {
+        this.goodsUnitName = goodsUnitName;
     }
 }

@@ -198,7 +198,7 @@
      * @param id
      */
     function detail(id) {
-        layer_show("销售单据明细", "<%=request.getContextPath()%>/server/salesInfo/saleInfoItem/"+id, "950px", "350px");
+        layer_show("销售单据明细", "<%=request.getContextPath()%>/server/salesInfo/saleInfoItem/"+id, "800", "400");
     }
 </script>
 </body>

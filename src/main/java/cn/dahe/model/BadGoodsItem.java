@@ -1,23 +1,28 @@
 package cn.dahe.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
- * 客户端订单明细
- * Created by fy on 2017/3/16.
+ * 报损明细
+ * Created by fy on 2017/3/31.
  */
-@Table(name = "t_client_order_time")
+@Table(name = "t_bad_goods_item")
 @Entity
-public class ClientOrderItem {
+public class BadGoodsItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    //所属订单
-    @Column(name = "client_order_id")
-    private int clientOrderId;
+    //报损单id
+    @Column(name = "bad_goods_id")
+    private int badGoodsId;
     //预定数量
-    @Column(name = "order_num")
-    private int orderNum;
+    @Column(name = "goods_num")
+    private int goodsNum;
     //商品编码
     @Column(name = "goods_no")
     private String goodsNo;
@@ -39,20 +44,20 @@ public class ClientOrderItem {
         this.id = id;
     }
 
-    public int getClientOrderId() {
-        return clientOrderId;
+    public int getBadGoodsId() {
+        return badGoodsId;
     }
 
-    public void setClientOrderId(int clientOrderId) {
-        this.clientOrderId = clientOrderId;
+    public void setBadGoodsId(int badGoodsId) {
+        this.badGoodsId = badGoodsId;
     }
 
-    public int getOrderNum() {
-        return orderNum;
+    public int getGoodsNum() {
+        return goodsNum;
     }
 
-    public void setOrderNum(int orderNum) {
-        this.orderNum = orderNum;
+    public void setGoodsNum(int goodsNum) {
+        this.goodsNum = goodsNum;
     }
 
     public String getGoodsNo() {

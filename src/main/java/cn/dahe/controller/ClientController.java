@@ -1,8 +1,7 @@
 package cn.dahe.controller;
 
 import cn.dahe.dto.AjaxObj;
-import cn.dahe.dto.ClientOrderDto;
-import cn.dahe.dto.GoodsTrafficDto;
+import cn.dahe.dto.ClientDataDto;
 import cn.dahe.model.*;
 import cn.dahe.service.*;
 import cn.dahe.util.CacheUtils;
@@ -12,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -45,6 +45,10 @@ public class ClientController {
     private IGoodsRawService goodsRawService;
     @Resource
     private IClientOrderService clientOrderService;
+    @Resource
+    private IBadGoodsService badGoodsService;
+    @Resource
+    private ISaleInfoService saleInfoService;
 
     @RequestMapping(value = "test", method = RequestMethod.GET)
     public String test(){
@@ -114,7 +118,7 @@ public class ClientController {
      */
     @RequestMapping(value = "orderGoods", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj orderGoods(GoodsTrafficDto goodsTrafficDto, HttpSession session){
+    public AjaxObj orderGoods(ClientDataDto goodsTrafficDto, HttpSession session){
         AjaxObj json = new AjaxObj();
         logger.info("--- " + goodsTrafficDto.toString());
         Cashier cashier = (Cashier) session.getAttribute("clientUser");
@@ -125,26 +129,52 @@ public class ClientController {
     }
 
     /**
-     * 客户端点餐下单
+     * 保存销售单据
+     * @param saleInfo
+     * @param session
      * @return
      */
-    @RequestMapping(value = "order", method = RequestMethod.GET)
+    @RequestMapping(value = "saleInfo", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj clientOrder(HttpSession session, ClientOrderDto clientOrderDto){
+    public AjaxObj addSaleInfo(SaleInfo saleInfo, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier) session.getAttribute("clientUser");
-        clientOrderService.findByStoreId(cashier.getStoreId(), "0");
+        saleInfoService.add(saleInfo, cashier.getStoreId());
+        json.setResult(1);
         return json;
     }
 
     /**
-     * 保存销售单据
+     * 销售单据列表
+     * @param info
+     * @param startTime
+     * @param endTime
+     * @param session
      * @return
      */
-    @RequestMapping(value = "saleInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "saleInfoList", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxObj saleInfo(){
+    public AjaxObj saleInfoList(@RequestParam(required = false, defaultValue = "0") String info, String startTime, String endTime, HttpSession session){
         AjaxObj json = new AjaxObj();
+        Cashier cashier = (Cashier) session.getAttribute("clientUser");
+        List<SaleInfo> list = saleInfoService.saleInfoList(info, startTime, endTime, cashier.getStoreId());
+        json.setResult(1);
+        json.setObject(list);
+        return json;
+    }
+
+    /**
+     * 销售单据明细
+     * @param saleInfoId
+     * @return
+     */
+    @RequestMapping(value = "findBySaleInfoId", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxObj findBySaleInfoId(int saleInfoId){
+        AjaxObj json = new AjaxObj();
+        List<SaleInfoItem> list = saleInfoService.findBySaleId(saleInfoId);
+        json.setResult(1);
+        json.setObject(list);
         return json;
     }
 
@@ -226,7 +256,7 @@ public class ClientController {
     /**
      * 会员添加
      */
-    @RequestMapping(value = "addVip", method = RequestMethod.GET)
+    @RequestMapping(value = "addVip", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj addVip(Vip vip, HttpSession session){
         AjaxObj json = new AjaxObj();
@@ -282,11 +312,24 @@ public class ClientController {
     public  AjaxObj netOrder(HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier)session.getAttribute("clientUser");
-        List<ClientOrder> clientOrders = clientOrderService.findByStoreId(cashier.getStoreId(),"0");
+        List<ClientOrder> clientOrders = clientOrderService.findByStoreId(cashier.getStoreId(),"0,1");
         json.setResult(1);
         json.setObject(clientOrders);
         return json;
     }
 
-
+    /**
+     * 商品报损
+     * @return
+     */
+    @RequestMapping(value = "badGoods", method = RequestMethod.POST)
+    @ResponseBody
+    public  AjaxObj badGoods(ClientDataDto clientDataDto, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        Cashier cashier = (Cashier)session.getAttribute("clientUser");
+        badGoodsService.add(clientDataDto, cashier);
+        json.setResult(1);
+        json.setObject("报损提交成功");
+        return json;
+    }
 }

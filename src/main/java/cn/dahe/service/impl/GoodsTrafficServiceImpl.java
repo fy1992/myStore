@@ -1,7 +1,7 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.*;
-import cn.dahe.dto.GoodsTrafficDto;
+import cn.dahe.dto.ClientDataDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.*;
 import cn.dahe.service.IGoodsTrafficService;
@@ -16,12 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by fy on 2017/1/23.
@@ -45,7 +41,7 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
     private IGoodsRawDao goodsRawDao;
 
     @Override
-    public void add(GoodsTrafficDto t, int storeId) {
+    public void add(ClientDataDto t, int storeId) {
         GoodsTraffic goodsTraffic = new GoodsTraffic();
         goodsTraffic.setWishTime(DateUtil.format(t.getWishTime(), "yyyy-MM-dd"));
         goodsTraffic.setDescription(t.getDescription());
