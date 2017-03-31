@@ -8,6 +8,7 @@ import cn.dahe.model.ClientGoodsRaw;
 import cn.dahe.model.GoodsRaw;
 import cn.dahe.model.Store;
 import cn.dahe.service.IGoodsRawService;
+import cn.dahe.util.DateUtil;
 import cn.dahe.util.StringUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +44,10 @@ public class GoodsRawServiceImpl implements IGoodsRawService{
             if(t.getProductionDate() == null){
                 t.setProductionDate(new Date());
             }
+            Date pro_date = t.getProductionDate();
+            int shelfLife = t.getShelfLife();
+            t.setOverdueDay(DateUtil.getOverdueDay(pro_date, shelfLife));
+            t.setOverdueTime(DateUtil.getOverdueTime(pro_date, shelfLife));
             goodsRawDao.add(t);
             return true;
         }
@@ -55,6 +61,10 @@ public class GoodsRawServiceImpl implements IGoodsRawService{
 
     @Override
     public void update(GoodsRaw t) {
+        Date pro_date = t.getProductionDate();
+        int shelfLife = t.getShelfLife();
+        t.setOverdueDay(DateUtil.getOverdueDay(pro_date, shelfLife));
+        t.setOverdueTime(DateUtil.getOverdueTime(pro_date, shelfLife));
         goodsRawDao.update(t);
     }
 

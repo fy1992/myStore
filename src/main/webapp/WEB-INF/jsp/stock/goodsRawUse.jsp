@@ -113,7 +113,7 @@ table = $('#goodsRawUse_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/server/goods/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/raw/usedList",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({

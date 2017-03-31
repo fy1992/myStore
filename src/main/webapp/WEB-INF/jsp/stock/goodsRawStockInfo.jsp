@@ -17,7 +17,7 @@
 <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 
-<title>原材料庫存列表</title>
+<title>原材料库存预警列表</title>
 </head>
 <body class="pos-r">
 <div>
@@ -26,12 +26,12 @@
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="select-box" style="width: 100px;">
                 <select class="select radius" id="categoriesId">
-                    <option value="0">全部分类</option>
+                    <option value="-1">全部分类</option>
                 </select>
             </span>
             <span class="select-box" style="width: 120px;">
                 <select class="select radius" id="supplierId">
-                    <option value="0">全部供货商</option>
+                    <option value="-1">全部供货商</option>
                 </select>
             </span>
             <input type="text" id="raw_info" placeholder="原材料名称/条码" style="width:260px" class="input-text radius">
@@ -100,15 +100,21 @@ table = $('#stock_table').dataTable({
        "aoColumns" : [
         {"mData" : null, "sDefaultContent" : "", "bSortable":false},
         {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "goodsNo", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "rawNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "categoriesName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "supplierName", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
             return  !data ? "无" : data;
         }},
         {"mData" : "stock", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "mainUnitName", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "stockUp", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "stockDown", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "mainUnitName", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
+            return  !data ? "无" : data;
+        }},
+        {"mData" : "stockUp", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
+            return  !data ? "-" : data;
+        }},
+        {"mData" : "stockDown", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
+            return  !data ? "-" : data;
+        }},
         {"mData" : "overdueTime", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
 	        return  data ? format(data).substring(0, 10) : "-";
         }},
@@ -136,7 +142,7 @@ table = $('#stock_table').dataTable({
        "fnFormatNumber": function(iIn){
        	    return iIn;//格式化数字显示方式
        },
-       "sAjaxSource" : "<%=request.getContextPath()%>/server/goods/list",
+       "sAjaxSource" : "<%=request.getContextPath()%>/server/raw/list",
        //服务器端，数据回调处理  
        "fnServerData" : function(sSource, aDataSet, fnCallback) {
            $.ajax({
@@ -152,9 +158,11 @@ table = $('#stock_table').dataTable({
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
       	var categoriesId = $("#categoriesId").val();
       	var supplierId = $("#supplierId").val();
-      	aoData.push({"name":"categories","value":categoriesId});
-      	aoData.push({"name":"supplier","value":supplierId});
+      	var rawInfo = $("#raw_info").val();
+      	aoData.push({"name":"categoriesId","value":categoriesId});
+      	aoData.push({"name":"supplierId","value":supplierId});
       	aoData.push({"name":"stockPage","value":1});
+      	aoData.push({"name":"goodsRawInfo","value":rawInfo});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){

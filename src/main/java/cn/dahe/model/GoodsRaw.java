@@ -48,7 +48,13 @@ public class GoodsRaw {
     private Date productionDate;
     //保质期
     @Column(name = "shelf_life")
-    private String shelfLife;
+    private int shelfLife;
+    //过期时间
+    @Column(name = "over_due_time", columnDefinition = "INT DEFAULT 0")
+    private Date overdueTime;
+    //过期天数
+    @Column(name = "over_due_day")
+    private int overdueDay;
     //库存
     private int stock;
     //库存上限
@@ -209,11 +215,11 @@ public class GoodsRaw {
         this.supplierName = supplierName;
     }
 
-    public String getShelfLife() {
+    public int getShelfLife() {
         return shelfLife;
     }
 
-    public void setShelfLife(String shelfLife) {
+    public void setShelfLife(int shelfLife) {
         this.shelfLife = shelfLife;
     }
 
@@ -231,5 +237,21 @@ public class GoodsRaw {
 
     public void setStockDown(String stockDown) {
         this.stockDown = stockDown;
+    }
+
+    public Date getOverdueTime() {
+        return overdueTime;
+    }
+
+    public void setOverdueTime(Date overdueTime) {
+        this.overdueTime = overdueTime;
+    }
+
+    public int getOverdueDay() {
+        return overdueDay;
+    }
+
+    public void setOverdueDay(int overdueDay) {
+        this.overdueDay = overdueDay;
     }
 }

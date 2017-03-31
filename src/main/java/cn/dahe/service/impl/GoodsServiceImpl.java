@@ -338,8 +338,11 @@ public class GoodsServiceImpl implements IGoodsService{
         }else{
             goodsDto.setGoodsTagss("0");
         }
-        Date pro_date = goods.getProductionDate();
+        goodsDto.setOverdueDay(goods.getOverdueDay());
+        goodsDto.setOverdueTime(DateUtil.format(goods.getOverdueTime(), "yyyy-MM-dd"));
+        /*Date pro_date = goods.getProductionDate();
         int shelfLife = goods.getShelfLife();
+
         if(pro_date != null && shelfLife != 0){
             Calendar c = Calendar.getInstance();
             c.setTime(pro_date);
@@ -351,7 +354,7 @@ public class GoodsServiceImpl implements IGoodsService{
                 long time = nowDate.getTime() - overdueTime.getTime();
                 goodsDto.setOverdueDay((int)time/(24*60*60*1000));
             }
-        }
+        }*/
         return goodsDto;
     }
 
@@ -419,6 +422,10 @@ public class GoodsServiceImpl implements IGoodsService{
             });
             goods.setGoodsTagsSet(goodsTagsSet);
         }
+        Date pro_date = goods.getProductionDate();
+        int shelfLife = goods.getShelfLife();
+        goods.setOverdueDay(DateUtil.getOverdueDay(pro_date, shelfLife));
+        goods.setOverdueTime(DateUtil.getOverdueTime(pro_date, shelfLife));
         return goods;
     }
 

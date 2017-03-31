@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
@@ -99,6 +100,28 @@ public class DateUtil {
 			e.printStackTrace();
 		}
     	return date;
+    }
+
+    public static Date getOverdueTime(Date productionDate, int shelfLife){
+        if(productionDate != null && shelfLife != 0){
+            Calendar c = Calendar.getInstance();
+            c.setTime(productionDate);
+            c.add(Calendar.DATE, shelfLife);
+            return c.getTime();
+        }
+        return null;
+    }
+
+    public static int getOverdueDay(Date productionDate, int shelfLife){
+        if(productionDate != null && shelfLife != 0){
+            Date overdueTime = getOverdueTime(productionDate, shelfLife);
+            Date nowDate = new Date();
+            if(nowDate.after(overdueTime)){
+                long time = nowDate.getTime() - overdueTime.getTime();
+                return (int)time/(24*60*60*1000);
+            }
+        }
+        return 0;
     }
 	
 	public static void main(String[] args) {

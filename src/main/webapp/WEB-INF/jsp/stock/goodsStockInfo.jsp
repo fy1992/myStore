@@ -17,7 +17,7 @@
 <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 <link href="${ctxResource}/css/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 
-<title>庫存列表</title>
+<title>库存列表</title>
 </head>
 <body class="pos-r">
 <div>

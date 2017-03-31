@@ -124,6 +124,12 @@ public class Goods {
     //是否用配方价更新进货价 0 否 1 是
     @Column(name = "use_raw_price", columnDefinition = "INT DEFAULT 0")
     private int useRawPrice;
+    //过期时间
+    @Column(name = "over_due_time")
+    private Date overdueTime;
+    //过期天数
+    @Column(name = "over_due_day", columnDefinition = "INT DEFAULT 0")
+    private int overdueDay;
 
     public int getId() {
         return id;
@@ -403,6 +409,22 @@ public class Goods {
 
     public void setUseRawPrice(int useRawPrice) {
         this.useRawPrice = useRawPrice;
+    }
+
+    public Date getOverdueTime() {
+        return overdueTime;
+    }
+
+    public void setOverdueTime(Date overdueTime) {
+        this.overdueTime = overdueTime;
+    }
+
+    public int getOverdueDay() {
+        return overdueDay;
+    }
+
+    public void setOverdueDay(int overdueDay) {
+        this.overdueDay = overdueDay;
     }
 
     @Override

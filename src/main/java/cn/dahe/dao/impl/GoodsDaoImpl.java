@@ -56,8 +56,9 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
             objectList.add(storeId);
         }
         if(stockPage == 1){
-            hql.append(" and goods.stock.goodNum <= 0");
+            hql.append(" and ( goods.stock.goodNum <= 0 or goods.overdueDay > 0 )");
         }
+
         hql.append(" order by "+ params.getOrderColumn() + " " +params.getOrderDir());
         return this.find(hql.toString(), objectList, start, pageSize);
     }

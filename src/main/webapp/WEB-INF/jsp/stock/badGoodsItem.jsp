@@ -18,7 +18,7 @@
 			<th>条码</th>
 			<th>商品数量</th>
 			<th width="120">单位</th>
-			<th width="120">价格</th>
+			<th width="120">金额</th>
 		</tr>
 	</thead>
 	<tbody>

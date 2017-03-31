@@ -87,7 +87,7 @@ public class BadGoodsServiceImpl implements IBadGoodsService{
                     price = goodsRaw.getPrice();
                 }
                 badGoodsItem.setGoodsNum((Integer)map.get("goodsNum"));
-                badGoodsItem.setPrice(price * t.getBadNum());
+                badGoodsItem.setPrice(price * (Integer)map.get("goodsNum"));
                 badGoodsItem.setBadGoodsId(badGoodsId);
                 badGoodsItemDao.add(badGoodsItem);
                 totalPrice += badGoodsItem.getPrice()*100;

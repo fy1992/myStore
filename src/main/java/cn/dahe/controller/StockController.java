@@ -25,18 +25,26 @@ public class StockController {
     @Resource
     private IStockService stockService;
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String list(){
-        return "stock/stockInfo";
-    }
-
-    @RequestMapping(value = "rawList", method = RequestMethod.GET)
-    public String rawList(){
-        return "stock/goodsRawInfo";
+    /**
+     * 商品库存预警
+     * @return
+     */
+    @RequestMapping(value = "goodsList", method = RequestMethod.GET)
+    public String goodsList(){
+        return "stock/goodsStockInfo";
     }
 
     /**
-     * 列表页查询
+     * 营业概况
+     * @return
+     */
+    @RequestMapping(value = "rawList", method = RequestMethod.GET)
+    public String rawList(){
+        return "stock/goodsRawStockInfo";
+    }
+
+    /**
+     * 商品库存预警
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
@@ -45,5 +53,4 @@ public class StockController {
         User user = (User) session.getAttribute("loginUser");
         return stockService.findByParams(aDataSet, user.getStoreId());
     }
-
 }
