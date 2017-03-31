@@ -10,6 +10,7 @@
 	<link href="${ctxResource}/css/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
 	<link href="${ctxResource}/css/wap.css" type="text/css" rel="stylesheet" media="all">
 	<script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
+	<script type="text/javascript" src="${ctxResource}/js/jquery.cookie.js"></script>
 	<script type="text/javascript" src="${ctxResource}/js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -26,7 +27,7 @@
 		<div class="choose_three">
 			<ul>
 				<li>
-					<a href="public_shopping.html">
+					<a href="${ctx}/wechatdemo/shoppingCart">
 						<span class="glyphicon glyphicon-shopping-cart"></span>
 						<span>购物车:￥</span>
 						<span id="totalPrice">0</span>
@@ -36,8 +37,8 @@
 			</ul>
 		</div>
 		<ul class="glyfl">
-			<li><a>全部</a></li>
-			<li><a href="javascript:;" onclick="loadData(4 )">测试</a></li>
+			<li><a href="javascript:;" onclick="loadData(0)">全部</a></li>
+			<li><a href="javascript:;" onclick="loadData(4)">测试</a></li>
 			<c:forEach var="categ" items="${categList }">
 				<li><a href="javascript:;" onclick="loadData(${categ.id })">${categ.name }</a></li>
 			</c:forEach>
@@ -45,7 +46,7 @@
 	</div>
 	<script type="text/javascript" >
 		// 定义购物车map
-		var shopping_cart = new Map();
+		var shopping_cart;
 		
 		window.onresize = function() {
 			w_h();
@@ -53,8 +54,18 @@
 		
 		$(document).ready(function() {
 			w_h();
+			loadCookie();
 			loadData(0);
 		});
+		
+		function loadCookie(){
+			var shop_cookie = $.cookie("shopping_cart");
+			if(shop_cookie){
+				shopping_cart = new Map(JSON.parse(shop_cookie));
+			}else{
+				shopping_cart = new Map();
+			}
+		}
 		
 		function loadData(categId){
 			$.ajax({
@@ -62,10 +73,16 @@
 				type:'get',
 				success: function(data){
 					var tempDiv = "";
+					var totalNum = 0;
+					var totalPrice = 0;
 					for (i=0; i<data.length; i++) {
 						var num = 0;
 						var goods = data[i];
-						if(shopping_cart.has(""+goods.id)) num = shopping_cart.get(""+goods.id);
+						if(shopping_cart.has(""+goods.id)){
+							num = shopping_cart.get(""+goods.id);
+							totalNum += num;
+							totalPrice += num*goods.price;
+						}
 						tempDiv += "<div class=\"choose_wares\">";
 						tempDiv += "<img src=\""+goods.imgUrl+"\">";
 						tempDiv += "<ul> <li>"+goods.goodsName+"</li>";
@@ -76,7 +93,8 @@
 					}
 					$(".choose_two").empty();
 					$(".choose_two").html(tempDiv);
-					
+					$("#totalNum").text(totalNum);
+					$("#totalPrice").text(totalPrice);
 					$(".calculator i").each(function() {
 						var remapk = parseInt($(this).html());
 						if (remapk > 0) {
@@ -99,6 +117,7 @@
 			var add_a = adds + 1;
 			shopping_cart.set(goodsId, add_a);
 			$(ele).siblings("i").html(add_a);
+			$.cookie("shopping_cart", JSON.stringify([...shopping_cart]), {path:"/"});
 			$("#totalNum").text(parseInt($("#totalNum").text()) + 1);
 			$("#totalPrice").text(parseFloat($("#totalPrice").text()) + parseFloat($(ele).parent().prev().children().eq(0).text()));
 		};
@@ -114,6 +133,7 @@
 				var rem_a = rems - 1;
 				shopping_cart.set(goodsId, rem_a);
 				$(ele).siblings("i").html(rem_a);
+				$.cookie("shopping_cart", JSON.stringify([...shopping_cart]), {path:"/"});
 				$("#totalNum").text(parseInt($("#totalNum").text()) - 1);
 				$("#totalPrice").text(parseFloat($("#totalPrice").text()) - parseFloat($(ele).parent().prev().children().eq(0).text()));
 			}
