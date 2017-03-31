@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.dahe.model.Categories;
 import cn.dahe.model.ClientGoods;
@@ -46,8 +47,8 @@ public class WeChatDemoController {
 
 	@Resource
 	private IClientGoodsService clientGoodsService;
-    @Resource
-    private ICategoriesService categoriesService;
+	@Resource
+	private ICategoriesService categoriesService;
 
 	/**
 	 * 微信服务器验证
@@ -114,11 +115,24 @@ public class WeChatDemoController {
 	 */
 	@RequestMapping(value = "goodsList")
 	public String wxChooseGoods(Model model) {
-		List<ClientGoods> goodsList = clientGoodsService.findAll(1);
 		List<Categories> categList = categoriesService.findAll(1);
-		model.addAttribute("goodsList", goodsList);
 		model.addAttribute("categList", categList);
 		return "wechat/public_choose";
+	}
+
+	/**
+	 * 根据类别id查找下属商品
+	 * @param categId
+	 * @return
+	 */
+	@RequestMapping(value = "goodsByCategId")
+	@ResponseBody
+	public List<ClientGoods> goodsByCategId(int categId){
+		if(categId == 0){
+			return clientGoodsService.findAll(1);
+		}else{
+			return clientGoodsService.goodsListByCategories(categId, 1);
+		}
 	}
 
 	/**

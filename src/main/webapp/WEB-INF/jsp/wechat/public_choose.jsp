@@ -13,7 +13,112 @@
 	<script type="text/javascript" src="${ctxResource}/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<script>
+	<div class="wap">
+		<div class="choose_one">
+			<ul>
+				<li><a id="glyfl"><span class="glyphicon glyphicon-th"></span>分类</a></li>
+				<li><a><span class="glyphicon glyphicon-home"></span>壹號掌柜</a></li>
+				<li><a><span class="glyphicon glyphicon-user"></span></a></li>
+			</ul>
+		</div>
+		<div class="choose_two">
+		</div>
+		<div class="choose_three">
+			<ul>
+				<li>
+					<a href="public_shopping.html">
+						<span class="glyphicon glyphicon-shopping-cart"></span>
+						<span>购物车:￥</span>
+						<span id="totalPrice">0</span>
+					</a><i id="totalNum">0</i>
+				</li>
+				<li><a><span class="glyphicon glyphicon-search"></span></a></li>
+			</ul>
+		</div>
+		<ul class="glyfl">
+			<li><a>全部</a></li>
+			<li><a href="javascript:;" onclick="loadData(4 )">测试</a></li>
+			<c:forEach var="categ" items="${categList }">
+				<li><a href="javascript:;" onclick="loadData(${categ.id })">${categ.name }</a></li>
+			</c:forEach>
+		</ul>
+	</div>
+	<script type="text/javascript" >
+		// 定义购物车map
+		var shopping_cart = new Map();
+		
+		window.onresize = function() {
+			w_h();
+		}
+		
+		$(document).ready(function() {
+			w_h();
+			loadData(0);
+		});
+		
+		function loadData(categId){
+			$.ajax({
+				url:'${ctx}/wechatdemo/goodsByCategId?categId='+categId,
+				type:'get',
+				success: function(data){
+					var tempDiv = "";
+					for (i=0; i<data.length; i++) {
+						var num = 0;
+						var goods = data[i];
+						if(shopping_cart.has(""+goods.id)) num = shopping_cart.get(""+goods.id);
+						tempDiv += "<div class=\"choose_wares\">";
+						tempDiv += "<img src=\""+goods.imgUrl+"\">";
+						tempDiv += "<ul> <li>"+goods.goodsName+"</li>";
+						tempDiv += "<li> <p>￥<span>"+goods.price+"</span></p>";
+						tempDiv += "<div class=\"calculator\"><span class=\"glyphicon glyphicon-minus-sign cgrey\" onclick=\"delGoods(this, '"+goods.id+"')\"></span>";
+						tempDiv += "<i>"+num+"</i><span class=\"glyphicon glyphicon-plus-sign corange\" onclick=\"addGoods(this, '"+goods.id+"')\"></span>";
+						tempDiv += "</div> </li> </ul> </div>";
+					}
+					$(".choose_two").empty();
+					$(".choose_two").html(tempDiv);
+					
+					$(".calculator i").each(function() {
+						var remapk = parseInt($(this).html());
+						if (remapk > 0) {
+							$(this).parent().children().eq(0).removeClass("cgrey");
+							$(this).parent().children().eq(0).addClass("corange");
+						}
+					});
+				}
+			});
+			
+		}
+	
+		function addGoods(ele, goodsId){
+			var adds = parseInt($(ele).parent().children().eq(1).html());
+			var addb = $(ele).parent().children().eq(0);
+			if (adds == 0) {
+				addb.removeClass("cgrey");
+				addb.addClass("corange");
+			}
+			var add_a = adds + 1;
+			shopping_cart.set(goodsId, add_a);
+			$(ele).siblings("i").html(add_a);
+			$("#totalNum").text(parseInt($("#totalNum").text()) + 1);
+			$("#totalPrice").text(parseFloat($("#totalPrice").text()) + parseFloat($(ele).parent().prev().children().eq(0).text()));
+		};
+		
+		function delGoods(ele, goodsId){
+			var rems = parseInt($(ele).parent().children().eq(1).html());
+			var remb = $(ele);
+			if (rems > 0) {
+				if (rems == 1) {
+					remb.removeClass("corange");
+					remb.addClass("cgrey");
+				} 
+				var rem_a = rems - 1;
+				shopping_cart.set(goodsId, rem_a);
+				$(ele).siblings("i").html(rem_a);
+				$("#totalNum").text(parseInt($("#totalNum").text()) - 1);
+				$("#totalPrice").text(parseFloat($("#totalPrice").text()) - parseFloat($(ele).parent().prev().children().eq(0).text()));
+			}
+		};
+		
 		function w_h(widthWin, heightWin) {
 			var widthWin = $(window).width();
 			var heightWin = $(window).height();
@@ -31,98 +136,15 @@
 			$("body").css("font-size", bodyfont);
 			$(".choose_two").css("height", heightWin - bodyfont * 12);
 		}
-		$(document).ready(function() {
-			w_h()
-			$(".calculator i").each(function() {
-				var remapk = parseInt($(this).html());
-				if (remapk > 0) {
-					$(this).parent().children().eq(0).removeClass("cgrey");
-					$(this).parent().children().eq(0).addClass("corange");
-				}
-			});
-		});
-		window.onresize = function() {
-			w_h();
-		}
-	</script>
-	<div class="wap">
-		<div class="choose_one">
-			<ul>
-				<li><a id="glyfl"><span class="glyphicon glyphicon-th"></span>分类</a></li>
-				<li><a><span class="glyphicon glyphicon-home"></span>壹號掌柜</a></li>
-				<li><a><span class="glyphicon glyphicon-user"></span></a></li>
-			</ul>
-		</div>
-		<div class="choose_two">
-			<c:forEach var="goods" items="${goodsList }">
-				<div class="choose_wares">
-					<img src="${goods.imgUrl }">
-					<ul>
-						<li>${goods.goodsName }</li>
-						<li>
-							<p>￥<span>${goods.price }</span></p>
-							<div class="calculator">
-								<span class="glyphicon glyphicon-minus-sign rem cgrey"></span>
-								<i>0</i>
-								<span class="glyphicon glyphicon-plus-sign add corange"></span>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</c:forEach>
-		</div>
-		<div class="choose_three">
-			<ul>
-				<li>
-					<a href="public_shopping.html">
-						<span class="glyphicon glyphicon-shopping-cart"></span>
-						<span>购物车:￥</span>
-						<span id="totalPrice">0</span>
-					</a><i id="totalNum">0</i>
-				</li>
-				<li><a><span class="glyphicon glyphicon-search"></span></a></li>
-			</ul>
-		</div>
-		<ul class="glyfl">
-			<li><a>全部显示</a></li>
-			<c:forEach var="categ" items="${categList }">
-				<li><a>${categ.name }</a></li>
-			</c:forEach>
-		</ul>
-	</div>
-	<script>
-		$(".add").click(function() {
-			var adds = parseInt($(this).parent().children().eq(1).html());
-			var addb = $(this).parent().children().eq(0);
-			if (adds == 0) {
-				addb.removeClass("cgrey");
-				addb.addClass("corange");
-			}
-			var add_a = adds + 1;
-			$(this).siblings("i").html(add_a);
-			$("#totalNum").text(parseInt($("#totalNum").text()) + 1);
-			$("#totalPrice").text(parseFloat($("#totalPrice").text()) + parseFloat($(this).parent().prev().children().eq(0).text()));
-		});
-		$(".rem").click(function() {
-			var rems = parseInt($(this).parent().children().eq(1).html());
-			var remb = $(this);
-			if (rems > 0) {
-				if (rems == 1) {
-					remb.removeClass("corange");
-					remb.addClass("cgrey");
-				} 
-				var rem_a = rems - 1;
-				$(this).siblings("i").html(rem_a);
-				$("#totalNum").text(parseInt($("#totalNum").text()) - 1);
-				$("#totalPrice").text(parseFloat($("#totalPrice").text()) - parseFloat($(this).parent().prev().children().eq(0).text()));
-			}
-		});
+		
 		$("#glyfl").click(function() {
 			$(".glyfl").css("display", "block")
 		});
+		
 		$(".glyfl li a").click(function() {
 			$(".glyfl").css("display", "none")
 		});
+		
 	</script>
 </body>
 </html>
