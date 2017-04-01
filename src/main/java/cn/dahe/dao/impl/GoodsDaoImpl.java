@@ -56,7 +56,7 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
             objectList.add(storeId);
         }
         if(stockPage == 1){
-            hql.append(" and ( goods.stock.goodNum <= 0 or goods.overdueDay > 0 )");
+            hql.append(" and ( goods.finishedStock.goodNum <= 0 or goods.overdueDay > 0 )");
         }
 
         hql.append(" order by "+ params.getOrderColumn() + " " +params.getOrderDir());
@@ -96,5 +96,11 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
             return this.list(hql, storeId);
         }
         return this.list(hql);
+    }
+
+    @Override
+    public List<Goods> findIntermediaryGoods(int storeId) {
+        String hql = "from Goods where storeId = ? and intermediary = 0 and autoFinished = 1";
+        return this.list(hql, storeId);
     }
 }

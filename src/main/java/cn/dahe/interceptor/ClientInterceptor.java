@@ -13,6 +13,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class ClientInterceptor extends HandlerInterceptorAdapter {
 	
@@ -28,22 +29,21 @@ public class ClientInterceptor extends HandlerInterceptorAdapter {
         HttpSession session = request.getSession();
         if(!checkAllowAccess(url)){
             if(StringUtils.isNotBlank(token) && CacheUtils.getCashierUser(token) != null) {
-                Cashier cashier = (Cashier) session.getAttribute("clientUser");
+                int storeId = Integer.parseInt(token.substring(token.length() - 1));
+                Cashier cashier = (Cashier) session.getAttribute("clientUser_" + storeId);
                 if (cashier == null) {
-                    logger.info("session过期，重新赋值");
-                    session.setAttribute("clientUser", CacheUtils.getCashierUser(token));
+                    cashier = (Cashier)CacheUtils.getCashierUser(token);
+                    if(cashier.getStoreId() == storeId){
+                        logger.info("session过期，重新赋值");
+                        session.setAttribute("clientUser_" + storeId, cashier);
+                        return true;
+                    }else{
+                        writeJson(response);
+                        return false;
+                    }
                 }
-                return true;
             }else{
-                logger.info("客户端没有登录");
-                AjaxObj json = new AjaxObj();
-                json.setResult(2);
-                json.setMsg("账号过期，请重新登录");
-                response.setCharacterEncoding("UTF-8");
-                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                response.setHeader("Cache-Control", "no-cache, must-revalidate");
-                response.getWriter().write(JSON.toJSONString(json));
-                response.getWriter().close();
+                writeJson(response);
                 return false;
             }
         }
@@ -60,6 +60,9 @@ public class ClientInterceptor extends HandlerInterceptorAdapter {
             url = "/" + url;
         }
         if(url.equals("/client/login")){
+            return true;
+        }
+        if(url.equals("/client/storeLogin")){
             return true;
         }
         return false;
@@ -79,4 +82,20 @@ public class ClientInterceptor extends HandlerInterceptorAdapter {
 		}
 		return token;
 	}
+
+	private void writeJson(HttpServletResponse response){
+	    try {
+            logger.info("客户端没有登录");
+            AjaxObj json = new AjaxObj();
+            json.setResult(2);
+            json.setMsg("账号过期，请重新登录");
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setHeader("Cache-Control", "no-cache, must-revalidate");
+            response.getWriter().write(JSON.toJSONString(json));
+            response.getWriter().close();
+        }catch (IOException e){
+	        e.printStackTrace();
+        }
+    }
 }

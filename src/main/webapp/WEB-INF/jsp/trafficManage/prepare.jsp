@@ -62,10 +62,18 @@
 
 <div class="cfpdBtnbox">
 	<div class="f-l ml-20"><b class="c-primary" id = "status"></b> <span id="time"></span></div>
+    <div class="btnDiv">
     <c:if test="${trafficManage.status eq 0}">
-        <a class="btn btn-primary size-M f-r" id="pass">确认进货</a>
-        <a class="btn btn-default size-M f-r" id="nopass">拒绝进货</a>
+        <c:if test="${trafficManage.trafficType eq 1}">
+            <a class="btn btn-primary size-M f-r" id="passIn">确认进货</a>
+            <a class="btn btn-default size-M f-r" id="nopassIn">拒绝进货</a>
+        </c:if>
+        <c:if test="${trafficManage.trafficType eq 0}">
+            <a class="btn btn-primary size-M f-r" id="passReturn">确认退货</a>
+            <a class="btn btn-default size-M f-r" id="nopassReturn">拒绝退货</a>
+        </c:if>
     </c:if>
+    </div>
 </div>
 <script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
@@ -75,32 +83,62 @@
 <script>
 $(function(){
     if(${trafficManage.status ne 0}){
-        var msg = "${trafficManage.status}" == "-1" ? "已拒绝进货" : "已完成进货";
+        var msg;
+        if("${trafficManage.trafficType eq 0}"){
+            msg = "${trafficManage.status}" == "-1" ? "已拒绝退货" : "已完成退货";
+        }else{
+            msg = "${trafficManage.status}" == "-1" ? "已拒绝进货" : "已完成进货";
+        }
         var msgClass = "${trafficManage.status}" == "-1" ? "c-danger" : "c-success";
         $("#status").text(msg);
         $("#status").prop("class", msgClass);
         $("#time").text(format("${trafficManage.optTime}"));
     }
-	//拒绝
-	$("#nopass").click(function(){
+	//拒绝进货
+	$("#nopassIn").click(function(){
         $.post("<%=request.getContextPath()%>/server/goodsTrafficManage/prepare", {"id": ${trafficManage.id}, "type" : -1}, function (data) {
 			layer.msg(data.msg, {time : 1500, icon:6}, function () {
                 window.parent.table.fnDraw();
 				$("#status").text(data.msg);
                 $("#status").prop("class", "c-danger");
 				$("#time").text(format(data.object));
+				$(".btnDiv").toggle(false);
             })
         });
 	});
-	//确认
-	$("#pass").click(function(){
+	//确认进货
+	$("#passIn").click(function(){
 	    $.post("<%=request.getContextPath()%>/server/goodsTrafficManage/prepare", {"id": "${trafficManage.id}", "type" : 1}, function (data) {
 			window.parent.table.fnDraw();
             $("#status").text(data.msg);
             $("#status").prop("class", "c-success");
             $("#time").text(format(data.object));
+            $(".btnDiv").toggle(false);
         });
 	});
+
+    //拒绝退货
+    $("#nopassReturn").click(function(){
+        $.post("<%=request.getContextPath()%>/server/goodsTrafficManage/returnGoods", {"id": ${trafficManage.id}, "type" : -1}, function (data) {
+            layer.msg(data.msg, {time : 1500, icon:6}, function () {
+                window.parent.table.fnDraw();
+                $("#status").text(data.msg);
+                $("#status").prop("class", "c-danger");
+                $("#time").text(format(data.object));
+                $(".btnDiv").toggle(false);
+            })
+        });
+    });
+    //确认退货
+    $("#passReturn").click(function(){
+        $.post("<%=request.getContextPath()%>/server/goodsTrafficManage/returnGoods", {"id": "${trafficManage.id}", "type" : 1}, function (data) {
+            window.parent.table.fnDraw();
+            $("#status").text(data.msg);
+            $("#status").prop("class", "c-success");
+            $("#time").text(format(data.object));
+            $(".btnDiv").toggle(false);
+        });
+    });
 });
 </script>
 </body>

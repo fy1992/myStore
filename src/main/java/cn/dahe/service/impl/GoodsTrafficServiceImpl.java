@@ -147,14 +147,15 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
                 storeId = s_id;
             }
             List<Store> stores = storeDao.findByPid(storeId);
+            StringBuffer sb = new StringBuffer();
+            sb.append(storeId + ",");
             if(stores != null && stores.size() > 0) {
-                StringBuffer sb = new StringBuffer();
                 for (Store store : stores) {
-                    sb.append(store.getId());
+                    sb.append(store.getId() + ",");
                 }
-                sb.deleteCharAt(sb.length() - 1);
-                params.setStringParam1(sb.toString());
             }
+            sb.deleteCharAt(sb.length() - 1);
+            params.setStringParam1(sb.toString());
             return goodsTrafficDao.findByParam(start, pageSize, params);
         }catch (Exception e){
             e.printStackTrace();
@@ -197,8 +198,6 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
         TrafficManage trafficManage = new TrafficManage();
         trafficManage.setStoreId(goodsTraffic.getOrderStoreId());//进货门店
         trafficManage.setStoreName(goodsTraffic.getOrderStoreName());
-        trafficManage.setOutStoreId(goodsTraffic.getPrepareStoreId());
-        trafficManage.setOutStoreName(goodsTraffic.getPrepareStoreName());
         trafficManage.setDescription(goodsTraffic.getDescription());
         trafficManage.setOrderDate(new Date());
         trafficManage.setWishDate(goodsTraffic.getWishTime());
@@ -207,9 +206,13 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
         trafficManage.setTotalPrice(priceSum); //总价
         trafficManage.setGoodsNum(goodsNum); //货流量
         trafficManage.setTrafficNo(NumberUtils.getNoByTime());
+        //配置出货门店
         StoreGoodsTraffic storeGoodsTraffic = storeGoodsTrafficDao.findByStoreId(trafficManage.getStoreId());
-        trafficManage.setOutStoreId(storeGoodsTraffic.getPrepareStoreId());//出货门店
-        trafficManage.setOutStoreName(storeGoodsTraffic.getPrepareStoreName());
+        int outStoreId = storeGoodsTraffic.getPrepareStoreId();
+        trafficManage.setOutStoreId(outStoreId);
+        String outStoreName = storeGoodsTraffic.getPrepareStoreName();
+        trafficManage.setOutStoreName(StringUtils.isBlank(outStoreName) ? "" : outStoreName);
+
         int trafficManageId = trafficManageDao.addAndGetId4Integer(trafficManage);
         orderGoodsInfoList.forEach(orderGoodsInfo -> {
             orderGoodsInfo.setTrafficManageId(trafficManageId);

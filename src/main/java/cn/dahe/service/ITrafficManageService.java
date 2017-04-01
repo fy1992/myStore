@@ -1,5 +1,6 @@
 package cn.dahe.service;
 
+import cn.dahe.dto.ClientDataDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.TrafficManage;
 
@@ -29,9 +30,22 @@ public interface ITrafficManageService {
     void importTrafficManageExcel(int storeId);
 
     /**
-     * 配货
+     * 客户端配货审核
      * @param id
      * @param type
      */
     TrafficManage updatePrepare(int id, int type);
+
+    /**
+     * 客户端退货
+     * @param storeId
+     */
+    void addReturnedGoods(ClientDataDto clientDataDto, int storeId);
+
+    /**
+     * 客户端退货审核
+     * @param type
+     * @return
+     */
+    TrafficManage updateReturnedGoods(int id, int type);
 }

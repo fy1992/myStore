@@ -16,6 +16,7 @@ public class ClientDataDto {
     private String orderInfo;
     //订货类型 0 商品类型 1 原材料
     private int type;
+
     public String getWishTime() {
         return wishTime;
     }

@@ -122,14 +122,19 @@
         "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
             var startTime = $("#startTime").val();
             var endTime = $("#endTime").val();
+            var storeId = $("#storeId").val();
             if(!startTime){
                 startTime = "";
             }
             if(!endTime){
                 endTime = "";
             }
+            if(!storeId){
+                storeId = 0;
+            }
             aoData.push({"name":"startTime","value":startTime});
             aoData.push({"name":"endTime","value":endTime});
+            aoData.push({"name":"storeId","value":storeId});
         },
         "fnDrawCallback" : function () {
             $('#redirect').keyup(function(e){

@@ -291,7 +291,7 @@ public class GoodsServiceImpl implements IGoodsService{
         goodsDto.setVipSet(goods.getVipSet());
         goodsDto.setStatus(goods.getStatus());
         goodsDto.setProductionDate(DateUtil.format(new Date(), "yyy-MM-dd"));
-        Stock stock = goods.getStock();
+        Stock stock = goods.getFinishedStock();
         String goodsNum = "";
         if(stock != null){
             goodsNum = Long.toString(stock.getGoodNum());
@@ -364,7 +364,7 @@ public class GoodsServiceImpl implements IGoodsService{
         goods.setPrice(goodsDto.getPrice());
         Stock stock = new Stock();
         stock.setGoodNum(Long.parseLong(goodsDto.getStock()));
-        goods.setStock(stock);
+        goods.setFinishedStock(stock);//加到成品库存上
         goods.setCategoriesId(goodsDto.getCategoriesId());
         Categories c = categoriesDao.get(goodsDto.getCategoriesId());
         goods.setCategoriesName(c.getName());

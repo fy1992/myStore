@@ -126,14 +126,15 @@ public class ClientOrderServiceImpl implements IClientOrderService{
                 storeId = s_id;
             }
             List<Store> stores = storeDao.findByPid(storeId);
+            StringBuffer sb = new StringBuffer();
+            sb.append(storeId + ",");
             if(stores != null && stores.size() > 0) {
-                StringBuffer sb = new StringBuffer();
                 for (Store store : stores) {
-                    sb.append(store.getId());
+                    sb.append(store.getId() + ",");
                 }
-                sb.deleteCharAt(sb.length() - 1);
-                params.setStringParam1(sb.toString());
             }
+            sb.deleteCharAt(sb.length() - 1);
+            params.setStringParam1(sb.toString());
             params.setStringParam2(orderNo);
             return clientOrderDao.findByParam(start, pageSize, params);
         }catch (Exception e){

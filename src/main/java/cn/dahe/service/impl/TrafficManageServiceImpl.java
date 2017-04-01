@@ -2,18 +2,24 @@ package cn.dahe.service.impl;
 
 import cn.dahe.dao.IClientGoodsDao;
 import cn.dahe.dao.IGoodsDao;
+import cn.dahe.dao.IGoodsRawDao;
 import cn.dahe.dao.IOrderGoodsInfoDao;
 import cn.dahe.dao.IStoreDao;
+import cn.dahe.dao.IStoreGoodsTrafficDao;
 import cn.dahe.dao.ITrafficManageDao;
+import cn.dahe.dto.ClientDataDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.ClientGoods;
 import cn.dahe.model.Goods;
+import cn.dahe.model.GoodsRaw;
 import cn.dahe.model.OrderGoodsInfo;
 import cn.dahe.model.Stock;
 import cn.dahe.model.Store;
+import cn.dahe.model.StoreGoodsTraffic;
 import cn.dahe.model.TrafficManage;
 import cn.dahe.service.ITrafficManageService;
 import cn.dahe.util.DateUtil;
+import cn.dahe.util.NumberUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -41,6 +47,10 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
     private IOrderGoodsInfoDao orderGoodsInfoDao;
     @Resource
     private IGoodsDao goodsDao;
+    @Resource
+    private IGoodsRawDao goodsRawDao;
+    @Resource
+    private IStoreGoodsTrafficDao storeGoodsTrafficDao;
 
     @Override
     public void add(TrafficManage t) {
@@ -71,9 +81,8 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
     public Pager<TrafficManage> findByParams(String aDataSet, int storeId) {
         int start = 0;// 起始
         int pageSize = 20;// size
-        int status = -1;
         String startTime = "", endTime = "", trafficNo = "";
-        int s_id = 0;
+        int s_id = 0, trafficType = -1;
         try{
             JSONArray json = JSONArray.parseArray(aDataSet);
             int len = json.size();
@@ -81,10 +90,8 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
                 JSONObject jsonObject = (JSONObject) json.get(i);
                 if (jsonObject.get("name").equals("iDisplayStart")) {
                     start = (Integer) jsonObject.get("value");
-                } else if (jsonObject.get("name").equals("iDisplayLength")) {
+                }else if (jsonObject.get("name").equals("iDisplayLength")) {
                     pageSize = (Integer) jsonObject.get("value");
-                }else if (jsonObject.get("name").equals("status")) {
-                    status = Integer.parseInt(jsonObject.get("value").toString());
                 }else if(jsonObject.get("name").equals("startTime")){
                     startTime = jsonObject.get("value").toString();
                 }else if (jsonObject.get("name").equals("endTime")) {
@@ -93,6 +100,8 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
                     trafficNo = jsonObject.get("value").toString();
                 }else if (jsonObject.get("name").equals("storeId")){
                     s_id = Integer.parseInt(jsonObject.get("value").toString());
+                }else if (jsonObject.get("name").equals("trafficType")){
+                    trafficType = Integer.parseInt(jsonObject.get("value").toString());
                 }
             }
             Pager<Object> params = new Pager<>();
@@ -102,7 +111,6 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
             if(StringUtils.isNotBlank(endTime)){
                 params.setEndTime(DateUtil.format(endTime, "yyyy-MM-dd"));
             }
-            params.setStatus(status);
             params.setOrderColumn("tm.id");
             params.setOrderDir("desc");
             params.setStringParam1(trafficNo);
@@ -118,6 +126,8 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
                 sb.deleteCharAt(sb.length() - 1);
                 params.setStringParam2(sb.toString());
             }
+            params.setIntParam1(storeId);
+            params.setIntParam2(trafficType);
             return trafficManageDao.findByParam(start, pageSize, params);
         }catch (Exception e){
             e.printStackTrace();
@@ -149,9 +159,98 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
                         clientGoodsDao.update(clientGoods);
 
                         Goods goods = goodsDao.findByGoodsNo(goodsNo, clientGoods.getStoreId());
-                        Stock stock = goods.getStock();
+                        Stock stock = goods.getFinishedStock();
                         stock.setGoodNum(stock.getGoodNum() - changeNum);
-                        goods.setStock(stock);
+                        goods.setFinishedStock(stock);
+                        goodsDao.update(goods);
+                    }
+                });
+            });
+        }
+        return trafficManage;
+    }
+
+    @Override
+    public void addReturnedGoods(ClientDataDto clientDataDto, int storeId) {
+        TrafficManage trafficManage = new TrafficManage();
+        trafficManage.setTrafficType(0);//退货单
+        trafficManage.setStatus(0);//待确认退货
+        trafficManage.setTrafficNo(NumberUtils.getNoByTime());
+        trafficManage.setStoreId(storeId);//退货门店
+        Store store = storeDao.get(storeId);
+        if(store != null){
+            trafficManage.setStoreName(store.getName());
+        }
+        trafficManage.setDescription(clientDataDto.getDescription());
+        trafficManage.setOrderDate(new Date());
+        trafficManage.setWishDate(new Date());
+        //配置出货门店
+        StoreGoodsTraffic storeGoodsTraffic = storeGoodsTrafficDao.findByStoreId(trafficManage.getStoreId());
+        int outStoreId = storeGoodsTraffic.getPrepareStoreId();
+        trafficManage.setOutStoreId(outStoreId);
+        String outStoreName = storeGoodsTraffic.getPrepareStoreName();
+        trafficManage.setOutStoreName(StringUtils.isBlank(outStoreName) ? "" : outStoreName);
+        int id = trafficManageDao.addAndGetId4Integer(trafficManage);
+
+
+        JSONArray json = JSONArray.parseArray(clientDataDto.getOrderInfo());
+        double price, totalPrice = 0.0;
+        int totalSum = 0;
+        for(int i = 0, len = json.size(); i < len; i++){
+            JSONObject map = JSONObject.parseObject(json.get(i).toString());
+            OrderGoodsInfo orderGoodsInfo = new OrderGoodsInfo();
+            if(clientDataDto.getType() == 0){
+                Goods goods = goodsDao.findByGoodsNo(map.get("goodsNo").toString(), storeId);
+                orderGoodsInfo.setGoodsName(goods.getName());
+                orderGoodsInfo.setGoodsNo(goods.getGoodsNo());
+                orderGoodsInfo.setMainUnitId(goods.getMainUnitId());
+                orderGoodsInfo.setMainUnitName(goods.getMainUnitName());
+                price = goods.getPrice();
+            }else{
+                GoodsRaw goodsRaw = goodsRawDao.findByRawNo(map.get("goodsNo").toString(), storeId);
+                orderGoodsInfo.setGoodsName(goodsRaw.getName());
+                orderGoodsInfo.setGoodsNo(goodsRaw.getRawNo());
+                orderGoodsInfo.setMainUnitId(goodsRaw.getMainUnitId());
+                orderGoodsInfo.setMainUnitName(goodsRaw.getMainUnitName());
+                price = goodsRaw.getPrice();
+            }
+            orderGoodsInfo.setTrafficManageId(id);
+            orderGoodsInfo.setDistributeNum((Integer)map.get("goodsNum"));
+            orderGoodsInfo.setPrice(price);
+            orderGoodsInfo.setPriceSum(price * (Integer)map.get("goodsNum"));
+            orderGoodsInfoDao.add(orderGoodsInfo);
+            totalPrice += orderGoodsInfo.getPriceSum() * 100;
+            totalSum += orderGoodsInfo.getDistributeNum();
+        }
+
+        trafficManage = trafficManageDao.get(id);
+        trafficManage.setTotalPrice(totalPrice/100); // 总价
+        trafficManage.setGoodsNum(totalSum); //总量
+        trafficManageDao.update(trafficManage);
+    }
+
+    @Override
+    public TrafficManage updateReturnedGoods(int id, int type) {
+        TrafficManage trafficManage = trafficManageDao.get(id);
+        trafficManage.setStatus(type);
+        trafficManage.setOptTime(new Date());
+        trafficManageDao.update(trafficManage);
+        //若退货通过
+        if(type == 1){
+            List<ClientGoods> clientGoodss = clientGoodsDao.findByStoreId(trafficManage.getStoreId());
+            List<OrderGoodsInfo> orderGoodsInfoList = orderGoodsInfoDao.findByTrafficManageId(id);
+            clientGoodss.forEach(clientGoods -> {
+                String goodsNo = clientGoods.getGoodsNo();
+                orderGoodsInfoList.forEach(orderGoodsInfo -> {
+                    if(goodsNo.equals(orderGoodsInfo.getGoodsNo())){
+                        int changeNum = orderGoodsInfo.getDistributeNum();
+                        clientGoods.setGoodsNum(clientGoods.getGoodsNum() - changeNum);
+                        clientGoodsDao.update(clientGoods);
+
+                        Goods goods = goodsDao.findByGoodsNo(goodsNo, clientGoods.getStoreId());
+                        Stock stock = goods.getFinishedStock();
+                        stock.setGoodNum(stock.getGoodNum() + changeNum);
+                        goods.setFinishedStock(stock);
                         goodsDao.update(goods);
                     }
                 });

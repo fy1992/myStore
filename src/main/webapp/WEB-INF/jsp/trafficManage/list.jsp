@@ -37,8 +37,8 @@
             <span class="select-box" style="width: 120px;">
                 <select class="select" id="traffic_static">
                     <option value="-1">全部货单</option>
-                    <option value = "0">门店进货单</option>
-                    <option value = "1">门店退货单</option>
+                    <option value = "1">门店进货单</option>
+                    <option value = "0">门店退货单</option>
                 </select>
             </span>
             <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTafficDate\')||\'%y-%M-%d\'}',readOnly:true,skin:'twoer'})" id="startTafficDate" class="input-text Wdate radius" style="width:120px;"/> 至
@@ -132,7 +132,11 @@ table = $('#trafficManage_table').dataTable({
         {"mData" : "outStoreName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "storeName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "status", "sDefaultContent" : "", "bSortable":false, "mRender" : function (data, type, full) {
-            return data == 0 ? "<span class='c-success'>待确认进货</span>" : data == 1 ? "<span class='c-999'>已完成进货  " + format(full.optTime) + "</span>" : "<span class='c-danger'>已拒绝进货  " + format(full.optTime) + "</span>";
+	  	    if(full.trafficType == 1){
+                return data == 0 ? "<span class='c-success'>待确认进货</span>" : data == 1 ? "<span class='c-999'>已完成进货  " + format(full.optTime) + "</span>" : "<span class='c-danger'>已拒绝进货  " + format(full.optTime) + "</span>";
+            }else{
+                return data == 0 ? "<span class='c-success'>待确认退货</span>" : data == 1 ? "<span class='c-999'>已完成退货  " + format(full.optTime) + "</span>" : "<span class='c-danger'>已拒绝退货  " + format(full.optTime) + "</span>";
+            }
         }},
         {"mData" : "goodsNum", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "totalPrice", "sDefaultContent" : "", "bSortable":false},
@@ -174,7 +178,7 @@ table = $('#trafficManage_table').dataTable({
            });  
        },
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
-      	var status = $("#traffic_static").val();
+      	var trafficType = $("#traffic_static").val();
       	var trafficNo = $("#trafficNo").val();
       	var startTime = $("#startTafficDate").val();
       	var endTime = $("#endTafficDate").val();
@@ -185,7 +189,7 @@ table = $('#trafficManage_table').dataTable({
         if(!storeId){
             storeId = 0;
         }
-        aoData.push({"name":"status","value":status});
+        aoData.push({"name":"trafficType","value":trafficType});
         aoData.push({"name":"trafficNo","value":trafficNo});
         aoData.push({"name":"startTime","value":startTime});
         aoData.push({"name":"endTime","value":endTime});

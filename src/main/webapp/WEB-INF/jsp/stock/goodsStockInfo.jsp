@@ -26,12 +26,12 @@
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="select-box" style="width: 100px;">
                 <select class="select radius" id="categoriesId">
-                    <option value="0">全部分类</option>
+                    <option value="-1">全部分类</option>
                 </select>
             </span>
             <span class="select-box" style="width: 120px;">
                 <select class="select radius" id="supplierId">
-                    <option value="0">全部供货商</option>
+                    <option value="-1">全部供货商</option>
                 </select>
             </span>
             <button id="stock_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
@@ -151,8 +151,8 @@ table = $('#stock_table').dataTable({
     "fnServerParams" : function(aoData){  //那个函数是判断字符串中是否含有数字
       	var categoriesId = $("#categoriesId").val();
       	var supplierId = $("#supplierId").val();
-      	aoData.push({"name":"categories","value":categoriesId});
-      	aoData.push({"name":"supplier","value":supplierId});
+      	aoData.push({"name":"categoriesId","value":categoriesId});
+      	aoData.push({"name":"supplierId","value":supplierId});
       	aoData.push({"name":"stockPage","value":1});
     },
     "fnDrawCallback" : function () {

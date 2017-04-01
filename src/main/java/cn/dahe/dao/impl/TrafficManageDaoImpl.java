@@ -21,12 +21,17 @@ public class TrafficManageDaoImpl extends BaseDaoImpl<TrafficManage> implements 
         List<Object> list = new ArrayList<>();
         Date startTime = params.getStartTime();
         Date endTime = params.getEndTime();
-        int status = params.getStatus();
         String trafficNo = params.getStringParam1();
         String storeIdStr = params.getStringParam2();
-        if(status != -1){
-            hql.append(" and tm.status = ?");
-            list.add(status);
+        int storeId = params.getIntParam1();
+        int trafficType = params.getIntParam2();
+        if(trafficType != -1){
+            hql.append(" and tm.trafficType = ?");
+            list.add(trafficType);
+        }
+        if(storeId != 0){
+            hql.append(" and tm.storeId = ?");
+            list.add(storeId);
         }
         if(startTime != null){
             startTime = new java.sql.Date(startTime.getTime());

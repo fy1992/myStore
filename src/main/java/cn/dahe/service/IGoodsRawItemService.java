@@ -20,7 +20,9 @@ public interface IGoodsRawItemService {
      * 添加商品的配方明细
      * @param goodsId
      * @param rawItems
-     * @param useRawPrice
+     * @param useRawPrice  自动更新成品进货价
+     * @param intermediary 是否是半成品
+     * @param autoFinished 是否直接转化为成品
      */
-    void addRawItems(int goodsId, String rawItems, int useRawPrice);
+    void addRawItems(int goodsId, String rawItems, int useRawPrice, int intermediary, int autoFinished);
 }

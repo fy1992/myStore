@@ -190,12 +190,22 @@ public class RawController {
 
     /**
      * 保存配方详单
+     * @param goodsId
+     * @param rawItems
+     * @param useRawPrice
+     * @param intermediary
+     * @param autoFinished
+     * @return
      */
     @RequestMapping(value = "addRawItem", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addRawItem(int goodsId, String rawItems, int useRawPrice){
+    public AjaxObj addRawItem(int goodsId,
+                              String rawItems,
+                              int useRawPrice,
+                              int intermediary,
+                              int autoFinished){
         AjaxObj json = new AjaxObj();
-        goodsRawItemService.addRawItems(goodsId, rawItems, useRawPrice);
+        goodsRawItemService.addRawItems(goodsId, rawItems, useRawPrice, intermediary, autoFinished);
         json.setResult(1);
         json.setMsg("商品原材料设置完成");
         return json;

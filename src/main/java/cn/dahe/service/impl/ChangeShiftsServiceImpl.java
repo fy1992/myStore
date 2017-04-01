@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 交接班
  * Created by fy on 2017/3/20.
  */
 @Service("changeShiftsService")
@@ -50,11 +51,11 @@ public class ChangeShiftsServiceImpl implements IChangeShiftsService {
 
     @Override
     public void logout(Cashier cashier) {
-        int id = (int) CacheUtils.getChangeShifts("changeShifts_"+cashier.getId());
+        int id = (int) CacheUtils.getChangeShifts("changeShifts_" + cashier.getStoreId() + cashier.getId());
         ChangeShifts changeShifts = changeShiftsDao.get(id);
         changeShifts.setEndTime(new Date());
         changeShiftsDao.update(changeShifts);
-        CacheUtils.removeChangeShifts("changeShifts_"+cashier.getId());
+        CacheUtils.removeChangeShifts("changeShifts_" + cashier.getStoreId() + cashier.getId());
     }
 
     @Override
@@ -103,14 +104,15 @@ public class ChangeShiftsServiceImpl implements IChangeShiftsService {
                 storeId = s_id;
             }
             List<Store> stores = storeDao.findByPid(storeId);
+            StringBuffer sb = new StringBuffer();
+            sb.append(storeId + ",");
             if(stores != null && stores.size() > 0) {
-                StringBuffer sb = new StringBuffer();
                 for (Store store : stores) {
-                    sb.append(store.getId());
+                    sb.append(store.getId() + ",");
                 }
-                sb.deleteCharAt(sb.length() - 1);
-                params.setStringParam1(sb.toString());
             }
+            sb.deleteCharAt(sb.length() - 1);
+            params.setStringParam1(sb.toString());
             return changeShiftsDao.findByParam(start, pageSize, params);
         }catch (Exception e){
             e.printStackTrace();

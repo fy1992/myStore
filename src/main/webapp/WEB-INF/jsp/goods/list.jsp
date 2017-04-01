@@ -306,7 +306,7 @@ function del(id){
 
 //配方
 function recipe(id) {
-    layer_show("商品配方管理", "<%=request.getContextPath()%>/server/goods/recipe/"+id, "490", "440");
+    layer_show("商品配方管理", "<%=request.getContextPath()%>/server/goods/recipe/"+id, "490", "500");
 }
 </script>
 </body>

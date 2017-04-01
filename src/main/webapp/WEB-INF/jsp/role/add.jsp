@@ -55,7 +55,7 @@
             <div class="formControls col-6">
                 <div class="mb-40 pd-20 clearfixs" id="ckBox">
                     <input type="hidden" name = "permissionIds" id="permissions" value/>
-                    <input type = "checkbox" id="allPosAuth"> 全选
+                    <%--<input type = "checkbox" id="allPosAuth"> 全选--%>
                     <br clear="all" />
                 </div>
             </div>

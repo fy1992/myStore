@@ -78,10 +78,14 @@ public class Goods {
     //保质期
     @Column(name = "shelf_life")
     private int shelfLife;
-    //库存
+    //成品库存
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "stock_id")
-    private Stock stock;
+    @JoinColumn(name = "finished_stock_id")
+    private Stock finishedStock;
+    //半成品库存
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "intermediary_stock_id")
+    private Stock intermediaryStock;
     //库存上限
     @Column(name = "stock_up")
     private int stockUp;
@@ -130,6 +134,15 @@ public class Goods {
     //过期天数
     @Column(name = "over_due_day", columnDefinition = "INT DEFAULT 0")
     private int overdueDay;
+    //是否是半成品 0 否 1 是
+    @Column(columnDefinition = "INT DEFAULT 1")
+    private int intermediary;
+    //是否直接转化成品  0 否 1 是
+    @Column(name = "auto_finished", columnDefinition = "INT DEFAULT 0")
+    private int autoFinished;
+    //对应成品的商品编号
+    @Column(name = "finished_goods_no")
+    private String finishedGoodsNo;
 
     public int getId() {
         return id;
@@ -347,12 +360,36 @@ public class Goods {
         this.goodsTagsSet = goodsTagsSet;
     }
 
-    public Stock getStock() {
-        return stock;
+    public Stock getFinishedStock() {
+        return finishedStock;
     }
 
-    public void setStock(Stock stock) {
-        this.stock = stock;
+    public void setFinishedStock(Stock finishedStock) {
+        this.finishedStock = finishedStock;
+    }
+
+    public Stock getIntermediaryStock() {
+        return intermediaryStock;
+    }
+
+    public void setIntermediaryStock(Stock intermediaryStock) {
+        this.intermediaryStock = intermediaryStock;
+    }
+
+    public int getIntermediary() {
+        return intermediary;
+    }
+
+    public void setIntermediary(int intermediary) {
+        this.intermediary = intermediary;
+    }
+
+    public String getFinishedGoodsNo() {
+        return finishedGoodsNo;
+    }
+
+    public void setFinishedGoodsNo(String finishedGoodsNo) {
+        this.finishedGoodsNo = finishedGoodsNo;
     }
 
     public String getUnitIds() {
@@ -427,6 +464,14 @@ public class Goods {
         this.overdueDay = overdueDay;
     }
 
+    public int getAutoFinished() {
+        return autoFinished;
+    }
+
+    public void setAutoFinished(int autoFinished) {
+        this.autoFinished = autoFinished;
+    }
+
     @Override
     public String toString() {
         return "Goods{" +
@@ -451,7 +496,6 @@ public class Goods {
                 ", supplierName='" + supplierName + '\'' +
                 ", productionDate=" + productionDate +
                 ", shelfLife=" + shelfLife +
-                ", stock=" + stock +
                 ", stockUp=" + stockUp +
                 ", stockDown=" + stockDown +
                 ", description='" + description + '\'' +

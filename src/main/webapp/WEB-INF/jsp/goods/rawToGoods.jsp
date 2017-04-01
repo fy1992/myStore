@@ -10,7 +10,7 @@
     <link href="${ctxResource}/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div class="row cl mb-5">
+<div class="row cl mb-5" style="padding:5px;">
     <div class="col-4">
         <img src="${goods.imgUrl}" style="width: 145px"/>
     </div>
@@ -36,7 +36,10 @@
     </div>
 </div>
 <div class="row cl mb-5" style="border-top: 1px;border-top-style: dashed;border-color:#999;">
-    <label class="form-label col-3"><input type="checkbox" id="updatePriceByRaw" style="position: absolute;left: 45px;top: 11px;"/></label>
+    <label class="form-label col-4">
+        <input type="checkbox" id="updatePriceByRaw" style="position: absolute;left: 45px;top: 11px;"/>
+    </label>
+    <div class="row col-2"></div>
     <div class="formControls col-6">
         <span style="font-size: 12px;color: #999;text-align: left;">使用配方成本价更新成品进货价</span>
     </div>
@@ -56,6 +59,32 @@
 </table>
 <input type = "hidden" id = "check" value=""/>
 <p><a class="btn border-grey block mt-20 mb-40" id="addRaw">+ 添加原材料</a></p>
+<div>
+    <div class="row cl" style="margin: 10px;">
+        <div class="row cl col-1"></div>
+        <div class="row cl col-4">
+            半成品
+        </div>
+        <div class="row cl col-3"></div>
+        <div class="row cl clo-4">
+            <input type="radio" name = "intermediary"  value = "1" <c:if test="${goods.intermediary eq 1}">checked</c:if>/> 是
+            <input type="radio" name = "intermediary"  value = "0" <c:if test="${goods.intermediary eq 0}">checked</c:if>/> 否
+        </div>
+    </div>
+    <div class="row cl" style="margin: 10px;display: none;" id="intermadiaryDiv">
+        <div class="row cl col-1"></div>
+        <div class="row cl col-4">
+            是否直接转化为成品
+        </div>
+        <div class="row cl col-3"></div>
+        <div class="row cl clo-4">
+            <input type="radio" name = "autoFinished"  value = "1" <c:if test="${goods.autoFinished eq 1}">checked</c:if>/> 是
+            <input type="radio" name = "autoFinished"  value = "0" <c:if test="${goods.autoFinished eq 0}">checked</c:if>/> 否
+        </div>
+    </div>
+    <div class="row cl" style="height: 32px;">
+    </div>
+</div>
 <div class="cfpdBtnbox">
     <a class="btn btn-primary size-M f-r" id="save">保存</a>
     <a class="btn btn-default size-M f-r" onclick="layer_close()">取消</a>
@@ -67,6 +96,19 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script>
     $(function(){
+        if($("input[name='intermediary']:checked").val() == 1){
+            $("#intermadiaryDiv").toggle(true);
+        }else{
+            $("#intermadiaryDiv").toggle(false);
+        }
+        $("input[name='intermediary']").on("click", function () {
+            if($(this).val() == 1){
+                $("#intermadiaryDiv").toggle(true);
+            }else{
+                $("#intermadiaryDiv").toggle(false);
+            }
+        });
+        
         $.post("<%=request.getContextPath()%>/server/raw/goodsRawItemList", {id : "${id}"}, function(data){
             var initCheck = [];
             for(var n in data){
@@ -90,7 +132,7 @@
         $("#addRaw").click(function(){
             layer.open({
                 type: 2,
-                area: ['490px', '400px'],
+                area: ['490px', '460px'],
                 fix: true, //不固定
                 title: false,
                 shadeClose: false,
@@ -120,7 +162,16 @@
             if($("#updatePriceByRaw").prop("checked")){
                 useRawPrice = 1;
             }
-            $.post("<%=request.getContextPath()%>/server/raw/addRawItem", {goodsId : "${id}", rawItems:JSON.stringify(rawItems), useRawPrice:useRawPrice}, function (data) {
+            var intermediary = $("input[name='intermediary']:checked").val();
+            var autoFinished = $("input[name='autoFinished']:checked").val();
+            if(!autoFinished){
+                autoFinished = 0;
+            }
+            if(rawItems.length == 0){
+                layer.msg("请添加原材料",{time : 2000, icon : 5});
+                return false;
+            }
+            $.post("<%=request.getContextPath()%>/server/raw/addRawItem", {goodsId : "${id}", rawItems:JSON.stringify(rawItems), useRawPrice:useRawPrice, intermediary : intermediary, autoFinished : autoFinished},function (data) {
                 if(data.result == 1){
                     window.parent.table.fnDraw();
                     layer.msg(data.msg, {time : 2000, icon : 6}, function () {

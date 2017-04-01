@@ -95,4 +95,20 @@ public class GoodsTrafficManageController {
         json.setResult(1);
         return json;
     }
+
+    /**
+     * 退货
+     * @return
+     */
+    @RequestMapping(value = "returnGoods", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj returnGoods(int id, int type){
+        AjaxObj json = new AjaxObj();
+        TrafficManage trafficManage = trafficManageService.updateReturnedGoods(id, type);
+        String msg = type == -1 ? "已拒绝退货" : "已完成退货";
+        json.setMsg(msg);
+        json.setObject(trafficManage.getOptTime());
+        json.setResult(1);
+        return json;
+    }
 }
