@@ -34,15 +34,31 @@ public class VipServiceImpl implements IVipService{
 
     @Override
     public void add(Vip t) {
-        t.setRegisterTime(new Date());
-        VipLevel vipLevel = vipLevelDao.get(t.getVipLevelID());
-        t.setVipLevelName(vipLevel.getName());
-        Store store = storeDao.get(t.getStoreId());
-        if(store != null){
-            t.setStoreName(store.getName());
-        }
-        t.setRegisterTime(new Date());
         vipDao.addAndGetId4Integer(t);
+    }
+
+    @Override
+    public boolean add(Vip t, int storeId) {
+        Vip vip = vipDao.findByStorIdAndVipNo(t.getVipNo(), Integer.toString(storeId));
+        if(vip == null){
+            t.setRegisterTime(new Date());
+            VipLevel vipLevel = vipLevelDao.get(t.getVipLevelID());
+            if(vipLevel != null){
+                t.setVipLevelName(vipLevel.getName());
+            }
+            t.setStoreId(storeId);
+            Store store = storeDao.get(storeId);
+            if(store != null){
+                t.setStoreName(store.getName());
+            }
+            t.setRegisterTime(new Date());
+            t.setCreateCardDate(new Date());
+            t.setStatus(1);
+            add(t);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.util.List;
  */
 public interface IVipService {
     void add(Vip t);
+    boolean add(Vip t, int storeId);
     void del(int id);
     void update(Vip t);
     Vip get(int id);

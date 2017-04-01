@@ -69,12 +69,12 @@
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3"><span class="c-red">* </span>售价：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" name = "price" id="price" style="width: 90%;"/>&nbsp;<label>元</label></div>
+                	<div class="formControls col-6"><input type = "text" class="input-text radius text-r" name = "price" id="price" style="width: 90%;"/>&nbsp;<label>元</label></div>
                 	<div class="col-3"> </div>
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3"><span class="c-red">* </span>进价：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius" id = "bid" name = "bid" style="width: 90%;"/>&nbsp;<label>元</label></div>
+                	<div class="formControls col-6"><input type = "text" class="input-text radius text-r" id = "bid" name = "bid" style="width: 90%;"/>&nbsp;<label>元</label></div>
                 	<div class="col-3"> </div>
                 </div>
             </div>

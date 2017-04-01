@@ -1,6 +1,7 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.ICategoriesDao;
+import cn.dahe.dao.IClientGoodsRawDao;
 import cn.dahe.dao.IGoodsRawDao;
 import cn.dahe.dao.IStoreDao;
 import cn.dahe.dto.Pager;
@@ -31,6 +32,8 @@ public class GoodsRawServiceImpl implements IGoodsRawService{
     private IGoodsRawDao goodsRawDao;
     @Resource
     private IStoreDao storeDao;
+    @Resource
+    private IClientGoodsRawDao clientGoodsRawDao;
 
     @Override
     public boolean add(GoodsRaw t) {
@@ -49,6 +52,18 @@ public class GoodsRawServiceImpl implements IGoodsRawService{
             t.setOverdueDay(DateUtil.getOverdueDay(pro_date, shelfLife));
             t.setOverdueTime(DateUtil.getOverdueTime(pro_date, shelfLife));
             goodsRawDao.add(t);
+
+            ClientGoodsRaw clientGoodsRaw = new ClientGoodsRaw();
+            clientGoodsRaw.setRawNum(0);
+            clientGoodsRaw.setCategoriesId(t.getCategoriesId());
+            clientGoodsRaw.setCategoriesName(t.getCategoriesName());
+            clientGoodsRaw.setImgUrl(t.getImgUrl());
+            clientGoodsRaw.setPrice(t.getPrice());
+            clientGoodsRaw.setRawName(t.getName());
+            clientGoodsRaw.setRawNo(t.getRawNo());
+            clientGoodsRaw.setStoreId(t.getStoreId());
+            clientGoodsRaw.setRawUnit(t.getMainUnitName());
+            clientGoodsRawDao.add(clientGoodsRaw);
             return true;
         }
         return false;
@@ -65,6 +80,10 @@ public class GoodsRawServiceImpl implements IGoodsRawService{
         int shelfLife = t.getShelfLife();
         t.setOverdueDay(DateUtil.getOverdueDay(pro_date, shelfLife));
         t.setOverdueTime(DateUtil.getOverdueTime(pro_date, shelfLife));
+        if(t.getMainUnitId() == -1){
+            t.setMainUnitId(0);
+            t.setMainUnitName("");
+        }
         goodsRawDao.update(t);
     }
 

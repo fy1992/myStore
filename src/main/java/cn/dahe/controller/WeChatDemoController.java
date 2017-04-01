@@ -134,6 +134,18 @@ public class WeChatDemoController {
 			return clientGoodsService.goodsListByCategories(categId, 1);
 		}
 	}
+	
+	/**
+	 * 商品列表
+	 * 
+	 * @param return_url
+	 * @param code
+	 * @return
+	 */
+	@RequestMapping(value = "shoppingCart")
+	public String wxShoppingCart(Model model) {
+		return "wechat/public_shopping";
+	}
 
 	/**
 	 * 自定义创建菜单
