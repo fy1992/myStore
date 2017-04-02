@@ -1,8 +1,5 @@
 package cn.dahe.dto;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 商品货流管理
  * Created by fy on 2017/1/29.
@@ -16,7 +13,10 @@ public class ClientDataDto {
     private String orderInfo;
     //订货类型 0 商品类型 1 原材料
     private int type;
-
+    //导购员id
+    private int salesId;
+    //会员id
+    private int vipId;
     public String getWishTime() {
         return wishTime;
     }
@@ -47,6 +47,22 @@ public class ClientDataDto {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getSalesId() {
+        return salesId;
+    }
+
+    public void setSalesId(int salesId) {
+        this.salesId = salesId;
+    }
+
+    public int getVipId() {
+        return vipId;
+    }
+
+    public void setVipId(int vipId) {
+        this.vipId = vipId;
     }
 
     @Override

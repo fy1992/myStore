@@ -49,4 +49,10 @@ public class CashierDaoImpl extends BaseDaoImpl<Cashier> implements ICashierDao{
         String hql = "from Cashier cashier where cashier.cashierNo = ? and cashier.storeId = ?";
         return (Cashier)this.queryByHql(hql, new Object[]{cashierNo, storeId});
     }
+
+    @Override
+    public List<Cashier> findAllCashier(int storeId) {
+        String hql = "from Cashier where storeId = ?";
+        return this.list(hql, storeId);
+    }
 }

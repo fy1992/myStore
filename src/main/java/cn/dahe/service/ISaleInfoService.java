@@ -1,6 +1,8 @@
 package cn.dahe.service;
 
+import cn.dahe.dto.ClientDataDto;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.Cashier;
 import cn.dahe.model.SaleInfo;
 import cn.dahe.model.SaleInfoItem;
 
@@ -12,7 +14,7 @@ import java.util.List;
  */
 public interface ISaleInfoService {
     boolean add(SaleInfo t);
-    boolean add(SaleInfo t, int storeId);
+    boolean add(ClientDataDto t, Cashier cashier);
     void del(int id);
     void update(SaleInfo t);
     SaleInfo get(int id);

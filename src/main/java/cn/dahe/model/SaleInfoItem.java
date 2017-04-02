@@ -21,9 +21,9 @@ public class SaleInfoItem {
     @Column(name = "sale_info_id")
     private int saleInfoId;
     @Column(name = "goods_no")
-    private int goodsNo;
+    private String goodsNo;
     @Column(name = "goods_name")
-    private int goodsName;
+    private String goodsName;
     //商品原价
     @Column(name = "goods_price")
     private double goodsPrice;
@@ -55,14 +55,6 @@ public class SaleInfoItem {
 
     public void setSaleInfoId(int saleInfoId) {
         this.saleInfoId = saleInfoId;
-    }
-
-    public int getGoodsNo() {
-        return goodsNo;
-    }
-
-    public void setGoodsNo(int goodsNo) {
-        this.goodsNo = goodsNo;
     }
 
     public double getGoodsPrice() {
@@ -97,14 +89,6 @@ public class SaleInfoItem {
         this.gain = gain;
     }
 
-    public int getGoodsName() {
-        return goodsName;
-    }
-
-    public void setGoodsName(int goodsName) {
-        this.goodsName = goodsName;
-    }
-
     public int getGoodsUnitId() {
         return goodsUnitId;
     }
@@ -119,5 +103,21 @@ public class SaleInfoItem {
 
     public void setGoodsUnitName(String goodsUnitName) {
         this.goodsUnitName = goodsUnitName;
+    }
+
+    public String getGoodsNo() {
+        return goodsNo;
+    }
+
+    public void setGoodsNo(String goodsNo) {
+        this.goodsNo = goodsNo;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
 }

@@ -170,16 +170,16 @@ public class ClientController {
 
     /**
      * 保存销售单据
-     * @param saleInfo
+     * @param clientDataDto
      * @param session
      * @return
      */
     @RequestMapping(value = "saleInfo", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj addSaleInfo(int sid, SaleInfo saleInfo, HttpSession session){
+    public AjaxObj addSaleInfo(int sid, ClientDataDto clientDataDto, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier) session.getAttribute("clientUser_" + sid);
-        saleInfoService.add(saleInfo, cashier.getStoreId());
+        saleInfoService.add(clientDataDto, cashier);
         json.setResult(1);
         return json;
     }

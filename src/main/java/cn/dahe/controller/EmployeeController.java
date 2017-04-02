@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -117,6 +118,17 @@ public class EmployeeController {
         return json;
     }
 
+    /**
+     * 所有收银员
+     * @return
+     */
+    @RequestMapping(value = "allCashierList", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Cashier> cashierList(HttpSession session){
+        User user = (User) session.getAttribute("loginUser");
+        return employeeService.findAllCashier(user.getStoreId());
+    }
+
     //========================================cashier end========================================================
 
     //========================================sales begin========================================================
@@ -192,7 +204,7 @@ public class EmployeeController {
     //========================================sales end========================================================
     //========================================交接班 begin========================================================
     /**
-     * 导购员列表页查询
+     * 交换班列表页查询
      * */
     @RequestMapping(value = "/changeShiftsList", method = RequestMethod.GET)
     public String changeShiftsList(){
@@ -200,7 +212,7 @@ public class EmployeeController {
     }
 
     /**
-     * 导购员列表页查询
+     * 交换班列表页查询
      * */
     @RequestMapping(value = "/changeShiftsList", method = RequestMethod.POST)
     @ResponseBody

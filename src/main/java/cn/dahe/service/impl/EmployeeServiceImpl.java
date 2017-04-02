@@ -244,4 +244,9 @@ public class EmployeeServiceImpl implements IEmployeeService{
     public List<Sales> findAllSales(int storeId) {
         return salesDao.findAll(storeId);
     }
+
+    @Override
+    public List<Cashier> findAllCashier(int storeId) {
+        return cashierDao.findAllCashier(storeId);
+    }
 }

@@ -56,4 +56,6 @@ public interface IEmployeeService {
     Pager employeeList(String aDataSet, int storeId, int type);
 
     List<Sales> findAllSales(int storeId);
+
+    List<Cashier> findAllCashier(int storeId);
 }

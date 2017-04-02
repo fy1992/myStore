@@ -58,7 +58,7 @@
             </div>
             <div class="row cl">
                 <label class="form-label col-3">提成：</label>
-                <div class="formControls col-7"><input type = "text" class="input-text radius" id="sales_percentage" name = "percentage"/></div>
+                <div class="formControls col-7"><input type = "text" class="input-text radius" id="sales_percentage" name = "percentage" value = "0"/></div>
                 <div class="col-2"> %</div>
             </div>
         </div>

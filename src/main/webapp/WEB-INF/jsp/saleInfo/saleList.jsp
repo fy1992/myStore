@@ -86,6 +86,12 @@
 <script type="text/javascript">
     //搜索
     $(function(){
+        $.post("<%=request.getContextPath()%>/server/employee/allCashierList", function (data) {
+            for(var n in data){
+                $("#cashierId").append("<option value = '"+data[n].id+"'>"+data[n].name+"</option>");
+            }
+        })
+
         $("#salesInfo_search").click(function(){
             table.fnDraw();
         });
@@ -198,7 +204,7 @@
      * @param id
      */
     function detail(id) {
-        layer_show("销售单据明细", "<%=request.getContextPath()%>/server/salesInfo/saleInfoItem/"+id, "800", "400");
+        layer_show("销售单据明细", "<%=request.getContextPath()%>/server/saleInfo/saleInfoItem/"+id, "800", "400");
     }
 </script>
 </body>

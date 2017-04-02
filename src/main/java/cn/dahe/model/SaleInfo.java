@@ -38,7 +38,7 @@ public class SaleInfo {
     @Column(name = "cashier_id")
     private int cashierId;
     @Column(name = "cashier_name")
-    private int cashierName;
+    private String cashierName;
     //商品数量
     @Column(name = "goods_num")
     private int goodsNum;
@@ -112,11 +112,11 @@ public class SaleInfo {
         this.cashierId = cashierId;
     }
 
-    public int getCashierName() {
+    public String getCashierName() {
         return cashierName;
     }
 
-    public void setCashierName(int cashierName) {
+    public void setCashierName(String cashierName) {
         this.cashierName = cashierName;
     }
 

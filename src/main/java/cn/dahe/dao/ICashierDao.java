@@ -3,6 +3,8 @@ package cn.dahe.dao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Cashier;
 
+import java.util.List;
+
 /**
  *收银员
  * Created by fy on 2017/1/17.
@@ -24,4 +26,6 @@ public interface ICashierDao extends IBaseDao<Cashier>{
      * @return
      */
     Cashier findByCashierNo(int storeId, String cashierNo);
+
+    List<Cashier> findAllCashier(int storeId);
 }
