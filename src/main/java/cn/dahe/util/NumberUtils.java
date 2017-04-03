@@ -31,5 +31,10 @@ public class NumberUtils {
 
     public static void main(String[] args) {
         System.out.println(getNoByTime());
+        try {
+            System.out.println(DecimalUtil.div(199, 100, 2));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

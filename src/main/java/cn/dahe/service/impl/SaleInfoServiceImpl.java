@@ -1,7 +1,6 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.*;
-import cn.dahe.dao.impl.SaleInfoDaoImpl;
 import cn.dahe.dto.ClientDataDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.*;
@@ -41,6 +40,8 @@ public class SaleInfoServiceImpl implements ISaleInfoService {
     private IGoodsRawItemDao goodsRawItemDao;
     @Resource
     private IGoodsRawDao goodsRawDao;
+    @Resource
+    private ISaleCountDao saleCountDao;
     @Override
     public boolean add(SaleInfo t) {
         t.setMarkTime(new Date());
@@ -74,7 +75,7 @@ public class SaleInfoServiceImpl implements ISaleInfoService {
         }
         int id = saleInfoDao.addAndGetId4Integer(saleInfo);
         JSONArray json = JSONArray.parseArray(t.getOrderInfo());
-        double price = 0.0, totalGain = 0.0;
+        double price = 0.0, totalGain = 0.0, totalRawPrice = 0.0;
         int totalSum = 0;
         for(int i = 0, len = json.size(); i < len; i++){
             JSONObject map = JSONObject.parseObject(json.get(i).toString());
@@ -91,6 +92,7 @@ public class SaleInfoServiceImpl implements ISaleInfoService {
             //若商品设置了通过原材料自动更新进货价
             if(goods.getUseRawPrice() == 1){
                 saleInfoItem.setGain(((goods.getPrice() * 100 - goods.getBid() * 100) * saleInfoItem.getGoodsNum())/100);
+                totalRawPrice += goods.getBid() * 100 * saleInfoItem.getGoodsNum();
             }else{
                 double rawPrice = 0.0;
                 List<GoodsRawItem> goodsRawItems = goodsRawItemDao.findByGoodsId(goods.getId());
@@ -99,6 +101,7 @@ public class SaleInfoServiceImpl implements ISaleInfoService {
                     rawPrice += goodsRaw.getPrice() * 100 * goodsRawItem.getRawNum();
                 }
                 saleInfoItem.setGain(((goods.getPrice() * 100 - rawPrice) * saleInfoItem.getGoodsNum())/100);
+                totalRawPrice += rawPrice * 100 * saleInfoItem.getGoodsNum();
             }
             saleInfoItemDao.add(saleInfoItem);
             price += goods.getPrice()*100;
@@ -111,6 +114,15 @@ public class SaleInfoServiceImpl implements ISaleInfoService {
         saleInfo.setGain(totalGain/100);
         saleInfo.setGoodsNum(totalSum);
         update(saleInfo);
+
+        SaleCount saleCount = saleCountDao.findByDay(new Date(), new Date(), cashier.getStoreId()).get(0);
+        saleCount.setGain((saleCount.getGain()*100 + saleInfo.getGain()*100)/100);
+        saleCount.setTurnover((saleCount.getTurnover()*100 + saleInfo.getRealPrice())/100);
+        saleCount.setOrderNum(saleCount.getOrderNum() + saleInfo.getGoodsNum());
+        saleCount.setPaidByMoney((saleCount.getPaidByMoney()  * 100 + saleInfo.getRealPrice() * 100)/100);
+        saleCount.setIncome(saleCount.getGain());
+        saleCount.setPay((saleCount.getPay() * 100 + totalRawPrice) / 100);
+        saleCountDao.update(saleCount);
         return id != 0;
     }
 
@@ -201,5 +213,12 @@ public class SaleInfoServiceImpl implements ISaleInfoService {
         }
         params.setIntParam1(storeId);
         return saleInfoDao.saleInfoList(params);
+    }
+
+    @Override
+    public List<SaleCount> findByDay(String startTime, String endTime, int storeId) {
+        Date start = DateUtil.format(startTime, "yyyy-MM-dd");
+        Date end = DateUtil.format(endTime, "yyyy-MM-dd");
+        return saleCountDao.findByDay(start, end, storeId);
     }
 }

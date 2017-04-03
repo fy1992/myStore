@@ -52,7 +52,7 @@
                 <tbody id="table_tr">
                     <tr role="row" class="odd">
                         <td>商品销售</td>
-                        <td>销售额 <span>0.00</span>, 利润 <span>0.00</span>, 单数 <span>0</span></td>
+                        <td>销售额 <span id = "turnover">0.00</span>, 利润 <span id = "gain">0.00</span>, 单数 <span id = "num">0</span></td>
                         <td>0.00</td>
                     </tr>
                     <tr role="row" class="even">
@@ -85,6 +85,22 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/My97DatePicker/WdatePicker.js"></script>
 <script>
+    var startTime = $("#startTime").val();
+    var endTime = $("#endTime").val();
+    if(!startTime){
+        startTime = new Date();
+    }
+    if(!endTime){
+        endTime = new Data();
+    }
+    $.post("<%=request.getContextPath()%>/server/saleInfo/list", {startTime : , endTime : }, function (data) {
+        if(data.result == 1){
+            var list = data.object
+            for(var n in data.list){
+
+            }
+        }
+    });
 </script>
 </body>
 </html>

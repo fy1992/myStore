@@ -3,6 +3,7 @@ package cn.dahe.service;
 import cn.dahe.dto.ClientDataDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Cashier;
+import cn.dahe.model.SaleCount;
 import cn.dahe.model.SaleInfo;
 import cn.dahe.model.SaleInfoItem;
 
@@ -38,4 +39,13 @@ public interface ISaleInfoService {
      * @return
      */
     List<SaleInfo> saleInfoList(String info, String startTime, String endTime, int storeId);
+
+    /**
+     * 按时间查询营业情况
+     * @param StartTime
+     * @param endTime
+     * @param storeId
+     * @return
+     */
+    List<SaleCount> findByDay(String StartTime, String endTime, int storeId);
 }

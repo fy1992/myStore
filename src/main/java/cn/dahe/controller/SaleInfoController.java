@@ -1,12 +1,12 @@
 package cn.dahe.controller;
 
+import cn.dahe.dto.AjaxObj;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.SaleCount;
 import cn.dahe.model.SaleInfo;
 import cn.dahe.model.SaleInfoItem;
-import cn.dahe.model.Store;
 import cn.dahe.model.User;
 import cn.dahe.service.ISaleInfoService;
-import cn.dahe.service.IStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -29,19 +29,29 @@ import java.util.List;
 public class SaleInfoController {
     private static Logger logger = LoggerFactory.getLogger(SaleInfoController.class);
     @Resource
-    private IStoreService storeService;
-    @Resource
     private ISaleInfoService saleInfoService;
     /**
      * 营业概况
      * @return
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String saleInfoList(HttpSession session, Model model){
-        User user = (User) session.getAttribute("loginUser");
-        Store store = storeService.get(user.getStoreId());
-
+    public String saleInfoList(){
         return "saleInfo/saleInfo";
+    }
+
+    /**
+     * 营业概况
+     * @return
+     */
+    @RequestMapping(value = "list", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj saleInfoList(String startTime, String endTime, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        User user = (User) session.getAttribute("loginUser");
+        List<SaleCount> list = saleInfoService.findByDay(startTime, endTime, user.getStoreId());
+        json.setResult(1);
+        json.setObject(list);
+        return json;
     }
 
     /**
