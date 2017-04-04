@@ -455,7 +455,22 @@ public class GoodsServiceImpl implements IGoodsService{
     }
 
     @Override
-    public void updateGoodsIntermediary(String goodsNo, int storeId) {
+    public void updateGoodsIntermediary(String goodsNo, int num, int storeId) {
         Goods goods = goodsDao.findByGoodsNo(goodsNo, storeId);
+        Stock stock;
+        if(goods.getAutoFinished() == 1){
+            stock = goods.getFinishedStock();
+            stock.setGoodNum(stock.getGoodNum() + num);
+            goods.setFinishedStock(stock);
+        }else{
+            stock = goods.getIntermediaryStock();
+            stock.setGoodNum(stock.getGoodNum() + num);
+            goods.setIntermediaryStock(stock);
+        }
+        goodsDao.update(goods);
+        //客户端库存修改
+        ClientGoods clientGoods = clientGoodsDao.findByGoodsNo(goodsNo, storeId);
+        clientGoods.setGoodsNum(clientGoods.getGoodsNum() + num);
+        clientGoodsDao.update(clientGoods);
     }
 }

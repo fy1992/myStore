@@ -381,7 +381,7 @@ public class ClientController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "intermediaryList", method = RequestMethod.POST)
+    @RequestMapping(value = "intermediaryList", method = RequestMethod.GET)
     @ResponseBody
     public AjaxObj intermediaryList(int sid, HttpSession session){
         AjaxObj json = new AjaxObj();
@@ -398,12 +398,12 @@ public class ClientController {
      * @param session
      * @return
      */
-    @RequestMapping
+    @RequestMapping(value = "doIntermediary", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj doIntermediary(int sid, String goodsNo, HttpSession session){
+    public AjaxObj doIntermediary(int sid, String goodsNo, int num, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier) session.getAttribute("clientUser_" + sid);
-        goodsService.updateGoodsIntermediary(goodsNo, cashier.getStoreId());
+        goodsService.updateGoodsIntermediary(goodsNo, num, cashier.getStoreId());
         json.setObject("半成品制作完成");
         json.setResult(1);
         return json;

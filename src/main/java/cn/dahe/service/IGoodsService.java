@@ -83,6 +83,7 @@ public interface IGoodsService{
      * 半成品制作
      * @param goodsNo
      * @param storeId
+     * @param num
      */
-    void updateGoodsIntermediary(String goodsNo, int storeId);
+    void updateGoodsIntermediary(String goodsNo, int num, int storeId);
 }
