@@ -7,6 +7,7 @@ import cn.dahe.model.SaleCount;
 import cn.dahe.model.SaleInfo;
 import cn.dahe.model.SaleInfoItem;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +21,26 @@ public interface ISaleInfoService {
     void update(SaleInfo t);
     SaleInfo get(int id);
     SaleInfo load(int id);
+
+    /**
+     * 添加营业额
+     * @param saleCount
+     */
+    void addSaleCount(SaleCount saleCount);
+
+    /**
+     * 删除
+     * @param id
+     */
+    void delSaleCount(int id);
+
+    /**
+     * 按时间查询营业额
+     * @param storeId
+     * @param countDate
+     * @return
+     */
+    SaleCount getSaleCount(int storeId, Date countDate);
     /**
      * 销售列表
      * @param aDataSet

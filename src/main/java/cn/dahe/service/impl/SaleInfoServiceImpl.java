@@ -6,6 +6,7 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.*;
 import cn.dahe.service.ISaleInfoService;
 import cn.dahe.util.DateUtil;
+import cn.dahe.util.DecimalUtil;
 import cn.dahe.util.NumberUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -89,40 +90,43 @@ public class SaleInfoServiceImpl implements ISaleInfoService {
             saleInfoItem.setGoodsPrice(clientGoods.getPrice());
             saleInfoItem.setGoodsNum((Integer)map.get("goodsNum"));
             saleInfoItem.setRealPrice(goods.getPrice());
-            //若商品设置了通过原材料自动更新进货价
-            if(goods.getUseRawPrice() == 1){
-                saleInfoItem.setGain(((goods.getPrice() * 100 - goods.getBid() * 100) * saleInfoItem.getGoodsNum())/100);
-                totalRawPrice += goods.getBid() * 100 * saleInfoItem.getGoodsNum();
-            }else{
+            //若商品配置了原材料并且设置了通过原材料自动更新进货价
+            if(goods.getHasRaws() == 1 && goods.getUseRawPrice() == 1){
                 double rawPrice = 0.0;
                 List<GoodsRawItem> goodsRawItems = goodsRawItemDao.findByGoodsId(goods.getId());
                 for(GoodsRawItem goodsRawItem : goodsRawItems){
                     GoodsRaw goodsRaw = goodsRawDao.get(goodsRawItem.getRawId());
                     rawPrice += goodsRaw.getPrice() * 100 * goodsRawItem.getRawNum();
                 }
-                saleInfoItem.setGain(((goods.getPrice() * 100 - rawPrice) * saleInfoItem.getGoodsNum())/100);
-                totalRawPrice += rawPrice * 100 * saleInfoItem.getGoodsNum();
+                saleInfoItem.setGain(DecimalUtil.getDouble(((goods.getPrice() * 100 - rawPrice) * saleInfoItem.getGoodsNum()),2));
+                totalRawPrice += rawPrice * saleInfoItem.getGoodsNum();
+            }else{
+                saleInfoItem.setGain(DecimalUtil.getDouble(((goods.getPrice() * 100 - goods.getBid() * 100) * saleInfoItem.getGoodsNum()),2));
+                totalRawPrice += goods.getBid() * 100 * saleInfoItem.getGoodsNum();
             }
             saleInfoItemDao.add(saleInfoItem);
-            price += goods.getPrice()*100;
-            totalGain += saleInfoItem.getGain()*100;
+            price += goods.getPrice() * 100 * saleInfoItem.getGoodsNum();
+            totalGain += saleInfoItem.getGain() * 100;
             totalSum += saleInfoItem.getGoodsNum();
         }
-        saleInfo = get(id);
-        saleInfo.setGoodsPrice(price/100);
-        saleInfo.setRealPrice(price/100);
-        saleInfo.setGain(totalGain/100);
+        saleInfo = saleInfoDao.get(id);
+        saleInfo.setGoodsPrice(DecimalUtil.getDouble(price, 2));
+        saleInfo.setRealPrice(DecimalUtil.getDouble(price, 2));
+        saleInfo.setGain(DecimalUtil.getDouble(totalGain, 2));
         saleInfo.setGoodsNum(totalSum);
         update(saleInfo);
 
-        SaleCount saleCount = saleCountDao.findByDay(new Date(), new Date(), cashier.getStoreId()).get(0);
-        saleCount.setGain((saleCount.getGain()*100 + saleInfo.getGain()*100)/100);
-        saleCount.setTurnover((saleCount.getTurnover()*100 + saleInfo.getRealPrice())/100);
-        saleCount.setOrderNum(saleCount.getOrderNum() + saleInfo.getGoodsNum());
-        saleCount.setPaidByMoney((saleCount.getPaidByMoney()  * 100 + saleInfo.getRealPrice() * 100)/100);
-        saleCount.setIncome(saleCount.getGain());
-        saleCount.setPay((saleCount.getPay() * 100 + totalRawPrice) / 100);
-        saleCountDao.update(saleCount);
+        List<SaleCount> saleCountList = saleCountDao.findByDay(new Date(), new Date(), cashier.getStoreId());
+        if(saleCountList != null && saleCountList.size() > 0){
+            SaleCount saleCount = saleCountList.get(0);
+            saleCount.setGain(DecimalUtil.getDouble(saleCount.getGain() * 100 + saleInfo.getGain() * 100,2));
+            saleCount.setTurnover(DecimalUtil.getDouble(saleCount.getTurnover() * 100 + saleInfo.getRealPrice() * 100,2));
+            saleCount.setOrderNum(saleCount.getOrderNum() + 1);
+            saleCount.setPaidByMoney(DecimalUtil.getDouble(saleCount.getPaidByMoney()  * 100 + saleInfo.getRealPrice() * 100,2));
+            saleCount.setIncome(saleCount.getGain());
+            saleCount.setPay(DecimalUtil.getDouble(saleCount.getPay() * 100 + totalRawPrice,2));
+            saleCountDao.update(saleCount);
+        }
         return id != 0;
     }
 
@@ -220,5 +224,24 @@ public class SaleInfoServiceImpl implements ISaleInfoService {
         Date start = DateUtil.format(startTime, "yyyy-MM-dd");
         Date end = DateUtil.format(endTime, "yyyy-MM-dd");
         return saleCountDao.findByDay(start, end, storeId);
+    }
+
+    @Override
+    public void addSaleCount(SaleCount saleCount) {
+        saleCountDao.add(saleCount);
+    }
+
+    @Override
+    public void delSaleCount(int id) {
+        saleCountDao.delete(id);
+    }
+
+    @Override
+    public SaleCount getSaleCount(int storeId, Date countDate) {
+        List<SaleCount> list = saleCountDao.findByDay(countDate, countDate, storeId);
+        if(list != null && list.size() > 0){
+            return list.get(0);
+        }
+        return null;
     }
 }

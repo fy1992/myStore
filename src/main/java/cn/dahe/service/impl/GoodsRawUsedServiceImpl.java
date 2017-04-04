@@ -4,6 +4,7 @@ import cn.dahe.dao.IGoodsRawUsedDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.GoodsRawUsed;
 import cn.dahe.service.IGoodsRawUsedService;
+import cn.dahe.util.DecimalUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class GoodsRawUsedServiceImpl implements IGoodsRawUsedService{
     @Override
     public void update(GoodsRawUsed t) {
         GoodsRawUsed gru = goodsRawUsedDao.get(t.getId());
-        gru.setTotalPrice((gru.getTotalPrice()*100 + t.getTotalPrice()*100)/100);
+        gru.setTotalPrice(DecimalUtil.getDouble(gru.getTotalPrice()*100 + t.getTotalPrice()*100,2));
         gru.setUsedNum(gru.getUsedNum() + t.getUsedNum());
         goodsRawUsedDao.update(t);
     }

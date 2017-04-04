@@ -140,9 +140,6 @@ public class Goods {
     //是否直接转化成品  0 否 1 是
     @Column(name = "auto_finished", columnDefinition = "INT DEFAULT 0")
     private int autoFinished;
-    //对应成品的商品编号
-    @Column(name = "finished_goods_no")
-    private String finishedGoodsNo;
 
     public int getId() {
         return id;
@@ -382,14 +379,6 @@ public class Goods {
 
     public void setIntermediary(int intermediary) {
         this.intermediary = intermediary;
-    }
-
-    public String getFinishedGoodsNo() {
-        return finishedGoodsNo;
-    }
-
-    public void setFinishedGoodsNo(String finishedGoodsNo) {
-        this.finishedGoodsNo = finishedGoodsNo;
     }
 
     public String getUnitIds() {

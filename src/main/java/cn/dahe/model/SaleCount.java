@@ -20,9 +20,7 @@ public class SaleCount {
     private int id;
     //统计时间
     @Column(name = "count_date")
-    private Date countDate;
-    //概况
-    private String info;
+    private String countDate;
     //所属分店Id
     @Column(name = "store_id")
     private int storeId;
@@ -48,20 +46,12 @@ public class SaleCount {
         this.id = id;
     }
 
-    public Date getCountDate() {
+    public String getCountDate() {
         return countDate;
     }
 
-    public void setCountDate(Date countDate) {
+    public void setCountDate(String countDate) {
         this.countDate = countDate;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
     }
 
     public int getStoreId() {

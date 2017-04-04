@@ -43,7 +43,7 @@ public class SalesCampaignDaoImpl extends BaseDaoImpl<SalesCampaign> implements 
 
     @Override
     public List<SalesCampaign> findAll(int storeId) {
-        String hql = "from SalesCampaign where overdue = 1 whre storeId = ?";
+        String hql = "from SalesCampaign where storeId = ?";
         return this.list(hql, storeId);
     }
 

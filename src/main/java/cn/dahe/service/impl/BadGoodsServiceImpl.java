@@ -15,6 +15,7 @@ import cn.dahe.model.Store;
 import cn.dahe.service.IBadGoodsService;
 import cn.dahe.service.IStoreService;
 import cn.dahe.util.DateUtil;
+import cn.dahe.util.DecimalUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -93,7 +94,7 @@ public class BadGoodsServiceImpl implements IBadGoodsService{
                 totalPrice += badGoodsItem.getPrice()*100;
             }
             BadGoods badGoods = get(badGoodsId);
-            badGoods.setPrice(totalPrice/100);
+            badGoods.setPrice(DecimalUtil.getDouble(totalPrice,2));
             update(badGoods);
         }
     }

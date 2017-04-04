@@ -34,7 +34,7 @@
             </span>--%>
                 <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}',readOnly:true,skin:'twoer'})" id="startTime" class="input-text Wdate radius" style="width:120px;"/> 至
                 <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2099-10-01',readOnly:true,skin:'twoer'})" id="endTime" class="input-text Wdate radius" style="width:120px;"/>
-            <button id="news_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+            <button id="saleInfo_search" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         </div>
         <div class="pd-20 clearfix">
             <table class="table table-border table-bordered table-bg table-hover table-striped box-shadow" id="goods_table">
@@ -42,8 +42,8 @@
                 <tr class="text-c">
                     <th width="50"></th>
                     <th width="50">概况</th>
-                    <th width="100">现金支付</th>
-                    <%--<th width="50">银联支付</th>
+                    <%--<th width="100">现金支付</th>
+                    <th width="50">银联支付</th>
                     <th width="50">储值卡支付</th>
                     <th width="50">次卡支付</th>
                     <th width="50">购物卡支付</th>--%>
@@ -52,18 +52,18 @@
                 <tbody id="table_tr">
                     <tr role="row" class="odd">
                         <td>商品销售</td>
-                        <td>销售额 <span id = "turnover">0.00</span>, 利润 <span id = "gain">0.00</span>, 单数 <span id = "num">0</span></td>
-                        <td>0.00</td>
+                        <td>销售额 <span id = "turnover"></span>, 利润 <span id = "gain"></span>, 单数 <span id = "num"></span></td>
+                        <%--<td>0.00</td>--%>
                     </tr>
                     <tr role="row" class="even">
                         <td>现金收支</td>
-                        <td>收入 <span>0</span>, 支出<span>0</span></td>
-                        <td><span>0.00</span></td>
+                        <td>收入 <span id="income"></span>, 支出<span id = "pay"></span></td>
+                        <%--<td><span>0.00</span></td>--%>
                     </tr>
                     <tr role="row" class="odd">
                         <td>总计</td>
                         <td>-</td>
-                        <td><span>0.00</span></td>
+                        <%--<td><span>0.00</span></td>--%>
                     </tr>
                     <%--<tr role="row" class="even">
                         <td></td>
@@ -83,24 +83,47 @@
 <script type="text/javascript" src="${ctxResource}/js/layer/layer.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script type="text/javascript" src="${ctxResource}/js/My97DatePicker/WdatePicker.js"></script>
 <script>
-    var startTime = $("#startTime").val();
-    var endTime = $("#endTime").val();
-    if(!startTime){
-        startTime = new Date();
-    }
-    if(!endTime){
-        endTime = new Data();
-    }
-    $.post("<%=request.getContextPath()%>/server/saleInfo/list", {startTime : , endTime : }, function (data) {
-        if(data.result == 1){
-            var list = data.object
-            for(var n in data.list){
+    $(function () {
+        var startTime = $("#startTime").val();
+        var endTime = $("#endTime").val();
+        getInfo(startTime, endTime);
 
-            }
+        $("#saleInfo_search").on("click", function () {
+            startTime = $("#startTime").val();
+            endTime = $("#endTime").val();
+            getInfo(startTime, endTime);
+        });
+    })
+
+    function getInfo(startTime, endTime){
+        if(!startTime){
+            startTime = format(new Date());
         }
-    });
+        if(!endTime){
+            endTime = format(new Date());
+        }
+        $.post("<%=request.getContextPath()%>/server/saleInfo/list", {startTime : startTime, endTime : endTime}, function (data) {
+            if(data.result == 1){
+                var list = data.object;
+                var turnover = 0.00, gain = 0.00, orderNum = 0, income = 0, pay = 0;
+                for(var n in list){
+                    turnover += list[n].turnover;
+                    gain += list[n].gain;
+                    income += list[n].income;
+                    pay += list[n].pay;
+                    orderNum += list[n].orderNum;
+                }
+                $("#turnover").text(turnover);
+                $("#gain").text(gain);
+                $("#income").text(income);
+                $("#pay").text(pay);
+                $("#num").text(orderNum);
+            }
+        });
+    }
 </script>
 </body>
 </html>

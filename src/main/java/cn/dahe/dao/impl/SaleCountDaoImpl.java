@@ -2,6 +2,7 @@ package cn.dahe.dao.impl;
 
 import cn.dahe.dao.ISaleCountDao;
 import cn.dahe.model.SaleCount;
+import cn.dahe.util.DateUtil;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -16,16 +17,16 @@ import java.util.List;
 public class SaleCountDaoImpl extends BaseDaoImpl<SaleCount> implements ISaleCountDao{
     @Override
     public List<SaleCount> findByDay(Date startTime, Date endTime, int storeId) {
-        StringBuffer hql = new StringBuffer("from SaleCount saleCount where 1=1");
+        StringBuffer sql = new StringBuffer("select * from t_sale_count where 1=1");
         List<Object> list = new ArrayList();
         if(storeId != 0){
-            hql.append(" and saleCount.storeId = ?");
+            sql.append(" and store_id = ?");
             list.add(storeId);
         }
-        hql.append(" and saleCount.countDate >= ?");
-        list.add(startTime);
-        hql.append(" and saleCount.countDate <= ?");
-        list.add(endTime);
-        return this.list(hql.toString(), list);
+        sql.append(" and count_date >= ?");
+        list.add(java.sql.Date.valueOf(DateUtil.format(startTime, "yyyy-MM-dd")));
+        sql.append(" and count_date <= ?");
+        list.add(java.sql.Date.valueOf(DateUtil.format(endTime, "yyyy-MM-dd")));
+        return this.listBySqlAndList(sql.toString(), list, SaleCount.class, true);
     }
 }

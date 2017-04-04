@@ -313,6 +313,10 @@ public class GoodsServiceImpl implements IGoodsService{
         goodsDto.setProductionDate(DateUtil.format(goods.getProductionDate(), "yyyy-MM-dd"));
         goodsDto.setGoodsNo(goods.getGoodsNo());
         goodsDto.setGoodsImg(goods.getImgUrl());
+        goodsDto.setIntermediary(goods.getIntermediary());
+        goodsDto.setHasRaws(goods.getHasRaws());
+        goodsDto.setUseRawPrice(goods.getUseRawPrice());
+        goodsDto.setAutoFinished(goods.getAutoFinished());
         Set<SmallTicket> smallTicketSet = goods.getSmallTicketSet();
         Set<GoodsTags> goodsTagsSet = goods.getGoodsTagsSet();
         if(smallTicketSet != null && smallTicketSet.size() > 0){
@@ -379,6 +383,10 @@ public class GoodsServiceImpl implements IGoodsService{
         goods.setShelfLife(StringUtil.formatStr2Int(goodsDto.getShelfLife()));
         goods.setStatus(goodsDto.getStatus());
         goods.setMainUnitId(goodsDto.getMainUnit());
+        goods.setIntermediary(goodsDto.getIntermediary());
+        goods.setHasRaws(goodsDto.getHasRaws());
+        goods.setAutoFinished(goodsDto.getAutoFinished());
+        goods.setUseRawPrice(goodsDto.getUseRawPrice());
         GoodsUnit mainUnit = goodsUnitDao.get(goodsDto.getMainUnit());
         if(mainUnit != null){
             goods.setMainUnitName(mainUnit.getName());
@@ -411,6 +419,7 @@ public class GoodsServiceImpl implements IGoodsService{
         int shelfLife = goods.getShelfLife();
         goods.setOverdueDay(DateUtil.getOverdueDay(pro_date, shelfLife));
         goods.setOverdueTime(DateUtil.getOverdueTime(pro_date, shelfLife));
+
         return goods;
     }
 
@@ -438,5 +447,15 @@ public class GoodsServiceImpl implements IGoodsService{
     @Override
     public List<Goods> findAll(int storeId) {
         return goodsDao.findAll(storeId);
+    }
+
+    @Override
+    public List<Goods> findIntermediaryGoods(int storeId) {
+        return goodsDao.findIntermediaryGoods(storeId);
+    }
+
+    @Override
+    public void updateGoodsIntermediary(String goodsNo, int storeId) {
+        Goods goods = goodsDao.findByGoodsNo(goodsNo, storeId);
     }
 }

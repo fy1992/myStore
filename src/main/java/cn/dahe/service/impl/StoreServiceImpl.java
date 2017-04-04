@@ -307,4 +307,9 @@ public class StoreServiceImpl implements IStoreService{
         }
         storeGoodsTrafficDao.update(sgt);
     }
+
+    @Override
+    public List<Store> findAll() {
+        return storeDao.findAll();
+    }
 }

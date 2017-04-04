@@ -71,4 +71,18 @@ public interface IGoodsService{
      * @return
      */
     List<Goods> findAll(int storeId);
+
+    /**
+     * 查询半成品列表
+     * @param storeId
+     * @return
+     */
+    List<Goods> findIntermediaryGoods(int storeId);
+
+    /**
+     * 半成品制作
+     * @param goodsNo
+     * @param storeId
+     */
+    void updateGoodsIntermediary(String goodsNo, int storeId);
 }

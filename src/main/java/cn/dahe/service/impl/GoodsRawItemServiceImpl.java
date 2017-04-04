@@ -7,6 +7,7 @@ import cn.dahe.model.Goods;
 import cn.dahe.model.GoodsRaw;
 import cn.dahe.model.GoodsRawItem;
 import cn.dahe.service.IGoodsRawItemService;
+import cn.dahe.util.DecimalUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -82,7 +83,7 @@ public class GoodsRawItemServiceImpl implements IGoodsRawItemService{
             goodsRawItem.setRawNum(rawNum);
             if(useRawPrice == 1){
                 GoodsRaw goodsRaw = goodsRawDao.get(goodsRawItem.getRawId());
-                bid += goodsRaw.getBid()*rawNum*100;
+                bid += goodsRaw.getPrice() * rawNum * 100;
             }
             goodsRawItem.setRawNo((String)object.get("rawNo"));
             goodsRawItemDao.add(goodsRawItem);
@@ -92,7 +93,7 @@ public class GoodsRawItemServiceImpl implements IGoodsRawItemService{
         goods.setIntermediary(intermediary);
         goods.setUseRawPrice(useRawPrice);
         if(useRawPrice == 1){
-            goods.setBid(bid/100);
+            goods.setBid(DecimalUtil.getDouble(bid,2));
         }
         goods.setHasRaws(1);
         goodsDao.update(goods);

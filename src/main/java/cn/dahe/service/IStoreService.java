@@ -49,6 +49,8 @@ public interface IStoreService {
      */
     List<Store> findAll(int storeId, int removeId);
 
+    List<Store> findAll();
+
     void add(StoreGoodsTraffic storeGoodsTraffic);
     void update(StoreGoodsTraffic storeGoodsTraffic);
 

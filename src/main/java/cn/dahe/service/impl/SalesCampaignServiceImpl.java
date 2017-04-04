@@ -99,4 +99,9 @@ public class SalesCampaignServiceImpl implements ISalesCampaignService{
     public List<SalesCampaign> findByHasCoupon(int storeId) {
         return salesCampaignDao.findByHasCoupon(storeId);
     }
+
+    @Override
+    public List<SalesCampaign> findAll(int storeId) {
+        return salesCampaignDao.findAll(storeId);
+    }
 }

@@ -57,6 +57,8 @@ public class ClientController {
     private IStoreService storeService;
     @Resource
     private IUserService userService;
+    @Resource
+    private IGoodsService goodsService;
 
     @RequestMapping(value = "test", method = RequestMethod.GET)
     public String test(){
@@ -384,7 +386,26 @@ public class ClientController {
     public AjaxObj intermediaryList(int sid, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier)session.getAttribute("clientUser_" + sid);
+        List<Goods> list = goodsService.findIntermediaryGoods(cashier.getStoreId());
+        json.setResult(1);
+        json.setObject(list);
+        return json;
+    }
 
+    /**
+     * 半成品制作
+     * @param goodsNo
+     * @param session
+     * @return
+     */
+    @RequestMapping
+    @ResponseBody
+    public AjaxObj doIntermediary(int sid, String goodsNo, HttpSession session){
+        AjaxObj json = new AjaxObj();
+        Cashier cashier = (Cashier) session.getAttribute("clientUser_" + sid);
+        goodsService.updateGoodsIntermediary(goodsNo, cashier.getStoreId());
+        json.setObject("半成品制作完成");
+        json.setResult(1);
         return json;
     }
 }

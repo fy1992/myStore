@@ -61,6 +61,12 @@ public class GoodsDto {
     private int overdueDay;
     //是否有配方 0 没有 1 有
     private int hasRaws;
+    //是否用配方价更新进货价 0 否 1 是
+    private int useRawPrice;
+    //是否直接转化成品  0 否 1 是
+    private int autoFinished;
+    //是否是半成品 0 否 1 是
+    private int intermediary;
 
     public String getName() {
         return name;
@@ -301,6 +307,30 @@ public class GoodsDto {
 
     public void setHasRaws(int hasRaws) {
         this.hasRaws = hasRaws;
+    }
+
+    public int getUseRawPrice() {
+        return useRawPrice;
+    }
+
+    public void setUseRawPrice(int useRawPrice) {
+        this.useRawPrice = useRawPrice;
+    }
+
+    public int getAutoFinished() {
+        return autoFinished;
+    }
+
+    public void setAutoFinished(int autoFinished) {
+        this.autoFinished = autoFinished;
+    }
+
+    public int getIntermediary() {
+        return intermediary;
+    }
+
+    public void setIntermediary(int intermediary) {
+        this.intermediary = intermediary;
     }
 
     @Override

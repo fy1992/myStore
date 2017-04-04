@@ -23,4 +23,6 @@ public interface ISalesCampaignService {
     Pager<SalesCampaign> findByParams(String aDataSet, int storeId);
 
     List<SalesCampaign> findByHasCoupon(int storeId);
+
+    List<SalesCampaign> findAll(int storeId);
 }

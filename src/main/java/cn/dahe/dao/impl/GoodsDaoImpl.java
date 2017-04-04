@@ -100,7 +100,7 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
 
     @Override
     public List<Goods> findIntermediaryGoods(int storeId) {
-        String hql = "from Goods where storeId = ? and intermediary = 0 and autoFinished = 1";
+        String hql = "from Goods where storeId = ? and intermediary = 1";
         return this.list(hql, storeId);
     }
 }

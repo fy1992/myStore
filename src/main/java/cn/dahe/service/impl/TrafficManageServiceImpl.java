@@ -19,6 +19,7 @@ import cn.dahe.model.StoreGoodsTraffic;
 import cn.dahe.model.TrafficManage;
 import cn.dahe.service.ITrafficManageService;
 import cn.dahe.util.DateUtil;
+import cn.dahe.util.DecimalUtil;
 import cn.dahe.util.NumberUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -224,7 +225,7 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
         }
 
         trafficManage = trafficManageDao.get(id);
-        trafficManage.setTotalPrice(totalPrice/100); // 总价
+        trafficManage.setTotalPrice(DecimalUtil.getDouble(totalPrice,2)); // 总价
         trafficManage.setGoodsNum(totalSum); //总量
         trafficManageDao.update(trafficManage);
     }
