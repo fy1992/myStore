@@ -1,6 +1,7 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.IClientGoodsDao;
+import cn.dahe.dao.IClientGoodsRawDao;
 import cn.dahe.dao.IGoodsDao;
 import cn.dahe.dao.IGoodsRawDao;
 import cn.dahe.dao.IOrderGoodsInfoDao;
@@ -10,6 +11,7 @@ import cn.dahe.dao.ITrafficManageDao;
 import cn.dahe.dto.ClientDataDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.ClientGoods;
+import cn.dahe.model.ClientGoodsRaw;
 import cn.dahe.model.Goods;
 import cn.dahe.model.GoodsRaw;
 import cn.dahe.model.OrderGoodsInfo;
@@ -52,6 +54,8 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
     private IGoodsRawDao goodsRawDao;
     @Resource
     private IStoreGoodsTrafficDao storeGoodsTrafficDao;
+    @Resource
+    private IClientGoodsRawDao clientGoodsRawDao;
 
     @Override
     public void add(TrafficManage t) {
@@ -142,30 +146,53 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
     }
 
     @Override
-    public TrafficManage updatePrepare(int id, int type) {
+    public TrafficManage updatePrepare(int id, int type, int trafficType) {
         TrafficManage trafficManage = trafficManageDao.get(id);
         trafficManage.setStatus(type);
         trafficManage.setOptTime(new Date());
         trafficManageDao.update(trafficManage);
+
+        List<OrderGoodsInfo> orderGoodsInfoList = orderGoodsInfoDao.findByTrafficManageId(id);
+        int storeId = trafficManage.getStoreId();
+        int goodsType = trafficManage.getOrderType();
         //若配货通过
         if(type == 1){
-            List<ClientGoods> clientGoodss = clientGoodsDao.findByStoreId(trafficManage.getStoreId());
-            List<OrderGoodsInfo> orderGoodsInfoList = orderGoodsInfoDao.findByTrafficManageId(id);
-            clientGoodss.forEach(clientGoods -> {
-                String goodsNo = clientGoods.getGoodsNo();
-                orderGoodsInfoList.forEach(orderGoodsInfo -> {
-                    if(goodsNo.equals(orderGoodsInfo.getGoodsNo())){
-                        int changeNum = orderGoodsInfo.getDistributeNum();
-                        clientGoods.setGoodsNum(changeNum);
-                        clientGoodsDao.update(clientGoods);
-
-                        Goods goods = goodsDao.findByGoodsNo(goodsNo, clientGoods.getStoreId());
-                        Stock stock = goods.getFinishedStock();
-                        stock.setGoodNum(stock.getGoodNum() - changeNum);
-                        goods.setFinishedStock(stock);
-                        goodsDao.update(goods);
+            orderGoodsInfoList.forEach(orderGoodsInfo -> {
+                String goodsNo = orderGoodsInfo.getGoodsNo();
+                int changeNum = orderGoodsInfo.getDistributeNum();
+                if(goodsType == 0) {
+                    ClientGoods clientGoods = clientGoodsDao.findByGoodsNo(goodsNo, storeId);
+                    if(trafficType == 0) {
+                        clientGoods.setFinishedNum(clientGoods.getFinishedNum() + changeNum);
+                    }else{
+                        clientGoods.setFinishedNum(clientGoods.getFinishedNum() - changeNum);
                     }
-                });
+                    clientGoodsDao.update(clientGoods);
+                    Goods goods = goodsDao.findByGoodsNo(goodsNo, storeId);
+                    Stock stock = goods.getStock();
+                    if(trafficType == 0) {
+                        stock.setGoodNum(stock.getGoodNum() - changeNum);
+                    }else{
+                        stock.setGoodNum(stock.getGoodNum() + changeNum);
+                    }
+                    goods.setStock(stock);
+                    goodsDao.update(goods);
+                }else{
+                    ClientGoodsRaw clientGoodsRaw = clientGoodsRawDao.findByRawNo(goodsNo, storeId);
+                    if(trafficType == 0) {
+                        clientGoodsRaw.setRawNum(clientGoodsRaw.getRawNum() + changeNum);
+                    }else{
+                        clientGoodsRaw.setRawNum(clientGoodsRaw.getRawNum() - changeNum);
+                    }
+                    clientGoodsRawDao.update(clientGoodsRaw);
+                    GoodsRaw goodsRaw = goodsRawDao.findByRawNo(goodsNo, storeId);
+                    if(trafficType == 0) {
+                        goodsRaw.setStock(goodsRaw.getStock() - changeNum);
+                    }else{
+                        goodsRaw.setStock(goodsRaw.getStock() + changeNum);
+                    }
+                    goodsRawDao.update(goodsRaw);
+                }
             });
         }
         return trafficManage;
@@ -228,35 +255,5 @@ public class TrafficManageServiceImpl implements ITrafficManageService{
         trafficManage.setTotalPrice(DecimalUtil.getDouble(totalPrice,2)); // 总价
         trafficManage.setGoodsNum(totalSum); //总量
         trafficManageDao.update(trafficManage);
-    }
-
-    @Override
-    public TrafficManage updateReturnedGoods(int id, int type) {
-        TrafficManage trafficManage = trafficManageDao.get(id);
-        trafficManage.setStatus(type);
-        trafficManage.setOptTime(new Date());
-        trafficManageDao.update(trafficManage);
-        //若退货通过
-        if(type == 1){
-            List<ClientGoods> clientGoodss = clientGoodsDao.findByStoreId(trafficManage.getStoreId());
-            List<OrderGoodsInfo> orderGoodsInfoList = orderGoodsInfoDao.findByTrafficManageId(id);
-            clientGoodss.forEach(clientGoods -> {
-                String goodsNo = clientGoods.getGoodsNo();
-                orderGoodsInfoList.forEach(orderGoodsInfo -> {
-                    if(goodsNo.equals(orderGoodsInfo.getGoodsNo())){
-                        int changeNum = orderGoodsInfo.getDistributeNum();
-                        clientGoods.setGoodsNum(clientGoods.getGoodsNum() - changeNum);
-                        clientGoodsDao.update(clientGoods);
-
-                        Goods goods = goodsDao.findByGoodsNo(goodsNo, clientGoods.getStoreId());
-                        Stock stock = goods.getFinishedStock();
-                        stock.setGoodNum(stock.getGoodNum() + changeNum);
-                        goods.setFinishedStock(stock);
-                        goodsDao.update(goods);
-                    }
-                });
-            });
-        }
-        return trafficManage;
     }
 }

@@ -60,6 +60,7 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
         }
         goodsTraffic.setOrderStoreId(storeId);
         goodsTraffic.setOrderStoreName(store.getName());
+        goodsTraffic.setOrderType(t.getType());
         int goodsTrafficId = goodsTrafficDao.addAndGetId4Integer(goodsTraffic);
         JSONArray json = JSONArray.parseArray(t.getOrderInfo());
         for(int i = 0, len = json.size(); i < len; i++){
@@ -206,6 +207,7 @@ public class GoodsTrafficServiceImpl implements IGoodsTrafficService {
         trafficManage.setTotalPrice(priceSum); //总价
         trafficManage.setGoodsNum(goodsNum); //货流量
         trafficManage.setTrafficNo(NumberUtils.getNoByTime());
+        trafficManage.setOrderType(goodsTraffic.getOrderType());//货流类型 0 商品 1 原材料
         //配置出货门店
         StoreGoodsTraffic storeGoodsTraffic = storeGoodsTrafficDao.findByStoreId(trafficManage.getStoreId());
         int outStoreId = storeGoodsTraffic.getPrepareStoreId();

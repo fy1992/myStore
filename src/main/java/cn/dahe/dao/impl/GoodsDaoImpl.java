@@ -56,7 +56,7 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
             objectList.add(storeId);
         }
         if(stockPage == 1){
-            hql.append(" and ( goods.finishedStock.goodNum <= 0 or goods.overdueDay > 0 )");
+            hql.append(" and ( goods.stock.goodNum <= 0 or goods.overdueDay > 0 )");
         }
 
         hql.append(" order by "+ params.getOrderColumn() + " " +params.getOrderDir());
@@ -69,17 +69,18 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
             return null;
         }
         int categoriesId = params.getIntParam1(); //分类id
-        int unitId = params.getIntParam2(); //单位id
-        String hql = "from Goods goods where 1=1";
+        String info = params.getStringParam1();
+        StringBuffer hql = new StringBuffer("from Goods goods where 1=1");
+        List<Object> list = new ArrayList<>();
         if(categoriesId != 0){
-            hql += " and goods.categoriesId = ?";
-            return this.list(hql, categoriesId);
+            hql.append(" and goods.categoriesId = ?");
+            list.add(categoriesId);
         }
-        if(unitId != 0){
-            hql += " and goods.mainUnitId = ?";
-            return this.list(hql, unitId);
+        if(StringUtils.isNotBlank(info)){
+            hql.append(" and goods.goodsName like ?");
+            list.add("%" + info + "%");
         }
-        return this.list(hql);
+        return this.list(hql.toString(), list);
     }
 
     @Override

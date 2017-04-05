@@ -23,6 +23,7 @@ public class GoodsTraffic {
     //订货状态 -1 已作废 0 待审核 1 配货中 2 已完成
     private int status;
     //0 商品  1 原材料
+    @Column(name = "order_type")
     private int orderType;
     //备注
     private String description;

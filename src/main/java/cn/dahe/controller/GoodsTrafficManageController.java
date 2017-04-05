@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -68,7 +66,6 @@ public class GoodsTrafficManageController {
 
     /**
      * 配货
-     * @return
      */
     @RequestMapping(value = "prepare/{id}", method = RequestMethod.GET)
     public String prepareManage(@PathVariable int id, Model model){
@@ -82,13 +79,14 @@ public class GoodsTrafficManageController {
 
     /**
      * 配货
-     * @return
+     * @param id   退货单id
+     * @param type  1 已完成进货 -1 已拒绝进货
      */
     @RequestMapping(value = "prepare", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj preparemanage(int id, int type){
         AjaxObj json = new AjaxObj();
-        TrafficManage trafficManage = trafficManageService.updatePrepare(id, type);
+        TrafficManage trafficManage = trafficManageService.updatePrepare(id, type, 0);
         String msg = type == -1 ? "已拒绝进货" : "已完成进货";
         json.setMsg(msg);
         json.setObject(trafficManage.getOptTime());
@@ -98,13 +96,14 @@ public class GoodsTrafficManageController {
 
     /**
      * 退货
-     * @return
+     * @param id   退货单id
+     * @param type  1 已完成进货 -1 已拒绝进货
      */
     @RequestMapping(value = "returnGoods", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj returnGoods(int id, int type){
         AjaxObj json = new AjaxObj();
-        TrafficManage trafficManage = trafficManageService.updateReturnedGoods(id, type);
+        TrafficManage trafficManage = trafficManageService.updatePrepare(id, type, 1);
         String msg = type == -1 ? "已拒绝退货" : "已完成退货";
         json.setMsg(msg);
         json.setObject(trafficManage.getOptTime());

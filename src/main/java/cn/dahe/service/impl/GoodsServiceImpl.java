@@ -31,12 +31,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
+ * 商品
  * Created by fy on 2017/1/13.
  */
 @Service("goodsService")
 public class GoodsServiceImpl implements IGoodsService{
     private static Logger logger = LoggerFactory.getLogger(GoodsServiceImpl.class);
-
     @Resource
     private IGoodsDao goodsDao;
     @Resource
@@ -51,6 +51,10 @@ public class GoodsServiceImpl implements IGoodsService{
     private ISupplierDao supplierDao;
     @Resource
     private IClientGoodsDao clientGoodsDao;
+    @Resource
+    private IGoodsRawItemDao goodsRawItemDao;
+    @Resource
+    private IClientGoodsRawDao clientGoodsRawDao;
 
     @Override
     public boolean add(Goods t) {
@@ -291,7 +295,7 @@ public class GoodsServiceImpl implements IGoodsService{
         goodsDto.setVipSet(goods.getVipSet());
         goodsDto.setStatus(goods.getStatus());
         goodsDto.setProductionDate(DateUtil.format(new Date(), "yyy-MM-dd"));
-        Stock stock = goods.getFinishedStock();
+        Stock stock = goods.getStock();
         String goodsNum = "";
         if(stock != null){
             goodsNum = Long.toString(stock.getGoodNum());
@@ -353,7 +357,7 @@ public class GoodsServiceImpl implements IGoodsService{
         goods.setPrice(goodsDto.getPrice());
         Stock stock = new Stock();
         stock.setGoodNum(Long.parseLong(goodsDto.getStock()));
-        goods.setFinishedStock(stock);//加到成品库存上
+        goods.setStock(stock);//加到成品库存上
         goods.setCategoriesId(goodsDto.getCategoriesId());
         Categories c = categoriesDao.get(goodsDto.getCategoriesId());
         goods.setCategoriesName(c.getName());
@@ -457,20 +461,26 @@ public class GoodsServiceImpl implements IGoodsService{
     @Override
     public void updateGoodsIntermediary(String goodsNo, int num, int storeId) {
         Goods goods = goodsDao.findByGoodsNo(goodsNo, storeId);
-        Stock stock;
-        if(goods.getAutoFinished() == 1){
-            stock = goods.getFinishedStock();
-            stock.setGoodNum(stock.getGoodNum() + num);
-            goods.setFinishedStock(stock);
-        }else{
-            stock = goods.getIntermediaryStock();
-            stock.setGoodNum(stock.getGoodNum() + num);
-            goods.setIntermediaryStock(stock);
-        }
-        goodsDao.update(goods);
         //客户端库存修改
         ClientGoods clientGoods = clientGoodsDao.findByGoodsNo(goodsNo, storeId);
-        clientGoods.setGoodsNum(clientGoods.getGoodsNum() + num);
+        //若自动转化为成品
+        if(goods.getAutoFinished() == 1){
+            clientGoods.setFinishedNum(clientGoods.getFinishedNum() + num);
+        }else{
+            clientGoods.setFinishedNum(clientGoods.getSemifinishedNum() + num);
+        }
         clientGoodsDao.update(clientGoods);
+        List<GoodsRawItem> goodsRaws = goodsRawItemDao.findByGoodsId(goods.getId());
+        //修改客户端的原材料库存
+        goodsRaws.forEach(goodsRawItem -> {
+            ClientGoodsRaw clientGoodsRaw = clientGoodsRawDao.findByRawNo(goodsRawItem.getRawNo(), storeId);
+            clientGoodsRaw.setRawNum(clientGoodsRaw.getRawNum() - goodsRawItem.getRawNum());
+            clientGoodsRawDao.update(clientGoodsRaw);
+        });
+    }
+
+    @Override
+    public List<Goods> findByParams(Pager<Object> params) {
+        return goodsDao.findByParam(params);
     }
 }

@@ -17,35 +17,29 @@ public interface ITrafficManageService {
 
     /**
      * 根据参数查询
-     * @param aDataSet
-     * @param storeId
+     * @param aDataSet  dataables参数
+     * @param storeId 门店id
      * @return
      */
     Pager<TrafficManage> findByParams(String aDataSet, int storeId);
 
     /**
      * 通过excel导入货流信息
-     * @param storeId
+     * @param storeId 门店id
      */
     void importTrafficManageExcel(int storeId);
 
     /**
      * 客户端配货审核
-     * @param id
-     * @param type
+     * @param id  货流单id
+     * @param type  是否通过退货操作 0 不通过 1 通过
+     * @param trafficType 货流类型 0 进货单 1 退货单
      */
-    TrafficManage updatePrepare(int id, int type);
+    TrafficManage updatePrepare(int id, int type, int trafficType);
 
     /**
      * 客户端退货
-     * @param storeId
+     * @param storeId 门店id
      */
     void addReturnedGoods(ClientDataDto clientDataDto, int storeId);
-
-    /**
-     * 客户端退货审核
-     * @param type
-     * @return
-     */
-    TrafficManage updateReturnedGoods(int id, int type);
 }

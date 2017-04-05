@@ -89,3 +89,30 @@ input#ExpirationDate[type='text']{width: 90%;}
     line-height: 30px;
     text-indent: 0;
 }
+
+.self-th{
+    height: 20px;
+    line-height: 20px;
+    color: #ccc;
+    font-size: 12px;
+    text-align: left;
+    padding: 9px;
+    border: 0;
+    border-right: 1px solid #ccc;
+    margin: 0;
+    float: left;
+}
+
+.self-input{
+    width: 69px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    padding: 9px 0;
+    border: 0;
+    border-right: 1px solid #ccc;
+    margin: 0;
+    color: #09c;
+    float: left;
+    font-size: 14px;
+}

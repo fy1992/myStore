@@ -67,11 +67,11 @@
         </div>
         <div class="row cl col-3"></div>
         <div class="row cl clo-4">
-            <input type="radio" name = "intermediary"  value = "1" <c:if test="${goods.intermediary eq 1}">checked</c:if>/> 是
-            <input type="radio" name = "intermediary"  value = "0" <c:if test="${goods.intermediary eq 0}">checked</c:if>/> 否
+            <input type="radio" name = "semifinished"  value = "1" <c:if test="${goods.intermediary eq 1}">checked</c:if>/> 是
+            <input type="radio" name = "semifinished"  value = "0" <c:if test="${goods.intermediary eq 0}">checked</c:if>/> 否
         </div>
     </div>
-    <div class="row cl" style="margin: 10px;display: none;" id="intermadiaryDiv">
+    <div class="row cl" style="margin: 10px;display: none;" id="semifinishedDiv">
         <div class="row cl col-1"></div>
         <div class="row cl col-4">
             是否直接转化为成品
@@ -81,6 +81,22 @@
             <input type="radio" name = "autoFinished"  value = "1" <c:if test="${goods.autoFinished eq 1}">checked</c:if>/> 是
             <input type="radio" name = "autoFinished"  value = "0" <c:if test="${goods.autoFinished eq 0}">checked</c:if>/> 否
         </div>
+    </div>
+    <div class="row cl" id="targetGoodsDiv">
+        <table>
+            <thead>
+                <tr>
+                    <th class="self-th">制作成品</th>
+                    <th class="self-th">制作数量</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input readonly class="self-input" id="targetGoodsInput" type = "text" style="cursor: pointer;"/></td>
+                    <td><input id="targetGoodsNum" type = "number" /></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="row cl" style="height: 32px;">
     </div>
@@ -96,16 +112,44 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script>
     $(function(){
-        if($("input[name='intermediary']:checked").val() == 1){
-            $("#intermadiaryDiv").toggle(true);
+        $("#targetGoodsInput").on("click", function () {
+            layer.open({
+                type: 2,
+                area: ['490px', '460px'],
+                fix: true, //不固定
+                title: false,
+                shadeClose: false,
+                shade: false,
+                closeBtn: 0,
+                content: "<%=request.getContextPath()%>/server/goods/targetGoodsList"
+            });
+        });
+        if($("input[name='semifinished']:checked").val() == 1){
+            $("#semifinishedDiv").toggle(true);
+            $("#targetGoodsDiv").toggle(false);
         }else{
-            $("#intermadiaryDiv").toggle(false);
+            $("#semifinishedDiv").toggle(false);
+            $("#targetGoodsDiv").toggle(false);
         }
-        $("input[name='intermediary']").on("click", function () {
+        if($("input[name='autoFinished']:checked").val() == 1){
+            $("#targetGoodsDiv").toggle(true);
+        }else{
+            $("#targetGoodsDiv").toggle(false);
+        }
+        $("input[name='semifinished']").on("click", function () {
             if($(this).val() == 1){
-                $("#intermadiaryDiv").toggle(true);
+                $("#semifinishedDiv").toggle(true);
+                $("#targetGoodsDiv").toggle(false);
             }else{
-                $("#intermadiaryDiv").toggle(false);
+                $("#semifinishedDiv").toggle(false);
+                $("#targetGoodsDiv").toggle(false);
+            }
+        });
+        $("input[name='autoFinished']").on("click", function () {
+            if($(this).val() == 1){
+                $("#targetGoodsDiv").toggle(true);
+            }else{
+                $("#targetGoodsDiv").toggle(false);
             }
         });
         

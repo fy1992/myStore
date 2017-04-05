@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 
 /**
@@ -31,19 +32,31 @@ public class ClientGoods {
     @Column(name = "categories_id")
     private int categoriesId;
     //商品分類名稱
-    @Column(name = "categoreis_name")
+    @Column(name = "categories_name")
     private String categoriesName;
     //商品圖片
     @Column(name = "img_url")
     private String imgUrl;
     //售價
     private double price;
-    //商品庫存
+    //成品商品库存
     @Column(name = "goods_num")
-    private int goodsNum;
+    private int finishedNum;
+    //半成品商品库存
+    @Column(name = "semifinished_num")
+    private int semifinishedNum;
     //商品单位
     @Column(name = "goods_unit")
     private String goodsUnit;
+    //制作时间
+    @Column(name = "semifinished_time")
+    private Date semifinishedTime;
+    //半成品制作人
+    @Column(name = "cashier_name")
+    private String cashierName;
+    //成品名称
+    @Column(name = "target_goods_name")
+    private String targetGoodsName;
 
     public int getId() {
         return id;
@@ -101,12 +114,20 @@ public class ClientGoods {
         this.price = price;
     }
 
-    public int getGoodsNum() {
-        return goodsNum;
+    public int getFinishedNum() {
+        return finishedNum;
     }
 
-    public void setGoodsNum(int goodsNum) {
-        this.goodsNum = goodsNum;
+    public void setFinishedNum(int finishedNum) {
+        this.finishedNum = finishedNum;
+    }
+
+    public int getSemifinishedNum() {
+        return semifinishedNum;
+    }
+
+    public void setSemifinishedNum(int semifinishedNum) {
+        this.semifinishedNum = semifinishedNum;
     }
 
     public String getGoodsUnit() {
@@ -125,6 +146,30 @@ public class ClientGoods {
         this.goodsName = goodsName;
     }
 
+    public Date getSemifinishedTime() {
+        return semifinishedTime;
+    }
+
+    public void setSemifinishedTime(Date semifinishedTime) {
+        this.semifinishedTime = semifinishedTime;
+    }
+
+    public String getCashierName() {
+        return cashierName;
+    }
+
+    public void setCashierName(String cashierName) {
+        this.cashierName = cashierName;
+    }
+
+    public String getTargetGoodsName() {
+        return targetGoodsName;
+    }
+
+    public void setTargetGoodsName(String targetGoodsName) {
+        this.targetGoodsName = targetGoodsName;
+    }
+
     public ClientGoods() {
     }
 
@@ -135,7 +180,8 @@ public class ClientGoods {
         this.price = goods.getPrice();
         this.imgUrl = goods.getImgUrl();
         this.storeId = goods.getStoreId();
-        this.goodsNum = 0;
+        this.semifinishedNum = 0;
+        this.finishedNum = 0;
         this.goodsUnit = goods.getMainUnitName();
         this.goodsName = goods.getName();
     }

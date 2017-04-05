@@ -80,12 +80,8 @@ public class Goods {
     private int shelfLife;
     //成品库存
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "finished_stock_id")
-    private Stock finishedStock;
-    //半成品库存
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "intermediary_stock_id")
-    private Stock intermediaryStock;
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
     //库存上限
     @Column(name = "stock_up")
     private int stockUp;
@@ -140,6 +136,14 @@ public class Goods {
     //是否直接转化成品  0 否 1 是
     @Column(name = "auto_finished", columnDefinition = "INT DEFAULT 0")
     private int autoFinished;
+    //对应的成品商品id
+    @Column(name = "target_goods_id")
+    private String targetGoodsId;
+    @Column(name = "target_goods_name")
+    private String targetGoodsName;
+    //对应的成品的数量
+    @Column(name = "target_goods_num")
+    private int targetGoodsNum;
 
     public int getId() {
         return id;
@@ -357,20 +361,12 @@ public class Goods {
         this.goodsTagsSet = goodsTagsSet;
     }
 
-    public Stock getFinishedStock() {
-        return finishedStock;
+    public Stock getStock() {
+        return stock;
     }
 
-    public void setFinishedStock(Stock finishedStock) {
-        this.finishedStock = finishedStock;
-    }
-
-    public Stock getIntermediaryStock() {
-        return intermediaryStock;
-    }
-
-    public void setIntermediaryStock(Stock intermediaryStock) {
-        this.intermediaryStock = intermediaryStock;
+    public void setStock(Stock stock) {
+        this.stock = stock;
     }
 
     public int getIntermediary() {
@@ -459,6 +455,30 @@ public class Goods {
 
     public void setAutoFinished(int autoFinished) {
         this.autoFinished = autoFinished;
+    }
+
+    public String getTargetGoodsId() {
+        return targetGoodsId;
+    }
+
+    public void setTargetGoodsId(String targetGoodsId) {
+        this.targetGoodsId = targetGoodsId;
+    }
+
+    public int getTargetGoodsNum() {
+        return targetGoodsNum;
+    }
+
+    public void setTargetGoodsNum(int targetGoodsNum) {
+        this.targetGoodsNum = targetGoodsNum;
+    }
+
+    public String getTargetGoodsName() {
+        return targetGoodsName;
+    }
+
+    public void setTargetGoodsName(String targetGoodsName) {
+        this.targetGoodsName = targetGoodsName;
     }
 
     @Override
