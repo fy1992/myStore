@@ -67,8 +67,8 @@
         </div>
         <div class="row cl col-3"></div>
         <div class="row cl clo-4">
-            <input type="radio" name = "semifinished"  value = "1" <c:if test="${goods.intermediary eq 1}">checked</c:if>/> 是
-            <input type="radio" name = "semifinished"  value = "0" <c:if test="${goods.intermediary eq 0}">checked</c:if>/> 否
+            <input type="radio" name = "semifinished"  value = "1" id = "semifinished1" <c:if test="${goods.semifinished eq 1}">checked</c:if>/> <label for="semifinished1">是</label>
+            <input type="radio" name = "semifinished"  value = "0" id = "semifinished2" <c:if test="${goods.semifinished eq 0}">checked</c:if>/> <label for="semifinished2">否</label>
         </div>
     </div>
     <div class="row cl" style="margin: 10px;display: none;" id="semifinishedDiv">
@@ -78,22 +78,27 @@
         </div>
         <div class="row cl col-3"></div>
         <div class="row cl clo-4">
-            <input type="radio" name = "autoFinished"  value = "1" <c:if test="${goods.autoFinished eq 1}">checked</c:if>/> 是
-            <input type="radio" name = "autoFinished"  value = "0" <c:if test="${goods.autoFinished eq 0}">checked</c:if>/> 否
+            <input type="radio" name = "autoFinished"  value = "1" id = "autoFinished1" <c:if test="${goods.autoFinished eq 1}">checked</c:if>/> <label for="autoFinished1">是</label>
+            <input type="radio" name = "autoFinished"  value = "0" id = "autoFinished2" <c:if test="${goods.autoFinished eq 0}">checked</c:if>/> <label for="autoFinished2">否</label>
         </div>
     </div>
     <div class="row cl" id="targetGoodsDiv">
-        <table>
+        <table class="table table-border table-bordered table-bg box-shadow" >
             <thead>
-                <tr>
-                    <th class="self-th">制作成品</th>
-                    <th class="self-th">制作数量</th>
+                <tr class="text-c">
+                    <th>制作成品</th>
+                    <th>制作数量</th>
+                    <th>单位</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><input readonly class="self-input" id="targetGoodsInput" type = "text" style="cursor: pointer;"/></td>
-                    <td><input id="targetGoodsNum" type = "number" /></td>
+                    <td>
+                        <input style="width:160px;cursor: pointer;" class="input-text radius" id="targetGoodsName" value = "${goods.targetGoodsName}" type = "text"/>
+                        <input  id="targetGoodsId" type = "hidden" value = "${goods.targetGoodsId}"/>
+                    </td>
+                    <td><input style="width:100px" class="input-text radius" id="targetGoodsNum" value = "${goods.targetGoodsNum}" type = "number" min="0"/></td>
+                    <td><span id="unitName"></span></td>
                 </tr>
             </tbody>
         </table>
@@ -112,7 +117,7 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script>
     $(function(){
-        $("#targetGoodsInput").on("click", function () {
+        $("#targetGoodsName").on("click", function () {
             layer.open({
                 type: 2,
                 area: ['490px', '460px'],
@@ -143,6 +148,11 @@
             }else{
                 $("#semifinishedDiv").toggle(false);
                 $("#targetGoodsDiv").toggle(false);
+                $("input[name='autoFinished']").each(function () {
+                    if($(this).val() == 0){
+                        $(this).prop("checked", true);
+                    }
+                })
             }
         });
         $("input[name='autoFinished']").on("click", function () {
@@ -190,7 +200,7 @@
         $("#save").click(function(){
             var len = $(".text-c").length;
             var rawItems = [];
-            for(var i = 0; i < len - 1; i++){
+            for(var i = 0; i < len - 2; i++){
                 var rawItem = new RawItem(
                     "${id}",
                     $(".rawNum").eq(i).val(),
@@ -215,7 +225,26 @@
                 layer.msg("请添加原材料",{time : 2000, icon : 5});
                 return false;
             }
-            $.post("<%=request.getContextPath()%>/server/raw/addRawItem", {goodsId : "${id}", rawItems:JSON.stringify(rawItems), useRawPrice:useRawPrice, intermediary : intermediary, autoFinished : autoFinished},function (data) {
+            var targetGoodsId = 0;
+            var targetGoodsName = "";
+            var targetGoodsNum = 0;
+            if(autoFinished == 1){
+                targetGoodsId = $("#targetGoodsId").val();
+                targetGoodsName = $("#targetGoodsName").val();
+                targetGoodsNum = $("#targetGoodsNum").val();
+            }
+
+            $.post("<%=request.getContextPath()%>/server/raw/addRawItem", {
+                id : "${id}",
+                rawItems:JSON.stringify(rawItems),
+                useRawPrice:useRawPrice,
+                intermediary : intermediary,
+                autoFinished : autoFinished,
+                targetGoodsId : targetGoodsId,
+                targetGoodsName : targetGoodsName,
+                targetGoodsNum : targetGoodsNum
+            },
+                function (data) {
                 if(data.result == 1){
                     window.parent.table.fnDraw();
                     layer.msg(data.msg, {time : 2000, icon : 6}, function () {

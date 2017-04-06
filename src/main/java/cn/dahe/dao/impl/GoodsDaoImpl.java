@@ -70,14 +70,19 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
         }
         int categoriesId = params.getIntParam1(); //分类id
         String info = params.getStringParam1();
+        int storeId = params.getIntParam2();
         StringBuffer hql = new StringBuffer("from Goods goods where 1=1");
         List<Object> list = new ArrayList<>();
-        if(categoriesId != 0){
+        if(storeId != 0) {
+            hql.append(" and goods.storeId = ?");
+            list.add(storeId);
+        }
+        if(categoriesId != -1){
             hql.append(" and goods.categoriesId = ?");
             list.add(categoriesId);
         }
         if(StringUtils.isNotBlank(info)){
-            hql.append(" and goods.goodsName like ?");
+            hql.append(" and goods.name like ?");
             list.add("%" + info + "%");
         }
         return this.list(hql.toString(), list);

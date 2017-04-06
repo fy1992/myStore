@@ -68,7 +68,7 @@
                 <div class="formControls col-7">
                     <label class="form-label col-5">会员折扣：</label>
                     <div class="formControls col-7">
-                        <input type="text" class="input-text radius text-r" value="" style="width: 88%" id="vip_rebate" name = "rebate"><span>%</span>
+                        <input type="number" min="0" class="input-text radius text-r" style="width: 87%" value="" id="vip_rebate" name = "rebate"><span>%</span>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 <div class="formControls col-7">
                     <label class="form-label col-5">会员积分：</label>
                     <div class="formControls col-7">
-                        <input type="text" class="input-text radius text-r" value="0"  id="vip_point" style="width: 87%" name = "point"><span>分</span>
+                        <input type="number" min="0" class="input-text radius text-r" value="0"  id="vip_point" style="width: 87%" name = "point"><span>分</span>
                     </div>
                 </div>
             </div>
@@ -126,7 +126,7 @@
         <div class="row cl">
             <label class="form-label col-3">QQ号码：</label>
             <div class="formControls col-7">
-                <input type = "text"  class="input-text radius mr-5"  id="vip_qq" name="qq" value = ""/>
+                <input type = "number" style="width: 100%" class="input-text radius mr-5"  id="vip_qq" name="qq" value = ""/>
             </div>
             <div class="col-2"> </div>
         </div>

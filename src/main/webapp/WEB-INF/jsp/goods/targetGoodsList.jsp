@@ -12,23 +12,23 @@
 </head>
 <body>
 <span class="select-box radius" style="width: 100px;">
-    <select class="select" id="raw_categories">
+    <select class="select" id="goods_categories">
         <option value="-1">全部分类</option>
     </select>
 </span>
-<input type="text" id="raw_info" placeholder="" style="width:260px" class="input-text radius">
-<button id="raw_search" class="btn btn-success size-S"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+<input type="text" id="goods_info" placeholder="" style="width:260px" class="input-text radius">
+<button id="goods_search" class="btn btn-success size-S"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
 <table class="table table-border table-bordered table-bg table-hover table-sort table-striped box-shadow mb-40">
     <thead>
     <tr class="text-c">
         <th width="30">选择</th>
         <th width="100">序号</th>
-        <th width="100">原材料名称</th>
+        <th width="100">商品名称</th>
         <th width="100">条码</th>
         <th width="50">单位</th>
     </tr>
     </thead>
-    <tbody id = "rawBox"></tbody>
+    <tbody id = "goodsBox"></tbody>
 </table>
 <div class="cfpdBtnbox">
     <a class="btn btn-primary size-M f-r pl-20 pr-20" id="ensure">确认</a>
@@ -42,36 +42,36 @@
 <script type="text/javascript" src="${ctxResource}/js/myself.js"></script>
 <script>
     $(function(){
-        $("#rawBox").empty();
+        $("#goodsBox").empty();
         //类别
         $.post("<%=request.getContextPath()%>/server/categories/categoriesList", function (data) {
             for(var n in data){
-                $("#raw_categories").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
+                $("#goods_categories").append("<option value = '" + data[n].id + "'>" + data[n].name + "</option>");
             }
         });
 
-        $("#raw_search").on("click", function () {
-            var cid = $("#raw_categories").val();
-            var rawName = $("#raw_info").val();
-            if(cid == -1 && !rawName){
+        $("#goods_search").on("click", function () {
+            var cid = $("#goods_categories").val();
+            var goodsName = $("#goods_info").val();
+            if(cid == -1 && !goodsName){
                 return false;
             }
-            $("#rawBox").empty();
-            $.post("<%=request.getContextPath()%>/server/goods/goodsList", {cid : cid, rawName : rawName}, function(data){
+            $("#goodsBox").empty();
+            $.post("<%=request.getContextPath()%>/server/goods/goodsList", {cid : cid, goodsName : goodsName}, function(data){
                 if(data.length > 0){
                     for(var n in data){
-                        $("#rawBox").append(
+                        $("#goodsBox").append(
                             "<tr class=\"text-c\">" +
-                            "<td><input type=\"checkbox\" value=\""+data[n].id+"\" name = \"rawCb\" class=\"rawCb\"></td>" +
-                            "<td class='rawId'>"+data[n].id+"</td>" +
-                            "<td class='rawName'>"+data[n].name+"</td>" +
-                            "<td class='rawNo'>"+data[n].rawNo+"</td>" +
-                            "<td class='mainUnitName'>"+data[n].mainUnitName+"<input type='hidden' value='"+data[n].mainUnitId+"' class='mainUnitId'></td>" +
+                            "<td><input type=\"radio\" value=\""+data[n].id+"\" name = \"goodsCb\" class=\"goodsCb\"></td>" +
+                            "<td class='goodsId'>"+data[n].id+"</td>" +
+                            "<td class='goodsName'>"+data[n].name+"</td>" +
+                            "<td class='goodsNo'>"+data[n].goodsNo+"</td>" +
+                            "<td class='mainUnitName'>"+(data[n].mainUnitName?data[n].mainUnitName:"")+"</td>" +
                             "</tr>"
                         );
                     }
                 }else{
-                    $("#rawBox").append("<span class='PS'>没有符合条件的商品</span>");
+                    $("#goodsBox").append("<span class='PS'>没有符合条件的商品</span>");
                 }
             });
         });
@@ -79,33 +79,11 @@
 
         //确认
         $("#ensure").on("click", function(){
-            var ids = [];
-            var exIds = parent.$("#check").val();
-            if(exIds){
-                ids = exIds.split(",");
-            }
-            $("input[type='checkbox']").each(function () {
-                 if($(this).prop("checked")){
-                     var parentTr = $(this).parents("tr");
-                     if($.inArray(parentTr.find(".rawNo").text(), ids) == -1){
-                         parent.$("#rawList").append("<tr class=\"text-c\">" +
-                             "<td><span type=\"text\" class=\"rawName\">"+parentTr.find(".rawName").text()+"</span></td>" +
-                             "<td>" +
-                             "<span type=\"text\" class=\"rawNo\">"+parentTr.find(".rawNo").text()+"</span>" +
-                             "<input type = 'hidden' value = '"+parentTr.find(".rawId").text()+"' class=\"rawId\"/>" +
-                             "</td>" +
-                             "<td><input type='text' class=\"input-text rawNum\" value = \"1\"/></td>" +
-                             "<td>" +
-                             "<span type='text' class=\"goodsUnitName\">"+parentTr.find(".mainUnitName").text()+"</span>" +
-                             "<input type='hidden' class='goodsUnitId' value ='"+parentTr.find(".mainUnitId").val()+"'>" +
-                             "</td>" +
-                             "<td><a class=\"btn btn-danger size-MINI radius\" onclick=\"del("+parentTr.find(".rawId").text()+", this)\">删除</a></td>" +
-                             "</tr>");
-                         ids.push(parentTr.find(".rawNo").text());
-                     }
-                 }
-            });
-            parent.$("#check").val(ids);
+             var parentTr = $("input[type='radio']:checked").parents("tr");
+             parent.$("#targetGoodsName").val(parentTr.find(".goodsName").text());
+             parent.$("#targetGoodsId").val(parentTr.find(".goodsId").text());
+             parent.$("#targetGoodsNum").val(1);
+             parent.$("#unitName").text(parentTr.find(".mainUnitName").text());
             layer_close();
         });
     });

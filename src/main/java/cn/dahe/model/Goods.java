@@ -42,7 +42,7 @@ public class Goods {
     @Column(name = "is_ex", columnDefinition = "INT DEFAULT 1")
     private int ex;
     //是否开启会员折扣 0 不开启  1 开启
-    @Column(name = "is_vip_set")
+    @Column(name = "is_vip_set", columnDefinition = "INT DEFAULT 0")
     private int vipSet;
     //会员价
     @Column(name = "vip_price")
@@ -83,10 +83,10 @@ public class Goods {
     @JoinColumn(name = "stock_id")
     private Stock stock;
     //库存上限
-    @Column(name = "stock_up")
+    @Column(name = "stock_up", columnDefinition = "INT DEFAULT 0")
     private int stockUp;
     //库存下限
-    @Column(name = "stock_down")
+    @Column(name = "stock_down", columnDefinition = "INT DEFAULT 0")
     private int stockDown;
     //备注
     private String description;
@@ -113,13 +113,13 @@ public class Goods {
     @Column(columnDefinition = "INT DEFAULT 0")
     private int seq;
     //是否打印 0 不打印 1 打印
-    @Column(name = "is_print")
+    @Column(name = "is_print", columnDefinition = "INT DEFAULT 0")
     private int print;
     //是否是积分商品 0 不是 1 是
-    @Column(name = "is_score")
+    @Column(name = "is_score", columnDefinition = "INT DEFAULT 0")
     private int score;
     //是否有配方 0 沒有 1 有
-    @Column(name = "has_raws")
+    @Column(name = "has_raws", columnDefinition = "INT DEFAULT 0")
     private int hasRaws;
     //是否用配方价更新进货价 0 否 1 是
     @Column(name = "use_raw_price", columnDefinition = "INT DEFAULT 0")
@@ -132,17 +132,17 @@ public class Goods {
     private int overdueDay;
     //是否是半成品 0 否 1 是
     @Column(columnDefinition = "INT DEFAULT 1")
-    private int intermediary;
+    private int semifinished;
     //是否直接转化成品  0 否 1 是
     @Column(name = "auto_finished", columnDefinition = "INT DEFAULT 0")
     private int autoFinished;
     //对应的成品商品id
-    @Column(name = "target_goods_id")
-    private String targetGoodsId;
+    @Column(name = "target_goods_id", columnDefinition = "INT DEFAULT 0")
+    private int targetGoodsId;
     @Column(name = "target_goods_name")
     private String targetGoodsName;
     //对应的成品的数量
-    @Column(name = "target_goods_num")
+    @Column(name = "target_goods_num", columnDefinition = "INT DEFAULT 0")
     private int targetGoodsNum;
 
     public int getId() {
@@ -369,12 +369,12 @@ public class Goods {
         this.stock = stock;
     }
 
-    public int getIntermediary() {
-        return intermediary;
+    public int getSemifinished() {
+        return semifinished;
     }
 
-    public void setIntermediary(int intermediary) {
-        this.intermediary = intermediary;
+    public void setSemifinished(int semifinished) {
+        this.semifinished = semifinished;
     }
 
     public String getUnitIds() {
@@ -457,11 +457,11 @@ public class Goods {
         this.autoFinished = autoFinished;
     }
 
-    public String getTargetGoodsId() {
+    public int getTargetGoodsId() {
         return targetGoodsId;
     }
 
-    public void setTargetGoodsId(String targetGoodsId) {
+    public void setTargetGoodsId(int targetGoodsId) {
         this.targetGoodsId = targetGoodsId;
     }
 

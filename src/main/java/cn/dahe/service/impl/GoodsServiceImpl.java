@@ -317,7 +317,7 @@ public class GoodsServiceImpl implements IGoodsService{
         goodsDto.setProductionDate(DateUtil.format(goods.getProductionDate(), "yyyy-MM-dd"));
         goodsDto.setGoodsNo(goods.getGoodsNo());
         goodsDto.setGoodsImg(goods.getImgUrl());
-        goodsDto.setIntermediary(goods.getIntermediary());
+        goodsDto.setSemifinished(goods.getSemifinished());
         goodsDto.setHasRaws(goods.getHasRaws());
         goodsDto.setUseRawPrice(goods.getUseRawPrice());
         goodsDto.setAutoFinished(goods.getAutoFinished());
@@ -387,7 +387,7 @@ public class GoodsServiceImpl implements IGoodsService{
         goods.setShelfLife(StringUtil.formatStr2Int(goodsDto.getShelfLife()));
         goods.setStatus(goodsDto.getStatus());
         goods.setMainUnitId(goodsDto.getMainUnit());
-        goods.setIntermediary(goodsDto.getIntermediary());
+        goods.setSemifinished(goodsDto.getSemifinished());
         goods.setHasRaws(goodsDto.getHasRaws());
         goods.setAutoFinished(goodsDto.getAutoFinished());
         goods.setUseRawPrice(goodsDto.getUseRawPrice());

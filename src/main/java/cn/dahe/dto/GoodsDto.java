@@ -66,7 +66,7 @@ public class GoodsDto {
     //是否直接转化成品  0 否 1 是
     private int autoFinished;
     //是否是半成品 0 否 1 是
-    private int intermediary;
+    private int semifinished;
 
     public String getName() {
         return name;
@@ -325,12 +325,12 @@ public class GoodsDto {
         this.autoFinished = autoFinished;
     }
 
-    public int getIntermediary() {
-        return intermediary;
+    public int getSemifinished() {
+        return semifinished;
     }
 
-    public void setIntermediary(int intermediary) {
-        this.intermediary = intermediary;
+    public void setSemifinished(int semifinished) {
+        this.semifinished = semifinished;
     }
 
     @Override
