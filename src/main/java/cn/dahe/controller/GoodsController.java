@@ -48,6 +48,8 @@ public class GoodsController {
     private ICategoriesService categoriesService;
     @Resource
     private IBadGoodsService badGoodsService;
+    @Resource
+    private IClientGoodsService clientGoodsService;
     // 商品单位
     //=====================================goodsUnit begin=====================================================
     /***
@@ -460,6 +462,30 @@ public class GoodsController {
     }
 
     /**
+     * 为半成品选择成品
+     * @return
+     */
+    @RequestMapping(value = "targetGoodsList", method = RequestMethod.GET)
+    public String targetGoodsList(){
+        return "goods/targetGoodsList";
+    }
+
+    /**
+     * 查询商品列表
+     * @return
+     */
+    @RequestMapping(value = "goodsList", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Goods> goodsList(int cid, String goodsName, HttpSession session){
+        User user = (User) session.getAttribute("loginUser");
+        Pager<Object> param = new Pager<>();
+        param.setIntParam1(cid);
+        param.setIntParam2(user.getStoreId());
+        param.setStringParam1(goodsName);
+        return goodsService.findByParams(param);
+    }
+
+    /**
      * 列表页查询
      * */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -481,8 +507,8 @@ public class GoodsController {
 
     /**
      * 商品排序页面路由
-     * @param categoriesId
-     * @param model
+     * @param categoriesId 商品种类id
+     * @param model model
      * @return
      */
     @RequestMapping(value = "goodsSort", method = RequestMethod.GET)
@@ -692,4 +718,25 @@ public class GoodsController {
         return "stock/badGoodsItem";
     }
     //=======================================badGoods end=========================================================
+    //=======================================semiinished begin========================================================
+
+    /**
+     * 半成品记录
+     */
+    @RequestMapping(value = "semifinishedList", method = RequestMethod.GET)
+    public String semifinishedList(){
+        return "stock/semifinishedList";
+    }
+
+    /**
+     * 半成品记录查询
+     * */
+    @RequestMapping(value = "semifinishedList", method = RequestMethod.POST)
+    @ResponseBody
+    public Pager<ClientGoods> semifinishedList(HttpSession session, String aDataSet){
+        logger.info("--- ClientGoods list begin ---");
+        User user = (User)session.getAttribute("loginUser");
+        return clientGoodsService.semifinishedList(aDataSet, user.getStoreId());
+    }
+    //=======================================semifinished end=========================================================
 }

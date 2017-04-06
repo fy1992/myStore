@@ -67,20 +67,41 @@
         </div>
         <div class="row cl col-3"></div>
         <div class="row cl clo-4">
-            <input type="radio" name = "intermediary"  value = "1" <c:if test="${goods.intermediary eq 1}">checked</c:if>/> 是
-            <input type="radio" name = "intermediary"  value = "0" <c:if test="${goods.intermediary eq 0}">checked</c:if>/> 否
+            <input type="radio" name = "semifinished"  value = "1" id = "semifinished1" <c:if test="${goods.semifinished eq 1}">checked</c:if>/> <label for="semifinished1">是</label>
+            <input type="radio" name = "semifinished"  value = "0" id = "semifinished2" <c:if test="${goods.semifinished eq 0}">checked</c:if>/> <label for="semifinished2">否</label>
         </div>
     </div>
-    <div class="row cl" style="margin: 10px;display: none;" id="intermadiaryDiv">
+    <div class="row cl" style="margin: 10px;display: none;" id="semifinishedDiv">
         <div class="row cl col-1"></div>
         <div class="row cl col-4">
             是否直接转化为成品
         </div>
         <div class="row cl col-3"></div>
         <div class="row cl clo-4">
-            <input type="radio" name = "autoFinished"  value = "1" <c:if test="${goods.autoFinished eq 1}">checked</c:if>/> 是
-            <input type="radio" name = "autoFinished"  value = "0" <c:if test="${goods.autoFinished eq 0}">checked</c:if>/> 否
+            <input type="radio" name = "autoFinished"  value = "1" id = "autoFinished1" <c:if test="${goods.autoFinished eq 1}">checked</c:if>/> <label for="autoFinished1">是</label>
+            <input type="radio" name = "autoFinished"  value = "0" id = "autoFinished2" <c:if test="${goods.autoFinished eq 0}">checked</c:if>/> <label for="autoFinished2">否</label>
         </div>
+    </div>
+    <div class="row cl" id="targetGoodsDiv">
+        <table class="table table-border table-bordered table-bg box-shadow" >
+            <thead>
+                <tr class="text-c">
+                    <th>制作成品</th>
+                    <th>制作数量</th>
+                    <th>单位</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input style="width:160px;cursor: pointer;" class="input-text radius" id="targetGoodsName" value = "${goods.targetGoodsName}" type = "text"/>
+                        <input  id="targetGoodsId" type = "hidden" value = "${goods.targetGoodsId}"/>
+                    </td>
+                    <td><input style="width:100px" class="input-text radius" id="targetGoodsNum" value = "${goods.targetGoodsNum}" type = "number" min="0"/></td>
+                    <td><span id="unitName"></span></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="row cl" style="height: 32px;">
     </div>
@@ -96,16 +117,49 @@
 <script type="text/javascript" src="${ctxResource}/js/H-ui.admin.js"></script>
 <script>
     $(function(){
-        if($("input[name='intermediary']:checked").val() == 1){
-            $("#intermadiaryDiv").toggle(true);
+        $("#targetGoodsName").on("click", function () {
+            layer.open({
+                type: 2,
+                area: ['490px', '460px'],
+                fix: true, //不固定
+                title: false,
+                shadeClose: false,
+                shade: false,
+                closeBtn: 0,
+                content: "<%=request.getContextPath()%>/server/goods/targetGoodsList"
+            });
+        });
+        if($("input[name='semifinished']:checked").val() == 1){
+            $("#semifinishedDiv").toggle(true);
+            $("#targetGoodsDiv").toggle(false);
         }else{
-            $("#intermadiaryDiv").toggle(false);
+            $("#semifinishedDiv").toggle(false);
+            $("#targetGoodsDiv").toggle(false);
         }
-        $("input[name='intermediary']").on("click", function () {
+        if($("input[name='autoFinished']:checked").val() == 1){
+            $("#targetGoodsDiv").toggle(true);
+        }else{
+            $("#targetGoodsDiv").toggle(false);
+        }
+        $("input[name='semifinished']").on("click", function () {
             if($(this).val() == 1){
-                $("#intermadiaryDiv").toggle(true);
+                $("#semifinishedDiv").toggle(true);
+                $("#targetGoodsDiv").toggle(false);
             }else{
-                $("#intermadiaryDiv").toggle(false);
+                $("#semifinishedDiv").toggle(false);
+                $("#targetGoodsDiv").toggle(false);
+                $("input[name='autoFinished']").each(function () {
+                    if($(this).val() == 0){
+                        $(this).prop("checked", true);
+                    }
+                })
+            }
+        });
+        $("input[name='autoFinished']").on("click", function () {
+            if($(this).val() == 1){
+                $("#targetGoodsDiv").toggle(true);
+            }else{
+                $("#targetGoodsDiv").toggle(false);
             }
         });
         
@@ -146,7 +200,7 @@
         $("#save").click(function(){
             var len = $(".text-c").length;
             var rawItems = [];
-            for(var i = 0; i < len - 1; i++){
+            for(var i = 0; i < len - 2; i++){
                 var rawItem = new RawItem(
                     "${id}",
                     $(".rawNum").eq(i).val(),
@@ -171,7 +225,26 @@
                 layer.msg("请添加原材料",{time : 2000, icon : 5});
                 return false;
             }
-            $.post("<%=request.getContextPath()%>/server/raw/addRawItem", {goodsId : "${id}", rawItems:JSON.stringify(rawItems), useRawPrice:useRawPrice, intermediary : intermediary, autoFinished : autoFinished},function (data) {
+            var targetGoodsId = 0;
+            var targetGoodsName = "";
+            var targetGoodsNum = 0;
+            if(autoFinished == 1){
+                targetGoodsId = $("#targetGoodsId").val();
+                targetGoodsName = $("#targetGoodsName").val();
+                targetGoodsNum = $("#targetGoodsNum").val();
+            }
+
+            $.post("<%=request.getContextPath()%>/server/raw/addRawItem", {
+                id : "${id}",
+                rawItems:JSON.stringify(rawItems),
+                useRawPrice:useRawPrice,
+                intermediary : intermediary,
+                autoFinished : autoFinished,
+                targetGoodsId : targetGoodsId,
+                targetGoodsName : targetGoodsName,
+                targetGoodsNum : targetGoodsNum
+            },
+                function (data) {
                 if(data.result == 1){
                     window.parent.table.fnDraw();
                     layer.msg(data.msg, {time : 2000, icon : 6}, function () {

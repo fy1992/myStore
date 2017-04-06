@@ -78,7 +78,7 @@
                 </div>
                 <div class="row cl">
                 	<label class="form-label col-3">库存：</label>
-                	<div class="formControls col-6"><input type = "text" class="input-text radius text-r" value="0" id = "stock" name = "stock" placeholder="请输入库存量（单位：个）"/></div>
+                	<div class="formControls col-6"><input type = "number" style="width: 100%;" class="input-text radius text-r" value="0" id = "stock" name = "stock" placeholder="请输入库存量（单位：个）"/></div>
                 	<div class="col-3"> </div>
                 </div>
             </div>
@@ -165,7 +165,7 @@
             <div class="col-6">
                 <label class="form-label col-3">保质期：</label>
                 <div class="formControls col-6">
-                    <input type="text" class="input-text radius mr-6" id="ExpirationDate" name = "shelfLife"/><label>&nbsp;天</label>
+                    <input type="number" style="width: 90%;" min="0" class="input-text radius mr-6" id="ExpirationDate" name = "shelfLife"/><label>&nbsp;天</label>
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -174,14 +174,14 @@
             <div class="col-6">
                 <label class="form-label col-3">库存上限：</label>
                 <div class="formControls col-6">
-                    <input type="text"  class="input-text radius" id="stockUp" name = "stockUp"/>
+                    <input type="number" min="0" style="width: 100%;" class="input-text radius" id="stockUp" name = "stockUp"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
             <div class="col-6">
                 <label class="form-label col-3">库存下限：</label>
                 <div class="formControls col-6">
-                    <input type="text"  class="input-text radius" id="stockDown" name = "stockDown"/>
+                    <input type="number"  min="0" style="width: 100%;" class="input-text radius" id="stockDown" name = "stockDown"/>
                 </div>
                 <div class="col-3"> </div>
             </div>

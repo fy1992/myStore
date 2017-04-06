@@ -1,5 +1,6 @@
 package cn.dahe.dao;
 
+import cn.dahe.dto.Pager;
 import cn.dahe.model.ClientGoods;
 
 import java.util.List;
@@ -36,4 +37,12 @@ public interface IClientGoodsDao extends IBaseDao<ClientGoods>{
      * @return
      */
     List<ClientGoods> findByStoreId(int storeId);
+
+    /**
+     * 根据参数查询
+     * @param start
+     * @param pageSize
+     * @param params
+     */
+    Pager<ClientGoods> findByParam(int start, int pageSize, Pager<Object> params);
 }

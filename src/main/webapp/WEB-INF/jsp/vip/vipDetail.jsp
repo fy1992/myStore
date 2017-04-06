@@ -32,7 +32,7 @@
         <div class="row cl">
             <label class="form-label col-3">赠送积分</label>
             <div class="formControls col-6">
-                <input value = "${vipSys.wdPoint}" name = "wdPoint" id="wdPoint" class="input-text radius" type="text"/>
+                <input value = "${vipSys.wdPoint}" name = "wdPoint" id="wdPoint" class="input-text radius" type="number" min="0" style="width: 100%"/>
             </div>
             <div class="col-3">分</div>
         </div>
@@ -67,7 +67,7 @@
         <div class="row cl">
             <label class="form-label col-3">赠送积分</label>
             <div class="formControls col-6">
-                <input value = "${vipSys.zjsPoint}" name = "zjsPoint" id="zjsPoint" class="input-text radius" type="text"/>
+                <input value = "${vipSys.zjsPoint}" name = "zjsPoint" id="zjsPoint" class="input-text radius" type="number" min="0" style="width: 100%"/>
             </div>
             <div class="col-3">分</div>
         </div>

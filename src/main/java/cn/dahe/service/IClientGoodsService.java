@@ -1,5 +1,6 @@
 package cn.dahe.service;
 
+import cn.dahe.dto.Pager;
 import cn.dahe.model.ClientGoods;
 
 import java.util.List;
@@ -44,4 +45,11 @@ public interface IClientGoodsService {
 	 */
 	List<ClientGoods> findAll(int storeId);
 
+	/**
+	 * 半成品记录
+	 * @param aDataSet
+	 * @param storeId
+	 * @return
+	 */
+	Pager<ClientGoods> semifinishedList(String aDataSet, int storeId);
 }

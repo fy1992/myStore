@@ -94,7 +94,7 @@
             <div class="col-6 cl">
                 <label class="form-label col-3">库存：</label>
                 <div class="formControls col-6">
-                    <input type = "text" class="input-text radius text-r" value="0" id = "stock" name = "stock" placeholder="请输入库存量（单位：个）"/>
+                    <input type = "number" class="input-text radius text-r" value="0" id = "stock" name = "stock" style="width: 100%;" placeholder="请输入库存量（单位：个）"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -103,7 +103,7 @@
             <div class="formControls col-6">
                 <span class="select-box radius">
                     <input type="hidden" name = "mainUnitName" id="mainUnitName" value>
-                    <select id="mainUnit" name = "mainUnit" class="select">
+                    <select id="mainUnit" name = "mainUnitId" class="select">
                         <option value = "-1">- 请选择 -</option>
                     </select>
                 </span>
@@ -143,7 +143,7 @@
             <div class="col-6">
                 <label class="form-label col-3">保质期：</label>
                 <div class="formControls col-6">
-                    <input type="text" class="input-text radius mr-6 text-r" id="ExpirationDate"  name = "shelfLife"/><label>&nbsp;天</label>
+                    <input type="number" class="input-text radius mr-6 text-r" id="ExpirationDate"  name = "shelfLife" min="0" value="0" style="width: 90%;"/>&nbsp;<label>天</label>
                 </div>
                 <div class="col-3"> </div>
             </div>
@@ -152,14 +152,14 @@
             <div class="col-6">
                 <label class="form-label col-3">库存上限：</label>
                 <div class="formControls col-6">
-                    <input type="text"  class="input-text radius text-r" id="stockUp"  name = "stockUp"/>
+                    <input type="number"  class="input-text radius text-r" id="stockUp"  name = "stockUp" min="0" style="width: 100%;"/>
                 </div>
                 <div class="col-3"> </div>
             </div>
             <div class="col-6">
                 <label class="form-label col-3">库存下限：</label>
                 <div class="formControls col-6">
-                    <input type="text"  class="input-text radius text-r" id="stockDown"  name = "stockDown"/>
+                    <input type="number"  class="input-text radius text-r" id="stockDown"  name = "stockDown" min="0" style="width: 100%;"/>
                 </div>
                 <div class="col-3"> </div>
             </div>

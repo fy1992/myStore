@@ -32,7 +32,7 @@ public interface IGoodsTrafficService {
     /**
      * 门店配货
      * @param id
-     * @param orderGoodsInfos
+     * @param orderGoodsInfos 订货信息
      */
     boolean updatePrepareGoods(int id, String orderGoodsInfos);
 }

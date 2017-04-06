@@ -58,7 +58,7 @@ public class GoodsRawItemServiceImpl implements IGoodsRawItemService{
     }
 
     @Override
-    public void addRawItems(int goodsId, String rawItems, int useRawPrice, int intermediary, int autoFinished) {
+    public void addRawItems(int goodsId, String rawItems, int useRawPrice, int semifinished, int autoFinished, int targetGoodsId, String targetGoodsName, int targetGoodsNum) {
         JSONArray json = JSONArray.parseArray(rawItems);
         goodsRawItemDao.delByGoodsId(goodsId);
         double bid = 0.0;
@@ -90,8 +90,11 @@ public class GoodsRawItemServiceImpl implements IGoodsRawItemService{
         }
         Goods goods = goodsDao.get(goodsId);
         goods.setAutoFinished(autoFinished);
-        goods.setIntermediary(intermediary);
+        goods.setSemifinished(semifinished);
         goods.setUseRawPrice(useRawPrice);
+        goods.setTargetGoodsId(targetGoodsId);
+        goods.setTargetGoodsName(targetGoodsName);
+        goods.setTargetGoodsNum(targetGoodsNum);
         if(useRawPrice == 1){
             goods.setBid(DecimalUtil.getDouble(bid,2));
         }

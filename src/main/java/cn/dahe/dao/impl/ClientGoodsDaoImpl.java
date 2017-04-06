@@ -1,9 +1,16 @@
 package cn.dahe.dao.impl;
 
 import cn.dahe.dao.IClientGoodsDao;
+import cn.dahe.dto.Pager;
 import cn.dahe.model.ClientGoods;
+import cn.dahe.util.NumberUtils;
+import cn.dahe.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
+import sun.swing.BakedArrayList;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,5 +40,34 @@ public class ClientGoodsDaoImpl extends BaseDaoImpl<ClientGoods> implements ICli
     public List<ClientGoods> findByStoreId(int storeId) {
         String hql = "from ClientGoods where storeId = ?";
         return this.list(hql, storeId);
+    }
+
+    @Override
+    public Pager<ClientGoods> findByParam(int start, int pageSize, Pager<Object> params) {
+        int storeId = params.getIntParam1();
+        Date startTime = params.getStartTime();
+        Date endTime = params.getEndTime();
+        String info = params.getStringParam1();
+        List<Object> list = new ArrayList<>();
+        StringBuffer hql = new StringBuffer("from ClientGoods where storeId = ?");
+        list.add(storeId);
+        if(startTime != null){
+            hql.append(" and semifinishedTime >= ?");
+            list.add(startTime);
+        }
+        if(endTime != null){
+            hql.append(" and semifinishedTime <= ?");
+            list.add(endTime);
+        }
+        if(StringUtils.isNotBlank(info)){
+            if(StringUtil.isNumber(info)){
+                hql.append(" and goodsNo = ?");
+                list.add(info);
+            }else{
+                hql.append(" and goodsName like ?");
+                list.add("%" + info + "%");
+            }
+        }
+        return this.find(hql.toString(), list, start, pageSize);
     }
 }

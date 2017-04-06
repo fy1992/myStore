@@ -67,7 +67,7 @@ public class GoodsRawDaoImpl extends BaseDaoImpl<GoodsRaw> implements IGoodsRawD
         String rawName = params.getStringParam1();//名称
         StringBuffer hql = new StringBuffer("from GoodsRaw goodsRaw where 1=1");
         List<Object> list = new ArrayList<>();
-        if(categoriesId != 0){
+        if(categoriesId != -1){
             hql.append(" and goodsRaw.categoriesId = ?");
             list.add(categoriesId);
         }

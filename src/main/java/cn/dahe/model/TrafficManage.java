@@ -60,6 +60,10 @@ public class TrafficManage {
     //操作完成时间
     @Column(name = "opt_time")
     private Date optTime;
+    //0 商品  1 原材料
+    @Column(name = "order_type")
+    private int orderType;
+
     public int getId() {
         return id;
     }
@@ -178,5 +182,13 @@ public class TrafficManage {
 
     public void setOptTime(Date optTime) {
         this.optTime = optTime;
+    }
+
+    public int getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(int orderType) {
+        this.orderType = orderType;
     }
 }
