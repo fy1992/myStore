@@ -381,9 +381,9 @@ public class ClientController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "intermediaryList", method = RequestMethod.GET)
+    @RequestMapping(value = "smeifinishedList", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxObj intermediaryList(int sid, HttpSession session){
+    public AjaxObj smeifinishedList(int sid, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier)session.getAttribute("clientUser_" + sid);
         List<Goods> list = goodsService.findIntermediaryGoods(cashier.getStoreId());
@@ -398,9 +398,9 @@ public class ClientController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "doIntermediary", method = RequestMethod.POST)
+    @RequestMapping(value = "doSmeifinished", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj doIntermediary(int sid, String goodsNo, int num, HttpSession session){
+    public AjaxObj doSmeifinished(int sid, String goodsNo, int num, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier) session.getAttribute("clientUser_" + sid);
         goodsService.updateGoodsIntermediary(goodsNo, num, cashier.getStoreId());
