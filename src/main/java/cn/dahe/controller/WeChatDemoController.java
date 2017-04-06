@@ -1,7 +1,11 @@
 package cn.dahe.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletInputStream;
@@ -14,13 +18,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 
 import cn.dahe.model.Categories;
 import cn.dahe.model.ClientGoods;
 import cn.dahe.service.ICategoriesService;
 import cn.dahe.service.IClientGoodsService;
+import cn.dahe.util.DateUtil;
 import cn.dahe.util.HttpRequestProxy;
 import cn.dahe.util.WechatConstant;
 import weixin.popular.api.SnsAPI;
@@ -79,8 +88,7 @@ public class WeChatDemoController {
 			// 如果是订阅，则向用户发送欢迎消息
 			if ("subscribe".equals(eventMessage.getEvent())) {
 				// 创建回复
-				XMLMessage xmlTextMessage = new XMLTextMessage(eventMessage.getFromUserName(),
-						eventMessage.getToUserName(), "您好，欢迎关注！");
+				XMLMessage xmlTextMessage = new XMLTextMessage(eventMessage.getFromUserName(), eventMessage.getToUserName(), "您好，欢迎关注！");
 				xmlTextMessage.outputStreamWrite(response.getOutputStream());
 				return;
 			}
@@ -127,14 +135,14 @@ public class WeChatDemoController {
 	 */
 	@RequestMapping(value = "goodsByCategId")
 	@ResponseBody
-	public List<ClientGoods> goodsByCategId(int categId){
-		if(categId == 0){
+	public List<ClientGoods> goodsByCategId(int categId) {
+		if (categId == 0) {
 			return clientGoodsService.findAll(1);
-		}else{
+		} else {
 			return clientGoodsService.goodsListByCategories(categId, 1);
 		}
 	}
-	
+
 	/**
 	 * 商品列表
 	 * 
@@ -143,8 +151,56 @@ public class WeChatDemoController {
 	 * @return
 	 */
 	@RequestMapping(value = "shoppingCart")
-	public String wxShoppingCart(Model model) {
+	public String wxShoppingCart(@CookieValue(value = "shopping_cart", required = false) String shoppingCart, Model model) {
+		List<Map<String, Object>> soList = new ArrayList<Map<String, Object>>();
+		double totalPrice = 0.0;
+		int totalNum = 0;
+		if (StringUtils.isNotBlank(shoppingCart)) {
+			JSONArray array = JSON.parseArray(shoppingCart);
+			for (Object temp : array) {
+				Map<String, Object> tempMap = new HashMap<String, Object>();
+				JSONArray tempArr = (JSONArray) temp;
+				Integer count = tempArr.getIntValue(1);
+				if (count > 0) {
+					ClientGoods goods = clientGoodsService.get(tempArr.getIntValue(0));
+					tempMap.put("goods", goods);
+					tempMap.put("count", count);
+					soList.add(tempMap);
+					totalPrice += goods.getPrice() * count;
+					totalNum += count;
+				}
+			}
+		}
+		model.addAttribute("goods_list", soList);
+		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("totalNum", totalNum);
 		return "wechat/public_shopping";
+	}
+
+	/**
+	 * 确认订单
+	 */
+	@RequestMapping(value = "order_order")
+	public String orderOrder(@CookieValue(value = "shopping_cart", required = false) String shoppingCart, Model model) {
+		Date date = new Date(System.currentTimeMillis() + 60 * 60 * 1000l);
+		double totalPrice = 0.0;
+		int totalNum = 0;
+		if (StringUtils.isNotBlank(shoppingCart)) {
+			JSONArray array = JSON.parseArray(shoppingCart);
+			for (Object temp : array) {
+				JSONArray tempArr = (JSONArray) temp;
+				Integer count = tempArr.getIntValue(1);
+				if (count > 0) {
+					ClientGoods goods = clientGoodsService.get(tempArr.getIntValue(0));
+					totalPrice += goods.getPrice() * count;
+					totalNum += count;
+				}
+			}
+		}
+		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("totalNum", totalNum);
+		model.addAttribute("time", DateUtil.format(date, "yyyy-MM-dd HH:00"));
+		return "wechat/order_order";
 	}
 
 	/**
