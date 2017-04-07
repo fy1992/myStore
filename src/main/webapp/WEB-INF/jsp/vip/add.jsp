@@ -204,7 +204,7 @@
             },
             {
                 ele:"#vip_no",
-                datatype:"*",
+                datatype:"n",
                 nullmsg :"会员编号必填"
             },
             {
