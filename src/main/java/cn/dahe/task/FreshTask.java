@@ -28,8 +28,8 @@ public class FreshTask {
     @Resource
     private ISalesCampaignService salesCampaignService;
     //每天凌晨1点初始化
-    //@Scheduled(cron = "0 0 1 * * ?")
-    @Scheduled(cron = "0 45 20 * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
+//    @Scheduled(cron = "0 45 20 * * ?")
     @Transactional
     public void execute(){
         List<Store> storeList = storeService.findAll();

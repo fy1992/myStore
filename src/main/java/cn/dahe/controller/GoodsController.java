@@ -388,6 +388,10 @@ public class GoodsController {
     @RequestMapping(value = "recipe/{id}", method = RequestMethod.GET)
     public String rawToGoods(@PathVariable int id, Model model){
         Goods goods = goodsService.get(id);
+        Goods targetGoods = goodsService.get(goods.getTargetGoodsId());
+        if(targetGoods != null){
+            model.addAttribute("mainUnitName", targetGoods.getMainUnitName());
+        }
         model.addAttribute("goods", goods);
         model.addAttribute("id", id);
         return "goods/rawToGoods";

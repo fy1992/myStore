@@ -98,7 +98,7 @@
                         <input  id="targetGoodsId" type = "hidden" value = "${goods.targetGoodsId}"/>
                     </td>
                     <td><input style="width:100px" class="input-text radius" id="targetGoodsNum" value = "${goods.targetGoodsNum}" type = "number" min="0"/></td>
-                    <td><span id="unitName"></span></td>
+                    <td><span id="unitName">${mainUnitName}</span></td>
                 </tr>
             </tbody>
         </table>
@@ -221,7 +221,7 @@
             if(!autoFinished){
                 autoFinished = 0;
             }
-            if(rawItems.length == 0){
+            if(rawItems.length == 0 && autoFinished == 1){
                 layer.msg("请添加原材料",{time : 2000, icon : 5});
                 return false;
             }

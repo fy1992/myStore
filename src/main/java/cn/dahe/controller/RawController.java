@@ -72,7 +72,6 @@ public class RawController {
 
     /**
      * 商品原材料添加页面跳转
-     * @return
      */
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(){
@@ -98,7 +97,7 @@ public class RawController {
 
     /**
      * 商品原材料编辑页面跳转
-     * @return
+     * @param id 原材料id
      */
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable int id, Model model){
@@ -122,6 +121,9 @@ public class RawController {
         return json;
     }
 
+    /**
+     * 原材料消耗
+     */
     @RequestMapping(value = "usedList", method = RequestMethod.GET)
     public String usedList(){
         return "stock/goodsRawUse";

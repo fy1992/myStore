@@ -62,7 +62,8 @@ public class GoodsRawItemServiceImpl implements IGoodsRawItemService{
         JSONArray json = JSONArray.parseArray(rawItems);
         goodsRawItemDao.delByGoodsId(goodsId);
         double bid = 0.0;
-        for(int i = 0, len = json.size(); i < len; i++){
+        int len = json.size();
+        for(int i = 0; i < len; i++){
             JSONObject object = JSONObject.parseObject(json.get(i).toString());
             GoodsRawItem goodsRawItem = new GoodsRawItem();
             goodsRawItem.setGoodsId(Integer.parseInt((String)object.get("goodsId")));
@@ -88,6 +89,7 @@ public class GoodsRawItemServiceImpl implements IGoodsRawItemService{
             goodsRawItem.setRawNo((String)object.get("rawNo"));
             goodsRawItemDao.add(goodsRawItem);
         }
+
         Goods goods = goodsDao.get(goodsId);
         goods.setAutoFinished(autoFinished);
         goods.setSemifinished(semifinished);
@@ -98,7 +100,11 @@ public class GoodsRawItemServiceImpl implements IGoodsRawItemService{
         if(useRawPrice == 1){
             goods.setBid(DecimalUtil.getDouble(bid,2));
         }
-        goods.setHasRaws(1);
+        if(len > 0){
+            goods.setHasRaws(1);
+        }else{
+            goods.setHasRaws(0);
+        }
         goodsDao.update(goods);
     }
 }
