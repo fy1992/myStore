@@ -216,7 +216,7 @@
             if($("#updatePriceByRaw").prop("checked")){
                 useRawPrice = 1;
             }
-            var intermediary = $("input[name='intermediary']:checked").val();
+            var semifinished = $("input[name='semifinished']:checked").val();
             var autoFinished = $("input[name='autoFinished']:checked").val();
             if(!autoFinished){
                 autoFinished = 0;
@@ -238,7 +238,7 @@
                 id : "${id}",
                 rawItems:JSON.stringify(rawItems),
                 useRawPrice:useRawPrice,
-                intermediary : intermediary,
+                semifinished : semifinished,
                 autoFinished : autoFinished,
                 targetGoodsId : targetGoodsId,
                 targetGoodsName : targetGoodsName,

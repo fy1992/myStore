@@ -454,7 +454,7 @@ public class GoodsServiceImpl implements IGoodsService{
     }
 
     @Override
-    public List<Goods> findIntermediaryGoods(int storeId) {
+    public List<Object> findIntermediaryGoods(int storeId) {
         return goodsDao.findIntermediaryGoods(storeId);
     }
 

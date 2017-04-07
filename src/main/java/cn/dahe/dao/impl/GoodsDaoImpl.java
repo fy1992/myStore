@@ -8,7 +8,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fy on 2017/1/13.
@@ -105,8 +107,8 @@ public class GoodsDaoImpl extends BaseDaoImpl<Goods> implements IGoodsDao{
     }
 
     @Override
-    public List<Goods> findIntermediaryGoods(int storeId) {
-        String hql = "from Goods where storeId = ? and intermediary = 1";
-        return this.list(hql, storeId);
+    public List<Object> findIntermediaryGoods(int storeId) {
+        String hql = "select id, name, categories_id, goods_no from t_goods where store_id = ? and semifinished = 1";
+        return this.listBySql(hql, storeId, HashMap.class, false);
     }
 }

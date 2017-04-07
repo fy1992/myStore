@@ -73,7 +73,7 @@ public interface IGoodsService{
      * 查询半成品列表
      * @param storeId 门店id
      */
-    List<Goods> findIntermediaryGoods(int storeId);
+    List<Object> findIntermediaryGoods(int storeId);
 
     /**
      * 半成品制作

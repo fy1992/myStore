@@ -51,6 +51,7 @@ public class ClientGoodsDaoImpl extends BaseDaoImpl<ClientGoods> implements ICli
         List<Object> list = new ArrayList<>();
         StringBuffer hql = new StringBuffer("from ClientGoods where storeId = ?");
         list.add(storeId);
+        hql.append(" and semifinishedNum > 0");
         if(startTime != null){
             hql.append(" and semifinishedTime >= ?");
             list.add(startTime);

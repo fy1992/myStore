@@ -20,6 +20,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户端接口 （pc软件，android，ios）
@@ -236,7 +237,8 @@ public class ClientController {
     }
     /**
      * 通过类别查询商品（菜品）
-     * @param categoriesId
+     * @param sid 门店id
+     * @param categoriesId 商品 分类id
      */
     @RequestMapping(value = "goodsList", method = RequestMethod.GET)
     @ResponseBody
@@ -251,8 +253,8 @@ public class ClientController {
 
     /**
      * 原材料
-     * @param categoriesId
-     * @return
+     * @param sid 站点id
+     * @param categoriesId  类别id
      */
     @RequestMapping(value = "rawList", method = RequestMethod.GET)
     @ResponseBody
@@ -267,6 +269,7 @@ public class ClientController {
 
     /**
      * 查询该门店下的所有商品（菜品）类别
+     * @param sid  门店id
      */
     @RequestMapping(value = "categoriesList", method = RequestMethod.GET)
     @ResponseBody
@@ -281,8 +284,8 @@ public class ClientController {
 
     /**
      * 商品细缆
-     * @param goodsNo
-     * @return
+     * @param goodsNo 商品编码
+     * @param sid 门店id
      */
     @RequestMapping(value = "detail", method = RequestMethod.GET)
     @ResponseBody
@@ -297,6 +300,8 @@ public class ClientController {
 
     /**
      * 会员添加
+     * @param sid 门店id
+     * @param vip 会员信息
      */
     @RequestMapping(value = "addVip", method = RequestMethod.POST)
     @ResponseBody
@@ -314,7 +319,7 @@ public class ClientController {
 
     /**
      * 会员等级
-     * @return
+     * @param sid 门店信息
      */
     @RequestMapping(value = "vipLevel", method = RequestMethod.GET)
     @ResponseBody
@@ -329,9 +334,8 @@ public class ClientController {
 
     /**
      * 指定参数查询会员
-     * @param param
-     * @param session
-     * @return
+     * @param param 查询参数
+     * @param sid 门店id
      */
     @RequestMapping(value = "vipInfo", method = RequestMethod.GET)
     @ResponseBody
@@ -346,8 +350,7 @@ public class ClientController {
 
     /**
      * 网店订单
-     * @param session
-     * @return
+     * @param  sid 门店id
      */
     @RequestMapping(value = "netOrder", method = RequestMethod.GET)
     @ResponseBody
@@ -362,7 +365,8 @@ public class ClientController {
 
     /**
      * 商品报损
-     * @return
+     * @param sid 门店id
+     * @param clientDataDto 报损信息
      */
     @RequestMapping(value = "badGoods", method = RequestMethod.POST)
     @ResponseBody
@@ -377,16 +381,14 @@ public class ClientController {
 
     /**
      * 半成品列表
-     * @param sid
-     * @param session
-     * @return
+     * @param sid 门店id
      */
-    @RequestMapping(value = "intermediaryList", method = RequestMethod.GET)
+    @RequestMapping(value = "semifinishedList", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxObj intermediaryList(int sid, HttpSession session){
+    public AjaxObj semifinishedList(int sid, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier)session.getAttribute("clientUser_" + sid);
-        List<Goods> list = goodsService.findIntermediaryGoods(cashier.getStoreId());
+        List<Object> list = goodsService.findIntermediaryGoods(cashier.getStoreId());
         json.setResult(1);
         json.setObject(list);
         return json;
@@ -394,13 +396,13 @@ public class ClientController {
 
     /**
      * 半成品制作
-     * @param goodsNo
-     * @param session
-     * @return
+     * @param sid 门店id
+     * @param goodsNo 商品编码
+     * @param num 商品制作数量
      */
-    @RequestMapping(value = "doIntermediary", method = RequestMethod.POST)
+    @RequestMapping(value = "doSemifinished", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj doIntermediary(int sid, String goodsNo, int num, HttpSession session){
+    public AjaxObj doSemifinished(int sid, String goodsNo, int num, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier) session.getAttribute("clientUser_" + sid);
         goodsService.updateGoodsIntermediary(goodsNo, num, cashier.getStoreId());
