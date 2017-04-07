@@ -10,10 +10,70 @@
 	<link href="${ctxResource}/css/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
 	<link href="${ctxResource}/css/wap.css" type="text/css" rel="stylesheet" media="all">
 	<script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
+	<script type="text/javascript" src="${ctxResource}/js/jquery.cookie.js"></script>
 	<script type="text/javascript" src="${ctxResource}/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<script>
+	<div class="wap">
+		<div class="choose_one">
+			<ul>
+				<li><a href="javascript:history.go(-1);">
+						<span	class="glyphicon glyphicon-menu-left"></span>返回</a></li>
+				<li>购物车</li>
+				<li><a class="remab" onclick="clealAll()">
+						<span	class="glyphicon glyphicon-trash"></span>清空</a></li>
+			</ul>
+		</div>
+		<div class="shopping_one">
+			<c:forEach var="data" items="${goods_list}">
+				<ul class="shopping_wares">
+					<li>
+						<span>${data.goods.goodsName }</span>
+						<p>￥<span>${data.goods.price }</span></p>
+					</li>
+					<li>
+						<div class="calculator">
+							<span class="glyphicon glyphicon-minus-sign corange" onclick="delGoods(this, '${data.goods.id}')"></span> <i>${data.count }</i>
+							<span class="glyphicon glyphicon-plus-sign corange" onclick="addGoods(this, '${data.goods.id}')"></span>
+						</div>
+					</li>
+				</ul>
+			</c:forEach>
+		</div>
+		<div class="shopping_two">
+			<ul>
+				<li>
+					<span class="glyphicon glyphicon-shopping-cart"></span>
+					<span>购物车:￥</span>
+					<span id="totalPrice">${totalPrice }</span>
+					<i id="totalNum">${totalNum }</i>
+				</li>
+				<li><a href="${ctx }/wechatdemo/order_order">下单</a></li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		// 定义购物车map
+		var shopping_cart;
+	
+		window.onresize = function() {
+			w_h();
+		}
+		
+		$(document).ready(function() {
+			w_h();
+			loadCookie();
+		});
+		
+		function loadCookie(){
+			var shop_cookie = $.cookie("shopping_cart");
+			if(shop_cookie){
+				shopping_cart = new Map(JSON.parse(shop_cookie));
+			}else{
+				shopping_cart = new Map();
+			}
+		}
+	
 		function w_h(widthWin, heightWin) {
 			var widthWin = $(window).width();
 			var heightWin = $(window).height();
@@ -30,309 +90,42 @@
 			$("body").css("font-size", bodyfont);
 			$(".shopping_one").css("height", heightWin - bodyfont * 12);
 		}
-		$(document).ready(function() {
-			w_h()
-			$(".calculator i").each(function() {
-				var remapk = parseInt($(this).html());
-				if (remapk > 0) {
-					$(this).parent().children().eq(0).removeClass("cgrey");
-					$(this).parent().children().eq(0).addClass("corange");
-				}
-			});
-		});
-		window.onresize = function() {
-			w_h();
-		}
-	</script>
-	<div class="wap">
-		<div class="choose_one">
-			<ul>
-				<li><a id="glyfl">
-						<span	class="glyphicon glyphicon-menu-left"></span>返回</a></li>
-				<li>购物车</li>
-				<li><a class="remab">
-						<span	class="glyphicon glyphicon-trash"></span>清空</a></li>
-			</ul>
-		</div>
-		<div class="shopping_one">
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-			<ul class="shopping_wares">
-				<li><span>海鲜大杂烩意大利面加海鲜大杂烩意大利面加海鲜大杂烩意大利面加俩蛋</span>
-				<p>￥356478</p></li>
-				<li>
-					<div class="calculator">
-						<span class="glyphicon glyphicon-minus-sign rem cgrey"></span> <i>1</i>
-						<span class="glyphicon glyphicon-plus-sign add corange"></span>
-					</div>
-				</li>
-			</ul>
-		</div>
-		<div class="shopping_two">
-			<ul>
-				<li><span class="glyphicon glyphicon-shopping-cart"></span>购物车:￥23546816<i>99</i></li>
-				<li><a>下单</a></li>
-			</ul>
-		</div>
-	</div>
-	<script>
-		$(".remab").click(function() {
+		
+		// 清空购物车
+		function clealAll(){
+			shopping_cart = new Map();
 			$(".shopping_wares").remove();
-		});
-		$(".add").click(function() {
-			var adds = parseInt($(this).parent().children().eq(1).html());
-			var addb = $(this).parent().children().eq(0);
+			$.cookie("shopping_cart", JSON.stringify([...shopping_cart]), {path:"/"});
+		}
+		
+		function addGoods(ele, goodsId){
+			var adds = parseInt($(ele).parent().children().eq(1).html());
+			var addb = $(ele).parent().children().eq(0);
 			if (adds == 0) {
 				addb.removeClass("cgrey");
 				addb.addClass("corange");
 			}
 			var add_a = adds + 1;
-			$(this).siblings("i").html(add_a);
-		});
-		$(".rem").click(function() {
-			var rems = parseInt($(this).parent().children().eq(1).html());
-			var remb = $(this);
-			if (rems < 2) {
-				remb.removeClass("corange");
-				remb.addClass("cgrey");
-				$(this).siblings("i").html(0);
-				var parentz = $(this).parent().parent().parent();
-				setTimeout(function() {
-					parentz.remove();
-				}, 200);
-			} else {
-				var rem_a = rems - 1;
-				$(this).siblings("i").html(rem_a);
-			}
-		});
+			shopping_cart.set(goodsId, add_a);
+			$(ele).siblings("i").html(add_a);
+			$.cookie("shopping_cart", JSON.stringify([...shopping_cart]), {path:"/"});
+			$("#totalNum").text(parseInt($("#totalNum").text()) + 1);
+			$("#totalPrice").text(parseFloat($("#totalPrice").text()) + parseFloat($(ele).parent().parent().prev().children().eq(1).children().eq(0).text()));
+		};
+		
+		function delGoods(ele, goodsId){
+			var remb = $(ele);
+			var rems = parseInt(remb.parent().children().eq(1).html());
+			if (rems == 1) {
+				remb.parent().parent().parent().remove();
+			} 
+			var rem_a = rems - 1;
+			remb.siblings("i").html(rem_a);
+			shopping_cart.set(goodsId, rem_a);
+			$.cookie("shopping_cart", JSON.stringify([...shopping_cart]), {path:"/"});
+			$("#totalNum").text(parseInt($("#totalNum").text()) - 1);
+			$("#totalPrice").text(parseFloat($("#totalPrice").text()) - parseFloat(remb.parent().parent().prev().children().eq(1).children().eq(0).text()));
+		}
 	</script>
 </body>
 </html>
