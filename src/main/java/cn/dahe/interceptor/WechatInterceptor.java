@@ -1,8 +1,8 @@
 package cn.dahe.interceptor;
 
+import cn.dahe.model.Vip;
 import cn.dahe.util.WechatConstant;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -18,16 +18,15 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String requestUri = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String url = requestUri.substring(contextPath.length());
 		if (!checkAllowAccess(url)) {
 			HttpSession session = request.getSession();
-			String openId = (String) session.getAttribute("wxUser");
+			Vip vip = (Vip) session.getAttribute("wxUser");
 			// 如果session中不存在此用户，则重定向到微信网页授权链接
-			if (StringUtils.isBlank(openId)) {
+			if (vip == null) {
 				logger.info("微信端用戶认证失效:" + url);
 				StringBuilder sbAuthUrl = new StringBuilder();
 				String callbackUrl = "http://694059031.tunnel.2bdata.com/store/wechatdemo/wxAuth?return_url=" + url;
@@ -35,7 +34,7 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 				sbAuthUrl.append("?redirect_uri=" + URLEncoder.encode(callbackUrl));
 				sbAuthUrl.append("&appid=" + WechatConstant.appid);
 				sbAuthUrl.append("&response_type=code");
-				sbAuthUrl.append("&scope=snsapi_base");
+				sbAuthUrl.append("&scope=snsapi_info");
 				sbAuthUrl.append("#wechat_redirect");
 				response.sendRedirect(sbAuthUrl.toString());
 			}

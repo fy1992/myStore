@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -27,18 +28,25 @@ import com.alibaba.fastjson.JSONArray;
 
 import cn.dahe.model.Categories;
 import cn.dahe.model.ClientGoods;
+import cn.dahe.model.Vip;
 import cn.dahe.service.ICategoriesService;
 import cn.dahe.service.IClientGoodsService;
+import cn.dahe.service.IClientOrderService;
+import cn.dahe.service.IOrderGoodsInfoService;
+import cn.dahe.service.IVipService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.HttpRequestProxy;
+import cn.dahe.util.OrderNoUtil;
 import cn.dahe.util.WechatConstant;
 import weixin.popular.api.SnsAPI;
 import weixin.popular.api.TokenAPI;
 import weixin.popular.bean.message.EventMessage;
 import weixin.popular.bean.sns.SnsToken;
 import weixin.popular.bean.token.Token;
+import weixin.popular.bean.user.User;
 import weixin.popular.bean.xmlmessage.XMLMessage;
 import weixin.popular.bean.xmlmessage.XMLTextMessage;
+import weixin.popular.support.TokenManager;
 import weixin.popular.util.SignatureUtil;
 import weixin.popular.util.XMLConverUtil;
 
@@ -58,6 +66,10 @@ public class WeChatDemoController {
 	private IClientGoodsService clientGoodsService;
 	@Resource
 	private ICategoriesService categoriesService;
+	@Resource
+	private IClientOrderService orderService;
+	@Resource
+	private IVipService vipService;
 
 	/**
 	 * 微信服务器验证
@@ -109,7 +121,20 @@ public class WeChatDemoController {
 		// 根据openId查找用户,如果有则放入session中,没有则新建vip用户。
 		if (snsToken != null && StringUtils.isNotBlank(snsToken.getOpenid())) {
 			logger.info("OpenId:" + snsToken.getOpenid());
-			session.setAttribute("wxUser", snsToken.getOpenid());
+			String openId = snsToken.getOpenid();
+			Vip vip = vipService.findByOpenId(openId);
+			if (vip == null) {
+				User user = SnsAPI.userinfo(TokenManager.getDefaultToken(), openId, "zh_CN");
+				vip = new Vip();
+				vip.setStoreId(1);
+				vip.setOpenId(openId);
+				vip.setRegisterTime(new Date());
+				vip.setCreateCardDate(new Date());
+				vip.setVipName(user.getNickname());
+				vip.setVipNo(OrderNoUtil.generateWbNo());
+				vipService.add(vip);
+			}
+			session.setAttribute("wxUser", vip);
 		}
 		return "redirect:" + return_url;
 	}
@@ -200,6 +225,15 @@ public class WeChatDemoController {
 		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("totalNum", totalNum);
 		model.addAttribute("time", DateUtil.format(date, "yyyy-MM-dd HH:00"));
+		return "wechat/order_order";
+	}
+
+	/**
+	 * 下单
+	 */
+	@RequestMapping(value = "order", method = RequestMethod.POST)
+	public String order(@CookieValue(value = "shopping_cart", required = false) String shoppingCart, HttpSession session, Model model) {
+		Vip vip = (Vip) session.getAttribute("wxuser");
 		return "wechat/order_order";
 	}
 
