@@ -12,10 +12,13 @@ import cn.dahe.util.DateUtil;
 import cn.dahe.util.NumberUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
 import java.util.Date;
 import java.util.List;
 
@@ -34,30 +37,9 @@ public class ClientOrderServiceImpl implements IClientOrderService{
     private IClientOrderItemDao clientOrderItemDao;
 
     @Override
-    public void add(ClientOrderDto t) {
-        String orderItemInfo = t.getOrderItemInfo();
-        ClientOrder clientOrder = new ClientOrder();
-        clientOrder.setClientOrderNo(NumberUtils.getNoByTime());
-        clientOrder.setDescription(t.getDescription());
-        clientOrder.setOrderAddr(t.getOrderAddr());
-        clientOrder.setOrderName(t.getOrderName());
-        clientOrder.setPayType(t.getPayType());
-        clientOrder.setPhone(t.getPhone());
-        clientOrder.setType(0);
-        int id = add(clientOrder);
-        //TODO
-        JSONArray json = JSONArray.parseArray(orderItemInfo);
-        for(int i = 0, len = json.size(); i < len; i++){
-            JSONObject map = JSONObject.parseObject(json.get(i).toString());
-            ClientOrderItem clientOrderItem = new ClientOrderItem();
-
-        }
-    }
-
-    @Override
-    public int add(ClientOrder t) {
+    public void add(ClientOrder t) {
         t.setOrderTime(new Date());
-        return clientOrderDao.addAndGetId4Integer(t);
+        clientOrderDao.addAndGetId4Integer(t);
     }
 
     @Override
@@ -164,43 +146,30 @@ public class ClientOrderServiceImpl implements IClientOrderService{
     }
 
     @Override
-    public void orderByWechat(String openId, ClientOrderDto clientOrderDto) {
+    public ClientOrder addOrderByWechat(Vip vip, ClientOrderDto clientOrderDto) {
         ClientOrder clientOrder = new ClientOrder();
-        clientOrder.setOpenId(openId);
-        Vip vip = vipService.findByOpenId(openId);
-        if(vip != null){
-            clientOrder.setVipNo(vip.getVipNo());
-            clientOrder.setVipName(vip.getVipName());
-            clientOrder.setStoreId(vip.getStoreId());
-        }else{
-            clientOrder.setVipNo(vip.getVipNo());
-            clientOrder.setVipName(vip.getVipName());
-            clientOrder.setStoreId(0);
-        }
-        clientOrder.setPhone(clientOrderDto.getPhone());
-        clientOrder.setOrderName(clientOrderDto.getOrderName());
-        clientOrder.setTotalPrice(clientOrderDto.getTotalPrice());
-        clientOrder.setOrderNums(clientOrderDto.getOrderNums());
-        clientOrder.setFromType(clientOrderDto.getFromType());
-        //TODO 都默认是网店
-        clientOrder.setType(0);
-        clientOrder.setStatus(0);
-        clientOrder.setPayStatus(0);
-        clientOrder.setOrderTime(new Date());
-        clientOrder.setDescription(clientOrderDto.getDescription());
-        clientOrder.setClientOrderNo(NumberUtils.getNoByTime());
-        clientOrder.setOrderAddr(clientOrderDto.getOrderAddr());
-        clientOrder.setPayType(clientOrderDto.getPayType());
-        int id = clientOrderDao.addAndGetId4Integer(clientOrder);
-        JSONArray json = JSONArray.parseArray(clientOrderDto.getOrderItemInfo());
-        for(int i = 0, len = json.size(); i < len; i++){
-            ClientOrderItem clientOrderItem = new ClientOrderItem();
-            clientOrderItem.setClientOrderId(id);
-            JSONObject map = JSONObject.parseObject(json.get(i).toString());
-            clientOrderItem.setGoodsNo(map.get("goodsNo").toString());
-            clientOrderItem.setOrderNum(Integer.parseInt(map.get("goodsNum").toString()));
-            clientOrderItemDao.add(clientOrderItem);
-        }
+        try {
+			BeanUtils.copyProperties(clientOrder, clientOrderDto);
+			clientOrder.setVipNo(vip.getVipNo());
+			clientOrder.setOpenId(vip.getOpenId());
+	        clientOrder.setVipName(vip.getVipName());
+	        clientOrder.setStoreId(vip.getStoreId());
+	        clientOrder.setClientOrderNo(NumberUtils.getNoByTime());
+	        clientOrderDao.addAndGetId4Integer(clientOrder);
+	        JSONArray array = JSONArray.parseArray(clientOrderDto.getOrderItemInfo());
+	        for (Object temp : array) {
+	        	JSONArray tempArr = (JSONArray) temp;
+				ClientOrderItem clientOrderItem = new ClientOrderItem();
+				clientOrderItem.setGoodsNo(tempArr.getString(0));
+				clientOrderItem.setOrderNum(tempArr.getIntValue(1));
+				clientOrderItem.setClientOrderId(clientOrder.getId());
+				clientOrderItemDao.add(clientOrderItem);
+	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+        return clientOrder;
     }
 
     @Override
@@ -212,4 +181,5 @@ public class ClientOrderServiceImpl implements IClientOrderService{
 
         }
     }
+	
 }

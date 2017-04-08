@@ -52,12 +52,12 @@
 				<span class="glyphicon glyphicon-ok success_co"></span>
 			</p>
 			<span>下单状态：下单成功</span> 
-			<span>订单号：20170217163807436410</span> <i>2017-02-17	16:35:21</i>
+			<span>订单号：${order.clientOrderNo }</span> <i><fmt:formatDate value="${order.orderTime }" type="both"/></i>
 		</div>
 		<div class="success_two">
 			<ul>
 				<li><a>致电商家：15136072409</a></li>
-				<li><a>查看订单</a></li>
+				<li><a href="${ctx }/wechatdemo/order_detail/${order.id }">查看订单</a></li>
 			</ul>
 		</div>
 	</div>

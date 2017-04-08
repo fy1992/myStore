@@ -3,6 +3,7 @@ package cn.dahe.service;
 import cn.dahe.dto.ClientOrderDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.ClientOrder;
+import cn.dahe.model.Vip;
 
 import java.util.List;
 
@@ -10,43 +11,69 @@ import java.util.List;
  * Created by fy on 2017/3/16.
  */
 public interface IClientOrderService {
-    int add(ClientOrder clientOrder);
-    void add(ClientOrderDto t);
-    void del(int id);
-    void update(ClientOrder t);
-    ClientOrder get(int id);
-    ClientOrder load(int id);
 
-    /**
-     * 根据参数查询
-     * @param aDataSet
-     * @param storeId
-     * @return
-     */
-    Pager<ClientOrder> findByParams(String aDataSet, int storeId);
+	void add(ClientOrder t);
 
-    /**
-     * 根据vip编号查询
-     * @param vipNo
-     * @return
-     */
-    List<ClientOrder> findByVipNo(String vipNo);
+	void del(int id);
 
-    ClientOrder findByClientOrderNo(String clientOrderNo);
+	void update(ClientOrder t);
 
-    List<ClientOrder> findByStoreId(int storeId, String status);
+	ClientOrder get(int id);
 
-    List<ClientOrder> findByOpenId(String openId);
+	ClientOrder load(int id);
 
-    /**
-     * 微信点餐
-     * @param openId
-     * @param clientOrderDto
-     */
-    void orderByWechat(String openId, ClientOrderDto clientOrderDto);
+	/**
+	 * 根据参数查询
+	 * 
+	 * @param aDataSet
+	 * @param storeId
+	 * @return
+	 */
+	Pager<ClientOrder> findByParams(String aDataSet, int storeId);
 
-    /**
-     *订单处理
-     */
-    void auditOrder(int id, int status, int storeId);
+	/**
+	 * 根据openId编号查询
+	 * 
+	 * @param openId
+	 * @return
+	 */
+	List<ClientOrder> findByOpenId(String openId);
+
+	/**
+	 * 根据vip编号查询
+	 * 
+	 * @param vipNo
+	 * @return
+	 */
+	List<ClientOrder> findByVipNo(String vipNo);
+
+	/**
+	 * 根据店铺id和状态查询
+	 * @param storeId
+	 * @param status
+	 * @return
+	 */
+	List<ClientOrder> findByStoreId(int storeId, String status);
+
+	/**
+	 * 根据订单编号查询订单
+	 * @param clientOrderNo
+	 * @return
+	 */
+	ClientOrder findByClientOrderNo(String clientOrderNo);
+	
+	/**
+	 * 微信点餐
+	 * 
+	 * @param vip
+	 * @param clientOrderDto
+	 * @return
+	 */
+	ClientOrder addOrderByWechat(Vip vip, ClientOrderDto clientOrderDto);
+
+	/**
+	 * 订单处理
+	 */
+	void auditOrder(int id, int status, int storeId);
+
 }
