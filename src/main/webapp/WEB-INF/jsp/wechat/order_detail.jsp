@@ -54,45 +54,35 @@
 				<a><span class="glyphicon glyphicon-check grey"></span>完成</a>
 			</div>
 			<p>
-				购物清单：<i>共5件</i>
+				购物清单：<i>共${order.orderNums }件</i>
 			</p>
 			<ul class="detailed_two">
-				<li><i>1</i>
-				<p>网袜kid你法师大富科技阿斯你法师大富科技阿斯蒂芬蒂芬</p>
-					<span>$12546811</span></li>
-				<li><i>1</i>
-				<p>网袜kid你法师大富蒂芬</p>
-					<span>$125468</span></li>
-				<li><i>1</i>
-				<p>网袜kid你法师大富科技阿斯蒂芬</p>
-					<span>$125468</span></li>
-				<li><i>1</i>
-				<p>网袜kid你法师大富科技蒂芬</p>
-					<span>$125468</span></li>
-				<li><i>1</i>
-				<p>网袜kid你法师大富科技蒂芬</p>
-					<span>$125468</span></li>
+				<c:forEach items="${items }" var="item">
+					<li><i>${item.orderNum }</i>
+					<p>${item.goodsName }</p>
+						<span>$${item.price }</span></li>
+				</c:forEach>
 			</ul>
 			<p>配送信息：</p>
 			<ul class="detailed_three">
 				<li><p>收货人：</p>
-					<i>阿斯蒂芬</i></li>
+					<i>${order.orderName }</i></li>
 				<li><p>电话：</p>
-					<i>12496547236</i></li>
+					<i>${order.phone }</i></li>
 				<li><p>地址：</p>
-					<i>网袜kid你法师大富科技阿斯你法师大富科技阿斯蒂芬蒂芬</i></li>
-				<li><p>配送时间：</p>
-					<i>2017-05-15 11:31:31</i></li>
+					<i>${order.orderAddr }</i></li>
+				<li><p>下单时间：</p>
+					<i><fmt:formatDate value="${order.orderTime }" type="both"/></i></li>
 				<li><p>付款方式：</p>
-					<i>网单，货到付款</i></li>
+					<i>到店支付</i></li>
 				<li><p>备注：</p>
-					<i>网袜kid你法师大富科技阿斯你法师大富科技阿斯蒂</i></li>
+					<i>${order.description }</i></li>
 			</ul>
 		</div>
 		<div class="detailed_four">
 			<ul>
-				<li>￥23816124</li>
-				<li><a>联系商家</a>|<a>再次购买</a></li>
+				<li>￥${order.totalPrice }</li>
+				<li><a>联系商家</a>|<a href="${ctx }/wechatdemo/goodsList">再次购买</a></li>
 			</ul>
 		</div>
 	</div>

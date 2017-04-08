@@ -9,214 +9,227 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * 客户端点餐订单
- * Created by fy on 2017/3/15.
+ * 客户端点餐订单 Created by fy on 2017/3/15.
  */
 @Table(name = "t_client_order")
 @Entity
 public class ClientOrder {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    //下单时间
-    @Column(name = "order_time")
-    private Date orderTime;
-    //所属门店
-    @Column(name = "store_id")
-    private int storeId;
-    //订单类型 0 网单 1 店单
-    private int type;
-    //订单来源类型 0 自营  1 美团  2 饿了么  3 百度外卖
-    @Column(name = "from_type")
-    private int fromType;
-    //订单状态 -1 已作废 0 等待处理  1 配送途中  2 完成
-    private int status;
-    //电话
-    private String phone;
-    //姓名
-    @Column(name = "order_name")
-    private String orderName;
-    //备注
-    private String description;
-    //支付方式 0 会员支付 1 货到付款
-    @Column(name = "pay_type")
-    private int payType;
-    //支付状态 0 未支付 1 已支付
-    @Column(name = "pay_status")
-    private int payStatus;
-    //地址
-    @Column(name = "order_addr")
-    private String orderAddr;
-    //总价
-    @Column(name = "total_price")
-    private double totalPrice;
-    //总数量
-    @Column(name = "order_nums")
-    private int orderNums;
-    //订单所属会员
-    @Column(name = "vip_no")
-    private String vipNo;
-    @Column(name = "vip_name")
-    private String vipName;
-    //订单号
-    @Column(name = "client_order_no")
-    private String clientOrderNo;
-    //微信openId
-    @Column(name = "open_id")
-    private String openId;
-    //导购员id
-    @Column(name = "sales_id")
-    private int salesId;
 
-    public int getId() {
-        return id;
-    }
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	// 所属门店
+	@Column(name = "store_id")
+	private int storeId;
+	// 订单类型 0 网单 1 店单
+	private int type;
+	// 订单来源类型 0 自营 1 美团 2 饿了么 3 百度外卖
+	@Column(name = "from_type")
+	private int fromType;
+	// 订单状态 -1 已作废 0 等待处理 1 配送途中 2 完成
+	private int status;
+	// 支付方式 0 会员支付 1 货到付款
+	@Column(name = "pay_type")
+	private int payType;
+	// 支付状态 0 未支付 1 已支付
+	@Column(name = "pay_status")
+	private int payStatus;
+	// 导购员id
+	@Column(name = "sales_id")
+	private int salesId;
+	// 总数量
+	@Column(name = "order_nums")
+	private int orderNums;
+	// 总价
+	@Column(name = "total_price")
+	private double totalPrice;
+	// 下单时间
+	@Column(name = "order_time")
+	private Date orderTime;
+	// 微信到店时间或客户端送达时间
+	@Column(name = "arrive_time")
+	private Date arriveTime;
+	// 会员编号
+	@Column(name = "vip_no")
+	private String vipNo;
+	// 会员姓名
+	@Column(name = "vip_name")
+	private String vipName;
+	// 微信openId
+	@Column(name = "open_id")
+	private String openId;
+	// 电话
+	private String phone;
+	// 姓名
+	@Column(name = "order_name")
+	private String orderName;
+	// 地址
+	@Column(name = "order_addr")
+	private String orderAddr;
+	// 订单号
+	@Column(name = "client_order_no")
+	private String clientOrderNo;
+	// 备注
+	private String description;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public Date getOrderTime() {
-        return orderTime;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setOrderTime(Date orderTime) {
-        this.orderTime = orderTime;
-    }
+	public int getStoreId() {
+		return storeId;
+	}
 
-    public int getStoreId() {
-        return storeId;
-    }
+	public void setStoreId(int storeId) {
+		this.storeId = storeId;
+	}
 
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
-    }
+	public int getType() {
+		return type;
+	}
 
-    public int getType() {
-        return type;
-    }
+	public void setType(int type) {
+		this.type = type;
+	}
 
-    public void setType(int type) {
-        this.type = type;
-    }
+	public int getFromType() {
+		return fromType;
+	}
 
-    public int getStatus() {
-        return status;
-    }
+	public void setFromType(int fromType) {
+		this.fromType = fromType;
+	}
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	public int getStatus() {
+		return status;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+	public int getPayType() {
+		return payType;
+	}
 
-    public String getOrderName() {
-        return orderName;
-    }
+	public void setPayType(int payType) {
+		this.payType = payType;
+	}
 
-    public void setOrderName(String orderName) {
-        this.orderName = orderName;
-    }
+	public int getPayStatus() {
+		return payStatus;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setPayStatus(int payStatus) {
+		this.payStatus = payStatus;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public int getSalesId() {
+		return salesId;
+	}
 
-    public int getPayType() {
-        return payType;
-    }
+	public void setSalesId(int salesId) {
+		this.salesId = salesId;
+	}
 
-    public void setPayType(int payType) {
-        this.payType = payType;
-    }
+	public int getOrderNums() {
+		return orderNums;
+	}
 
-    public String getOrderAddr() {
-        return orderAddr;
-    }
+	public void setOrderNums(int orderNums) {
+		this.orderNums = orderNums;
+	}
 
-    public void setOrderAddr(String orderAddr) {
-        this.orderAddr = orderAddr;
-    }
+	public double getTotalPrice() {
+		return totalPrice;
+	}
 
-    public double getTotalPrice() {
-        return totalPrice;
-    }
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+	public Date getOrderTime() {
+		return orderTime;
+	}
 
-    public int getOrderNums() {
-        return orderNums;
-    }
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
+	}
 
-    public void setOrderNums(int orderNums) {
-        this.orderNums = orderNums;
-    }
+	public Date getArriveTime() {
+		return arriveTime;
+	}
 
-    public String getVipNo() {
-        return vipNo;
-    }
+	public void setArriveTime(Date arriveTime) {
+		this.arriveTime = arriveTime;
+	}
 
-    public void setVipNo(String vipNo) {
-        this.vipNo = vipNo;
-    }
+	public String getVipNo() {
+		return vipNo;
+	}
 
-    public String getVipName() {
-        return vipName;
-    }
+	public void setVipNo(String vipNo) {
+		this.vipNo = vipNo;
+	}
 
-    public void setVipName(String vipName) {
-        this.vipName = vipName;
-    }
+	public String getVipName() {
+		return vipName;
+	}
 
-    public String getClientOrderNo() {
-        return clientOrderNo;
-    }
+	public void setVipName(String vipName) {
+		this.vipName = vipName;
+	}
 
-    public void setClientOrderNo(String clientOrderNo) {
-        this.clientOrderNo = clientOrderNo;
-    }
+	public String getOpenId() {
+		return openId;
+	}
 
-    public int getFromType() {
-        return fromType;
-    }
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
 
-    public void setFromType(int fromType) {
-        this.fromType = fromType;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public int getPayStatus() {
-        return payStatus;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-    public void setPayStatus(int payStatus) {
-        this.payStatus = payStatus;
-    }
+	public String getOrderName() {
+		return orderName;
+	}
 
-    public String getOpenId() {
-        return openId;
-    }
+	public void setOrderName(String orderName) {
+		this.orderName = orderName;
+	}
 
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
+	public String getOrderAddr() {
+		return orderAddr;
+	}
 
-    public int getSalesId() {
-        return salesId;
-    }
+	public void setOrderAddr(String orderAddr) {
+		this.orderAddr = orderAddr;
+	}
 
-    public void setSalesId(int salesId) {
-        this.salesId = salesId;
-    }
+	public String getClientOrderNo() {
+		return clientOrderNo;
+	}
+
+	public void setClientOrderNo(String clientOrderNo) {
+		this.clientOrderNo = clientOrderNo;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }

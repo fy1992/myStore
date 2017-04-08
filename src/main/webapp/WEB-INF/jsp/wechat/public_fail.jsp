@@ -40,8 +40,9 @@
 	<div class="wap">
 		<div class="choose_one">
 			<ul>
-				<li><a id="glyfl"><span
-						class="glyphicon glyphicon-menu-left"></span>返回</a></li>
+				<li>
+					<a id="glyfl"><span class="glyphicon glyphicon-menu-left"></span>返回</a>
+				</li>
 				<li>下单失败</li>
 				<li></li>
 			</ul>
@@ -50,13 +51,12 @@
 			<p>
 				<span class="glyphicon glyphicon-remove fail_co"></span>
 			</p>
-			<span>下单状态：下单失败</span> <span>请返回重新下单</span> <i>2017-02-17
-				16:35:21</i>
+			<span>下单状态：下单失败</span> <span>请返回重新下单</span> <i>${order.clientOrderNo }</i> 
 		</div>
 		<div class="success_two">
 			<ul>
 				<li><a>致电商家：15136072409</a></li>
-				<li><a>重新下单</a></li>
+				<li><a href="${ctx }/wechatdemo/goodsList">重新下单</a></li>
 			</ul>
 		</div>
 	</div>

@@ -17,7 +17,6 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(WechatInterceptor.class);
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String requestUri = request.getRequestURI();
 		String contextPath = request.getContextPath();
@@ -31,10 +30,11 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 				StringBuilder sbAuthUrl = new StringBuilder();
 				String callbackUrl = "http://694059031.tunnel.2bdata.com/store/wechatdemo/wxAuth?return_url=" + url;
 				sbAuthUrl.append("https://open.weixin.qq.com/connect/oauth2/authorize");
-				sbAuthUrl.append("?redirect_uri=" + URLEncoder.encode(callbackUrl));
-				sbAuthUrl.append("&appid=" + WechatConstant.appid);
+				sbAuthUrl.append("?appid=" + WechatConstant.appid);
+				sbAuthUrl.append("&redirect_uri=" + URLEncoder.encode(callbackUrl, "utf-8"));
 				sbAuthUrl.append("&response_type=code");
-				sbAuthUrl.append("&scope=snsapi_info");
+				sbAuthUrl.append("&scope=snsapi_userinfo");
+				sbAuthUrl.append("&state=0123456789");
 				sbAuthUrl.append("#wechat_redirect");
 				response.sendRedirect(sbAuthUrl.toString());
 			}

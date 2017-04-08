@@ -3,38 +3,37 @@ package cn.dahe.dto;
 import java.util.Date;
 
 /**
- * 订单dto
- * Created by fy on 2017/3/16.
+ * 订单dto Created by fy on 2017/3/16.
  */
 public class ClientOrderDto {
 
-	//ID
+	// ID
 	private int id;
-	//订单类型 0 网单 1 店单
+	// 订单类型 0 网单 1 店单
 	private int type;
-	//订单状态 0 等待处理  1 配送途中  2 完成
+	// 订单状态 0 等待处理 1 配送途中 2 完成
 	private int status;
-	//支付方式 0 会员支付 1 货到付款
+	// 支付方式 0 会员支付 1 货到付款
 	private int payType;
-	//订单来源类型 0 自营  1 美团  2 饿了么  3 百度外卖
+	// 订单来源类型 0 自营 1 美团 2 饿了么 3 百度外卖
 	private int fromType;
-	//总数量
+	// 总数量
 	private int orderNums;
-	//总价
+	// 总价
 	private double totalPrice;
-	//下单时间
-	private Date orderTime;
-	//到店时间
+	// 下单时间
+	private Date orderTime = new Date();
+	// 到店时间
 	private Date arriveTime;
-	//电话
+	// 电话
 	private String phone;
-	//地址
+	// 地址
 	private String orderAddr;
-	//姓名
+	// 姓名
 	private String orderName;
-	//备注
+	// 备注
 	private String description;
-	//订单细缆  (商品编码  数量)
+	// 订单细缆 (商品编码 数量)
 	private String orderItemInfo;
 
 	public int getId() {

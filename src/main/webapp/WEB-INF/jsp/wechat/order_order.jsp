@@ -23,31 +23,35 @@
 				<li></li>
 			</ul>
 		</div>
-		<div class="awayorder_one">
-			<p>客户信息：</p>
-			<ul class="awayorderul1">
-				<li><p>姓名：</p>
-					<input type="text" placeholder="请填写姓名"></li>
-				<li><p>电话：</p>
-					<input type="text" placeholder="请填写联系电话"></li>
-				<li><p>地址：</p>
-					<input type="text" value="到店消费" disabled></li>
-				<li><p>时间：</p>
-					<input type="text" id="time-format" value="${time }" placeholder="请填写到店时间" ></li>
-			</ul>
-			<p>支付方式：</p>
-			<ul class="awayorderul2">
-				<li><p>到店支付</p></li>
-			</ul>
-			<p>添加备注：</p>
-			<textarea placeholder="给商家留言 " class="awayorderul3"></textarea>
-		</div>
-		<div class="shopping_two">
-			<ul>
-				<li><span class="glyphicon glyphicon-shopping-cart"></span>购物车:￥${totalPrice }<i>${totalNum }</i></li>
-				<li><a>提交订单</a></li>
-			</ul>
-		</div>
+		<form action="${ctx }/wechatdemo/order" method="post" id="order_form">
+			<input type="hidden" name="orderNums" value="${totalNum }">
+			<input type="hidden" name="totalPrice" value="${totalPrice }">
+			<div class="awayorder_one">
+				<p>客户信息：</p>
+				<ul class="awayorderul1">
+					<li><p>姓名：</p>
+						<input type="text" name="orderName" placeholder="请填写姓名"></li>
+					<li><p>电话：</p>
+						<input type="text" name="phone" placeholder="请填写联系电话"></li>
+					<li><p>地址：</p>
+						<input type="text" name="orderAddr" value="到店消费" disabled></li>
+					<li><p>时间：</p>
+						<input type="text" name="arriveTime" id="time-format" value="${time }" placeholder="请填写到店时间" ></li>
+				</ul>
+				<p>支付方式：</p>
+				<ul class="awayorderul2">
+					<li><p>到店支付</p></li>
+				</ul>
+				<p>添加备注：</p>
+				<textarea placeholder="给商家留言 " name="description" class="awayorderul3"></textarea>
+			</div>
+			<div class="shopping_two">
+				<ul>
+					<li><span class="glyphicon glyphicon-shopping-cart"></span>购物车:￥${totalPrice }<i>${totalNum }</i></li>
+					<li><a onclick="document.getElementById('order_form').submit();return false">提交订单</a></li>
+				</ul>
+			</div>
+		</form>
 	</div>
 	<script type="text/javascript">
 	
