@@ -1,15 +1,18 @@
 package cn.dahe.service.impl;
 
 import cn.dahe.dao.*;
+import cn.dahe.dto.ClientDataDto;
 import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.*;
 import cn.dahe.service.IGoodsService;
+import cn.dahe.service.ISemifinishedItemService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.PoiUtils;
 import cn.dahe.util.ResourcesUtils;
 import cn.dahe.util.StringUtil;
 import cn.dahe.util.UploadsUtils;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.beanutils.BeanUtils;
@@ -55,6 +58,8 @@ public class GoodsServiceImpl implements IGoodsService{
     private IGoodsRawItemDao goodsRawItemDao;
     @Resource
     private IClientGoodsRawDao clientGoodsRawDao;
+    @Resource
+    private ISemifinishedItemService semifinishedItemService;
 
     @Override
     public boolean add(Goods t) {
@@ -454,29 +459,68 @@ public class GoodsServiceImpl implements IGoodsService{
     }
 
     @Override
-    public List<Object> findIntermediaryGoods(int storeId) {
-        return goodsDao.findIntermediaryGoods(storeId);
+    public List<Object> findSemifinishedGoods(int storeId) {
+        return goodsDao.findSemifinishedGoods(storeId);
     }
 
     @Override
-    public void updateGoodsIntermediary(String goodsNo, int num, int storeId) {
-        Goods goods = goodsDao.findByGoodsNo(goodsNo, storeId);
-        //客户端库存修改
-        ClientGoods clientGoods = clientGoodsDao.findByGoodsNo(goodsNo, storeId);
-        //若自动转化为成品
-        if(goods.getAutoFinished() == 1){
-            clientGoods.setFinishedNum(clientGoods.getFinishedNum() + num);
-        }else{
-            clientGoods.setFinishedNum(clientGoods.getSemifinishedNum() + num);
+    public Map<String, Object> updateGoodsSemifinished(ClientDataDto clientDataDto, Cashier cashier) {
+        String clientInfo = clientDataDto.getOrderInfo();
+        JSONArray json = JSONArray.parseArray(clientInfo);
+        int len = json.size();
+        Map<String, Object> resultMap = new HashMap<>();
+        int storeId = cashier.getStoreId();
+        if(len > 0){
+            for(int i = 0; i < len; i++){
+                JSONObject object = JSONObject.parseObject(json.get(i).toString());
+                String goodsNo = object.get("goodsNo").toString();
+                int num = Integer.parseInt(object.get("goodsNum").toString());
+                //通过商品编码获取客户端商品信息
+                Goods goods = goodsDao.findByGoodsNo(goodsNo, storeId);
+                //获取商品所需的原材料
+                List<GoodsRawItem> goodsRaws = goodsRawItemDao.findByGoodsId(goods.getId());
+                goodsRaws.forEach(goodsRawItem -> {
+                    //通过原材料编码获取客户端原材料的信息 并 修改客户端的原材料库存
+                    ClientGoodsRaw clientGoodsRaw = clientGoodsRawDao.findByRawNo(goodsRawItem.getRawNo(), storeId);
+                    if(clientGoodsRaw.getRawNum() >= goodsRawItem.getRawNum()){
+                        clientGoodsRaw.setRawNum(clientGoodsRaw.getRawNum() - goodsRawItem.getRawNum()*num);
+                        clientGoodsRawDao.update(clientGoodsRaw);
+                    }else{
+                        resultMap.put(clientGoodsRaw.getRawNo(), clientGoodsRaw.getRawName());
+                    }
+                });
+                if(resultMap.size() > 0){
+                    return resultMap;
+                }
+
+                //增加半成品记录
+                SemifinishedItem semifinishedItem = new SemifinishedItem();
+                semifinishedItem.setCashierName(cashier.getName());
+                semifinishedItem.setCategoriesId(goods.getCategoriesId());
+                semifinishedItem.setStoreId(cashier.getStoreId());
+
+                //客户端库存修改
+                ClientGoods clientGoods = clientGoodsDao.findByGoodsNo(goodsNo, storeId);
+                //若自动转化为成品
+                if(goods.getAutoFinished() == 1){
+                    //客户端商品成品库存增加
+                    clientGoods.setFinishedNum(clientGoods.getFinishedNum() + num);
+                    semifinishedItem.setTargetGoodsName(goods.getTargetGoodsName());
+                    semifinishedItem.setTargetGoodsNo(goods.getTargetGoodsNo());
+                    semifinishedItem.setFinishedNum(num);
+                }else{
+                    //客户端商品半成品库存增加
+                    clientGoods.setSemifinishedNum(clientGoods.getSemifinishedNum() + num);
+                    semifinishedItem.setSemifinishedNum(num);
+                }
+                clientGoodsDao.update(clientGoods);
+
+                semifinishedItem.setGoodsNo(clientGoods.getGoodsNo());
+                semifinishedItem.setGoodsName(clientGoods.getGoodsName());
+                semifinishedItemService.add(semifinishedItem);
+            }
         }
-        clientGoodsDao.update(clientGoods);
-        List<GoodsRawItem> goodsRaws = goodsRawItemDao.findByGoodsId(goods.getId());
-        //修改客户端的原材料库存
-        goodsRaws.forEach(goodsRawItem -> {
-            ClientGoodsRaw clientGoodsRaw = clientGoodsRawDao.findByRawNo(goodsRawItem.getRawNo(), storeId);
-            clientGoodsRaw.setRawNum(clientGoodsRaw.getRawNum() - goodsRawItem.getRawNum());
-            clientGoodsRawDao.update(clientGoodsRaw);
-        });
+        return resultMap;
     }
 
     @Override

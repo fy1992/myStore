@@ -22,9 +22,15 @@ public class CategoriesDaoImpl extends BaseDaoImpl<Categories> implements ICateg
     }
 
     @Override
-    public List<Categories> findAll(int storeId) {
-        String hql = "from Categories where storeId = ?";
-        return this.list(hql, storeId);
+    public List<Categories> findAll(int storeId, int show) {
+        StringBuffer hql = new StringBuffer("from Categories where storeId = ?");
+        List<Object> list = new ArrayList<>();
+        list.add(storeId);
+        if(show != -1){
+            hql.append(" and show = ?");
+            list.add(show);
+        }
+        return this.list(hql.toString(), list);
     }
 
     @Override

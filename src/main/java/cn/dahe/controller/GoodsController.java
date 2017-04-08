@@ -49,7 +49,7 @@ public class GoodsController {
     @Resource
     private IBadGoodsService badGoodsService;
     @Resource
-    private IClientGoodsService clientGoodsService;
+    private ISemifinishedItemService semifinishedItemService;
     // 商品单位
     //=====================================goodsUnit begin=====================================================
     /***
@@ -737,10 +737,10 @@ public class GoodsController {
      * */
     @RequestMapping(value = "semifinishedList", method = RequestMethod.POST)
     @ResponseBody
-    public Pager<ClientGoods> semifinishedList(HttpSession session, String aDataSet){
-        logger.info("--- ClientGoods list begin ---");
+    public Pager<SemifinishedItem> semifinishedList(HttpSession session, String aDataSet){
+        logger.info("--- SemifinishedItem list begin ---");
         User user = (User)session.getAttribute("loginUser");
-        return clientGoodsService.semifinishedList(aDataSet, user.getStoreId());
+        return semifinishedItemService.semifinishedList(aDataSet, user.getStoreId());
     }
     //=======================================semifinished end=========================================================
 }

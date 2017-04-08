@@ -141,14 +141,13 @@ public class WeChatDemoController {
 
 	/**
 	 * 商品列表
-	 * 
 	 * @param return_url
 	 * @param code
 	 * @return
 	 */
 	@RequestMapping(value = "goodsList")
 	public String wxChooseGoods(Model model) {
-		List<Categories> categList = categoriesService.findAll(1);
+		List<Categories> categList = categoriesService.findAll(1, 1);
 		model.addAttribute("categList", categList);
 		return "wechat/public_choose";
 	}

@@ -141,6 +141,8 @@ public class Goods {
     private int targetGoodsId;
     @Column(name = "target_goods_name")
     private String targetGoodsName;
+    @Column(name = "target_goods_no")
+    private String targetGoodsNo;
     //对应的成品的数量
     @Column(name = "target_goods_num", columnDefinition = "INT DEFAULT 0")
     private int targetGoodsNum;
@@ -479,6 +481,14 @@ public class Goods {
 
     public void setTargetGoodsName(String targetGoodsName) {
         this.targetGoodsName = targetGoodsName;
+    }
+
+    public String getTargetGoodsNo() {
+        return targetGoodsNo;
+    }
+
+    public void setTargetGoodsNo(String targetGoodsNo) {
+        this.targetGoodsNo = targetGoodsNo;
     }
 
     @Override

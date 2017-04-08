@@ -66,7 +66,7 @@
                             "<td class='goodsId'>"+data[n].id+"</td>" +
                             "<td class='goodsName'>"+data[n].name+"</td>" +
                             "<td class='goodsNo'>"+data[n].goodsNo+"</td>" +
-                            "<td class='mainUnitName'>"+(data[n].mainUnitName?data[n].mainUnitName:"")+"</td>" +
+                            "<td class='mainUnitName'>" + (data[n].mainUnitName ? data[n].mainUnitName : "") + "</td>" +
                             "</tr>"
                         );
                     }
@@ -83,6 +83,7 @@
              parent.$("#targetGoodsName").val(parentTr.find(".goodsName").text());
              parent.$("#targetGoodsId").val(parentTr.find(".goodsId").text());
              parent.$("#targetGoodsNum").val(1);
+             parent.$("#targetGoodsNo").val(parentTr.find(".goodsNo").text());
              parent.$("#unitName").text(parentTr.find(".mainUnitName").text());
             layer_close();
         });

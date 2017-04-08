@@ -74,9 +74,14 @@ public class CategoriesController {
     public AjaxObj addCategories(String name, int pid, HttpSession session){
         AjaxObj json = new AjaxObj();
         User user = (User)session.getAttribute("loginUser");
-        categoriesService.add(name, pid, user.getStoreId());
-        json.setMsg("分类添加成功");
-        json.setResult(1);
+        boolean b = categoriesService.add(name, pid, user.getStoreId());
+        if(b){
+            json.setMsg("分类添加成功");
+            json.setResult(1);
+        }else{
+            json.setMsg("该分类已存在");
+            json.setResult(0);
+        }
         return json;
     }
 
@@ -102,8 +107,9 @@ public class CategoriesController {
                                   int id, @RequestParam(defaultValue = "-1", required = false) int pid,
                                   HttpSession session){
         AjaxObj json = new AjaxObj();
-        categoriesService.update(name, id, pid);
-        json.setMsg("分类修改成功");
+        User user = (User) session.getAttribute("loginUser");
+        categoriesService.update(name, id, pid, user.getStoreId());
+        json.setMsg("分类修改完成");
         json.setResult(1);
         return json;
     }
@@ -146,6 +152,6 @@ public class CategoriesController {
     @ResponseBody
     public List<Categories> categoriesList(HttpSession session){
         User user = (User) session.getAttribute("loginUser");
-        return categoriesService.findAll(user.getStoreId());
+        return categoriesService.findAll(user.getStoreId(), -1);
     }
 }

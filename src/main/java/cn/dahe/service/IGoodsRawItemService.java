@@ -21,11 +21,11 @@ public interface IGoodsRawItemService {
      * @param goodsId
      * @param rawItems
      * @param useRawPrice  自动更新成品进货价
-     * @param intermediary 是否是半成品
+     * @param Semifinished 是否是半成品
      * @param autoFinished 是否直接转化为成品
      * @param targetGoodsName  目标成品名称
      * @param targetGoodsId    目标成品id
      * @param targetGoodsNum   目标成品数量
      */
-    void addRawItems(int goodsId, String rawItems, int useRawPrice, int intermediary, int autoFinished, int targetGoodsId, String targetGoodsName, int targetGoodsNum);
+    void addRawItems(int goodsId, String rawItems, int useRawPrice, int Semifinished, int autoFinished, int targetGoodsId, String targetGoodsName, int targetGoodsNum);
 }

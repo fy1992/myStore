@@ -89,7 +89,7 @@ public class WechatController {
     @ResponseBody
     public AjaxObj getGoodsCategoriesList(int storeId, String openId){
         AjaxObj json = new AjaxObj();
-        List<Categories> categoriesList = categoriesService.findAll(storeId);
+        List<Categories> categoriesList = categoriesService.findAll(storeId, 1);
         json.setResult(1);
         json.setObject(categoriesList);
         return json;

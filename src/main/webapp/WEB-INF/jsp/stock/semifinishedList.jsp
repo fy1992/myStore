@@ -87,20 +87,20 @@ table = $('#semifinished_table').dataTable({
        "aoColumns" : [
 	  	{"mData" : null, "sDefaultContent" : "", "sClass":"center", "bSortable":false},
         {"mData" : "semifinishedTime", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-            return data ? data : "-";
+            return data ? format(data) : "-";
         }},
         {"mData" : "cashierName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "goodsName", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
             return data ? data : "-";
         }},
         {"mData" : "semifinishedNum", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-            return data != 0 ? data : "-";
+            return data != 0 ? data : "0";
         }},
         {"mData" : "targetGoodsName", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
             return data ? data : "-";
         }},
         {"mData" : "finishedNum", "sDefaultContent" : "", "bSortable":false, "mRender":function(data, type, full){
-            return data != 0 ? data : "-";
+            return data != 0 ? data : "0";
         }}
     ],
     "language":{

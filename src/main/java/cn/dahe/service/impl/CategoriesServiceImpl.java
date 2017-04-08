@@ -36,7 +36,7 @@ public class CategoriesServiceImpl implements ICategoriesService{
 
     @Override
     public List<Tree> initTree(String rootName, int storeId) {
-        List<Categories> categoriesList = categoriesDao.findAll(storeId);
+        List<Categories> categoriesList = categoriesDao.findAll(storeId, -1);
         List<Tree> cts = new ArrayList<Tree>();
         for(Categories categories : categoriesList){
             Tree tree = new Tree();
@@ -134,19 +134,26 @@ public class CategoriesServiceImpl implements ICategoriesService{
     }
 
     @Override
-    public void add(String name, int pid, int storeId) {
-        Categories categories = new Categories();
-        categories.setName(name);
-        categories.setStoreId(storeId);
-        Categories parent = get(pid);
-        categories.setParent(parent);
-        add(categories);
+    public boolean add(String name, int pid, int storeId) {
+        Categories categories  = categoriesDao.findByName(name, storeId);
+        if(categories == null){
+            categories = new Categories();
+            categories.setName(name);
+            categories.setStoreId(storeId);
+            Categories parent = get(pid);
+            categories.setParent(parent);
+            categories.setToggleShow(1);
+            add(categories);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void update(String name, int id, int pid) {
-        Categories categories = get(id);
-        if(StringUtils.isNotEmpty(name) && StringUtils.isNotBlank(name)) {
+    public void update(String name, int id, int pid, int storeId) {
+        Categories categories = categoriesDao.findByName(name, storeId);
+        if(categories == null){
+            categories = get(id);
             categories.setName(name);
         }
         if(pid != -1){
@@ -172,7 +179,7 @@ public class CategoriesServiceImpl implements ICategoriesService{
     }
 
     @Override
-    public List<Categories> findAll(int storeId) {
-        return categoriesDao.findAll(storeId);
+    public List<Categories> findAll(int storeId, int show) {
+        return categoriesDao.findAll(storeId, show);
     }
 }

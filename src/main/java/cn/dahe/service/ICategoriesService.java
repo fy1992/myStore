@@ -22,7 +22,7 @@ public interface ICategoriesService {
      * @param pid
      * @param storeId
      */
-    void add(String name, int pid, int storeId);
+    boolean add(String name, int pid, int storeId);
 
     /**
      * 编辑
@@ -30,7 +30,7 @@ public interface ICategoriesService {
      * @param id
      * @param pid
      */
-    void update(String name, int id, int pid);
+    void update(String name, int id, int pid, int store);
     /**
      * 根据父id获取子节点
      * @param pid
@@ -72,7 +72,8 @@ public interface ICategoriesService {
     /**
      * 查询全部
      * @param storeId
+     * @param show 控制分类在客户端的显示 0 不显示 1 显示
      * @return
      */
-    List<Categories> findAll(int storeId);
+    List<Categories> findAll(int storeId, int show);
 }

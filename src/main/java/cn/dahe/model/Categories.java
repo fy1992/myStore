@@ -1,6 +1,5 @@
 package cn.dahe.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,10 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * 商品类别
@@ -32,9 +28,11 @@ public class Categories {
     //所属店面
     @Column(name = "store_id")
     private int storeId;
-
-    private int seq;
     //排序
+    private int seq;
+    //是否在网店显示 0 不显示 1 显示
+    @Column(name = "toggle_show",columnDefinition = "INT DEFAULT 1")
+    private int toggleShow;
     public int getId() {
         return id;
     }
@@ -75,7 +73,13 @@ public class Categories {
         this.seq = seq;
     }
 
+    public int getToggleShow() {
+        return toggleShow;
+    }
 
+    public void setToggleShow(int toggleShow) {
+        this.toggleShow = toggleShow;
+    }
 
     @Override
     public String toString() {

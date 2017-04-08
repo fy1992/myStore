@@ -44,7 +44,7 @@
                     <div class="formControls col-6">
                         <span>${goodsDto.goodsNo}</span>
                         <input name = "id" value = "${goodsDto.id}" type = "hidden"/>
-                        <input name = "intermediary" value = "${goodsDto.intermediary}" type = "hidden"/>
+                        <input name = "semifinished" value = "${goodsDto.semifinished}" type = "hidden"/>
                         <input name = "hasRaws" value = "${goodsDto.hasRaws}" type = "hidden"/>
                         <input name = "useRawPrice" value = "${goodsDto.useRawPrice}" type = "hidden"/>
                         <input name = "autoFinished" value = "${goodsDto.autoFinished}" type = "hidden"/>

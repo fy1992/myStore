@@ -1,8 +1,11 @@
 package cn.dahe.service;
 
+import cn.dahe.dto.ClientDataDto;
 import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.Pager;
+import cn.dahe.model.Cashier;
 import cn.dahe.model.Goods;
+import com.sun.deploy.util.SessionState;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -73,15 +76,14 @@ public interface IGoodsService{
      * 查询半成品列表
      * @param storeId 门店id
      */
-    List<Object> findIntermediaryGoods(int storeId);
+    List<Object> findSemifinishedGoods(int storeId);
 
     /**
      * 半成品制作
-     * @param goodsNo 商品编码
-     * @param storeId 门店id
-     * @param num 制作数量
+     * @param clientDataDto 半成品信息
+     * @param cashier 收银员信息
      */
-    void updateGoodsIntermediary(String goodsNo, int num, int storeId);
+    Map<String, Object> updateGoodsSemifinished(ClientDataDto clientDataDto, Cashier cashier);
 
     /**
      * 根据参数查询

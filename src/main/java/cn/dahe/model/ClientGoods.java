@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
 
 
 /**
@@ -25,7 +24,7 @@ public class ClientGoods {
     //商品名称
     @Column(name = "goods_name")
     private String goodsName;
-    //商品所屬門店
+    //商品所属门店
     @Column(name = "store_id")
     private int storeId;
     //商品分類id
@@ -48,15 +47,6 @@ public class ClientGoods {
     //商品单位
     @Column(name = "goods_unit")
     private String goodsUnit;
-    //制作时间
-    @Column(name = "semifinished_time")
-    private Date semifinishedTime;
-    //半成品制作人
-    @Column(name = "cashier_name")
-    private String cashierName;
-    //成品名称
-    @Column(name = "target_goods_name")
-    private String targetGoodsName;
 
     public int getId() {
         return id;
@@ -144,30 +134,6 @@ public class ClientGoods {
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
-    }
-
-    public Date getSemifinishedTime() {
-        return semifinishedTime;
-    }
-
-    public void setSemifinishedTime(Date semifinishedTime) {
-        this.semifinishedTime = semifinishedTime;
-    }
-
-    public String getCashierName() {
-        return cashierName;
-    }
-
-    public void setCashierName(String cashierName) {
-        this.cashierName = cashierName;
-    }
-
-    public String getTargetGoodsName() {
-        return targetGoodsName;
-    }
-
-    public void setTargetGoodsName(String targetGoodsName) {
-        this.targetGoodsName = targetGoodsName;
     }
 
     public ClientGoods() {

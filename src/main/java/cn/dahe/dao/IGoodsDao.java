@@ -46,5 +46,5 @@ public interface IGoodsDao extends IBaseDao<Goods>{
      * @param storeId
      * @return
      */
-    List<Object> findIntermediaryGoods(int storeId);
+    List<Object> findSemifinishedGoods(int storeId);
 }

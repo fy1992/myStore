@@ -96,6 +96,7 @@
                     <td>
                         <input style="width:160px;cursor: pointer;" class="input-text radius" id="targetGoodsName" value = "${goods.targetGoodsName}" type = "text"/>
                         <input  id="targetGoodsId" type = "hidden" value = "${goods.targetGoodsId}"/>
+                        <input  id="targetGoodsNo" type = "hidden" value = "${goods.targetGoodsNo}"/>
                     </td>
                     <td><input style="width:100px" class="input-text radius" id="targetGoodsNum" value = "${goods.targetGoodsNum}" type = "number" min="0"/></td>
                     <td><span id="unitName">${mainUnitName}</span></td>
@@ -228,10 +229,12 @@
             var targetGoodsId = 0;
             var targetGoodsName = "";
             var targetGoodsNum = 0;
+            var targetGoodsNo = "";
             if(autoFinished == 1){
                 targetGoodsId = $("#targetGoodsId").val();
                 targetGoodsName = $("#targetGoodsName").val();
                 targetGoodsNum = $("#targetGoodsNum").val();
+                targetGoodsNo = $("#targetGoodsNo").val();
             }
 
             $.post("<%=request.getContextPath()%>/server/raw/addRawItem", {
@@ -242,7 +245,8 @@
                 autoFinished : autoFinished,
                 targetGoodsId : targetGoodsId,
                 targetGoodsName : targetGoodsName,
-                targetGoodsNum : targetGoodsNum
+                targetGoodsNum : targetGoodsNum,
+                targetGoodsNo : targetGoodsNo
             },
                 function (data) {
                 if(data.result == 1){

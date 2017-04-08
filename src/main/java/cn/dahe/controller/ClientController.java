@@ -45,7 +45,7 @@ public class ClientController {
     @Resource
     private IChangeShiftsService changeShiftsService;
     @Resource
-    private IGoodsRawService goodsRawService;
+    private IClientGoodsRawService clientGoodsRawService;
     @Resource
     private IClientOrderService clientOrderService;
     @Resource
@@ -262,7 +262,7 @@ public class ClientController {
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier) session.getAttribute("clientUser_" + sid);
         json.setResult(1);
-        List<GoodsRaw> goodsRaws = goodsRawService.findByCategoriesId(categoriesId, cashier.getStoreId());
+        List<ClientGoodsRaw> goodsRaws = clientGoodsRawService.goodsRawListByCategories(categoriesId, cashier.getStoreId());
         json.setObject(goodsRaws);
         return json;
     }
@@ -276,7 +276,7 @@ public class ClientController {
     public AjaxObj getGoodsCategoriesList(int sid, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier)session.getAttribute("clientUser_" + sid);
-        List<Categories> categoriesList = categoriesService.findAll(cashier.getStoreId());
+        List<Categories> categoriesList = categoriesService.findAll(cashier.getStoreId(), 1);
         json.setResult(1);
         json.setObject(categoriesList);
         return json;
@@ -388,7 +388,7 @@ public class ClientController {
     public AjaxObj semifinishedList(int sid, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier)session.getAttribute("clientUser_" + sid);
-        List<Object> list = goodsService.findIntermediaryGoods(cashier.getStoreId());
+        List<Object> list = goodsService.findSemifinishedGoods(cashier.getStoreId());
         json.setResult(1);
         json.setObject(list);
         return json;
@@ -397,17 +397,24 @@ public class ClientController {
     /**
      * 半成品制作
      * @param sid 门店id
-     * @param goodsNo 商品编码
-     * @param num 商品制作数量
+     * @param clientDataDto 半成品信息
      */
     @RequestMapping(value = "doSemifinished", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxObj doSemifinished(int sid, String goodsNo, int num, HttpSession session){
+    public AjaxObj doSemifinished(int sid, ClientDataDto clientDataDto, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier) session.getAttribute("clientUser_" + sid);
-        goodsService.updateGoodsIntermediary(goodsNo, num, cashier.getStoreId());
-        json.setObject("半成品制作完成");
-        json.setResult(1);
+        Map<String, Object> result = goodsService.updateGoodsSemifinished(clientDataDto, cashier);
+        if(result.size() == 0){
+            json.setObject("半成品制作完成");
+            json.setResult(1);
+        }else{
+            StringBuffer sb = new StringBuffer();
+            result.forEach((k, v) -> sb.append(v + ","));
+            sb.deleteCharAt(sb.length() - 1);
+            json.setMsg("原材料 " + sb.toString() + " 的库存不足");
+            json.setResult(0);
+        }
         return json;
     }
 }

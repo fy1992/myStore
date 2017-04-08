@@ -48,13 +48,15 @@
                 },
                 type : "post",
                 success : function(data){
-                    layer.msg(data.msg, {time : 1500, icon:6}, function(){
-                        if(data.result == 1){
+                    if(data.result == 1){
+                        layer.msg(data.msg, {time : 1500, icon:6}, function(){
                             window.parent.table.fnDraw();
                             window.parent.tree.reAsyncChildNodes(null, "refresh");
                             layer_close();
-                        }
-                    });
+                        });
+                    }else{
+                        layer.msg(data.msg, {time : 1500, icon:5});
+                    }
                 }
             });
         }

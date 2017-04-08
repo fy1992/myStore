@@ -20,9 +20,10 @@ public interface ICategoriesDao extends IBaseDao<Categories>{
     /**
      * 查询所有分类
      * @param storeId
+     * @param show 控制分类的在客户端的显示 0 不显示 1 显示
      * @return
      */
-    List<Categories> findAll(int storeId);
+    List<Categories> findAll(int storeId, int show);
 
     /**
      * 根据参数查询
