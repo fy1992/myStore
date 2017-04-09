@@ -44,7 +44,7 @@
       </div>
       <div class="row">
           <div class="formControls col-10 col-offset-8 mt-20">
-              <a href="register" class="ml-30" style="color:#3bb4f2;text-decoration:none">还没账号？</a>
+              <a href="<%=request.getContextPath()%>/register" class="ml-30" style="color:#3bb4f2;text-decoration:none">还没账号？</a>
           </div>
       </div>
   </div>

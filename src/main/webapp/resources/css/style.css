@@ -89,3 +89,54 @@ input#ExpirationDate[type='text']{width: 90%;}
     line-height: 30px;
     text-indent: 0;
 }
+
+.register-label{
+    width: 80px;
+    height: 38px;
+    padding: 0 0 0 10px;
+    line-height: 38px;
+    float: left;
+}
+
+.registerBox{
+    position:absolute;
+    width:520px;
+    min-height:410px;
+    height:auto;
+    left:50%;
+    top:43%;
+    margin-left:-240px;
+    margin-top:-184px;
+    padding-top:18px;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.register-title{
+    width: 100%;
+    height: 32px;
+    border-bottom: 1px solid #e5e5e5;
+    float: left;
+    clear: both;
+}
+
+.info-area{
+    width: 503px;
+    margin: 0 auto;
+    padding: 20px 0;
+    clear: both;
+}
+
+.item{
+    margin: 0 -1px 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    font-size: 14px;
+    text-align: left;
+    background: #fff;
+    transition: .5s ease;
+    position: relative;
+}
+.item-input{
+    width:100% !important;
+}

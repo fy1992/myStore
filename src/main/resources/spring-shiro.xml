@@ -50,6 +50,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
                 /resources/** = anon
                 /login = anon
                 /client/** = anon
+                /register = anon
                 /wechat/** = anon
                 /wechatdemo/** = anon
                 <!--/server/permission/list = roles[admin]

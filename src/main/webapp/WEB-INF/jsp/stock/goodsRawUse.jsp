@@ -44,7 +44,7 @@
                         <th width="100">分类</th>
                         <th width="100">消耗量</th>
                         <th width="100">成本（元）</th>
-                        <th width="50">营业额占比</th>
+                       <%-- <th width="50">营业额占比</th>--%>
                     </tr>
                 </thead>
                 <tbody id="table_tr"></tbody>
@@ -90,8 +90,8 @@ table = $('#goodsRawUse_table').dataTable({
         {"mData" : "rawNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "categoriesName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "usedNum", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "totalPrice", "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "proportion", "sDefaultContent" : "", "bSortable":false}
+        {"mData" : "totalPrice", "sDefaultContent" : "", "bSortable":false}/*,
+        {"mData" : "proportion", "sDefaultContent" : "", "bSortable":false}*/
     ],
     "language":{
        "oPaginate": {

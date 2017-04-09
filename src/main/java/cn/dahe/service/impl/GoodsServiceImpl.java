@@ -60,6 +60,8 @@ public class GoodsServiceImpl implements IGoodsService{
     private IClientGoodsRawDao clientGoodsRawDao;
     @Resource
     private ISemifinishedItemService semifinishedItemService;
+    @Resource
+    private IGoodsRawUsedDao goodsRawUsedDao;
 
     @Override
     public boolean add(Goods t) {
@@ -485,6 +487,19 @@ public class GoodsServiceImpl implements IGoodsService{
                     if(clientGoodsRaw.getRawNum() >= goodsRawItem.getRawNum()){
                         clientGoodsRaw.setRawNum(clientGoodsRaw.getRawNum() - goodsRawItem.getRawNum()*num);
                         clientGoodsRawDao.update(clientGoodsRaw);
+
+                        //原材料消耗
+                        GoodsRawUsed goodsRawUsed = new GoodsRawUsed();
+                        goodsRawUsed.setStoreId(storeId);
+                        goodsRawUsed.setCategoriesId(clientGoodsRaw.getCategoriesId());
+                        goodsRawUsed.setCategoriesName(clientGoodsRaw.getCategoriesName());
+                        goodsRawUsed.setUsedTime(new Date());
+                        goodsRawUsed.setRawName(clientGoodsRaw.getRawName());
+                        goodsRawUsed.setRawNo(clientGoodsRaw.getRawNo());
+                        goodsRawUsed.setUsedNum(num);
+                        goodsRawUsed.setTotalPrice(clientGoodsRaw.getPrice()*num);
+                        goodsRawUsedDao.add(goodsRawUsed);
+
                     }else{
                         resultMap.put(clientGoodsRaw.getRawNo(), clientGoodsRaw.getRawName());
                     }

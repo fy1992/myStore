@@ -109,6 +109,14 @@ public class LoginController {
     }
 
     /**
+     * 注册
+     */
+    @RequestMapping(value = "register", method = RequestMethod.GET)
+    public String register(){
+        return "register";
+    }
+
+    /**
      * 注册 （门店）
      * @return
      */
