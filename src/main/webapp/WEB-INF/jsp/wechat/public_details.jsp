@@ -40,7 +40,7 @@
 	<div class="wap">
 		<div class="choose_one">
 			<ul>
-				<li><a id="glyfl"><span
+				<li><a href="javascript:history.go(-1);"><span
 						class="glyphicon glyphicon-menu-left"></span>返回</a></li>
 				<li>商品详情</li>
 				<li></li>

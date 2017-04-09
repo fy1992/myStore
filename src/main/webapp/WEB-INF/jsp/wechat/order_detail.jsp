@@ -41,7 +41,7 @@
 		<div class="choose_one">
 			<ul>
 				<li>
-					<a id="glyfl"><span class="glyphicon glyphicon-menu-left"></span>返回</a>
+					<a href="javascript:history.go(-1);"><span class="glyphicon glyphicon-menu-left"></span>返回</a>
 				</li>
 				<li>订单详情</li>
 				<li><a><span class="glyphicon glyphicon-qrcode"></span></a></li>

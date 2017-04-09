@@ -37,6 +37,7 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
 				sbAuthUrl.append("&state=0123456789");
 				sbAuthUrl.append("#wechat_redirect");
 				response.sendRedirect(sbAuthUrl.toString());
+				return false;
 			}
 		}
 		return true;

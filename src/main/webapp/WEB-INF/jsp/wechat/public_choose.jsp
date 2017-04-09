@@ -19,7 +19,7 @@
 			<ul>
 				<li><a id="glyfl"><span class="glyphicon glyphicon-th"></span>分类</a></li>
 				<li><a><span class="glyphicon glyphicon-home"></span>壹號掌柜</a></li>
-				<li><a><span class="glyphicon glyphicon-user"></span></a></li>
+				<li><a href="${ctx }/wechatdemo/vip_info"><span class="glyphicon glyphicon-user"></span></a></li>
 			</ul>
 		</div>
 		<div class="choose_two">
@@ -33,7 +33,6 @@
 						<span id="totalPrice">0</span>
 					</a><i id="totalNum">0</i>
 				</li>
-				<li><a><span class="glyphicon glyphicon-search"></span></a></li>
 			</ul>
 		</div>
 		<ul class="glyfl">

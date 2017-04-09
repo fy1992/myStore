@@ -69,7 +69,7 @@ public class WeChatDemoController {
 	private static Logger logger = LoggerFactory.getLogger(WeChatDemoController.class);
 
 	@Resource
-	private IClientOrderItemService orderItemService; 
+	private IClientOrderItemService orderItemService;
 	@Resource
 	private IClientGoodsService clientGoodsService;
 	@Resource
@@ -150,6 +150,7 @@ public class WeChatDemoController {
 
 	/**
 	 * 商品列表
+	 * 
 	 * @param return_url
 	 * @param code
 	 * @return
@@ -254,7 +255,7 @@ public class WeChatDemoController {
 			// 清空购物车cookie
 			Cookie cookie = new Cookie("shopping_cart", null);
 			cookie.setMaxAge(0);
-			cookie.setPath("/");  
+			cookie.setPath("/");
 			response.addCookie(cookie);
 			// 准备数据供页面显示
 			model.addAttribute("time", DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
@@ -276,6 +277,29 @@ public class WeChatDemoController {
 		model.addAttribute("order", order);
 		model.addAttribute("items", items);
 		return "wechat/order_detail";
+	}
+
+	/**
+	 * 会员详情页
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "vip_info", method = RequestMethod.GET)
+	public String vipInfo(HttpSession session, Model model) {
+		model.addAttribute("vip", session.getAttribute("wxUser"));
+		return "wechat/public_personal";
+	}
+	
+	/**
+	 * 订单历史页
+	 * @return
+	 */
+	@RequestMapping(value = "order_history", method = RequestMethod.GET)
+	public String orderHistory(HttpSession session, Model model){
+		Vip vip = (Vip) session.getAttribute("wxUser");
+		List<ClientOrder> orders = orderService.findByOpenId(vip.getOpenId());
+		model.addAttribute("orders", orders);
+		return "wechat/order_history";
 	}
 
 	@InitBinder

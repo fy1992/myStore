@@ -40,7 +40,7 @@
 	<div class="wap">
 		<div class="choose_one">
 			<ul>
-				<li><a id="glyfl">
+				<li><a href="javascript:history.go(-1);">
 						<span	class="glyphicon glyphicon-menu-left"></span>返回</a>
 				</li>
 				<li>壹號掌柜</li>

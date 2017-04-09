@@ -18,7 +18,7 @@
 	<div class="wap">
 		<div class="choose_one">
 			<ul>
-				<li><a id="glyfl"><span class="glyphicon glyphicon-menu-left"></span>返回</a></li>
+				<li><a href="javascript:history.go(-1);"><span class="glyphicon glyphicon-menu-left"></span>返回</a></li>
 				<li>确认订单</li>
 				<li></li>
 			</ul>
