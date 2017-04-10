@@ -7,7 +7,6 @@ import cn.dahe.dto.ClientOrderDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.*;
 import cn.dahe.service.IClientOrderService;
-import cn.dahe.service.IVipService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.NumberUtils;
 import com.alibaba.fastjson.JSONArray;
@@ -23,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 网店订单
  * Created by fy on 2017/3/16.
  */
 @Service("clientOrderService")
@@ -31,8 +31,6 @@ public class ClientOrderServiceImpl implements IClientOrderService{
     private IClientOrderDao clientOrderDao;
     @Resource
     private IStoreDao storeDao;
-    @Resource
-    private IVipService vipService;
     @Resource
     private IClientOrderItemDao clientOrderItemDao;
 
@@ -49,7 +47,7 @@ public class ClientOrderServiceImpl implements IClientOrderService{
 
     @Override
     public void update(ClientOrder t) {
-        ClientOrder clientOrder = clientOrderDao.findByClientOrderNo(t.getClientOrderNo());
+        ClientOrder clientOrder = clientOrderDao.findByClientOrderNo(t.getClientOrderNo(), t.getStoreId());
         clientOrderDao.update(clientOrder);
     }
 
@@ -136,8 +134,8 @@ public class ClientOrderServiceImpl implements IClientOrderService{
     }
 
     @Override
-    public ClientOrder findByClientOrderNo(String clientOrderNo) {
-        return clientOrderDao.findByClientOrderNo(clientOrderNo);
+    public ClientOrder findByClientOrderNo(String clientOrderNo, int storeId) {
+        return clientOrderDao.findByClientOrderNo(clientOrderNo, storeId);
     }
 
     @Override
@@ -167,7 +165,6 @@ public class ClientOrderServiceImpl implements IClientOrderService{
 	        }
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
 		}
         return clientOrder;
     }
@@ -177,9 +174,6 @@ public class ClientOrderServiceImpl implements IClientOrderService{
         ClientOrder clientOrder = clientOrderDao.get(id);
         clientOrder.setStatus(status);
         clientOrderDao.update(clientOrder);
-        if(status == 2){
-
-        }
     }
 	
 }

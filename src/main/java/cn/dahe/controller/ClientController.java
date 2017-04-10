@@ -49,6 +49,8 @@ public class ClientController {
     @Resource
     private IClientOrderService clientOrderService;
     @Resource
+    private IClientOrderItemService clientOrderItemService;
+    @Resource
     private IBadGoodsService badGoodsService;
     @Resource
     private ISaleInfoService saleInfoService;
@@ -72,7 +74,7 @@ public class ClientController {
      * @param password
      * @return
      */
-    @RequestMapping(value = "storeLogin", method = RequestMethod.GET)
+    @RequestMapping(value = "storeLogin", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj storeLogin(String username, String password){
         AjaxObj json = new AjaxObj();
@@ -92,7 +94,7 @@ public class ClientController {
      * @param password
      * @return
      */
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj cashierLogin(int sid, String cashierNo, String password, HttpSession session){
         String username = (String)CacheUtils.get("store", "store");
@@ -104,7 +106,6 @@ public class ClientController {
                 session.setAttribute("clientUser_" + sid, cashier);
                 Store store = storeService.get(sid);
                 String token = TokenUtil.getToken(cashierNo, password, store.getStoreNo(), sid);
-                token += sid;
                 CacheUtils.putCashierUser(token, cashier);
                 Object obj  = CacheUtils.getChangeShifts("changeShifts_" + sid + cashier.getId());
                 if(obj == null){
@@ -287,9 +288,9 @@ public class ClientController {
      * @param goodsNo 商品编码
      * @param sid 门店id
      */
-    @RequestMapping(value = "detail", method = RequestMethod.GET)
+    @RequestMapping(value = "goodsDetail", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxObj detail(int sid, String goodsNo, HttpSession session){
+    public AjaxObj goodsDetail(int sid, String goodsNo, HttpSession session){
         AjaxObj json = new AjaxObj();
         Cashier cashier = (Cashier) session.getAttribute("clientUser_" + sid);
         ClientGoods clientGoods = clientGoodsService.findByGoodsNo(goodsNo, cashier.getStoreId());
@@ -360,6 +361,38 @@ public class ClientController {
         List<ClientOrder> clientOrders = clientOrderService.findByStoreId(cashier.getStoreId(),"0,1");
         json.setResult(1);
         json.setObject(clientOrders);
+        return json;
+    }
+
+    /**
+     * 网店订单详情
+     * @param netOrderId
+     * @return
+     */
+    @RequestMapping(value = "netOrderDetail", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxObj netOrderDetail(int netOrderId){
+        AjaxObj json = new AjaxObj();
+        List<ClientOrderItem> clientOrderItemList = clientOrderItemService.findByClientOrderId(netOrderId);
+        json.setResult(1);
+        json.setObject(clientOrderItemList);
+        return json;
+    }
+
+    /**
+     * 网店订单状态改变
+     * @param sid
+     * @param orderId
+     * @param type
+     * @return
+     */
+    @RequestMapping(value = "netOrderChange", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxObj netOrderChange(int sid, int orderId, int type){
+        AjaxObj json = new AjaxObj();
+        clientOrderService.auditOrder(orderId, type, sid);
+        json.setResult(1);
+        json.setMsg("订单处理完成");
         return json;
     }
 

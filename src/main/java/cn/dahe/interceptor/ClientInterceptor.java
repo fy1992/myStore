@@ -29,7 +29,8 @@ public class ClientInterceptor extends HandlerInterceptorAdapter {
         HttpSession session = request.getSession();
         if(!checkAllowAccess(url)){
             if(StringUtils.isNotBlank(token) && CacheUtils.getCashierUser(token) != null) {
-                int storeId = Integer.parseInt(token.substring(token.length() - 1));
+                token = token.substring(token.length() - 4);
+                int storeId = Integer.parseInt(token.substring(0, 1));
                 Cashier cashier = (Cashier) session.getAttribute("clientUser_" + storeId);
                 if (cashier == null) {
                     cashier = (Cashier)CacheUtils.getCashierUser(token);

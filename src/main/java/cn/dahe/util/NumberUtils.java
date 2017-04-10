@@ -16,11 +16,11 @@ public class NumberUtils {
      */
     public static long getNo(int num){
         Random random = new Random();
-        String result = "";
+        StringBuffer result = new StringBuffer();
         for(int i = 0; i < num; i++) {
-            result += random.nextInt(10);
+            result.append(random.nextInt(10));
         }
-        return Long.parseLong(result);
+        return Long.parseLong(result.toString());
     }
 
     public static String getNoByTime(){
@@ -30,11 +30,10 @@ public class NumberUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(getNoByTime());
-        try {
-            System.out.println(DecimalUtil.div(199, 100, 2));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        String str = TokenUtil.getToken("001", "123456", "3535", 4);
+        System.out.println(str);
+        str = str.substring(str.length() - 4);
+        int storeId = Integer.parseInt(str.substring(0, 1));
+        System.out.println(storeId);
     }
 }

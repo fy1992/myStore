@@ -58,9 +58,10 @@ public interface IClientOrderService {
 	/**
 	 * 根据订单编号查询订单
 	 * @param clientOrderNo
+	 * @param storeId
 	 * @return
 	 */
-	ClientOrder findByClientOrderNo(String clientOrderNo);
+	ClientOrder findByClientOrderNo(String clientOrderNo, int storeId);
 	
 	/**
 	 * 微信点餐

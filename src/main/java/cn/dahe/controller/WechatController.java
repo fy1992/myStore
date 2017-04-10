@@ -122,14 +122,14 @@ public class WechatController {
 	 */
 	@RequestMapping(value = "orderDetail", method = RequestMethod.POST)
 	@ResponseBody
-	public AjaxObj orderDetail(String openId, String orderNo) {
+	public AjaxObj orderDetail(String openId, String orderNo, int sid) {
 		AjaxObj json = new AjaxObj();
 		if (StringUtils.isBlank(openId)) {
 			json.setResult(0);
 			json.setMsg("服务器错误");
 			return json;
 		}
-		ClientOrder clientOrder = orderService.findByClientOrderNo(orderNo);
+		ClientOrder clientOrder = orderService.findByClientOrderNo(orderNo, sid);
 		if (clientOrder.getOpenId().equals(openId)) {
 			json.setResult(1);
 			json.setObject(clientOrder);

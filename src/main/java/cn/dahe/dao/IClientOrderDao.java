@@ -22,9 +22,10 @@ public interface IClientOrderDao extends IBaseDao<ClientOrder>{
     /**
      * 订单号查询
      * @param clientOrderNo
+     * @param storeId
      * @return
      */
-    ClientOrder findByClientOrderNo(String clientOrderNo);
+    ClientOrder findByClientOrderNo(String clientOrderNo, int storeId);
 
     /**
      * 会员编号查询
