@@ -1,5 +1,6 @@
 package cn.dahe.service.impl;
 
+import cn.dahe.dao.IClientGoodsDao;
 import cn.dahe.dao.IClientOrderDao;
 import cn.dahe.dao.IClientOrderItemDao;
 import cn.dahe.dao.IStoreDao;
@@ -7,7 +8,6 @@ import cn.dahe.dto.ClientOrderDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.*;
 import cn.dahe.service.IClientOrderService;
-import cn.dahe.service.IVipService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.NumberUtils;
 import com.alibaba.fastjson.JSONArray;
@@ -27,12 +27,12 @@ import java.util.List;
  */
 @Service("clientOrderService")
 public class ClientOrderServiceImpl implements IClientOrderService{
+	@Resource
+	private IStoreDao storeDao;
     @Resource
     private IClientOrderDao clientOrderDao;
     @Resource
-    private IStoreDao storeDao;
-    @Resource
-    private IVipService vipService;
+    private IClientGoodsDao clientGoodsDao;
     @Resource
     private IClientOrderItemDao clientOrderItemDao;
 
@@ -159,10 +159,13 @@ public class ClientOrderServiceImpl implements IClientOrderService{
 	        JSONArray array = JSONArray.parseArray(clientOrderDto.getOrderItemInfo());
 	        for (Object temp : array) {
 	        	JSONArray tempArr = (JSONArray) temp;
+	        	ClientGoods goods = clientGoodsDao.get(tempArr.getIntValue(0));
 				ClientOrderItem clientOrderItem = new ClientOrderItem();
-				clientOrderItem.setGoodsNo(tempArr.getString(0));
+				clientOrderItem.setGoodsName(goods.getGoodsName());
 				clientOrderItem.setOrderNum(tempArr.getIntValue(1));
 				clientOrderItem.setClientOrderId(clientOrder.getId());
+				clientOrderItem.setGoodsNo(goods.getGoodsNo());
+				clientOrderItem.setPrice(goods.getPrice());
 				clientOrderItemDao.add(clientOrderItem);
 	        }
 		} catch (Exception e) {

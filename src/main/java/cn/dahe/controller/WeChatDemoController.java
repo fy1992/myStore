@@ -217,7 +217,7 @@ public class WeChatDemoController {
 	 * 确认订单
 	 */
 	@RequestMapping(value = "order_order")
-	public String orderOrder(@CookieValue(value = "shopping_cart", required = false) String shoppingCart, Model model) {
+	public String orderOrder(@CookieValue(value = "shopping_cart", required = true) String shoppingCart, Model model) {
 		Date date = new Date(System.currentTimeMillis() + 60 * 60 * 1000l);
 		double totalPrice = 0.0;
 		int totalNum = 0;

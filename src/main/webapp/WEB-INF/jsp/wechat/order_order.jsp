@@ -7,8 +7,8 @@
 	<title>确认订单</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0 , maximum-scale=1.0, user-scalable=0">
-	<link href="${ctxResource}/css/wap.css" type="text/css" rel="stylesheet" media="all">
 	<link href="${ctxResource}/css/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+	<link href="${ctxResource}/css/wap.css" type="text/css" rel="stylesheet" media="all">
 	<link href="${ctxResource}/css/jquery-weui.min.css" type="text/css" rel="stylesheet" media="all">
 	<script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 	<script type="text/javascript" src="${ctxResource}/js/bootstrap.min.js"></script>
@@ -47,7 +47,10 @@
 			</div>
 			<div class="shopping_two">
 				<ul>
-					<li><span class="glyphicon glyphicon-shopping-cart"></span>购物车:￥${totalPrice }<i>${totalNum }</i></li>
+					<li>
+						<span class="glyphicon glyphicon-shopping-cart"></span>
+						<span>购物车:￥</span><span>${totalPrice }</span>
+						<i>${totalNum }</i></li>
 					<li><a onclick="document.getElementById('order_form').submit();return false">提交订单</a></li>
 				</ul>
 			</div>
