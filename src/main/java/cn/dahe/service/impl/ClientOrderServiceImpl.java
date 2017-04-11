@@ -1,5 +1,6 @@
 package cn.dahe.service.impl;
 
+import cn.dahe.dao.IClientGoodsDao;
 import cn.dahe.dao.IClientOrderDao;
 import cn.dahe.dao.IClientOrderItemDao;
 import cn.dahe.dao.IStoreDao;
@@ -34,6 +35,8 @@ public class ClientOrderServiceImpl implements IClientOrderService{
     private IStoreDao storeDao;
     @Resource
     private IClientOrderItemDao clientOrderItemDao;
+    @Resource
+    private IClientGoodsDao clientGoodsDao;
 
     @Override
     public void add(ClientOrder t) {
