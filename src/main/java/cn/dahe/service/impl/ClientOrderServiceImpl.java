@@ -7,6 +7,7 @@ import cn.dahe.dto.ClientOrderDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.*;
 import cn.dahe.service.IClientOrderService;
+import cn.dahe.service.IVipService;
 import cn.dahe.util.DateUtil;
 import cn.dahe.util.NumberUtils;
 import com.alibaba.fastjson.JSONArray;
@@ -157,10 +158,13 @@ public class ClientOrderServiceImpl implements IClientOrderService{
 	        JSONArray array = JSONArray.parseArray(clientOrderDto.getOrderItemInfo());
 	        for (Object temp : array) {
 	        	JSONArray tempArr = (JSONArray) temp;
+	        	ClientGoods goods = clientGoodsDao.get(tempArr.getIntValue(0));
 				ClientOrderItem clientOrderItem = new ClientOrderItem();
-				clientOrderItem.setGoodsNo(tempArr.getString(0));
+				clientOrderItem.setGoodsName(goods.getGoodsName());
 				clientOrderItem.setOrderNum(tempArr.getIntValue(1));
 				clientOrderItem.setClientOrderId(clientOrder.getId());
+				clientOrderItem.setGoodsNo(goods.getGoodsNo());
+				clientOrderItem.setPrice(goods.getPrice());
 				clientOrderItemDao.add(clientOrderItem);
 	        }
 		} catch (Exception e) {

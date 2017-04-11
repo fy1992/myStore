@@ -9,9 +9,11 @@
 	<meta name="viewport"	content="width=device-width, initial-scale=1.0, minimum-scale=1.0 , maximum-scale=1.0, user-scalable=0">
 	<link href="${ctxResource}/css/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
 	<link href="${ctxResource}/css/wap.css" type="text/css" rel="stylesheet" media="all">
+	<link href="${ctxResource}/css/jquery-weui.min.css" type="text/css" rel="stylesheet" media="all">
 	<script type="text/javascript" src="${ctxResource}/js/jquery.min.js"></script>
 	<script type="text/javascript" src="${ctxResource}/js/jquery.cookie.js"></script>
 	<script type="text/javascript" src="${ctxResource}/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${ctxResource}/js/jquery-weui.min.js"></script>
 </head>
 <body>
 	<div class="wap">
@@ -44,11 +46,10 @@
 			<ul>
 				<li>
 					<span class="glyphicon glyphicon-shopping-cart"></span>
-					<span>购物车:￥</span>
-					<span id="totalPrice">${totalPrice }</span>
+					<span>购物车:￥</span><span id="totalPrice">${totalPrice }</span>
 					<i id="totalNum">${totalNum }</i>
 				</li>
-				<li><a href="${ctx }/wechatdemo/order_order">下单</a></li>
+				<li><a onclick="order_order()">下单</a></li>
 			</ul>
 		</div>
 	</div>
@@ -93,6 +94,8 @@
 		
 		// 清空购物车
 		function clealAll(){
+			$("#totalPrice").text(0);
+			$("#totalNum").text(0);
 			shopping_cart = new Map();
 			$(".shopping_wares").remove();
 			$.cookie("shopping_cart", JSON.stringify([...shopping_cart]), {path:"/"});
@@ -125,6 +128,15 @@
 			$.cookie("shopping_cart", JSON.stringify([...shopping_cart]), {path:"/"});
 			$("#totalNum").text(parseInt($("#totalNum").text()) - 1);
 			$("#totalPrice").text(parseFloat($("#totalPrice").text()) - parseFloat(remb.parent().parent().prev().children().eq(1).children().eq(0).text()));
+		}
+		
+		function order_order(){
+			if(shopping_cart.entries().next().value){
+				location.href="${ctx }/wechatdemo/order_order";
+			}else{
+				alert("购物车空哒，请选择商品哦~");
+				location.href="${ctx }/wechatdemo/goodsList";
+			}
 		}
 	</script>
 </body>

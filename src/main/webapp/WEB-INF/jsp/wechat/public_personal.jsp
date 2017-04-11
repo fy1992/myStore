@@ -41,7 +41,7 @@
 		<div class="choose_one">
 			<ul>
 				<li>
-					<a id="glyfl"><span	class="glyphicon glyphicon-menu-left"></span>返回</a>
+					<a href="javascript:history.go(-1);"><span class="glyphicon glyphicon-menu-left"></span>返回</a>
 				</li>
 				<li>个人中心</li>
 				<li><a>修改</a></li>
@@ -49,7 +49,7 @@
 		</div>
 		<div class="personal_one">
 			<div class="personal_bg">
-				<a class="personal_bga"><span class="glyphicon glyphicon-user"></span>张二胖</a>
+				<a class="personal_bga"><span class="glyphicon glyphicon-user"></span>${vip.vipName }</a>
 			</div>
 			<ul class="personal_two">
 				<li><a><i>0</i>优惠券</a></li>
@@ -57,11 +57,11 @@
 				<li><a><i>0</i>余额</a></li>
 			</ul>
 			<ul class="personal_three">
-				<li><p>卡号：</p><span>13113215461654321</span></li>
+				<li><p>卡号：</p><span>${vip.vipNo }</span></li>
 				<li><p>类型：</p><span>普通会员</span></li>
-				<li><p>手机：</p><span>12546853562</span></li>
+				<li><p>手机：</p><span>${vip.phone }</span></li>
 				<a><li><p>支付：</p><span class="glyphicon glyphicon-qrcode"></span></li></a>
-				<a><li><i>历史支付</i><i class="glyphicon glyphicon-menu-right"></i></li></a>
+				<a href="${ctx }/wechatdemo/order_history"><li><i>历史订单</i><i class="glyphicon glyphicon-menu-right"></i></li></a>
 			</ul>
 		</div>
 	</div>

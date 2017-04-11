@@ -5,7 +5,6 @@ import cn.dahe.dto.GoodsDto;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.Cashier;
 import cn.dahe.model.Goods;
-import com.sun.deploy.util.SessionState;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

@@ -27,7 +27,7 @@ public class CategoriesDaoImpl extends BaseDaoImpl<Categories> implements ICateg
         List<Object> list = new ArrayList<>();
         list.add(storeId);
         if(show != -1){
-            hql.append(" and show = ?");
+            hql.append(" and toggleShow = ?");
             list.add(show);
         }
         return this.list(hql.toString(), list);

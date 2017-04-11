@@ -4,7 +4,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>下单失败</title>
+	<title>历史订单</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0 , maximum-scale=1.0, user-scalable=0">
 	<link href="${ctxResource}/css/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
@@ -28,7 +28,7 @@
 			$("body").css("font-size", bodyfont);
 			$(".wap").css("width", widthWin);
 			$(".wap").css("height", heightWin);
-			$(".success_one").css("height", heightWin - bodyfont * 12);
+			$(".personal_one").css("height", heightWin - bodyfont * 6);
 		}
 		$(document).ready(function() {
 			w_h()
@@ -40,25 +40,38 @@
 	<div class="wap">
 		<div class="choose_one">
 			<ul>
-				<li>
-					<a href="javascript:history.go(-1);"><span class="glyphicon glyphicon-menu-left"></span>返回</a>
-				</li>
-				<li>下单失败</li>
-				<li></li>
+				<li><a href="javascript:history.go(-1);"><span class="glyphicon glyphicon-menu-left"></span>返回</a></li>
+				<li>历史订单</li>
+				<li><a><span class="glyphicon glyphicon-qrcode"></span></a></li>
 			</ul>
 		</div>
-		<div class="success_one">
-			<p>
-				<span class="glyphicon glyphicon-remove fail_co"></span>
-			</p>
-			<span>下单状态：下单失败</span> <span>请返回重新下单</span> <i><fmt:formatDate value="${order.orderTime }" type="both"/></i> 
-		</div>
-		<div class="success_two">
-			<ul>
-				<li><a>致电商家：15136072409</a></li>
-				<li><a href="${ctx }/wechatdemo/goodsList">重新下单</a></li>
-			</ul>
+		<div class="personal_one">
+			<div class="history_one">
+				<a><span class="glyphicon glyphicon-time blue"></span>等待处理</a> 
+				<a><span class="glyphicon glyphicon-refresh orange"></span>配送途中</a> 
+				<a><span class="glyphicon glyphicon-check green"></span>完成</a>
+			</div>
+			<div class="history_two">
+				<div class="history_two1" style="display: block">
+					<c:forEach items="${orders }" var="order">
+						<a href="${ctx }/wechatdemo/order_detail/${order.id }">
+							<span class="glyphicon glyphicon-time blue"></span>
+							<p><fmt:formatDate value="${order.orderTime }" type="both"/>&nbsp;共${order.orderNums }件<i>￥${order.totalPrice }</i></p>
+							<i class="glyphicon glyphicon-menu-right"></i>
+						</a> 
+					</c:forEach>
+				</div>
+			</div>
 		</div>
 	</div>
+	<script>
+		$(".history_two ul li").click(function() {
+			var index = $(this).index();
+			$('.history_two1').hide();
+			$('.history_two1:eq(' + index + ')').show();
+			$(".history_two ul li").removeClass("history_dian");
+			$(this).addClass("history_dian");
+		});
+	</script>
 </body>
 </html>
