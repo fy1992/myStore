@@ -150,9 +150,7 @@ public class WeChatDemoController {
 
 	/**
 	 * 商品列表
-	 * 
-	 * @param return_url
-	 * @param code
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "goodsList")
@@ -180,9 +178,8 @@ public class WeChatDemoController {
 
 	/**
 	 * 购物车列表
-	 * 
-	 * @param return_url
-	 * @param code
+	 * @param model
+	 * @param shoppingCart
 	 * @return
 	 */
 	@RequestMapping(value = "shoppingCart")
