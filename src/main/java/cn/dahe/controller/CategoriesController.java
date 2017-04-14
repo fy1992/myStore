@@ -41,7 +41,6 @@ public class CategoriesController {
 
     /**
      * 商品分类树
-     * @return
      */
     @RequestMapping(value = "tree", method = RequestMethod.POST)
     @ResponseBody
