@@ -26,7 +26,7 @@ public class SemifinishedItemDaoImpl extends BaseDaoImpl<SemifinishedItem> imple
         List<Object> list = new ArrayList<>();
         StringBuffer hql = new StringBuffer("from SemifinishedItem where storeId = ?");
         list.add(storeId);
-        hql.append(" and semifinishedNum > 0");
+//        hql.append(" and semifinishedNum > 0");
         if(startTime != null){
             hql.append(" and semifinishedTime >= ?");
             list.add(startTime);

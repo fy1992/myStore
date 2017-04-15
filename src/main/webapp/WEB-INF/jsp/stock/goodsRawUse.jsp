@@ -26,7 +26,7 @@
         <div class="text-r cl pl-20 pt-10 pb-10 box-shadow">
             <span class="select-box" style="width: 120px;">
                 <select class="select radius" id="categoriesId">
-                    <option value="0">全部分类</option>
+                    <option value="-1">全部分类</option>
                 </select>
             </span>
             <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}',readOnly:true,skin:'twoer'})" id="startTime" class="input-text Wdate radius" style="width:120px;"/> 至
@@ -86,7 +86,7 @@ table = $('#goodsRawUse_table').dataTable({
        "bFilter" : false,//是否启动过滤、搜索功能
        "aoColumns" : [
         {"mData" : null, "sDefaultContent" : "", "bSortable":false},
-        {"mData" : "name", "sDefaultContent" : "", "bSortable":false},
+        {"mData" : "rawName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "rawNo", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "categoriesName", "sDefaultContent" : "", "bSortable":false},
         {"mData" : "usedNum", "sDefaultContent" : "", "bSortable":false},
@@ -130,6 +130,7 @@ table = $('#goodsRawUse_table').dataTable({
         var startTime = $("#startTime").val();
         var endTime = $("#endTime").val();
         var rawInfo = $("#goodsRaw_info").val();
+        var categoriesId = $("#categoriesId").val();
         if(!startTime){
             startTime = "";
         }
@@ -139,6 +140,7 @@ table = $('#goodsRawUse_table').dataTable({
         aoData.push({"name":"startTime","value":startTime});
         aoData.push({"name":"endTime","value":endTime});
         aoData.push({"name":"rawInfo","value":rawInfo});
+        aoData.push({"name":"categoriesId","value":categoriesId});
     },
     "fnDrawCallback" : function () {
         $('#redirect').keyup(function(e){

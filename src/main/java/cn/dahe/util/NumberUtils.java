@@ -20,6 +20,10 @@ public class NumberUtils {
         for(int i = 0; i < num; i++) {
             result.append(random.nextInt(10));
         }
+        String start = result.substring(0, 1);
+        if(start.equals("0")){
+            result.replace(0, 1, Integer.toString(Integer.parseInt(start) + 1));
+        }
         return Long.parseLong(result.toString());
     }
 

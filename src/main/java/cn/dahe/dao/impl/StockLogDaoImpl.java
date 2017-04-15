@@ -20,8 +20,8 @@ public class StockLogDaoImpl extends BaseDaoImpl<StockLog> implements IStockLogD
         List<Object> list = new ArrayList<>();
         int status = params.getStatus();
         int storeId = params.getIntParam1();
-        Date startTime = new java.sql.Date(params.getStartTime().getTime());
-        Date endTime = new java.sql.Date(params.getEndTime().getTime());
+        Date startTime = params.getStartTime();
+        Date endTime = params.getEndTime();
         hql.append(" and sl.optType = ?");
         list.add(status);
         if(storeId != -1){

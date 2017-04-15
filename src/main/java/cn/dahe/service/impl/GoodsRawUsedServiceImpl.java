@@ -4,9 +4,11 @@ import cn.dahe.dao.IGoodsRawUsedDao;
 import cn.dahe.dto.Pager;
 import cn.dahe.model.GoodsRawUsed;
 import cn.dahe.service.IGoodsRawUsedService;
+import cn.dahe.util.DateUtil;
 import cn.dahe.util.DecimalUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -56,6 +58,7 @@ public class GoodsRawUsedServiceImpl implements IGoodsRawUsedService{
         int pageSize = 20;// size
         int categories = -1;
         String goodsRawInfo = "";
+        String startTime = "", endTime = "";
         try{
             JSONArray json = JSONArray.parseArray(aDataSet);
             int len = json.size();
@@ -65,16 +68,26 @@ public class GoodsRawUsedServiceImpl implements IGoodsRawUsedService{
                     start = (Integer) jsonObject.get("value");
                 } else if (jsonObject.get("name").equals("iDisplayLength")) {
                     pageSize = (Integer) jsonObject.get("value");
-                } else if (jsonObject.get("name").equals("goodsRawInfo")) {
+                } else if (jsonObject.get("name").equals("rawInfo")) {
                     goodsRawInfo = jsonObject.get("value").toString();
                 } else if (jsonObject.get("name").equals("categoriesId")) {
                     categories = Integer.parseInt(jsonObject.get("value").toString());
+                } else if (jsonObject.get("name").equals("startTime")) {
+                    startTime = jsonObject.get("value").toString();
+                } else if (jsonObject.get("name").equals("endTime")) {
+                    endTime = jsonObject.get("value").toString();
                 }
             }
             Pager<Object> params = new Pager<>();
             params.setOrderColumn("goodsRawUsed.id");
             params.setOrderDir("desc");
             params.setIntParam1(categories);
+            if(StringUtils.isNotBlank(startTime)){
+                params.setStartTime(DateUtil.format(startTime, "yyyy-MM-dd"));
+            }
+            if(StringUtils.isNotBlank(endTime)){
+                params.setEndTime(DateUtil.format(endTime, "yyyy-MM-dd"));
+            }
             params.setIntParam2(storeId);
             params.setStringParam1(goodsRawInfo);
             return goodsRawUsedDao.findByParam(start, pageSize, params);

@@ -21,6 +21,8 @@ public class GoodsRawUsedDaoImpl extends BaseDaoImpl<GoodsRawUsed> implements IG
         int categoriesId = params.getIntParam1();
         int storeId = params.getIntParam2();
         String goodsInfo = params.getStringParam1();
+        Date startTime = params.getStartTime();
+        Date endTime = params.getEndTime();
         List<Object> objectList = new ArrayList<>();
         StringBuffer hql = new StringBuffer("from GoodsRawUsed goodsRawUsed where 1=1");
         if (StringUtils.isNotEmpty(goodsInfo) && StringUtils.isNotBlank(goodsInfo)){
@@ -38,6 +40,14 @@ public class GoodsRawUsedDaoImpl extends BaseDaoImpl<GoodsRawUsed> implements IG
         if(storeId != 0){
             hql.append(" and goodsRawUsed.storeId = ?");
             objectList.add(storeId);
+        }
+        if(startTime != null){
+            hql.append(" and goodsRawUsed.usedTime >= ?");
+            objectList.add(startTime);
+        }
+        if(endTime != null){
+            hql.append(" and goodsRawUsed.usedTime <= ?");
+            objectList.add(endTime);
         }
         hql.append(" order by "+ params.getOrderColumn() + " " +params.getOrderDir());
         return this.find(hql.toString(), objectList, start, pageSize);

@@ -473,6 +473,8 @@ public class GoodsServiceImpl implements IGoodsService{
         Map<String, Object> resultMap = new HashMap<>();
         int storeId = cashier.getStoreId();
         if(len > 0){
+            Map<String, Integer> map = new HashMap<>();
+            Map<String, ClientGoodsRaw> rawMap = new HashMap<>();
             for(int i = 0; i < len; i++){
                 JSONObject object = JSONObject.parseObject(json.get(i).toString());
                 String goodsNo = object.get("goodsNo").toString();
@@ -485,21 +487,15 @@ public class GoodsServiceImpl implements IGoodsService{
                     //通过原材料编码获取客户端原材料的信息 并 修改客户端的原材料库存
                     ClientGoodsRaw clientGoodsRaw = clientGoodsRawDao.findByRawNo(goodsRawItem.getRawNo(), storeId);
                     if(clientGoodsRaw.getRawNum() >= goodsRawItem.getRawNum()){
+                        String rawNo = clientGoodsRaw.getRawNo();
                         clientGoodsRaw.setRawNum(clientGoodsRaw.getRawNum() - goodsRawItem.getRawNum()*num);
                         clientGoodsRawDao.update(clientGoodsRaw);
-
-                        //原材料消耗
-                        GoodsRawUsed goodsRawUsed = new GoodsRawUsed();
-                        goodsRawUsed.setStoreId(storeId);
-                        goodsRawUsed.setCategoriesId(clientGoodsRaw.getCategoriesId());
-                        goodsRawUsed.setCategoriesName(clientGoodsRaw.getCategoriesName());
-                        goodsRawUsed.setUsedTime(new Date());
-                        goodsRawUsed.setRawName(clientGoodsRaw.getRawName());
-                        goodsRawUsed.setRawNo(clientGoodsRaw.getRawNo());
-                        goodsRawUsed.setUsedNum(num);
-                        goodsRawUsed.setTotalPrice(clientGoodsRaw.getPrice()*num);
-                        goodsRawUsedDao.add(goodsRawUsed);
-
+                        if(map.get(rawNo) == null){
+                            map.put(rawNo, num);
+                        }else{
+                            map.put(rawNo, map.get(rawNo) + num);
+                        }
+                        rawMap.put(rawNo, clientGoodsRaw);
                     }else{
                         resultMap.put(clientGoodsRaw.getRawNo(), clientGoodsRaw.getRawName());
                     }
@@ -529,11 +525,24 @@ public class GoodsServiceImpl implements IGoodsService{
                     semifinishedItem.setSemifinishedNum(num);
                 }
                 clientGoodsDao.update(clientGoods);
-
+                logger.info("半成品制作 ： " + goodsNo);
                 semifinishedItem.setGoodsNo(clientGoods.getGoodsNo());
                 semifinishedItem.setGoodsName(clientGoods.getGoodsName());
                 semifinishedItemService.add(semifinishedItem);
             }
+            map.forEach((k,v) -> {
+                //原材料消耗
+                GoodsRawUsed goodsRawUsed = new GoodsRawUsed();
+                goodsRawUsed.setStoreId(storeId);
+                goodsRawUsed.setCategoriesId(rawMap.get(k).getCategoriesId());
+                goodsRawUsed.setCategoriesName(rawMap.get(k).getCategoriesName());
+                goodsRawUsed.setUsedTime(new Date());
+                goodsRawUsed.setRawName(rawMap.get(k).getRawName());
+                goodsRawUsed.setRawNo(k);
+                goodsRawUsed.setUsedNum(v);
+                goodsRawUsed.setTotalPrice(rawMap.get(k).getPrice()*v);
+                goodsRawUsedDao.add(goodsRawUsed);
+            });
         }
         return resultMap;
     }

@@ -135,7 +135,6 @@ public class RawController {
     @RequestMapping(value = "usedList", method = RequestMethod.POST)
     @ResponseBody
     public Pager<GoodsRawUsed> usedList(HttpSession session, String aDataSet){
-        AjaxObj json = new AjaxObj();
         User user = (User) session.getAttribute("loginUser");
         return goodsRawUsedService.goodsRawUsedList(aDataSet, user.getStoreId());
     }
