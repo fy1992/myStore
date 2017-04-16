@@ -26,5 +26,5 @@ public interface IGoodsRawUsedDao extends IBaseDao<GoodsRawUsed>{
      * @param storeId
      * @return
      */
-    GoodsRawUsed findByRawNoAndTime(String rawNo, Date time, int storeId);
+    GoodsRawUsed findByRawNoAndTime(String rawNo, String time, int storeId);
 }

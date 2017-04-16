@@ -7,11 +7,7 @@ import cn.dahe.dto.Pager;
 import cn.dahe.model.*;
 import cn.dahe.service.IGoodsService;
 import cn.dahe.service.ISemifinishedItemService;
-import cn.dahe.util.DateUtil;
-import cn.dahe.util.PoiUtils;
-import cn.dahe.util.ResourcesUtils;
-import cn.dahe.util.StringUtil;
-import cn.dahe.util.UploadsUtils;
+import cn.dahe.util.*;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -525,23 +521,33 @@ public class GoodsServiceImpl implements IGoodsService{
                     semifinishedItem.setSemifinishedNum(num);
                 }
                 clientGoodsDao.update(clientGoods);
-                logger.info("半成品制作 ： " + goodsNo);
                 semifinishedItem.setGoodsNo(clientGoods.getGoodsNo());
                 semifinishedItem.setGoodsName(clientGoods.getGoodsName());
                 semifinishedItemService.add(semifinishedItem);
             }
             map.forEach((k,v) -> {
-                //原材料消耗
-                GoodsRawUsed goodsRawUsed = new GoodsRawUsed();
-                goodsRawUsed.setStoreId(storeId);
-                goodsRawUsed.setCategoriesId(rawMap.get(k).getCategoriesId());
-                goodsRawUsed.setCategoriesName(rawMap.get(k).getCategoriesName());
-                goodsRawUsed.setUsedTime(new Date());
-                goodsRawUsed.setRawName(rawMap.get(k).getRawName());
-                goodsRawUsed.setRawNo(k);
-                goodsRawUsed.setUsedNum(v);
-                goodsRawUsed.setTotalPrice(rawMap.get(k).getPrice()*v);
-                goodsRawUsedDao.add(goodsRawUsed);
+                GoodsRawUsed goodsRawUsed = goodsRawUsedDao.findByRawNoAndTime(k, DateUtil.format(new Date(), "yyyy-MM-dd"), storeId);
+                if(goodsRawUsed == null){
+                    //原材料消耗
+                    goodsRawUsed = new GoodsRawUsed();
+                    goodsRawUsed.setStoreId(storeId);
+                    goodsRawUsed.setCategoriesId(rawMap.get(k).getCategoriesId());
+                    goodsRawUsed.setCategoriesName(rawMap.get(k).getCategoriesName());
+                    goodsRawUsed.setUsedTime(new Date());
+                    goodsRawUsed.setRawName(rawMap.get(k).getRawName());
+                    goodsRawUsed.setRawNo(k);
+                    goodsRawUsed.setUsedNum(v);
+                    goodsRawUsed.setTotalPrice(rawMap.get(k).getPrice()*v);
+                    goodsRawUsedDao.add(goodsRawUsed);
+                }else{
+                    goodsRawUsed.setUsedNum(goodsRawUsed.getUsedNum() + v);
+                    try {
+                        goodsRawUsed.setTotalPrice(DecimalUtil.div(goodsRawUsed.getTotalPrice() * 100 + rawMap.get(k).getPrice() * v * 100, 100, 2));
+                    }catch (IllegalAccessException e){
+                        e.printStackTrace();
+                    }
+                    goodsRawUsedDao.update(goodsRawUsed);
+                }
             });
         }
         return resultMap;

@@ -54,11 +54,12 @@ public class GoodsRawUsedDaoImpl extends BaseDaoImpl<GoodsRawUsed> implements IG
     }
 
     @Override
-    public GoodsRawUsed findByRawNoAndTime(String rawNo, Date time, int storeId) {
-        StringBuffer sql = new StringBuffer("select * from goodsRawUsed");
+    public GoodsRawUsed findByRawNoAndTime(String rawNo, String time, int storeId) {
+        StringBuffer sql = new StringBuffer("select * from t_goods_raw_used");
         sql.append(" where raw_no = ?");
         sql.append(" and DATE_FORMAT(used_time, '%Y-%m-%d') = ?");
         sql.append(" and store_id = ?");
-        return (GoodsRawUsed) this.listBySql(sql.toString(), new Object[]{rawNo, time, storeId}, GoodsRawUsed.class, true).get(0);
+        List<GoodsRawUsed> goodsRawUseds = this.listBySql(sql.toString(), new Object[]{rawNo, time, storeId}, GoodsRawUsed.class, true);
+        return goodsRawUseds != null && goodsRawUseds.size() > 0? goodsRawUseds.get(0) : null;
     }
 }
