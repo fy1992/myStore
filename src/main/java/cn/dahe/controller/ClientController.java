@@ -74,7 +74,7 @@ public class ClientController {
      * @param password
      * @return
      */
-    @RequestMapping(value = "storeLogin", method = RequestMethod.GET)
+    @RequestMapping(value = "storeLogin", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj storeLogin(String username, String password){
         AjaxObj json = new AjaxObj();
@@ -94,7 +94,7 @@ public class ClientController {
      * @param password
      * @return
      */
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
     public AjaxObj cashierLogin(int sid, String cashierNo, String password, HttpSession session){
         String username = (String)CacheUtils.get("store", "store");
