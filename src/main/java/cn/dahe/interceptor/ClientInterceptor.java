@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Calendar;
 
 public class ClientInterceptor extends HandlerInterceptorAdapter {
 	
@@ -28,9 +29,10 @@ public class ClientInterceptor extends HandlerInterceptorAdapter {
         String url = requestUri.substring(contextPath.length());
         HttpSession session = request.getSession();
         if(!checkAllowAccess(url)){
+            System.out.println(CacheUtils.getCashierUser(token));
             if(StringUtils.isNotBlank(token) && CacheUtils.getCashierUser(token) != null) {
-                token = token.substring(token.length() - 4);
-                int storeId = Integer.parseInt(token.substring(0, 1));
+                String tokenEnd = token.substring(token.length() - 4);
+                int storeId = Integer.parseInt(tokenEnd.substring(0, 1));
                 Cashier cashier = (Cashier) session.getAttribute("clientUser_" + storeId);
                 if (cashier == null) {
                     cashier = (Cashier)CacheUtils.getCashierUser(token);

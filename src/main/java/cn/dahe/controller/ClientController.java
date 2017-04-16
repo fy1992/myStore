@@ -128,7 +128,7 @@ public class ClientController {
     /**
      * 收银员退出(交接班)
      * */
-    @RequestMapping(value="/logout", method=RequestMethod.GET)
+    @RequestMapping(value="/logout", method=RequestMethod.POST)
     @ResponseBody
     public AjaxObj cashierLogout(int sid, HttpSession session){
         AjaxObj json = new AjaxObj();
