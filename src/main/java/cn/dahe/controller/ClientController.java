@@ -83,6 +83,9 @@ public class ClientController {
             CacheUtils.put("store", "store", username);
             json.setMsg("门店登录成功");
             json.setObject(user.getStoreId());
+        }else{
+            json.setMsg("密码错误");
+            json.setObject(user.getStoreId());
         }
         return json;
     }
