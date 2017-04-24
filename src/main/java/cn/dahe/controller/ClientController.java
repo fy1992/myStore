@@ -82,9 +82,11 @@ public class ClientController {
         if(user.getPassword().equals(SecurityUtil.MD5(password))){
             CacheUtils.put("store", "store", username);
             json.setMsg("门店登录成功");
+            json.setResult(1);
             json.setObject(user.getStoreId());
         }else{
             json.setMsg("密码错误");
+            json.setResult(0);
             json.setObject(user.getStoreId());
         }
         return json;
